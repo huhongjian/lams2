@@ -15,13 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @作者 江南一点雨
- * @公众号 江南一点雨
- * @微信号 a_java_boy
- * @GitHub https://github.com/lenve
- * @博客 http://wangsong.blog.csdn.net
- * @网站 http://www.javaboy.org
- * @时间 2019-09-27 7:13
+ * 目录service
  */
 @Service
 @CacheConfig(cacheNames = "menus_cache")
@@ -30,6 +24,14 @@ public class MenuService {
     MenuMapper menuMapper;
     @Autowired
     MenuRoleMapper menuRoleMapper;
+
+    /**
+     * 根据用户id获取对应的列表
+     * <p>
+     * 从springSecurity上下文中获取
+     *
+     * @return
+     */
     public List<Menu> getMenusByHrId() {
         return menuMapper.getMenusByHrId(((Hr) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
     }
@@ -54,6 +56,6 @@ public class MenuService {
             return true;
         }
         Integer result = menuRoleMapper.insertRecord(rid, mids);
-        return result==mids.length;
+        return result == mids.length;
     }
 }

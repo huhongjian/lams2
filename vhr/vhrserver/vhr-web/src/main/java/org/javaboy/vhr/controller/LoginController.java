@@ -12,13 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
- * @作者 江南一点雨
- * @公众号 江南一点雨
- * @微信号 a_java_boy
- * @GitHub https://github.com/lenve
- * @博客 http://wangsong.blog.csdn.net
- * @网站 http://www.javaboy.org
- * @时间 2019-09-21 21:15
+ * 登录验证相关
  */
 @RestController
 public class LoginController {
@@ -27,6 +21,13 @@ public class LoginController {
         return RespBean.error("尚未登录，请登录!");
     }
 
+    /**
+     * 验证码
+     *
+     * @param request
+     * @param resp
+     * @throws IOException
+     */
     @GetMapping("/verifyCode")
     public void verifyCode(HttpServletRequest request, HttpServletResponse resp) throws IOException {
         VerificationCode code = new VerificationCode();
@@ -34,6 +35,6 @@ public class LoginController {
         String text = code.getText();
         HttpSession session = request.getSession(true);
         session.setAttribute("verify_code", text);
-        VerificationCode.output(image,resp.getOutputStream());
+        VerificationCode.output(image, resp.getOutputStream());
     }
 }

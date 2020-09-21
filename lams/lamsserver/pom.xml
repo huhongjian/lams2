@@ -16,6 +16,7 @@
         <module>lams-model</module>
         <module>lams-service</module>
         <module>lams-web</module>
+        <module>lams-workflow</module>
     </modules>
 
 

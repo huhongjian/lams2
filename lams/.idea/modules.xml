@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/lams.iml" filepath="$PROJECT_DIR$/lams.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lamsserver/lams-mapper/lams-mapper.iml" filepath="$PROJECT_DIR$/lamsserver/lams-mapper/lams-mapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lamsserver/lams-model/lams-model.iml" filepath="$PROJECT_DIR$/lamsserver/lams-model/lams-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lamsserver/lams-service/lams-service.iml" filepath="$PROJECT_DIR$/lamsserver/lams-service/lams-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lamsserver/lams-web/lams-web.iml" filepath="$PROJECT_DIR$/lamsserver/lams-web/lams-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lamsserver/lamsserver.iml" filepath="$PROJECT_DIR$/lamsserver/lamsserver.iml" />
+    </modules>
+  </component>
+</project>

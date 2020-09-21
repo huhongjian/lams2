@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="lams-model" />
+        <module name="lams-web" />
+        <module name="lams-service" />
+        <module name="lams-mapper" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="lams" target="1.8" />
+      <module name="lams-mapper" target="1.8" />
+      <module name="lams-model" target="1.8" />
+      <module name="lams-service" target="1.8" />
+      <module name="lams-web" target="1.8" />
+      <module name="lamsserver" target="1.8" />
+      <module name="mailserver" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="lams-mapper" options="-parameters" />
+      <module name="lams-model" options="-parameters" />
+      <module name="lams-service" options="-parameters" />
+      <module name="lams-web" options="-parameters" />
+      <module name="mailserver" options="-parameters" />
+    </option>
+  </component>
+</project>

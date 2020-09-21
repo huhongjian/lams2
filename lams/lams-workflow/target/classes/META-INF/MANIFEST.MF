@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-Title: workorder-workflow
+Implementation-Version: 1.1.9
+Implementation-Vendor-Id: sogou
+Build-Jdk: 1.7.0_80
+Built-By: huhongjian
+Created-By: Maven Integration for Eclipse
+Implementation-URL: http://projects.spring.io/spring-boot/workorder/wo
+ rkorder-workflow/
+

@@ -771,7 +771,7 @@
             },
             initEmps(type) {
                 this.loading = true;
-                let url = '/asset/basic/?page=' + this.page + '&size=' + this.size;
+                let url = '/asset/basic/out/?page=' + this.page + '&size=' + this.size;
                 if (type && type == 'advanced') {
                     if (this.searchValue.politicId) {
                         url += '&politicId=' + this.searchValue.politicId;

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bupt.lams.mapper.AssetInMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.AssetIn">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="brand" property="brand" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="price" property="price"/>
+        <result column="applyDate" property="applyDate" jdbcType="DATE"/>
+        <result column="applicant" property="applicant" jdbcType="VARCHAR"/>
+        <result column="phoneNumber" property="phoneNumber" jdbcType="VARCHAR"/>
+        <result column="reason" property="reason" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, type, brand, status, price, applicant, phoneNumber, reason, applyDate
+  </sql>
+    <insert id="insertSelective" parameterType="com.bupt.lams.model.AssetIn" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into asset_in
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="brand != null">
+                brand,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="applicant != null">
+                applicant,
+            </if>
+            <if test="phoneNumber != null">
+                phoneNumber,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+            <if test="applyDate != null">
+                applyDate,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="brand != null">
+                #{brand},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="price != null">
+                #{price},
+            </if>
+            <if test="applicant != null">
+                #{applicant},
+            </if>
+            <if test="phoneNumber != null">
+                #{phoneNumber},
+            </if>
+            <if test="reason != null">
+                #{reason},
+            </if>
+            <if test="applyDate != null">
+                #{applyDate},
+            </if>
+        </trim>
+    </insert>
+    <select id="getAssetInByPage" resultMap="BaseResultMap">
+        select a.*
+        from asset_in a
+        <where>
+            <if test="assetIn.type !=null and assetIn.type!=''">
+                and assetIn.type like concat('%',#{assetIn.type},'%')
+            </if>
+            <if test="assetIn.brand !=null and assetIn.brand!=''">
+                and assetIn.brand like concat('%',#{assetIn.brand},'%')
+            </if>
+            <if test="assetIn.status !=null and assetIn.status!=''">
+                and assetIn.status like concat('%',#{assetIn.status},'%')
+            </if>
+            <if test="assetIn.applicant !=null and assetIn.applicant!=''">
+                and assetIn.applicant like concat('%',#{assetIn.applicant},'%')
+            </if>
+            <if test="beginDateScope !=null">
+                and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+            </if>
+        </where>
+        <if test="page !=null and size!=null">
+            limit #{page},#{size}
+        </if>
+    </select>
+    <select id="getTotal" resultType="java.lang.Long">
+        select count(*) from asset_in a
+        <where>
+            <if test="assetIn!=null">
+                <if test="assetIn.type !=null and assetIn.type!=''">
+                    and assetIn.type like concat('%',#{assetIn.type},'%')
+                </if>
+                <if test="assetIn.brand !=null and assetIn.brand!=''">
+                    and assetIn.brand like concat('%',#{assetIn.brand},'%')
+                </if>
+                <if test="assetIn.status !=null and assetIn.status!=''">
+                    and assetIn.status like concat('%',#{assetIn.status},'%')
+                </if>
+                <if test="assetIn.applicant !=null and assetIn.applicant!=''">
+                    and assetIn.applicant like concat('%',#{assetIn.applicant},'%')
+                </if>
+            </if>
+            <if test="beginDateScope !=null">
+                and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+            </if>
+        </where>
+    </select>
+</mapper>

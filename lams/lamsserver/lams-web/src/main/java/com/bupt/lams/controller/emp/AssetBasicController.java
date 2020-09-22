@@ -33,14 +33,19 @@ public class AssetBasicController {
     @Autowired
     DepartmentService departmentService;
 
-    @GetMapping("/")
+    @GetMapping("/out")
     public RespPageBean getAssetByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Asset asset, Date[] beginDateScope) {
         return assetService.getAssetByPage(page, size, asset, beginDateScope);
     }
 
+    @GetMapping("/in")
+    public RespPageBean getAssetInByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, AssetIn assetIn, Date[] beginDateScope) {
+        return assetService.getAssetInByPage(page, size, assetIn, beginDateScope);
+    }
+
     @PostMapping("/")
-    public RespBean addEmp(@RequestBody Employee employee) {
-        if (employeeService.addEmp(employee) == 1) {
+    public RespBean addAsset(@RequestBody AssetIn assetIn) {
+        if (assetService.addAssetIn(assetIn) == 1) {
             return RespBean.ok("添加成功!");
         }
         return RespBean.error("添加失败!");

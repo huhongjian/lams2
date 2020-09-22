@@ -21,7 +21,7 @@ spring:
     #每次应用启动不检查Activiti数据表是否存在及版本号是否匹配，提升应用启动速度
     #数据库里面没有Activiti数据表时，需要设置为true创建表
   activiti:
-    database-schema-update: true
+    database-schema-update: false
     #保存历史数据级别设置为full最高级别，便于历史数据的追溯
     history-level: full
 server:

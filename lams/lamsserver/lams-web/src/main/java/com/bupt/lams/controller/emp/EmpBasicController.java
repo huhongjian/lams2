@@ -2,8 +2,6 @@ package com.bupt.lams.controller.emp;
 
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.*;
-import org.javaboy.vhr.model.*;
-import org.javaboy.vhr.service.*;
 import com.bupt.lams.utils.POIUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

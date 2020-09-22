@@ -8,8 +8,6 @@ import org.activiti.engine.history.HistoricProcessInstance;
 
 /**
  * 流程Dto转换器
- *
- * @author shanglonghua
  */
 public class ProcessDtoConvertor {
 
@@ -21,7 +19,7 @@ public class ProcessDtoConvertor {
 	 * @return 业务对象列表
 	 */
 	public static List<ProcessDto> convertHisProcessToDto(List<HistoricProcessInstance> processList) {
-		List<ProcessDto> retProcessDtoList = new ArrayList<ProcessDto>();
+		List<ProcessDto> retProcessDtoList = new ArrayList<>();
 
 		if (processList != null && processList.size() > 0) {
 			ProcessDto tmpProcessDto;

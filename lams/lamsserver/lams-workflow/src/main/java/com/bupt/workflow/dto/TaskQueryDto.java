@@ -2,8 +2,6 @@ package com.bupt.workflow.dto;
 
 /**
  * 任务查询DTO
- *
- * @author shanglonghua
  */
 public class TaskQueryDto extends QueryBaseDto {
 

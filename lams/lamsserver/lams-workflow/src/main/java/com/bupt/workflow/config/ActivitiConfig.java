@@ -15,8 +15,6 @@ import java.io.IOException;
 
 /**
  * Activiti配置
- *
- * @author shanglonghua
  */
 @Configuration
 public class ActivitiConfig {
@@ -48,7 +46,6 @@ public class ActivitiConfig {
 		configuration.setHistory("full");
 		configuration.setGroupDataManager(groupDataCustomManager);
 		configuration.setUserDataManager(userDataCustomManager);
-
 		return configuration;
 	}
 

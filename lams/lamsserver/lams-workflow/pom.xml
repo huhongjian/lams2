@@ -11,6 +11,11 @@
     <artifactId>lams-workflow</artifactId>
 	
 	<dependencies>
+        <dependency>
+            <groupId>bupt</groupId>
+            <artifactId>lams-model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 		<dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-spring-boot-starter-basic</artifactId>
@@ -26,7 +31,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
-	</dependencies>
+        <dependency>
+            <groupId>bupt</groupId>
+            <artifactId>lams-model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <resources>

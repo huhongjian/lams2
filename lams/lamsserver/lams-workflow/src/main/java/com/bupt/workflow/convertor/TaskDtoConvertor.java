@@ -9,8 +9,6 @@ import java.util.Map;
 
 /**
  * TaskDto转换器
- *
- * @author shanglonghua
  */
 public class TaskDtoConvertor {
 

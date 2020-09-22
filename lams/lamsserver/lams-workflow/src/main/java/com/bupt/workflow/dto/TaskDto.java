@@ -6,8 +6,6 @@ import java.util.Map;
 
 /**
  * 任务Dto
- *
- * @author shanglonghua
  */
 public class TaskDto {
 

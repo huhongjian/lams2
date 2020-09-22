@@ -4,8 +4,6 @@ import java.util.Date;
 
 /**
  * 流程DTO
- *
- * @author shanglonghua
  */
 public class ProcessDto {
 

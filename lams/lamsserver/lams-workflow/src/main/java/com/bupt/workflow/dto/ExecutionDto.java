@@ -5,8 +5,6 @@ import java.util.Map;
 
 /**
  * 执行实例DTO
- *
- * @author shanglonghua
  */
 public class ExecutionDto {
 

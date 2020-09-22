@@ -4,8 +4,6 @@ import java.util.List;
 
 /**
  * Activiti 任务查询DTO
- *
- * @author shanglonghua
  */
 public abstract class QueryBaseDto {
 

@@ -1,11 +1,7 @@
 package com.bupt.workflow.convertor;
 
 import com.bupt.workflow.dto.TaskDto;
-import org.activiti.engine.impl.persistence.entity.TaskEntityImpl;
-import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

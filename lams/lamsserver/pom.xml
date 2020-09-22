@@ -18,6 +18,4 @@
         <module>lams-web</module>
         <module>lams-workflow</module>
     </modules>
-
-
 </project>

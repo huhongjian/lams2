@@ -10,7 +10,6 @@
     <groupId>bupt</groupId>
     <artifactId>lams-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>vhr-web</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

@@ -117,7 +117,7 @@
         </div>
         <div style="margin-top: 10px">
             <el-table
-                    :data="emps"
+                    :data="assets"
                     stripe
                     border
                     v-loading="loading"
@@ -130,60 +130,60 @@
                         width="55">
                 </el-table-column>
               <el-table-column
-                  prop="workID"
+                  prop="id"
                   fixed
                   label="ID"
                   align="left"
                   width="90">
               </el-table-column>
                 <el-table-column
-                        prop="name"
+                        prop="type"
                         align="left"
                         label="类型"
                         width="90">
                 </el-table-column>
                 <el-table-column
-                        prop="gender"
+                        prop="brand"
                         label="品牌"
                         align="left"
                         width="80">
                 </el-table-column>
               <el-table-column
-                  prop="politicsstatus.name"
+                  prop="status"
                   width="70"
                   label="状态">
               </el-table-column>
               <el-table-column
-                  prop="email"
+                  prop="readyDate"
                   width="180"
                   align="left"
                   label="入库时间">
               </el-table-column>
                 <el-table-column
-                        prop="birthday"
+                        prop="owner"
                         width="95"
                         align="left"
                         label="负责人">
                 </el-table-column>
                 <el-table-column
-                        prop="wedlock"
+                        prop="phoneNumber"
                         width="100"
                         label="负责人电话">
                 </el-table-column>
               <el-table-column
-                  prop="email"
+                  prop="applyDate"
                   width="180"
                   align="left"
                   label="申请时间">
               </el-table-column>
               <el-table-column
-                  prop="email"
+                  prop="duration"
                   width="180"
                   align="left"
                   label="预计借用时长">
               </el-table-column>
                 <el-table-column
-                        prop="nativePlace"
+                        prop="reason"
                         label="申请理由">
                 </el-table-column>
                 <el-table-column
@@ -474,7 +474,7 @@
                 importDataDisabled: false,
                 showAdvanceSearchView: false,
                 allDeps: [],
-                emps: [],
+                assets: [],
                 loading: false,
                 popVisible: false,
                 popVisible2: false,
@@ -771,7 +771,7 @@
             },
             initEmps(type) {
                 this.loading = true;
-                let url = '/employee/basic/?page=' + this.page + '&size=' + this.size;
+                let url = '/asset/basic/?page=' + this.page + '&size=' + this.size;
                 if (type && type == 'advanced') {
                     if (this.searchValue.politicId) {
                         url += '&politicId=' + this.searchValue.politicId;
@@ -800,7 +800,7 @@
                 this.getRequest(url).then(resp => {
                     this.loading = false;
                     if (resp) {
-                        this.emps = resp.data;
+                        this.assets = resp.data;
                         this.total = resp.total;
                     }
                 });

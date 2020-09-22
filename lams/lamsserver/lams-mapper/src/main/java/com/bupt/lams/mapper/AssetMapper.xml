@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bupt.lams.mapper.AssetMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.Asset">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="brand" property="brand" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="readyDate" property="readyDate" jdbcType="DATE"/>
+        <result column="owner" property="owner" jdbcType="VARCHAR"/>
+        <result column="phoneNumber" property="phoneNumber" jdbcType="VARCHAR"/>
+        <result column="duration" property="duration" jdbcType="INTEGER"/>
+        <result column="reason" property="reason" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, type, brand, status, readyDate, owner, phoneNumber, applyDate, duration, reason
+  </sql>
+    <select id="getAssetByPage" resultMap="BaseResultMap">
+        select a.*
+        from asset a
+        <where>
+            <if test="asset.type !=null and asset.type!=''">
+                and asset.type like concat('%',#{asset.type},'%')
+            </if>
+            <if test="asset.brand !=null and asset.brand!=''">
+                and asset.brand like concat('%',#{asset.brand},'%')
+            </if>
+            <if test="asset.status !=null and asset.status!=''">
+                and asset.status like concat('%',#{asset.status},'%')
+            </if>
+            <if test="asset.owner !=null and asset.owner!=''">
+                and asset.owner like concat('%',#{asset.owner},'%')
+            </if>
+            <if test="beginDateScope !=null">
+                and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+            </if>
+        </where>
+        <if test="page !=null and size!=null">
+            limit #{page},#{size}
+        </if>
+    </select>
+    <select id="getTotal" resultType="java.lang.Long">
+        select count(*) from asset a
+        <where>
+            <if test="asset!=null">
+                <if test="asset.type !=null and asset.type!=''">
+                    and asset.type like concat('%',#{asset.type},'%')
+                </if>
+                <if test="asset.brand !=null and asset.brand!=''">
+                    and asset.brand like concat('%',#{asset.brand},'%')
+                </if>
+                <if test="asset.status !=null and asset.status!=''">
+                    and asset.status like concat('%',#{asset.status},'%')
+                </if>
+                <if test="asset.owner !=null and asset.owner!=''">
+                    and asset.owner like concat('%',#{asset.owner},'%')
+                </if>
+            </if>
+            <if test="beginDateScope !=null">
+                and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+            </if>
+        </where>
+    </select>
+</mapper>

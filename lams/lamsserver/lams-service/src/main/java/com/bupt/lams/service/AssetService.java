@@ -53,4 +53,8 @@ public class AssetService {
         int result = assetInMapper.insertSelective(assetIn);
         return result;
     }
+
+    public Asset selectByPrimaryKey(Long id){
+        return assetMapper.selectByPrimaryKey(id);
+    }
 }

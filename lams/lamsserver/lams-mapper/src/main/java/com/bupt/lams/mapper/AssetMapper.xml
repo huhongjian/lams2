@@ -61,4 +61,11 @@
             </if>
         </where>
     </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from asset
+        where id = #{id}
+    </select>
+    <update id="updateAssetStatusById"></update>
 </mapper>

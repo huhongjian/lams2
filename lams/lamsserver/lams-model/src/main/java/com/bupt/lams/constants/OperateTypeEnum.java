@@ -1,21 +1,19 @@
 package com.bupt.lams.constants;
 
 /**
- * 资产状态
+ * 操作类型
  */
-public enum AssetStatusEnum {
-    CREATE("申请采购", 0),
-    APPROVE("审批通过", 1),
-    READY("已入库", 2),
-    ASK("申请借用", 3),
-    OCCUPIED("已借出", 4),
-    TRANSFER("转交", 5),
-    REJECTED("审批未通过", 6);
+public enum OperateTypeEnum {
+    REJECT("拒绝", 0),
+    APPROVE("通过", 1),
+    IN("入库", 2),
+    TRANSFER("转交", 3),
+    CANCEL("取消", 4);
 
     private String name;
     private int index;
 
-    AssetStatusEnum(String name, int index) {
+    OperateTypeEnum(String name, int index) {
         this.name = name;
         this.index = index;
     }

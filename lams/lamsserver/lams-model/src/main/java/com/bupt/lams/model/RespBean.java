@@ -28,10 +28,10 @@ public class RespBean {
         return new RespBean(500, msg, obj);
     }
 
-    private RespBean() {
+    public RespBean() {
     }
 
-    private RespBean(Integer status, String msg, Object obj) {
+    public RespBean(Integer status, String msg, Object obj) {
         this.status = status;
         this.msg = msg;
         this.obj = obj;

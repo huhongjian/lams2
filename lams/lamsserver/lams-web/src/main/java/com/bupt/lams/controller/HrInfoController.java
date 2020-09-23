@@ -4,6 +4,7 @@ import com.bupt.lams.config.FastDFSUtils;
 import com.bupt.lams.model.Hr;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.service.HrService;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,7 +29,9 @@ public class HrInfoController {
 
     @GetMapping("/hr/info")
     public Hr getCurrentHr(Authentication authentication) {
-        return ((Hr) authentication.getPrincipal());
+        Hr currentUser = (Hr) authentication.getPrincipal();
+        UserInfoUtils.setContext(currentUser);
+        return currentUser;
     }
 
     @PutMapping("/hr/info")

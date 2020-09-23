@@ -1,4 +1,4 @@
-package com.bupt.lams.controller.emp;
+package com.bupt.lams.controller.asset;
 
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.*;

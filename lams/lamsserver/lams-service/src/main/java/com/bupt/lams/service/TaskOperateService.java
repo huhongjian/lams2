@@ -12,6 +12,7 @@ import com.bupt.lams.mapper.HrMapper;
 import com.bupt.lams.model.*;
 import com.bupt.workflow.dto.TaskDto;
 import com.bupt.workflow.dto.TaskQueryDto;
+import com.bupt.workflow.service.process.ProcessManagerService;
 import com.bupt.workflow.service.task.TaskManagerService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.FormProperty;
@@ -39,6 +40,24 @@ public class TaskOperateService {
     TaskService taskService;
     @Resource
     HrMapper hrMapper;
+    @Resource
+    PreocessService preocessService;
+    @Resource
+    ProcessManagerService processManagerService;
+
+
+    public void startWorkFlow(Record record,Map<String,String> startParamMap) {
+        Asset asset = assetMapper.selectByPrimaryKey(record.getAid());
+        // 1. 查找关联工作流definition
+        String workflowKey = preocessService.selectByType(record.getType());
+        String procInstId = processManagerService.submitStartFormDataByProcessDefinitionKey(workflowKey, asset.getId().toString(), startParamMap, asset.getOwner());
+        // 3. 保存工单工作流关联关系
+        AssetWorkflow assetWorkflow = new AssetWorkflow();
+        assetWorkflow.setAid(asset.getId());
+        assetWorkflow.setWorkflowInstId(Long.parseLong(procInstId));
+        assetWorkflow.setWorkflowStartTime(new Date());
+        assetWorkflowService.saveAssetWorkflow(assetWorkflow);
+    }
 
     @Transactional(rollbackFor = Exception.class)
     public void handleOrder(TaskHandleDto taskHandleDto, List<Integer> candidateGroups, List<String> candidateUsers) {

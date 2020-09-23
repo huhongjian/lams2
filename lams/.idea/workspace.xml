@@ -23,28 +23,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/BusinessConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/OperateTypeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/WorkflowConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/TaskHandleDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/WorkflowTaskOperateInfoDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/AssetWorkflow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/WorkflowOperate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetWorkflowService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/emp/AssetTaskController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Record.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/PreocessService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/utils/UserInfoUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/lams-mapper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/lams-mapper.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/lams-model.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/lams-model.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/AssetStatusEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/AssetStatusEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/RespBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/RespBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/lams-service.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/lams-service.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/lams-web.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/lams-web.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/lams-workflow.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/lams-workflow.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Asset.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Asset.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetWorkflowService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetWorkflowService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/HrInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/HrInfoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/emp/AssetBasicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetBasicController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/emp/AssetTaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetTaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/emp/EmpBasicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/EmpBasicController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,11 +90,11 @@
       <recent name="I:\project\lams2\lams\lamsserver" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.bupt.lams.utils" />
       <recent name="com.bupt.lams.model" />
       <recent name="com.bupt.lams.dto" />
       <recent name="com.bupt.lams.constants" />
       <recent name="com.bupt.lams.mapper" />
-      <recent name="com.bupt.lams.service" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="I:\project\lams2\lams\lamsserver\lams-service\src\main\java\com\bupt\lams\service" />
@@ -244,7 +233,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600794485784</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="整合工作流开发">
+      <created>1600851594924</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1600851594924</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -272,7 +268,8 @@
     <MESSAGE value="改改配置" />
     <MESSAGE value="资产出库相关" />
     <MESSAGE value="资产入库相关开发" />
-    <option name="LAST_COMMIT_MESSAGE" value="资产入库相关开发" />
+    <MESSAGE value="整合工作流开发" />
+    <option name="LAST_COMMIT_MESSAGE" value="整合工作流开发" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1600784045187">
@@ -283,10 +280,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="35" width="1089" height="789" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1600784526262" />
-    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser" timestamp="1600847674733">
+    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser" timestamp="1600855450317">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1600847674733" />
+    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1600855450317" />
     <state x="310" y="335" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1600715573487">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -303,10 +300,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="524" y="114" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1600792664622" />
-    <state x="255" y="0" key="CommitChangelistDialog2" timestamp="1600794482285">
+    <state x="255" y="0" key="CommitChangelistDialog2" timestamp="1600851592947">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="255" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600794482285" />
+    <state x="255" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600851592947" />
     <state width="767" height="438" key="DebuggerActiveHint" timestamp="1600793072177">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -375,10 +372,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1600783197320" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1600794487266">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1600851597537">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600794487266" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600851597537" />
     <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1600792663608">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

@@ -9,4 +9,8 @@ public class AssetWorkflowService {
         //todo
         return null;
     }
+
+    public void saveAssetWorkflow(AssetWorkflow assetWorkflow){
+        // todo
+    }
 }

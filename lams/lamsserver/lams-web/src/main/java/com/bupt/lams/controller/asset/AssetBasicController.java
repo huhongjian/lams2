@@ -1,16 +1,22 @@
-package com.bupt.lams.controller.emp;
+package com.bupt.lams.controller.asset;
 
+import com.bupt.lams.constants.WorkflowConstant;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.*;
 import com.bupt.lams.utils.POIUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 资产信息相关
@@ -18,6 +24,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/asset/basic")
 public class AssetBasicController {
+
+    private Logger logger = LoggerFactory.getLogger(AssetBasicController.class);
+
+
     @Autowired
     EmployeeService employeeService;
     @Autowired
@@ -32,6 +42,8 @@ public class AssetBasicController {
     PositionService positionService;
     @Autowired
     DepartmentService departmentService;
+    @Resource
+    TaskOperateService taskOperateService;
 
     @GetMapping("/out")
     public RespPageBean getAssetByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Asset asset, Date[] beginDateScope) {
@@ -45,10 +57,30 @@ public class AssetBasicController {
 
     @PostMapping("/")
     public RespBean addAsset(@RequestBody AssetIn assetIn) {
-        if (assetService.addAssetIn(assetIn) == 1) {
-            return RespBean.ok("添加成功!");
+        RespBean respBean = new RespBean();
+        assetService.addAssetIn(assetIn);
+        try {
+            // todo 构造record
+            Record record = new Record();
+            taskOperateService.startWorkFlow(record, getDefaultStartWorkFlowParamsMap());
+            respBean.setStatus(200);
+        } catch (Exception e) {
+            logger.error("工单启动工作流失败", e);
+            e.printStackTrace();
         }
-        return RespBean.error("添加失败!");
+        return respBean;
+    }
+
+    /**
+     * 初始化流程启动参数
+     *
+     * @return 启动参数Map
+     */
+    private Map<String, String> getDefaultStartWorkFlowParamsMap() {
+        Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE, null);
+        paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE, null);
+        return paramsMap;
     }
 
     @DeleteMapping("/{id}")

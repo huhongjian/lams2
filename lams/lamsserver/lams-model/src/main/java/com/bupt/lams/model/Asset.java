@@ -9,7 +9,7 @@ import java.util.Date;
  * 实验室资产信息pojo
  */
 public class Asset implements Serializable {
-    private Integer id;
+    private Long id;
     private String type;
     private String brand;
     private String status;
@@ -40,11 +40,11 @@ public class Asset implements Serializable {
      */
     private String reason;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

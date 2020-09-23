@@ -1,4 +1,4 @@
-package com.bupt.lams.controller.emp;
+package com.bupt.lams.controller.asset;
 
 import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.constants.OperateTypeEnum;
@@ -10,6 +10,7 @@ import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.WorkflowOperate;
 import com.bupt.lams.service.AssetService;
 import com.bupt.lams.service.TaskOperateService;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,8 +59,7 @@ public class AssetTaskController {
         WorkflowTaskOperateInfoDto opInfoDto = new WorkflowTaskOperateInfoDto();
         List<WorkflowOperate> operateList = new ArrayList<>();
         try {
-            //todo 获取当前的用户
-            Hr userDto = new Hr();
+            Hr user = UserInfoUtils.getLoginedUser();
             // 1. 获取工单
             Asset asset = assetService.selectByPrimaryKey(aid);
             if (asset == null) {
@@ -69,9 +68,9 @@ public class AssetTaskController {
                 return response;
             }
             // 如果当前用户是工单创建人并且工单不是关闭状态
-            if (asset.getOwner().equals(userDto.getName()) && !asset.getStatus().equals(AssetStatusEnum.READY.getIndex())) {
+            if (asset.getOwner().equals(user.getName()) && !asset.getStatus().equals(AssetStatusEnum.READY.getIndex())) {
                 try {
-                    opInfoDto = taskOperateService.getWorkflowTaskOperateInfo(userDto.getName(), aid);
+                    opInfoDto = taskOperateService.getWorkflowTaskOperateInfo(user.getName(), aid);
                 } catch (RuntimeException e) {
                     logger.info("获取操作信息失败" + e.getMessage(), e);
                 } finally {
@@ -83,7 +82,7 @@ public class AssetTaskController {
                 }
             } else {
                 // 2. 根据查询来源设置操作信息
-                opInfoDto = taskOperateService.getWorkflowTaskOperateInfo(userDto.getName(), aid);
+                opInfoDto = taskOperateService.getWorkflowTaskOperateInfo(user.getName(), aid);
             }
         } catch (Exception e) {
             opInfoDto = new WorkflowTaskOperateInfoDto();

@@ -24,6 +24,8 @@ spring:
     database-schema-update: false
     #保存历史数据级别设置为full最高级别，便于历史数据的追溯
     history-level: full
+  main:
+    allow-bean-definition-overriding: true
 server:
   port: 8081
   compression:

@@ -22,34 +22,83 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
+    <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="新建采购申请，开启工作流">
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetWorkflowMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OperateTypeWorkflowMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OperateTypeWorkflowMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/ProcessTypeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/OperateTypeWorkflow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OperateTypeWorkflowService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/assetIn.bpmn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetInMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetInMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetWorkflowMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/OperateTypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/OperateTypeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Asset.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Asset.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/AssetIn.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Record.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Record.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetWorkflowService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetWorkflowService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/PreocessService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/utils/UserInfoUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/utils/UserInfoUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/config/ActivitiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/config/ActivitiConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/convertor/ProcessDtoConvertor.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/convertor/ProcessDtoConvertor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/convertor/TaskDtoConvertor.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/convertor/TaskDtoConvertor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/dto/ExecutionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/dto/ExecutionDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/dto/ProcessDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/dto/ProcessDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/dto/ProcessQueryDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/dto/ProcessQueryDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/dto/QueryBaseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/dto/QueryBaseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/dto/TaskDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/dto/TaskDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/dto/TaskQueryDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/dto/TaskQueryDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/service/identity/GroupManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/service/identity/GroupManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/service/identity/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/service/identity/UserManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/service/identity/impl/GroupDataCustomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/service/identity/impl/GroupDataCustomManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/service/identity/impl/GroupManagerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/service/identity/impl/GroupManagerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/service/identity/impl/UserDataCustomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/service/identity/impl/UserDataCustomManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/service/identity/impl/UserManagerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/service/identity/impl/UserManagerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/service/process/ProcessManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/service/process/ProcessManagerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/service/process/impl/ProcessManagerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/service/process/impl/ProcessManagerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/service/repository/ResourceManageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/service/repository/ResourceManageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/service/repository/impl/ResourceManageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/service/repository/impl/ResourceManageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/service/task/TaskManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/service/task/TaskManagerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/service/task/impl/TaskManagerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/service/task/impl/TaskManagerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/workflow/utils/ActivitiUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/utils/ActivitiUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetBasicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetBasicController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/OpManagerWithTranferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/OpManagerWithTranferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SEMWithTranferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SEMWithTranferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionAccountGroupWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionAccountGroupWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionBizInspectionGroupWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionBizInspectionGroupWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionFinSupportGroupWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionFinSupportGroupWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionInterfaceGroupWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionInterfaceGroupWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionMaterialsGroupWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionMaterialsGroupWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionSaleGroupWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionSaleGroupWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionWithoutTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupervisionWithoutTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupportWithTranferAdmOpProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupportWithTranferAdmOpProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupportWithTranferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupportWithTranferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupportWithoutTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/SupportWithoutTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/biztechOpProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/OpManagerWithTranferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/OpManagerWithTranferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SEMWithTranferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SEMWithTranferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionAccountGroupWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionAccountGroupWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionBizInspectionGroupWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionBizInspectionGroupWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionFinSupportGroupWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionFinSupportGroupWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionInterfaceGroupWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionInterfaceGroupWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionMaterialsGroupWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionMaterialsGroupWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionSaleGroupWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionSaleGroupWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionWithTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionWithTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionWithoutTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupervisionWithoutTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupportWithTranferAdmOpProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupportWithTranferAdmOpProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupportWithTranferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupportWithTranferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupportWithoutTransferProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/SupportWithoutTransferProcess.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/processes/biztechOpProcess.bpmn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +109,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -91,11 +141,12 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
   </component>
   <component name="ReactorSettings">
@@ -106,15 +157,16 @@
       <recent name="I:\project\lams2\lams\lamsserver" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.bupt.lams.constants" />
+      <recent name="com.bupt.lams.mapper" />
       <recent name="com.bupt.lams.utils" />
       <recent name="com.bupt.lams.model" />
       <recent name="com.bupt.lams.dto" />
-      <recent name="com.bupt.lams.constants" />
-      <recent name="com.bupt.lams.mapper" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="I:\project\lams2\lams\lamsserver\lams-service\src\main\java\com\bupt\lams\service" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-mapper\src\main\java\com\bupt\lams\mapper" />
+      <recent name="I:\project\lams2\lams\lamsserver\lams-workflow\src\main\resources\processes" />
+      <recent name="I:\project\lams2\lams\lamsserver\lams-service\src\main\java\com\bupt\lams\service" />
       <recent name="I:\project\lams2\vhr" />
     </key>
   </component>
@@ -263,7 +315,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600856258870</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="启动工作流">
+      <created>1600876330000</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1600876330000</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,7 +352,8 @@
     <MESSAGE value="资产入库相关开发" />
     <MESSAGE value="整合工作流开发" />
     <MESSAGE value="启动工作流" />
-    <option name="LAST_COMMIT_MESSAGE" value="启动工作流" />
+    <MESSAGE value="新建采购申请，开启工作流" />
+    <option name="LAST_COMMIT_MESSAGE" value="新建采购申请，开启工作流" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1600784045187">
@@ -304,90 +364,94 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="35" width="1089" height="789" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1600784526262" />
-    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser" timestamp="1600855450317">
+    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser" timestamp="1600946382442">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1600855450317" />
-    <state x="310" y="335" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1600715573487">
+    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1600946382442" />
+    <state x="310" y="335" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1600937359405">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="310" y="335" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1536.824@0.0.1536.824" timestamp="1600715573487" />
+    <state x="310" y="335" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1536.824@0.0.1536.824" timestamp="1600937359405" />
     <state x="522" y="245" key="#com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodDialog" timestamp="1600847892549">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="522" y="245" key="#com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodDialog/0.0.1536.824@0.0.1536.824" timestamp="1600847892549" />
-    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1600834518180">
+    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1600939584440">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1600834518180" />
+    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1600939584440" />
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1600937470761">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1600937470761" />
     <state x="524" y="114" key="#xdebugger.evaluate" timestamp="1600792664622">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="524" y="114" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1600792664622" />
-    <state x="255" y="0" key="CommitChangelistDialog2" timestamp="1600856249199">
+    <state x="255" y="0" key="CommitChangelistDialog2" timestamp="1600947560801">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="255" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600856249199" />
+    <state x="255" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1600947560801" />
     <state width="767" height="438" key="DebuggerActiveHint" timestamp="1600793072177">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="767" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1600793072177" />
-    <state x="40" y="65" width="1228" height="687" key="DiffContextDialog" timestamp="1600799889838">
+    <state x="40" y="65" width="1228" height="687" key="DiffContextDialog" timestamp="1600940336809">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="40" y="65" width="1228" height="687" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1600799889838" />
+    <state x="40" y="65" width="1228" height="687" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1600940336809" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1600783007803">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1600783007803" />
-    <state width="1493" height="332" key="GridCell.Tab.0.bottom" timestamp="1600875071822">
+    <state width="1493" height="332" key="GridCell.Tab.0.bottom" timestamp="1600934615295">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="332" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600875071822" />
-    <state width="1493" height="332" key="GridCell.Tab.0.center" timestamp="1600875071822">
+    <state width="1493" height="332" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600934615295" />
+    <state width="1493" height="332" key="GridCell.Tab.0.center" timestamp="1600934615294">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="332" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600875071822" />
-    <state width="1493" height="332" key="GridCell.Tab.0.left" timestamp="1600875071822">
+    <state width="1493" height="332" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1600934615294" />
+    <state width="1493" height="332" key="GridCell.Tab.0.left" timestamp="1600934615294">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="332" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600875071822" />
-    <state width="1493" height="332" key="GridCell.Tab.0.right" timestamp="1600875071822">
+    <state width="1493" height="332" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1600934615294" />
+    <state width="1493" height="332" key="GridCell.Tab.0.right" timestamp="1600934615295">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="332" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600875071822" />
-    <state width="1493" height="332" key="GridCell.Tab.1.bottom" timestamp="1600875071823">
+    <state width="1493" height="332" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1600934615295" />
+    <state width="1493" height="332" key="GridCell.Tab.1.bottom" timestamp="1600934615295">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="332" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600875071823" />
-    <state width="1493" height="332" key="GridCell.Tab.1.center" timestamp="1600875071822">
+    <state width="1493" height="332" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600934615295" />
+    <state width="1493" height="332" key="GridCell.Tab.1.center" timestamp="1600934615295">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="332" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1600875071822" />
-    <state width="1493" height="332" key="GridCell.Tab.1.left" timestamp="1600875071822">
+    <state width="1493" height="332" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1600934615295" />
+    <state width="1493" height="332" key="GridCell.Tab.1.left" timestamp="1600934615295">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="332" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1600875071822" />
-    <state width="1493" height="332" key="GridCell.Tab.1.right" timestamp="1600875071823">
+    <state width="1493" height="332" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1600934615295" />
+    <state width="1493" height="332" key="GridCell.Tab.1.right" timestamp="1600934615295">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="332" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1600875071823" />
-    <state width="1493" height="332" key="GridCell.Tab.2.bottom" timestamp="1600875071823">
+    <state width="1493" height="332" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1600934615295" />
+    <state width="1493" height="332" key="GridCell.Tab.2.bottom" timestamp="1600934615295">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="332" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600875071823" />
-    <state width="1493" height="332" key="GridCell.Tab.2.center" timestamp="1600875071823">
+    <state width="1493" height="332" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1600934615295" />
+    <state width="1493" height="332" key="GridCell.Tab.2.center" timestamp="1600934615295">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="332" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1600875071823" />
-    <state width="1493" height="332" key="GridCell.Tab.2.left" timestamp="1600875071823">
+    <state width="1493" height="332" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1600934615295" />
+    <state width="1493" height="332" key="GridCell.Tab.2.left" timestamp="1600934615295">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="332" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1600875071823" />
-    <state width="1493" height="332" key="GridCell.Tab.2.right" timestamp="1600875071823">
+    <state width="1493" height="332" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1600934615295" />
+    <state width="1493" height="332" key="GridCell.Tab.2.right" timestamp="1600934615295">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="332" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1600875071823" />
+    <state width="1493" height="332" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1600934615295" />
     <state x="502" y="114" key="RollbackChangesDialog" timestamp="1600796526378">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -396,10 +460,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1600783197320" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1600856261917">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1600876365756">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600856261917" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1600876365756" />
     <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1600792663608">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

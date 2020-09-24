@@ -1,5 +1,6 @@
 package com.bupt.lams.controller.asset;
 
+import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.constants.WorkflowConstant;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.*;
@@ -24,10 +25,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/asset/basic")
 public class AssetBasicController {
-
-    private Logger logger = LoggerFactory.getLogger(AssetBasicController.class);
-
-
     @Autowired
     EmployeeService employeeService;
     @Autowired
@@ -42,45 +39,19 @@ public class AssetBasicController {
     PositionService positionService;
     @Autowired
     DepartmentService departmentService;
-    @Resource
-    TaskOperateService taskOperateService;
 
-    @GetMapping("/out")
+    @GetMapping("/get")
     public RespPageBean getAssetByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Asset asset, Date[] beginDateScope) {
         return assetService.getAssetByPage(page, size, asset, beginDateScope);
     }
 
-    @GetMapping("/in")
-    public RespPageBean getAssetInByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, AssetIn assetIn, Date[] beginDateScope) {
-        return assetService.getAssetInByPage(page, size, assetIn, beginDateScope);
-    }
-
-    @PostMapping("/")
-    public RespBean addAsset(@RequestBody AssetIn assetIn) {
-        RespBean respBean = new RespBean();
-        assetService.addAssetIn(assetIn);
-        try {
-            // todo 构造record
-            Record record = new Record();
-            taskOperateService.startWorkFlow(record, getDefaultStartWorkFlowParamsMap());
-            respBean.setStatus(200);
-        } catch (Exception e) {
-            logger.error("工单启动工作流失败", e);
-            e.printStackTrace();
+    @PostMapping("/add")
+    public RespBean addAsset(@RequestBody Asset asset) {
+        Integer res = assetService.addAssetIn(asset);
+        if (res==1){
+            return RespBean.ok("资产申请采购成功！");
         }
-        return respBean;
-    }
-
-    /**
-     * 初始化流程启动参数
-     *
-     * @return 启动参数Map
-     */
-    private Map<String, String> getDefaultStartWorkFlowParamsMap() {
-        Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE, null);
-        paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE, null);
-        return paramsMap;
+        return RespBean.error("资产申请采购失败！");
     }
 
     @DeleteMapping("/{id}")

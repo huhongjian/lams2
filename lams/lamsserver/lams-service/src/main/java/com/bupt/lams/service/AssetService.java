@@ -1,29 +1,32 @@
 package com.bupt.lams.service;
 
-import com.bupt.lams.mapper.AssetInMapper;
+import com.bupt.lams.constants.OperateTypeEnum;
+import com.bupt.lams.constants.ProcessTypeEnum;
+import com.bupt.lams.constants.WorkflowConstant;
 import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.model.*;
-import org.springframework.amqp.rabbit.connection.CorrelationData;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 /**
  * 资产service
  */
 @Service
 public class AssetService {
-    @Resource
-    AssetMapper assetMapper;
+    private Logger logger = LoggerFactory.getLogger(AssetService.class);
 
     @Resource
-    AssetInMapper assetInMapper;
+    AssetMapper assetMapper;
+    @Resource
+    TaskOperateService taskOperateService;
 
     public RespPageBean getAssetByPage(Integer page, Integer size, Asset asset, Date[] beginDateScope) {
         if (page != null && size != null) {
@@ -37,24 +40,40 @@ public class AssetService {
         return bean;
     }
 
-    public RespPageBean getAssetInByPage(Integer page, Integer size, AssetIn assetIn, Date[] beginDateScope) {
-        if (page != null && size != null) {
-            page = (page - 1) * size;
+    @Transactional(rollbackFor = Exception.class)
+    public Integer addAssetIn(Asset asset) {
+        int result = assetMapper.insertSelective(asset);
+        // 构造record
+        Record record = new Record();
+        record.setAid(asset.getId());
+        record.setType(ProcessTypeEnum.IN.getIndex());
+        record.setOperate(OperateTypeEnum.CREATE.getName());
+        record.setOperateType(OperateTypeEnum.CREATE.getIndex());
+        record.setOperator(asset.getApplicant());
+        record.setOperatorMail(asset.getApplicantEmail());
+        record.setOperateTime(asset.getApplyDate());
+        try {
+            taskOperateService.startWorkFlow(record, getDefaultStartWorkFlowParamsMap());
+        } catch (Exception e) {
+            logger.error("启动工作流失败", e);
+            e.printStackTrace();
         }
-        List<Asset> data = assetInMapper.getAssetInByPage(page, size, assetIn, beginDateScope);
-        Long total = assetInMapper.getTotal(assetIn, beginDateScope);
-        RespPageBean bean = new RespPageBean();
-        bean.setData(data);
-        bean.setTotal(total);
-        return bean;
-    }
-
-    public Integer addAssetIn(AssetIn assetIn) {
-        int result = assetInMapper.insertSelective(assetIn);
         return result;
     }
 
-    public Asset selectByPrimaryKey(Long id){
+    public Asset selectByPrimaryKey(Long id) {
         return assetMapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 初始化流程启动参数
+     *
+     * @return 启动参数Map
+     */
+    private Map<String, String> getDefaultStartWorkFlowParamsMap() {
+        Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE, null);
+        paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE, null);
+        return paramsMap;
     }
 }

@@ -1,20 +1,16 @@
 package com.bupt.lams.constants;
 
 /**
- * 操作类型
+ * 流程类型
  */
-public enum OperateTypeEnum {
-    CREATE("创建申请", 0),
-    REJECT("拒绝", 1),
-    APPROVE("通过", 2),
-    IN("入库", 3),
-    TRANSFER("转交", 4),
-    CANCEL("取消", 5);
+public enum ProcessTypeEnum {
+    IN("入库", 1),
+    OUT("出库", 2);
 
     private String name;
     private int index;
 
-    OperateTypeEnum(String name, int index) {
+    ProcessTypeEnum(String name, int index) {
         this.name = name;
         this.index = index;
     }

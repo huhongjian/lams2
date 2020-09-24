@@ -11,8 +11,22 @@ import java.util.Date;
 public class Asset implements Serializable {
     private Long id;
     private String type;
+    private Long did;
     private String brand;
     private String status;
+    private Double price;
+    /**
+     * 申请人
+     */
+    private String applicant;
+    /**
+     * 申请人邮箱
+     */
+    private String applicantEmail;
+    /**
+     * 申请人电话
+     */
+    private String applicantPhone;
     /**
      * 入库时间
      */
@@ -21,11 +35,15 @@ public class Asset implements Serializable {
     /**
      * 负责人
      */
-    private String owner;
+    private String charger;
+    /**
+     * 负责人邮箱
+     */
+    private String chargerEmail;
     /**
      * 负责人电话
      */
-    private String phoneNumber;
+    private String chargerPhone;
     /**
      * 申请时间
      */
@@ -56,6 +74,22 @@ public class Asset implements Serializable {
         this.type = type;
     }
 
+    public Long getDid() {
+        return did;
+    }
+
+    public void setDid(Long did) {
+        this.did = did;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
     public String getBrand() {
         return brand;
     }
@@ -72,6 +106,30 @@ public class Asset implements Serializable {
         this.status = status;
     }
 
+    public String getApplicant() {
+        return applicant;
+    }
+
+    public void setApplicant(String applicant) {
+        this.applicant = applicant;
+    }
+
+    public String getApplicantEmail() {
+        return applicantEmail;
+    }
+
+    public void setApplicantEmail(String applicantEmail) {
+        this.applicantEmail = applicantEmail;
+    }
+
+    public String getApplicantPhone() {
+        return applicantPhone;
+    }
+
+    public void setApplicantPhone(String applicantPhone) {
+        this.applicantPhone = applicantPhone;
+    }
+
     public Date getReadyDate() {
         return readyDate;
     }
@@ -80,20 +138,28 @@ public class Asset implements Serializable {
         this.readyDate = readyDate;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getCharger() {
+        return charger;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setCharger(String charger) {
+        this.charger = charger;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getChargerEmail() {
+        return chargerEmail;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setChargerEmail(String chargerEmail) {
+        this.chargerEmail = chargerEmail;
+    }
+
+    public String getChargerPhone() {
+        return chargerPhone;
+    }
+
+    public void setChargerPhone(String chargerPhone) {
+        this.chargerPhone = chargerPhone;
     }
 
     public Date getApplyDate() {
@@ -118,21 +184,5 @@ public class Asset implements Serializable {
 
     public void setReason(String reason) {
         this.reason = reason;
-    }
-
-    @Override
-    public String toString() {
-        return "Asset{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", brand='" + brand + '\'' +
-                ", status='" + status + '\'' +
-                ", readyDate=" + readyDate +
-                ", owner='" + owner + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", applyDate=" + applyDate +
-                ", duration=" + duration +
-                ", reason='" + reason + '\'' +
-                '}';
     }
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bupt.lams.mapper.AssetWorkflowMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.AssetWorkflow">
+        <id column="id" property="id"/>
+        <result column="aid" property="aid"/>
+        <result column="workflow_inst_id" property="workflowInstId"/>
+        <result column="workflow_start_time" property="workflowStartTime"/>
+    </resultMap>
+    <insert id="insertSelective" parameterType="com.bupt.lams.model.AssetWorkflow" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into asset_workflow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="aid != null">
+                aid,
+            </if>
+            <if test="workflow_inst_id != null">
+                workflow_inst_id,
+            </if>
+            workflow_start_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="aid != null">
+                #{aid},
+            </if>
+            <if test="workflow_inst_id != null">
+                #{workflow_inst_id},
+            </if>
+            NOW()
+        </trim>
+    </insert>
+</mapper>

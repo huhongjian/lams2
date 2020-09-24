@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bupt.lams.mapper.OperateTypeWorkflowMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.OperateTypeWorkflow">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="operate_type" property="operateType"/>
+        <result column="workflow_key" property="workflowKey"/>
+        <result column="creator" property="creator"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, operate_type, workflow_key, creator, create_time
+  </sql>
+    <select id="selectByOperateType" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from operate_type_workflow
+        where operate_type = #{operateType}
+    </select>
+</mapper>

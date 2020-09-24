@@ -41,17 +41,17 @@ public class TaskOperateService {
     @Resource
     HrMapper hrMapper;
     @Resource
-    PreocessService preocessService;
+    OperateTypeWorkflowService operateTypeWorkflowService;
     @Resource
     ProcessManagerService processManagerService;
 
 
     public void startWorkFlow(Record record,Map<String,String> startParamMap) {
-        Asset asset = assetMapper.selectByPrimaryKey(record.getAid());
+        Asset asset = assetMapper.selectByPrimaryKey(record.getId());
         // 1. 查找关联工作流definition
-        String workflowKey = preocessService.selectByType(record.getType());
-        String procInstId = processManagerService.submitStartFormDataByProcessDefinitionKey(workflowKey, asset.getId().toString(), startParamMap, asset.getOwner());
-        // 3. 保存工单工作流关联关系
+        String workflowKey = operateTypeWorkflowService.selectWorkflowKeyByOperateType(record.getType());
+        String procInstId = processManagerService.submitStartFormDataByProcessDefinitionKey(workflowKey, asset.getId().toString(), startParamMap, asset.getApplicant());
+        // 2. 保存资产工作流关联关系
         AssetWorkflow assetWorkflow = new AssetWorkflow();
         assetWorkflow.setAid(asset.getId());
         assetWorkflow.setWorkflowInstId(Long.parseLong(procInstId));

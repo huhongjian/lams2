@@ -3,12 +3,19 @@
 <mapper namespace="com.bupt.lams.mapper.AssetMapper">
     <resultMap id="BaseResultMap" type="com.bupt.lams.model.Asset">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="type" property="type" jdbcType="VARCHAR"/>
-        <result column="brand" property="brand" jdbcType="VARCHAR"/>
-        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="type" property="type"/>
+        <result column="did" property="did"/>
+        <result column="brand" property="brand"/>
+        <result column="status" property="status"/>
+        <result column="price" property="price"/>
+        <result column="applicant" property="applicant"/>
+        <result column="applicant_email" property="applicantEmail"/>
+        <result column="applicant_phone" property="applicantPhone"/>
         <result column="readyDate" property="readyDate" jdbcType="DATE"/>
-        <result column="owner" property="owner" jdbcType="VARCHAR"/>
-        <result column="phoneNumber" property="phoneNumber" jdbcType="VARCHAR"/>
+        <result column="charger" property="charger"/>
+        <result column="charger_email" property="chargerEmail"/>
+        <result column="charger_phone" property="chargerPhone" jdbcType="VARCHAR"/>
+        <result column="applyDate" property="applyDate" jdbcType="DATE"/>
         <result column="duration" property="duration" jdbcType="INTEGER"/>
         <result column="reason" property="reason" jdbcType="VARCHAR"/>
     </resultMap>
@@ -68,4 +75,108 @@
         where id = #{id}
     </select>
     <update id="updateAssetStatusById"></update>
+    <insert id="insertSelective" parameterType="com.bupt.lams.model.Asset" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into asset
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="did != null">
+                did,
+            </if>
+            <if test="brand != null">
+                brand,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="applicant != null">
+                applicant,
+            </if>
+            <if test="applicantEmail != null">
+                applicant_email,
+            </if>
+            <if test="applicantPhone != null">
+                applicant_phone,
+            </if>
+            <if test="readyDate != null">
+                readyDate,
+            </if>
+            <if test="charger != null">
+                charger,
+            </if>
+            <if test="chargerEmail != null">
+                charger_email,
+            </if>
+            <if test="chargerPhone != null">
+                charger_phone,
+            </if>
+            <if test="applyDate != null">
+                applyDate,
+            </if>
+            <if test="duration != null">
+                duration,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="did != null">
+                #{did},
+            </if>
+            <if test="brand != null">
+                #{brand},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="price != null">
+                #{price},
+            </if>
+            <if test="applicant != null">
+                #{applicant},
+            </if>
+            <if test="applicantEmail != null">
+                #{applicantEmail},
+            </if>
+            <if test="applicantPhone != null">
+                #{applicantPhone},
+            </if>
+            <if test="readyDate != null">
+                #{readyDate},
+            </if>
+            <if test="charger != null">
+                #{charger},
+            </if>
+            <if test="chargerEmail != null">
+                #{chargerEmail},
+            </if>
+            <if test="chargerPhone != null">
+                #{chargerPhone},
+            </if>
+            <if test="applyDate != null">
+                #{applyDate},
+            </if>
+            <if test="duration != null">
+                #{duration},
+            </if>
+            <if test="reason != null">
+                #{reason},
+            </if>
+        </trim>
+    </insert>
 </mapper>

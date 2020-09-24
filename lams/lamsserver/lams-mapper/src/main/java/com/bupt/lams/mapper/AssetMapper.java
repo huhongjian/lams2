@@ -15,4 +15,6 @@ public interface AssetMapper {
     Asset selectByPrimaryKey(Long id);
 
     void updateAssetStatusById(Asset asset);
+
+    int insertSelective(Asset assetIn);
 }

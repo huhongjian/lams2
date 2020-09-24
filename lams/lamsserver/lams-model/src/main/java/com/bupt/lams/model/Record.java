@@ -13,8 +13,6 @@ public class Record {
 
     private String operatorMail;
 
-    private String content;
-
     private Integer operateType;
 
     private String operate;
@@ -33,16 +31,16 @@ public class Record {
         return aid;
     }
 
+    public void setAid(Long aid) {
+        this.aid = aid;
+    }
+
     public Integer getType() {
         return type;
     }
 
     public void setType(Integer type) {
         this.type = type;
-    }
-
-    public void setAid(Long aid) {
-        this.aid = aid;
     }
 
     public String getOperator() {
@@ -59,14 +57,6 @@ public class Record {
 
     public void setOperatorMail(String operatorMail) {
         this.operatorMail = operatorMail;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public Integer getOperateType() {

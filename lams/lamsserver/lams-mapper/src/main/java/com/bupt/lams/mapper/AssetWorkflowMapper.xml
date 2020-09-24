@@ -7,8 +7,7 @@
         <result column="workflow_inst_id" property="workflowInstId"/>
         <result column="workflow_start_time" property="workflowStartTime"/>
     </resultMap>
-    <insert id="insertSelective" parameterType="com.bupt.lams.model.AssetWorkflow" useGeneratedKeys="true"
-            keyProperty="id">
+    <insert id="insertSelective" parameterType="com.bupt.lams.model.AssetWorkflow" useGeneratedKeys="true" keyProperty="id">
         insert into asset_workflow
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -17,7 +16,7 @@
             <if test="aid != null">
                 aid,
             </if>
-            <if test="workflow_inst_id != null">
+            <if test="workflowInstId != null">
                 workflow_inst_id,
             </if>
             workflow_start_time,
@@ -29,8 +28,8 @@
             <if test="aid != null">
                 #{aid},
             </if>
-            <if test="workflow_inst_id != null">
-                #{workflow_inst_id},
+            <if test="workflowInstId != null">
+                #{workflowInstId},
             </if>
             NOW()
         </trim>

@@ -47,8 +47,10 @@ public class AssetBasicController {
 
     @PostMapping("/add")
     public RespBean addAsset(@RequestBody Asset asset) {
+        asset.setStatus(AssetStatusEnum.CREATE.getName());
+        asset.setApplyDate(new Date());
         Integer res = assetService.addAssetIn(asset);
-        if (res==1){
+        if (res == 1) {
             return RespBean.ok("资产申请采购成功！");
         }
         return RespBean.error("资产申请采购失败！");

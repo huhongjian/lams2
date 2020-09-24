@@ -47,7 +47,7 @@ public class TaskOperateService {
 
 
     public void startWorkFlow(Record record,Map<String,String> startParamMap) {
-        Asset asset = assetMapper.selectByPrimaryKey(record.getId());
+        Asset asset = assetMapper.selectByPrimaryKey(record.getAid());
         // 1. 查找关联工作流definition
         String workflowKey = operateTypeWorkflowService.selectWorkflowKeyByOperateType(record.getType());
         String procInstId = processManagerService.submitStartFormDataByProcessDefinitionKey(workflowKey, asset.getId().toString(), startParamMap, asset.getApplicant());

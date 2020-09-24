@@ -137,7 +137,7 @@
         </div>
         <div style="margin-top: 10px">
             <el-table
-                    :data="assetIns"
+                    :data="assets"
                     stripe
                     border
                     v-loading="loading"
@@ -184,8 +184,14 @@
                         align="left"
                         label="申请人">
                 </el-table-column>
+              <el-table-column
+                  prop="applicantEmail"
+                  width="95"
+                  align="left"
+                  label="申请人邮箱">
+              </el-table-column>
                 <el-table-column
-                        prop="phoneNumber"
+                        prop="applicantPhone"
                         width="100"
                         label="申请人电话">
                 </el-table-column>
@@ -227,16 +233,16 @@
                 :visible.sync="dialogVisible"
                 width="80%">
             <div>
-                <el-form :model="assetIn" :rules="rules" ref="empForm">
+                <el-form :model="asset" :rules="rules" ref="empForm">
                     <el-row>
                         <el-col :span="6">
                             <el-form-item label="品牌:" prop="brand">
-                                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="assetIn.brand"></el-input>
+                                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="asset.brand"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="10">
                             <el-form-item label="类型:" prop="type">
-                                <el-radio-group v-model="assetIn.type">
+                                <el-radio-group v-model="asset.type">
                                     <el-radio label="手机">手机</el-radio>
                                     <el-radio label="主机">主机</el-radio>
                                     <el-radio label="交换机">交换机</el-radio>
@@ -246,24 +252,29 @@
                         </el-col>
                       <el-col :span="6">
                         <el-form-item label="价格:" prop="price">
-                          <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="assetIn.price"></el-input>
+                          <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="asset.price"></el-input>
                         </el-form-item>
                       </el-col>
                     </el-row>
                   <el-row>
                       <el-col :span="6">
                         <el-form-item label="申请人:" prop="applicant">
-                          <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="assetIn.applicant"></el-input>
+                          <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="asset.applicant"></el-input>
                         </el-form-item>
                       </el-col>
                       <el-col :span="6">
-                        <el-form-item label="申请人电话:" prop="phoneNumber">
-                          <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="assetIn.phoneNumber"></el-input>
+                        <el-form-item label="申请人电话:" prop="applicantPhone">
+                          <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="asset.applicantPhone"></el-input>
                         </el-form-item>
                       </el-col>
+                    <el-col :span="6">
+                      <el-form-item label="申请人邮件:" prop="applicantEmail">
+                        <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="asset.applicantEmail"></el-input>
+                      </el-form-item>
+                    </el-col>
                       <el-col :span="10">
                         <el-form-item label="申请理由:" prop="reason">
-                          <el-input size="mini" style="width: 300px" prefix-icon="el-icon-edit" v-model="assetIn.reason"></el-input>
+                          <el-input size="mini" style="width: 300px" prefix-icon="el-icon-edit" v-model="asset.reason"></el-input>
                         </el-form-item>
                       </el-col>
                     </el-row>
@@ -297,7 +308,7 @@
                 importDataDisabled: false,
                 showAdvanceSearchView: false,
                 allDeps: [],
-                assetIns: [],
+                assets: [],
                 loading: false,
                 popVisible: false,
                 popVisible2: false,
@@ -328,12 +339,13 @@
                     label: '北京烤鸭'
                 }],
                 inputDepName: '所属部门',
-                assetIn: {
+                asset: {
                     brand: "华为",
                     type: "手机",
                     price: "4000",
                     applicant: "胡宏建",
-                    phoneNumber: "188",
+                    applicantPhone: "188",
+                    applicantEmail: "29411",
                     reason: "测试"
                 },
                 defaultProps: {
@@ -480,7 +492,7 @@
                 } else {
                     this.$refs['empForm'].validate(valid => {
                         if (valid) {
-                            this.postRequest("/asset/basic/add", this.assetIn).then(resp => {
+                            this.postRequest("/asset/basic/add", this.asset).then(resp => {
                                 if (resp) {
                                     this.dialogVisible = false;
                                     this.initEmps();
@@ -573,7 +585,7 @@
             },
             initEmps(type) {
                 this.loading = true;
-                let url = '/asset/basic/in/?page=' + this.page + '&size=' + this.size;
+                let url = '/asset/basic/get/?page=' + this.page + '&size=' + this.size;
                 if (type && type == 'advanced') {
                     if (this.searchValue.politicId) {
                         url += '&politicId=' + this.searchValue.politicId;
@@ -602,7 +614,7 @@
                 this.getRequest(url).then(resp => {
                     this.loading = false;
                     if (resp) {
-                        this.assetIns = resp.data;
+                        this.assets = resp.data;
                         this.total = resp.total;
                     }
                 });

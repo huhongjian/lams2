@@ -68,7 +68,7 @@ public class AssetTaskController {
                 return response;
             }
             // 如果当前用户是工单创建人并且工单不是关闭状态
-            if (asset.getOwner().equals(user.getName()) && !asset.getStatus().equals(AssetStatusEnum.READY.getIndex())) {
+            if (asset.getCharger().equals(user.getName()) && !asset.getStatus().equals(AssetStatusEnum.READY.getIndex())) {
                 try {
                     opInfoDto = taskOperateService.getWorkflowTaskOperateInfo(user.getName(), aid);
                 } catch (RuntimeException e) {

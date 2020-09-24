@@ -52,7 +52,7 @@ public class Asset implements Serializable {
     /**
      * 预计借用时间
      */
-    private int duration;
+    private Integer duration;
     /**
      * 申请理由
      */
@@ -170,11 +170,11 @@ public class Asset implements Serializable {
         this.applyDate = applyDate;
     }
 
-    public int getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

@@ -57,6 +57,7 @@ public class AssetService {
         } catch (Exception e) {
             logger.error("启动工作流失败", e);
             e.printStackTrace();
+            throw e;
         }
         return result;
     }

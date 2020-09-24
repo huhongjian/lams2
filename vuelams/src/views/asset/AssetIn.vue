@@ -150,11 +150,13 @@
                         width="55">
                 </el-table-column>
               <el-table-column
-                  prop="id"
                   fixed
                   label="ID"
                   align="left"
                   width="90">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="showEditEmpView(scope.row)">{{scope.row.id}}</el-button>
+                </template>
               </el-table-column>
                 <el-table-column
                         prop="type"
@@ -210,7 +212,7 @@
                         width="200"
                         label="操作">
                     <template slot-scope="scope">
-                      <el-button style="padding: 3px" size="mini" type="primary">通过</el-button>
+                      <el-button @click="handle(scope.row)" style="padding: 3px" size="mini" type="primary">通过</el-button>
                       <el-button style="padding: 3px" size="mini">详情</el-button>
                         <el-button @click="showEditEmpView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
                         <el-button @click="deleteEmp(scope.row)" style="padding: 3px" size="mini" type="danger">删除
@@ -282,9 +284,59 @@
             </div>
             <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="doAddAssetIn">确 定</el-button>
+    <el-button type="primary" @click="doAddAsset">确 定</el-button>
   </span>
         </el-dialog>
+      <el-dialog
+          :title="title"
+          :visible.sync="dialogVisible2"
+          width="80%">
+        <div>
+          <el-form :model="asset" :rules="rules" ref="empForm">
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="品牌:" prop="brand">
+                  {{asset.brand}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="类型:" prop="type">
+                  {{asset.type}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="价格:" prop="price">
+                  {{asset.price}}
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="申请人:" prop="applicant">
+                  {{asset.applicant}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="申请人电话:" prop="applicantPhone">
+                  {{asset.applicantPhone}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="申请人邮件:" prop="applicantEmail">
+                  {{asset.applicantEmail}}
+                </el-form-item>
+              </el-col>
+              <el-col :span="10">
+                <el-form-item label="申请理由:" prop="reason">{{asset.reason}}</el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button type="primary" @click="doAddAsset">确 定</el-button>
+  </span>
+      </el-dialog>
     </div>
 </template>
 
@@ -313,6 +365,7 @@
                 popVisible: false,
                 popVisible2: false,
                 dialogVisible: false,
+                dialogVisible2: false,
                 total: 0,
                 page: 1,
                 keyword: '',
@@ -453,11 +506,16 @@
                 this.inputDepName = '';
             },
             showEditEmpView(data) {
-                this.initPositions();
                 this.title = '编辑员工信息';
-                this.emp = data;
-                this.inputDepName = data.department.name;
-                this.dialogVisible = true;
+                this.asset = data;
+                this.dialogVisible2 = true;
+            },
+            handle(data) {
+                this.postRequest("/asset/task/" + data.id).then(resp => {
+                  if (resp) {
+                    this.initEmps();
+                  }
+                })
             },
             deleteEmp(data) {
                 this.$confirm('此操作将永久删除【' + data.name + '】, 是否继续?', '提示', {
@@ -477,7 +535,7 @@
                     });
                 });
             },
-            doAddAssetIn() {
+            doAddAsset() {
                 if (this.emp.id) {
                     this.$refs['empForm'].validate(valid => {
                         if (valid) {

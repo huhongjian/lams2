@@ -4,12 +4,12 @@ package com.bupt.lams.constants;
  * 操作类型
  */
 public enum OperateTypeEnum {
-    CREATE("创建申请", 0),
-    REJECT("拒绝", 1),
+    CREATE("创建申请", 1),
     APPROVE("通过", 2),
-    IN("入库", 3),
-    TRANSFER("转交", 4),
-    CANCEL("取消", 5);
+    REJECT("拒绝", 3),
+    IN("入库", 4),
+    TRANSFER("转交", 5),
+    CANCEL("撤回", 6);
 
     private String name;
     private int index;
@@ -33,5 +33,20 @@ public enum OperateTypeEnum {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    /**
+     * 根据index获取去name
+     *
+     * @param index
+     * @return
+     */
+    public static String getNameByIndex(Integer index) {
+        for (OperateTypeEnum e : OperateTypeEnum.values()) {
+            if (index.equals(e.getIndex())) {
+                return e.getName();
+            }
+        }
+        return null;
     }
 }

@@ -1,5 +1,7 @@
 package com.bupt.lams.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.constants.BusinessConstant;
@@ -14,6 +16,7 @@ import com.bupt.lams.dto.TaskDto;
 import com.bupt.lams.dto.TaskQueryDto;
 import com.bupt.lams.service.process.ProcessManagerService;
 import com.bupt.lams.service.task.TaskManagerService;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.FormProperty;
 import org.apache.commons.collections4.CollectionUtils;
@@ -46,7 +49,7 @@ public class TaskOperateService {
     ProcessManagerService processManagerService;
 
 
-    public void startWorkFlow(Record record,Map<String,String> startParamMap) {
+    public void startWorkFlow(Record record, Map<String, String> startParamMap) {
         Asset asset = assetMapper.selectByPrimaryKey(record.getAid());
         // 1. 查找关联工作流definition
         String workflowKey = operateTypeWorkflowService.selectWorkflowKeyByOperateType(record.getType());
@@ -60,8 +63,9 @@ public class TaskOperateService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void handleOrder(TaskHandleDto taskHandleDto, List<Integer> candidateGroups, List<String> candidateUsers) {
+    public void handleOrder(TaskHandleDto taskHandleDto, String candidateUser) {
         Long id = taskHandleDto.getId();
+        Hr user = UserInfoUtils.getLoginedUser();
 
         // 2. 查询工单工作流关联关系
         AssetWorkflow assetWorkflow = assetWorkflowService.getAssetWorkflowByAid(id);
@@ -75,7 +79,7 @@ public class TaskOperateService {
 
         // 4. 转交/回复工单
         if (assetWorkflow != null) {
-            TaskDto taskDto = getAssignedTaskInfoByOrderIdAndUserName(id, taskHandleDto.getOperator());
+            TaskDto taskDto = getAssignedTaskInfoByOrderIdAndUserName(id, user.getName());
             Map<String, Object> paramsMap = new HashMap<>();
             paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_OPERATE_TYPE,
                     String.valueOf(taskHandleDto.getOperateType()));
@@ -101,22 +105,16 @@ public class TaskOperateService {
             if (taskHandleDto.getOperateType() == OperateTypeEnum.TRANSFER.getIndex()) {
                 if (firstAssignee != null && !firstAssignee.equals("")) {
                     // 设置受理人1信息
-                    paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE, taskHandleDto.getOperator());
+                    paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE, user.getName());
                 }
                 // 三个及以上节点的工作流中第二个节点使用：WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE，中间节点不支持回复到具体人
                 // 只有OpManagerWithTranferProcess在使用
                 paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE, null);
-                paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_LAST_PERCESS_PERSON, taskHandleDto.getOperator());
+                paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_LAST_PERCESS_PERSON, user.getName());
                 paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_CANDIDATE_USERS, BusinessConstant.EMPTY_STR);
-                if (CollectionUtils.isNotEmpty(candidateGroups)) {
-                    // 设置转交组
-                    paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_CANDIDATE_GROUPS,
-                            StringUtils.join(candidateGroups.toArray(), BusinessConstant.COMMA_SEPARATOR));
-                }
-                if (CollectionUtils.isNotEmpty(candidateUsers)) {
+                if (StringUtils.isNotEmpty(candidateUser)) {
                     // 设置转交人
-                    paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_CANDIDATE_USERS,
-                            StringUtils.join(candidateUsers.toArray(), BusinessConstant.COMMA_SEPARATOR));
+                    paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_CANDIDATE_USERS, StringUtils.join(candidateUser, BusinessConstant.COMMA_SEPARATOR));
                 }
             }
             // 设置下一审批人为第一受理人
@@ -129,23 +127,24 @@ public class TaskOperateService {
                 paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE,
                         taskNameMapReplyUser.get(taskDto.getName()));
             }
-            this.taskManagerService.completeTask(taskDto.getTaskId(), paramsMap, taskHandleDto.getOperator());
+            this.taskManagerService.completeTask(taskDto.getTaskId(), paramsMap, user.getName());
         } else {
             throw new RuntimeException("未查询到关联流程信息");
         }
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void claimAndHandleOrder(TaskHandleDto taskHandleDto, List<Integer> candidateGroups, List<String> candidateUsers) {
+    public void claimAndHandleOrder(TaskHandleDto taskHandleDto, String candidateUser) {
         // 1. 获取待办
         TaskDto taskDto = getCandidateTskInfoByAssetIdAndUsername(taskHandleDto.getId(), null);
         Asset asset = assetMapper.selectByPrimaryKey(taskHandleDto.getId());
         assetMapper.updateAssetStatusById(asset);
         // 4. 接单操作
-        taskService.claim(taskDto.getTaskId(), taskHandleDto.getOperator());
-        logger.info("[end]接单，工单ID:" + taskHandleDto.getId() + ";用户账号：" + taskHandleDto.getOperator());
+        String operate = OperateTypeEnum.getNameByIndex(taskHandleDto.getOperateType());
+        taskService.claim(taskDto.getTaskId(), operate);
+        logger.info("[end]接单，工单ID:" + taskHandleDto.getId() + ";用户账号：" + operate);
         // 处理工单
-        this.handleOrder(taskHandleDto, candidateGroups, candidateUsers);
+        this.handleOrder(taskHandleDto, candidateUser);
     }
 
     /**
@@ -259,54 +258,11 @@ public class TaskOperateService {
                 }
                 // 转交组/人
                 else if (formId.equalsIgnoreCase(WorkflowConstant.WORKFLOW_PARAM_KEY_CANDIDATE_GROUPS_USERS)) {
-                    this.initCandidateGroupsAndUsers(operateInfoDto, formProperty);
+                    operateInfoDto.setCandidateUser(formProperty.getValue());
                 }
             }
         }
         return operateInfoDto;
-    }
-
-    /**
-     * 设置转交组/人
-     *
-     * @param operateInfoDto
-     *            操作信息
-     * @param formProperty
-     *            表单属性信息
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    private void initCandidateGroupsAndUsers(WorkflowTaskOperateInfoDto operateInfoDto,
-                                             FormProperty formProperty) {
-        String candidateGroupsAndUsersStr = formProperty.getValue();
-        JSONObject jsonObject = JSONObject.parseObject(candidateGroupsAndUsersStr);
-        if (jsonObject != null && jsonObject.containsKey(WorkflowConstant.WORKFLOW_PARAM_KEY_CANDIDATE_GROUPS)) {
-            List<JSONObject> candidateGroupsJson = (List) jsonObject
-                    .get(WorkflowConstant.WORKFLOW_PARAM_KEY_CANDIDATE_GROUPS);
-            Iterator<JSONObject> iterator = candidateGroupsJson.iterator();
-            Role roleDto = null;
-            JSONObject tmpJsonObj = null;
-            List<Role> roleList = new ArrayList<>();
-            while (iterator.hasNext()) {
-                tmpJsonObj = iterator.next();
-                roleDto = tmpJsonObj.toJavaObject(Role.class);
-                roleList.add(roleDto);
-            }
-            operateInfoDto.setCandidateGroups(roleList);
-        }
-        if (jsonObject != null && jsonObject.containsKey(WorkflowConstant.WORKFLOW_PARAM_KEY_CANDIDATE_USERS)) {
-            List<JSONObject> candidateGroupsJson = (List) jsonObject
-                    .get(WorkflowConstant.WORKFLOW_PARAM_KEY_CANDIDATE_USERS);
-            Iterator<JSONObject> iterator = candidateGroupsJson.iterator();
-            Hr adminUserDto = null;
-            JSONObject tmpJsonObj = null;
-            List<Hr> userList = new ArrayList<>();
-            while (iterator.hasNext()) {
-                tmpJsonObj = iterator.next();
-                adminUserDto = tmpJsonObj.toJavaObject(Hr.class);
-                userList.add(adminUserDto);
-            }
-            operateInfoDto.setCandidateUsers(userList);
-        }
     }
 
     /**
@@ -315,22 +271,10 @@ public class TaskOperateService {
      * @param operateInfoDto
      * @param formProperty
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private void initOperateTypes(WorkflowTaskOperateInfoDto operateInfoDto, FormProperty formProperty) {
-        Set<String> operateTypeStrs = ((HashMap) formProperty.getType().getInformation("values")).keySet();
-        HashMap operateMap = (HashMap) formProperty.getType().getInformation("values");
-        List<Integer> operateTypes = new ArrayList<Integer>();
-        List<WorkflowOperate> operateList = new ArrayList<>();
-        if (operateTypeStrs != null) {
-            for (String typeStr : operateTypeStrs) {
-                WorkflowOperate operate = new WorkflowOperate();
-                operate.setOperateType(Integer.parseInt(typeStr));
-                operate.setOperate((String) operateMap.get(typeStr));
-                operateTypes.add(Integer.parseInt(typeStr));
-                operateList.add(operate);
-            }
-        }
-        operateInfoDto.setOperateTypes(operateTypes);
+        JSONObject ops = JSONObject.parseObject(formProperty.getValue());
+        List<WorkflowOperate> operateList = JSONArray.parseArray(ops.getJSONArray("ops").toJSONString(), WorkflowOperate.class);
         operateInfoDto.setOperateList(operateList);
     }
 }

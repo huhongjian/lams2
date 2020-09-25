@@ -334,7 +334,9 @@
         </div>
         <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible2 = false">取 消</el-button>
-    <el-button type="primary" @click="doAddAsset">确 定</el-button>
+    <template v-for="op in candidateBranches.operateList">
+      <el-button type="primary" @click="handle(op)">{{ op.operate }}</el-button>
+    </template>
   </span>
       </el-dialog>
     </div>
@@ -374,7 +376,20 @@
                 joblevels: [],
                 politicsstatus: [],
                 positions: [],
-                candidateBranches: [],
+                candidateBranches: {
+                  operateList: [
+                    {
+                      operateType: 2,
+                      operate: '同意'
+                    }
+                  ],
+                  candidateUser: null
+                },
+              taskHandleDto: {
+                  id: null,
+                operateType: null,
+                candidateUser: null
+              },
                 tiptopDegrees: ['本科', '大专', '硕士', '博士', '高中', '初中', '小学', '其他'],
                 options: [{
                     value: '选项1',
@@ -521,12 +536,15 @@
           getCandidateBranchInfo(data){
             this.getRequest('/asset/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
               if (resp) {
-                this.candidateBranches = resp;
+                this.candidateBranches = resp.obj;
               }
-            })
+            });
           },
             handle(data) {
-                this.postRequest("/asset/task/" + data.id).then(resp => {
+              this.taskHandleDto.id = this.asset.id;
+              this.taskHandleDto.operateType = data.operateType;
+              this.taskHandleDto.candidateUser = this.candidateBranches.candidateUser;
+                this.postRequest("/asset/task/handleTask", this.taskHandleDto).then(resp => {
                   if (resp) {
                     this.initEmps();
                   }

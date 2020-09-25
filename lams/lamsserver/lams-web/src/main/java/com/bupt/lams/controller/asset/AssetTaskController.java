@@ -16,8 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 资产状态流转相关
@@ -39,7 +37,7 @@ public class AssetTaskController {
         RespBean response = new RespBean();
         response.setStatus(200);
         try {
-            taskOperateService.claimAndHandleOrder(taskHandleDto, taskHandleDto.getCandidateGroups(), taskHandleDto.getCandidateUsers());
+            taskOperateService.claimAndHandleOrder(taskHandleDto, taskHandleDto.getCandidateUser());
         } catch (Exception e) {
             logger.error("工单验证操作失败", e);
             response.setStatus(500);

@@ -14,9 +14,6 @@ import java.util.Map;
 
 /**
  * 自定义角色Service
- * 
- * @author shanglonghua
- * 
  */
 @Service
 public class GroupDataCustomManager implements GroupDataManager {

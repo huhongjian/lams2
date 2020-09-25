@@ -155,7 +155,7 @@
                   align="left"
                   width="90">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="showEditEmpView(scope.row)">{{scope.row.id}}</el-button>
+                  <el-button size="mini" @click="showDetailView(scope.row)">{{scope.row.id}}</el-button>
                 </template>
               </el-table-column>
                 <el-table-column
@@ -374,6 +374,7 @@
                 joblevels: [],
                 politicsstatus: [],
                 positions: [],
+                candidateBranches: [],
                 tiptopDegrees: ['本科', '大专', '硕士', '博士', '高中', '初中', '小学', '其他'],
                 options: [{
                     value: '选项1',
@@ -393,6 +394,7 @@
                 }],
                 inputDepName: '所属部门',
                 asset: {
+                    id: "",
                     brand: "华为",
                     type: "手机",
                     price: "4000",
@@ -506,10 +508,23 @@
                 this.inputDepName = '';
             },
             showEditEmpView(data) {
-                this.title = '编辑员工信息';
+                this.title = '编辑资产信息';
                 this.asset = data;
-                this.dialogVisible2 = true;
+                this.dialogVisible = true;
             },
+          showDetailView(data) {
+            this.title = '资产详情';
+            this.asset = data;
+            this.getCandidateBranchInfo(data);
+            this.dialogVisible2 = true;
+          },
+          getCandidateBranchInfo(data){
+            this.getRequest('/asset/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
+              if (resp) {
+                this.candidateBranches = resp;
+              }
+            })
+          },
             handle(data) {
                 this.postRequest("/asset/task/" + data.id).then(resp => {
                   if (resp) {

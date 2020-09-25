@@ -47,6 +47,7 @@ public class AssetBasicController {
 
     @PostMapping("/add")
     public RespBean addAsset(@RequestBody Asset asset) {
+        asset.setChargerByApplicant();
         asset.setStatus(AssetStatusEnum.CREATE.getName());
         asset.setApplyDate(new Date());
         Integer res = assetService.addAssetIn(asset);

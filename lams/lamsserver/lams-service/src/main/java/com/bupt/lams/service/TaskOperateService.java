@@ -138,8 +138,7 @@ public class TaskOperateService {
     @Transactional(rollbackFor = Exception.class)
     public void claimAndHandleOrder(TaskHandleDto taskHandleDto, List<Integer> candidateGroups, List<String> candidateUsers) {
         // 1. 获取待办
-        TaskDto taskDto = getCandidateTskInfoByOrderIdAndUsername(taskHandleDto.getId(),
-                null);
+        TaskDto taskDto = getCandidateTskInfoByAssetIdAndUsername(taskHandleDto.getId(), null);
         Asset asset = assetMapper.selectByPrimaryKey(taskHandleDto.getId());
         assetMapper.updateAssetStatusById(asset);
         // 4. 接单操作
@@ -191,13 +190,13 @@ public class TaskOperateService {
     }
 
     /**
-     * 根据工单ID及用户名查询未分配任务
+     * 根据资产ID及用户名查询未分配任务
      *
      * @param orderId  工单ID
      * @param username 用户账号
      * @return
      */
-    private TaskDto getCandidateTskInfoByOrderIdAndUsername(Long orderId, String username) {
+    private TaskDto getCandidateTskInfoByAssetIdAndUsername(Long orderId, String username) {
         TaskQueryDto taskQueryDto = new TaskQueryDto();
         taskQueryDto.setBusinessKey(orderId.toString());
         taskQueryDto.setUserName(username);
@@ -209,13 +208,31 @@ public class TaskOperateService {
         }
     }
 
-    public WorkflowTaskOperateInfoDto getWorkflowTaskOperateInfo(String username, Long orderId) {
+    public WorkflowTaskOperateInfoDto getCandidateOrAssignedOrderWorkflowTaskOperateInfo(String username, Long orderId) {
         logger.info("[start]获取工作流操作表单信息，用户账号：" + username + "; 工单ID:" + orderId);
         // 获取待办任务
-        TaskDto taskDto = this.getAssignedTaskInfoByOrderIdAndUserName(orderId, username);
+        TaskDto taskDto = this.getCandidateOrAssignedTaskInfoByOrderIdAndUsername(username, orderId);
         WorkflowTaskOperateInfoDto operateInfoDto = getTaskOperateInfoDtoByTaskDto(taskDto);
         logger.info("[end]获取工作流操作表单信息，用户账号：" + username + "; 工单ID:" + orderId);
         return operateInfoDto;
+    }
+
+    public TaskDto getCandidateOrAssignedTaskInfoByOrderIdAndUsername(String username, Long orderId) {
+        TaskQueryDto taskQueryDto = new TaskQueryDto();
+        taskQueryDto.setBusinessKey(orderId.toString());
+        taskQueryDto.setUserName(username);
+        List<TaskDto> taskDtos = this.taskManagerService.getCandidateTasks(taskQueryDto);
+        if (taskDtos == null || taskDtos.size() == 0) {
+            taskDtos = this.taskManagerService.getAssignedTasks(taskQueryDto);
+        }
+        if (CollectionUtils.isNotEmpty(taskDtos)) {
+            if (taskDtos.size() > 1) {
+                throw new RuntimeException("该工单签收或未签收的任务总数大于1，工单ID:" + orderId);
+            }
+            return taskDtos.get(0);
+        } else {
+            throw new RuntimeException("该工单不存在签收和未签收的任务，工单ID:" + orderId);
+        }
     }
 
     /**

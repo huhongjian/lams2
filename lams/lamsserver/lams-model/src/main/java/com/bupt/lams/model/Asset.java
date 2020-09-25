@@ -185,4 +185,10 @@ public class Asset implements Serializable {
     public void setReason(String reason) {
         this.reason = reason;
     }
+
+    public void setChargerByApplicant() {
+        charger = applicant;
+        chargerEmail = applicantEmail;
+        chargerPhone = applicantPhone;
+    }
 }

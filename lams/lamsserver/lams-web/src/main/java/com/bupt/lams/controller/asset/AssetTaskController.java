@@ -13,10 +13,7 @@ import com.bupt.lams.service.TaskOperateService;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -43,8 +40,7 @@ public class AssetTaskController {
         response.setStatus(200);
         try {
             taskOperateService.claimAndHandleOrder(taskHandleDto, taskHandleDto.getCandidateGroups(), taskHandleDto.getCandidateUsers());
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             logger.error("工单验证操作失败", e);
             response.setStatus(500);
             response.setMsg("工单验证操异常，请稍后重试");
@@ -54,14 +50,13 @@ public class AssetTaskController {
 
     @RequestMapping("getCandidateTaskBranchInfo")
     @ResponseBody
-    public RespBean getCandidateTaskBranchInfo(Long aid) {
+    public RespBean getCandidateTaskBranchInfo(@RequestParam Long id) {
         RespBean response = new RespBean();
         WorkflowTaskOperateInfoDto opInfoDto = new WorkflowTaskOperateInfoDto();
-        List<WorkflowOperate> operateList = new ArrayList<>();
         try {
             Hr user = UserInfoUtils.getLoginedUser();
             // 1. 获取工单
-            Asset asset = assetService.selectByPrimaryKey(aid);
+            Asset asset = assetService.selectByPrimaryKey(id);
             if (asset == null) {
                 response.setStatus(500);
                 response.setMsg("指定工单不存在！");
@@ -70,7 +65,7 @@ public class AssetTaskController {
             // 如果当前用户是工单创建人并且工单不是关闭状态
             if (asset.getCharger().equals(user.getName()) && !asset.getStatus().equals(AssetStatusEnum.READY.getIndex())) {
                 try {
-                    opInfoDto = taskOperateService.getWorkflowTaskOperateInfo(user.getName(), aid);
+                    opInfoDto = taskOperateService.getCandidateOrAssignedOrderWorkflowTaskOperateInfo(user.getName(), id);
                 } catch (RuntimeException e) {
                     logger.info("获取操作信息失败" + e.getMessage(), e);
                 } finally {
@@ -82,7 +77,7 @@ public class AssetTaskController {
                 }
             } else {
                 // 2. 根据查询来源设置操作信息
-                opInfoDto = taskOperateService.getWorkflowTaskOperateInfo(user.getName(), aid);
+                opInfoDto = taskOperateService.getCandidateOrAssignedOrderWorkflowTaskOperateInfo(user.getName(), id);
             }
         } catch (Exception e) {
             opInfoDto = new WorkflowTaskOperateInfoDto();

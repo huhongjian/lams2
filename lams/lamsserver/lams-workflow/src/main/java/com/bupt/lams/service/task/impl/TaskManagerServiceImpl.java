@@ -16,6 +16,7 @@ import org.activiti.engine.runtime.ExecutionQuery;
 import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,13 +62,13 @@ public class TaskManagerServiceImpl implements TaskManagerService {
             taskQuery.processInstanceBusinessKey(taskQueryDto.getBusinessKey());
         }
         // 3. 设置流程实例ID集合
-        if (!taskQueryDto.getProcInstIds().isEmpty()) {
+        if (CollectionUtils.isNotEmpty(taskQueryDto.getProcInstIds())) {
             taskQuery.processInstanceIdIn(taskQueryDto.getProcInstIds());
         }
         taskQuery.active();
         // 4. 按时间升序排列
         List<Task> taskList = taskQuery.orderByTaskCreateTime().asc().list();
-        if (!taskList.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(taskList)) {
             // 5. 获取businessKey
             Map<String, String> procInstIdToBizKeyMap = processManagerService
                     .getProcBizKeyMapById(getProcInstIds(taskList));

@@ -1,5 +1,6 @@
 package com.bupt.lams.config;
 
+import com.bupt.lams.utils.UserInfoUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.bupt.lams.model.Hr;
 import com.bupt.lams.model.RespBean;
@@ -64,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     PrintWriter out = response.getWriter();
                     Hr hr = (Hr) authentication.getPrincipal();
                     hr.setPassword(null);
+                    UserInfoUtils.setContext(hr);
                     RespBean ok = RespBean.ok("登录成功!", hr);
                     String s = new ObjectMapper().writeValueAsString(ok);
                     out.write(s);

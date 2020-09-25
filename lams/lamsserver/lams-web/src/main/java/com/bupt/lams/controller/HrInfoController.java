@@ -30,7 +30,6 @@ public class HrInfoController {
     @GetMapping("/hr/info")
     public Hr getCurrentHr(Authentication authentication) {
         Hr currentUser = (Hr) authentication.getPrincipal();
-        UserInfoUtils.setContext(currentUser);
         return currentUser;
     }
 

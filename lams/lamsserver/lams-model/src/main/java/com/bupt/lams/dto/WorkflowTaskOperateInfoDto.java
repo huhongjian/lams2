@@ -10,8 +10,6 @@ import java.util.List;
 
 /**
  * 待办任务表单信息获取
- *
- * @author shanglonghua
  */
 public class WorkflowTaskOperateInfoDto {
 

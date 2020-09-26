@@ -4,12 +4,13 @@ package com.bupt.lams.constants;
  * 操作类型
  */
 public enum OperateTypeEnum {
-    CREATE("创建申请", 1),
-    APPROVE("通过", 2),
+    CREATE("申请采购", 1),
+    APPROVE("批准采购", 2),
     REJECT("拒绝", 3),
     IN("入库", 4),
     TRANSFER("转交", 5),
-    CANCEL("撤回", 6);
+    CONFIRM("确认转交", 6),
+    CANCEL("撤回", 7);
 
     private String name;
     private int index;

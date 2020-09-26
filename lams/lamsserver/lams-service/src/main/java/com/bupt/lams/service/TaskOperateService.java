@@ -60,72 +60,33 @@ public class TaskOperateService {
         assetWorkflow.setWorkflowInstId(Long.parseLong(procInstId));
         assetWorkflow.setWorkflowStartTime(new Date());
         assetWorkflowService.saveAssetWorkflow(assetWorkflow);
+        TaskDto taskDto = getCandidateTskInfoByAssetIdAndUsername(record.getAid(), null);
+        Map<String, String> variablesMap = new HashMap<>();
+        variablesMap.put("nextUser", record.getOperator());
+        taskService.setVariables(taskDto.getTaskId(), variablesMap);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void handleOrder(TaskHandleDto taskHandleDto, String candidateUser) {
         Long id = taskHandleDto.getId();
         Hr user = UserInfoUtils.getLoginedUser();
-
-        // 2. 查询工单工作流关联关系
+        // 查询资产工作流关联关系
         AssetWorkflow assetWorkflow = assetWorkflowService.getAssetWorkflowByAid(id);
-
         Asset asset = this.assetMapper.selectByPrimaryKey(id);
-        // 3. 如果是解释类型则更新工单状态
-        if (taskHandleDto.getOperateType() == OperateTypeEnum.REJECT.getIndex()) {
-            asset.setStatus(AssetStatusEnum.REJECTED.getName());
+        // 如果是同意类型则更新资产状态
+        if (taskHandleDto.getOperateType() == OperateTypeEnum.APPROVE.getIndex()) {
+            asset.setStatus(AssetStatusEnum.APPROVE.getName());
+            assetMapper.updateAssetStatusById(asset);
         }
-//        this.orderService.updateOrderStatusById(order);
-
-        // 4. 转交/回复工单
         if (assetWorkflow != null) {
             TaskDto taskDto = getAssignedTaskInfoByOrderIdAndUserName(id, user.getName());
             Map<String, Object> paramsMap = new HashMap<>();
-            paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_OPERATE_TYPE,
-                    String.valueOf(taskHandleDto.getOperateType()));
-            // 获取受理人1
+            paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_OPERATE_TYPE, String.valueOf(taskHandleDto.getOperateType()));
             Map<String, Object> variableMap = taskDto.getVariablesMap();
-            // 多个节点的工作流中第一个节点使用：WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE
-            String firstAssignee = this.getAssigneeUsername(variableMap,
-                    WorkflowConstant.WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE);
-            String responseToAssignee = this.getAssigneeUsername(variableMap,
-                    WorkflowConstant.WORKFLOW_PARAM_KEY_LAST_PERCESS_PERSON);
-            // 当前任务的上个节点转交人，回复时使用
-            HashMap<String, String> taskNameMapReplyUser = variableMap
-                    .get(WorkflowConstant.WORKFLOW_PARAM_KEY_TASKNAME_MAP_REPLYUSER) != null
-                    ? (HashMap<String, String>) variableMap
-                    .get(WorkflowConstant.WORKFLOW_PARAM_KEY_TASKNAME_MAP_REPLYUSER)
-                    : new HashMap<String, String>();
-            // 更新当前任务的上个节点的转交人，上一步为回复时，不进行更新
-            if (responseToAssignee != null && !responseToAssignee.equals("")) {
-                taskNameMapReplyUser.put(taskDto.getName(), responseToAssignee);
-            }
-            // TODO 采用WORKFLOW_PARAM_KEY_TASKNAME_MAP_REPLYUSER来替换WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE、WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE，支持多个节点场景下回复给上游处理节点
-            paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_TASKNAME_MAP_REPLYUSER, taskNameMapReplyUser);
+            String nextUser = (String) variableMap.get("nextUser");
+            paramsMap.put("nextUser", nextUser);
             if (taskHandleDto.getOperateType() == OperateTypeEnum.TRANSFER.getIndex()) {
-                if (firstAssignee != null && !firstAssignee.equals("")) {
-                    // 设置受理人1信息
-                    paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE, user.getName());
-                }
-                // 三个及以上节点的工作流中第二个节点使用：WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE，中间节点不支持回复到具体人
-                // 只有OpManagerWithTranferProcess在使用
-                paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE, null);
-                paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_LAST_PERCESS_PERSON, user.getName());
-                paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_CANDIDATE_USERS, BusinessConstant.EMPTY_STR);
-                if (StringUtils.isNotEmpty(candidateUser)) {
-                    // 设置转交人
-                    paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_CANDIDATE_USERS, StringUtils.join(candidateUser, BusinessConstant.COMMA_SEPARATOR));
-                }
-            }
-            // 设置下一审批人为第一受理人
-            else if (taskHandleDto.getOperateType() == OperateTypeEnum.TRANSFER.getIndex()) {
-                paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_LAST_PERCESS_PERSON, null);
-                paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE,
-                        taskNameMapReplyUser.get(taskDto.getName()));
-                // 三个及以上节点的工作流中第二个节点使用：WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE，中间节点不支持回复到具体人
-                // 只有OpManagerWithTranferProcess在使用
-                paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE,
-                        taskNameMapReplyUser.get(taskDto.getName()));
+                paramsMap.put("nextUser", candidateUser);
             }
             this.taskManagerService.completeTask(taskDto.getTaskId(), paramsMap, user.getName());
         } else {
@@ -135,14 +96,12 @@ public class TaskOperateService {
 
     @Transactional(rollbackFor = Exception.class)
     public void claimAndHandleOrder(TaskHandleDto taskHandleDto, String candidateUser) {
-        // 1. 获取待办
+        // 获取待办
         TaskDto taskDto = getCandidateTskInfoByAssetIdAndUsername(taskHandleDto.getId(), null);
-        Asset asset = assetMapper.selectByPrimaryKey(taskHandleDto.getId());
-        assetMapper.updateAssetStatusById(asset);
-        // 4. 接单操作
-        String operate = OperateTypeEnum.getNameByIndex(taskHandleDto.getOperateType());
-        taskService.claim(taskDto.getTaskId(), operate);
-        logger.info("[end]接单，工单ID:" + taskHandleDto.getId() + ";用户账号：" + operate);
+        // 接单操作
+        Hr user = UserInfoUtils.getLoginedUser();
+        taskService.claim(taskDto.getTaskId(), user.getName());
+        logger.info("[end]接单，工单ID:" + taskHandleDto.getId() + ";用户账号：" + user.getName());
         // 处理工单
         this.handleOrder(taskHandleDto, candidateUser);
     }

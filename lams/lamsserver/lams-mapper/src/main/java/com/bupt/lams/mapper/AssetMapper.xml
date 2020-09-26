@@ -74,7 +74,11 @@
         from asset
         where id = #{id}
     </select>
-    <update id="updateAssetStatusById"></update>
+    <update id="updateAssetStatusById" parameterType="com.bupt.lams.model.Asset">
+        update asset a
+        set a.status = #{status}
+        where a.id = #{id}
+    </update>
     <insert id="insertSelective" parameterType="com.bupt.lams.model.Asset" useGeneratedKeys="true" keyProperty="id">
         insert into asset
         <trim prefix="(" suffix=")" suffixOverrides=",">

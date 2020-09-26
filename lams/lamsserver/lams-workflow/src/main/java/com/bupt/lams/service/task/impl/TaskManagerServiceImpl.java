@@ -252,7 +252,7 @@ public class TaskManagerServiceImpl implements TaskManagerService {
         if (task == null) {
             throw new RuntimeException("处理任务不存在，请确认后重试！");
         }
-        taskService.complete(taskId, formValues);
+        taskService.complete(task.getId(), formValues);
     }
 
     private Set<String> getProcInstIds(List<Task> taskList) {

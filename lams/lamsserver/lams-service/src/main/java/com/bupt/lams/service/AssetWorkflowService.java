@@ -12,8 +12,7 @@ public class AssetWorkflowService {
     AssetWorkflowMapper assetWorkflowMapper;
 
     public AssetWorkflow getAssetWorkflowByAid(Long aid) {
-        //todo
-        return null;
+        return assetWorkflowMapper.getAssetWorkflowByAid(aid);
     }
 
     public void saveAssetWorkflow(AssetWorkflow assetWorkflow) {

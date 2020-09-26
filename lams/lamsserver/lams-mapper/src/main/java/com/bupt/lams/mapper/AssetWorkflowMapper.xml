@@ -7,7 +7,8 @@
         <result column="workflow_inst_id" property="workflowInstId"/>
         <result column="workflow_start_time" property="workflowStartTime"/>
     </resultMap>
-    <insert id="insertSelective" parameterType="com.bupt.lams.model.AssetWorkflow" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="com.bupt.lams.model.AssetWorkflow" useGeneratedKeys="true"
+            keyProperty="id">
         insert into asset_workflow
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -34,4 +35,9 @@
             NOW()
         </trim>
     </insert>
+    <select id="getAssetWorkflowByAid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select aw.*
+        from asset_workflow aw
+        where aid = #{aid};
+    </select>
 </mapper>

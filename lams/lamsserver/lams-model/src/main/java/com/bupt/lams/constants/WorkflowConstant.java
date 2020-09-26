@@ -16,14 +16,12 @@ public class WorkflowConstant {
      * 指定的受理人1
      * 多个节点的工作流中第一个节点使用：WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE
      */
-    @Deprecated
     public static String WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE = "firstAssignee";
     /**
      * 回复上一受理人
      * 三个及以上节点的工作流中第二个节点使用：WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE，中间节点不支持回复到具体人
      * 只有OpManagerWithTranferProcess在使用
      */
-    @Deprecated
     public static String WORKFLOW_PARAM_KEY_RESPONSE_TO_ASSIGNEE = "responseToAssignee";
     /**
      * 上一级转交人

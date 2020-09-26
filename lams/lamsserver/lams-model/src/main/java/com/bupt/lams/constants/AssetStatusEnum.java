@@ -9,7 +9,7 @@ public enum AssetStatusEnum {
     READY("已入库", 2),
     ASK("申请借用", 3),
     OCCUPIED("已借出", 4),
-    TRANSFER("转交", 5),
+    TRANSFER("申请转交", 5),
     REJECTED("审批未通过", 6);
 
     private String name;

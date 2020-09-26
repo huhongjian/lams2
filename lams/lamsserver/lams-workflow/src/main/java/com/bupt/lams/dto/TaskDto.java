@@ -60,7 +60,7 @@ public class TaskDto {
 	/**
 	 * 流程变量
 	 */
-	private Map<String, Object> variablesMap = new HashMap<String, Object>();
+	private Map<String, Object> variablesMap = new HashMap<>();
 
 	public String getTaskId() {
 		return taskId;

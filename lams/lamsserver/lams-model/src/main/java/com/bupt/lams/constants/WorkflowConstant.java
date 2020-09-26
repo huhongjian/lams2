@@ -11,7 +11,7 @@ public class WorkflowConstant {
     /**
      * 操作类型
      */
-    public static String WORKFLOW_PARAM_KEY_OPERATE_TYPE = "operateType";
+    public static String OPERATE_TYPE = "operateType";
     /**
      * 指定的受理人1
      * 多个节点的工作流中第一个节点使用：WORKFLOW_PARAM_KEY_FIRST_ASSIGNEE
@@ -44,7 +44,7 @@ public class WorkflowConstant {
      */
     public static String WORKFLOW_PARAM_KEY_TASKNAME_MAP_REPLYUSER = "taskNameMapReplyUser";
     /**
-     * 提出人
+     * 下一个处理人
      */
-    public static String WORKFLOW_PARAM_KEY_APPLY_USER_ID = "applyUserId";
+    public static String NEXT_USER = "nextUser";
 }

@@ -10,7 +10,8 @@ public enum OperateTypeEnum {
     IN("入库", 4),
     TRANSFER("转交", 5),
     CONFIRM("确认转交", 6),
-    CANCEL("撤回", 7);
+    CANCEL("撤回", 7),
+    REFUSE("拒绝", 8);
 
     private String name;
     private int index;

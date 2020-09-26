@@ -37,11 +37,11 @@ public class AssetTaskController {
         RespBean response = new RespBean();
         response.setStatus(200);
         try {
-            taskOperateService.claimAndHandleOrder(taskHandleDto, taskHandleDto.getCandidateUser());
+            taskOperateService.claimAndHandleTask(taskHandleDto);
         } catch (Exception e) {
-            logger.error("工单验证操作失败", e);
+            logger.error("当前流程操作失败！", e);
             response.setStatus(500);
-            response.setMsg("工单验证操异常，请稍后重试");
+            response.setMsg("资产操作异常，请稍后重试");
         }
         return response;
     }

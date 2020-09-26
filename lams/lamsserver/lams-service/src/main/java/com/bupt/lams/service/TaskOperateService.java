@@ -1,33 +1,34 @@
 package com.bupt.lams.service;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bupt.lams.constants.AssetStatusEnum;
-import com.bupt.lams.constants.BusinessConstant;
 import com.bupt.lams.constants.OperateTypeEnum;
+import com.bupt.lams.constants.ProcessTypeEnum;
 import com.bupt.lams.constants.WorkflowConstant;
+import com.bupt.lams.dto.TaskDto;
 import com.bupt.lams.dto.TaskHandleDto;
+import com.bupt.lams.dto.TaskQueryDto;
 import com.bupt.lams.dto.WorkflowTaskOperateInfoDto;
 import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.mapper.HrMapper;
 import com.bupt.lams.model.*;
-import com.bupt.lams.dto.TaskDto;
-import com.bupt.lams.dto.TaskQueryDto;
 import com.bupt.lams.service.process.ProcessManagerService;
 import com.bupt.lams.service.task.TaskManagerService;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.FormProperty;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class TaskOperateService {
@@ -67,43 +68,68 @@ public class TaskOperateService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void handleOrder(TaskHandleDto taskHandleDto, String candidateUser) {
+    public void handleTask(TaskHandleDto taskHandleDto) {
         Long id = taskHandleDto.getId();
+        String candidateUser = taskHandleDto.getCandidateUser();
         Hr user = UserInfoUtils.getLoginedUser();
         // 查询资产工作流关联关系
         AssetWorkflow assetWorkflow = assetWorkflowService.getAssetWorkflowByAid(id);
         Asset asset = this.assetMapper.selectByPrimaryKey(id);
-        // 如果是同意类型则更新资产状态
+        if (assetWorkflow == null) {
+            throw new RuntimeException("未查询到关联流程信息");
+        }
+        // 获取当前任务信息
+        TaskDto taskDto = getAssignedTaskInfoByOrderIdAndUserName(id, user.getName());
+        Map<String, Object> paramsMap = new HashMap<>();
+        Map<String, Object> variableMap = taskDto.getVariablesMap();
+        String nextUser = (String) variableMap.get(WorkflowConstant.NEXT_USER);
+        // 保存操作类型，用来筛选流程中不同的分支
+        paramsMap.put(WorkflowConstant.OPERATE_TYPE, String.valueOf(taskHandleDto.getOperateType()));
+        // 下一处理人默认一直延续，是流程发起人（申请人）
+        paramsMap.put(WorkflowConstant.NEXT_USER, nextUser);
+        if (taskHandleDto.getOperateType() == OperateTypeEnum.TRANSFER.getIndex()) {
+            // 如果是转交的话，设置为转交人
+            paramsMap.put(WorkflowConstant.NEXT_USER, candidateUser);
+        }
+        // 完成当前操作
+        taskManagerService.completeTask(taskDto.getTaskId(), paramsMap, user.getName());
+        // 如果是批准采购则更新资产状态
         if (taskHandleDto.getOperateType() == OperateTypeEnum.APPROVE.getIndex()) {
             asset.setStatus(AssetStatusEnum.APPROVE.getName());
             assetMapper.updateAssetStatusById(asset);
+            return;
         }
-        if (assetWorkflow != null) {
-            TaskDto taskDto = getAssignedTaskInfoByOrderIdAndUserName(id, user.getName());
-            Map<String, Object> paramsMap = new HashMap<>();
-            paramsMap.put(WorkflowConstant.WORKFLOW_PARAM_KEY_OPERATE_TYPE, String.valueOf(taskHandleDto.getOperateType()));
-            Map<String, Object> variableMap = taskDto.getVariablesMap();
-            String nextUser = (String) variableMap.get("nextUser");
-            paramsMap.put("nextUser", nextUser);
-            if (taskHandleDto.getOperateType() == OperateTypeEnum.TRANSFER.getIndex()) {
-                paramsMap.put("nextUser", candidateUser);
-            }
-            this.taskManagerService.completeTask(taskDto.getTaskId(), paramsMap, user.getName());
-        } else {
-            throw new RuntimeException("未查询到关联流程信息");
+        // 如果是入库则新增入库资产
+        if (taskHandleDto.getOperateType() == OperateTypeEnum.IN.getIndex()) {
+            asset.setCategory(ProcessTypeEnum.OUT.getIndex());
+            asset.setStatus(AssetStatusEnum.READY.getName());
+            assetMapper.insertSelective(asset);
+            return;
+        }
+        // 如果是确认转交则更新资产状态
+        if (taskHandleDto.getOperateType() == OperateTypeEnum.CONFIRM.getIndex()) {
+            asset.setStatus(AssetStatusEnum.OCCUPIED.getName());
+            assetMapper.updateAssetStatusById(asset);
+            return;
+        }
+        // 如果是新资产申请被拒绝，则更新资产状态
+        if (taskHandleDto.getOperateType() == OperateTypeEnum.REJECT.getIndex()) {
+            asset.setStatus(AssetStatusEnum.REJECTED.getName());
+            assetMapper.updateAssetStatusById(asset);
+            return;
         }
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void claimAndHandleOrder(TaskHandleDto taskHandleDto, String candidateUser) {
-        // 获取待办
+    public void claimAndHandleTask(TaskHandleDto taskHandleDto) {
+        // 获取待办任务
         TaskDto taskDto = getCandidateTskInfoByAssetIdAndUsername(taskHandleDto.getId(), null);
-        // 接单操作
+        // 接受用户任务
         Hr user = UserInfoUtils.getLoginedUser();
         taskService.claim(taskDto.getTaskId(), user.getName());
         logger.info("[end]接单，工单ID:" + taskHandleDto.getId() + ";用户账号：" + user.getName());
-        // 处理工单
-        this.handleOrder(taskHandleDto, candidateUser);
+        // 处理资产操作
+        this.handleTask(taskHandleDto);
     }
 
     /**
@@ -212,7 +238,7 @@ public class TaskOperateService {
             for (FormProperty formProperty : taskForm) {
                 formId = formProperty.getId();
                 // operateType字段设置
-                if (formId.equalsIgnoreCase(WorkflowConstant.WORKFLOW_PARAM_KEY_OPERATE_TYPE)) {
+                if (formId.equalsIgnoreCase(WorkflowConstant.OPERATE_TYPE)) {
                     this.initOperateTypes(operateInfoDto, formProperty);
                 }
                 // 转交组/人

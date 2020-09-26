@@ -4,8 +4,7 @@
     <startEvent id="startEvent1" name="start"></startEvent>
     <userTask id="userTask1" name="教师审批" activiti:candidateGroups="6">
       <extensionElements>
-        <activiti:formProperty id="operateType" name="拒绝/通过" type="string" expression="{&quot;ops&quot;:[{&quot;operateType&quot;:2,&quot;operate&quot;:&quot;同意&quot;},{&quot;operateType&quot;:3,&quot;operate&quot;:&quot;拒绝&quot;}]}" required="true"></activiti:formProperty>
-        <activiti:formProperty id="candidateGroupsAndUsers" name="下一审批人" type="string" expression="{&quot;candidateGroups&quot;:[{&quot;id&quot;:6,&quot;name&quot;:&quot;ROLE_admin&quot;,&quot;nameZh&quot;:&quot;系统管理员&quot;}]}" required="true"></activiti:formProperty>
+        <activiti:formProperty id="operateType" name="拒绝/通过" type="string" expression="{&quot;ops&quot;:[{&quot;operateType&quot;:2,&quot;operate&quot;:&quot;批准采购&quot;},{&quot;operateType&quot;:3,&quot;operate&quot;:&quot;拒绝&quot;}]}" required="true"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <userTask id="userTask2" name="财务入账" activiti:candidateGroups="6">
@@ -17,15 +16,11 @@
     <exclusiveGateway id="sid-EC6973C7-BAF7-4C70-AE58-596047FDD865"></exclusiveGateway>
     <sequenceFlow id="flow1" sourceRef="startEvent1" targetRef="userTask1"></sequenceFlow>
     <sequenceFlow id="flow2" sourceRef="userTask1" targetRef="sid-EC6973C7-BAF7-4C70-AE58-596047FDD865"></sequenceFlow>
-    <sequenceFlow id="flow3" name="同意" sourceRef="sid-EC6973C7-BAF7-4C70-AE58-596047FDD865" targetRef="userTask2">
+    <sequenceFlow id="flow3" name="批准" sourceRef="sid-EC6973C7-BAF7-4C70-AE58-596047FDD865" targetRef="userTask2">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${operateType=='2'}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow4" name="拒绝" sourceRef="sid-EC6973C7-BAF7-4C70-AE58-596047FDD865" targetRef="sid-AE3BD4E9-8C86-4CDC-83D7-E649A64510A4">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${operateType=='3'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="flow5" name="入库" sourceRef="userTask2" targetRef="sid-AE3BD4E9-8C86-4CDC-83D7-E649A64510A4">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${operateType=='4'}]]></conditionExpression>
-    </sequenceFlow>
+    <sequenceFlow id="flow5" name="入库" sourceRef="userTask2" targetRef="sid-AE3BD4E9-8C86-4CDC-83D7-E649A64510A4"></sequenceFlow>
+    <sequenceFlow id="flow4" name="拒绝" sourceRef="sid-EC6973C7-BAF7-4C70-AE58-596047FDD865" targetRef="sid-AE3BD4E9-8C86-4CDC-83D7-E649A64510A4"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_assetIn">
     <bpmndi:BPMNPlane bpmnElement="assetIn" id="BPMNPlane_assetIn">

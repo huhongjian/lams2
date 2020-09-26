@@ -1,23 +1,18 @@
 package com.bupt.lams.controller.asset;
 
 import com.bupt.lams.constants.AssetStatusEnum;
-import com.bupt.lams.constants.WorkflowConstant;
+import com.bupt.lams.constants.ProcessTypeEnum;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.*;
 import com.bupt.lams.utils.POIUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 资产信息相关
@@ -41,12 +36,14 @@ public class AssetBasicController {
     DepartmentService departmentService;
 
     @GetMapping("/get")
-    public RespPageBean getAssetByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Asset asset, Date[] beginDateScope) {
+    public RespPageBean getAssetInByPage(@RequestParam Integer category, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Asset asset, Date[] beginDateScope) {
+        asset.setCategory(category);
         return assetService.getAssetByPage(page, size, asset, beginDateScope);
     }
 
     @PostMapping("/add")
     public RespBean addAsset(@RequestBody Asset asset) {
+        asset.setCategory(ProcessTypeEnum.IN.getIndex());
         asset.setChargerByApplicant();
         asset.setStatus(AssetStatusEnum.CREATE.getName());
         asset.setApplyDate(new Date());

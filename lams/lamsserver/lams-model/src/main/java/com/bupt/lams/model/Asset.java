@@ -10,6 +10,10 @@ import java.util.Date;
  */
 public class Asset implements Serializable {
     private Long id;
+    /**
+     * 资产流程类型：1.入库，2.出库
+     */
+    private int category;
     private String type;
     private Long did;
     private String brand;
@@ -64,6 +68,14 @@ public class Asset implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
     }
 
     public String getType() {

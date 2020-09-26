@@ -3,6 +3,7 @@
 <mapper namespace="com.bupt.lams.mapper.AssetMapper">
     <resultMap id="BaseResultMap" type="com.bupt.lams.model.Asset">
         <id column="id" property="id"/>
+        <result column="category" property="category"/>
         <result column="type" property="type"/>
         <result column="did" property="did"/>
         <result column="brand" property="brand"/>
@@ -11,13 +12,13 @@
         <result column="applicant" property="applicant"/>
         <result column="applicant_email" property="applicantEmail"/>
         <result column="applicant_phone" property="applicantPhone"/>
-        <result column="readyDate" property="readyDate" jdbcType="DATE"/>
+        <result column="readyDate" property="readyDate"/>
         <result column="charger" property="charger"/>
         <result column="charger_email" property="chargerEmail"/>
-        <result column="charger_phone" property="chargerPhone" jdbcType="VARCHAR"/>
-        <result column="applyDate" property="applyDate" jdbcType="DATE"/>
-        <result column="duration" property="duration" jdbcType="INTEGER"/>
-        <result column="reason" property="reason" jdbcType="VARCHAR"/>
+        <result column="charger_phone" property="chargerPhone"/>
+        <result column="applyDate" property="applyDate"/>
+        <result column="duration" property="duration"/>
+        <result column="reason" property="reason"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, type, did, brand, status, price, applicant, applicant_email, applicant_phone, readyDate, charger, charger_email, charger_phone, applyDate, duration, reason
@@ -26,20 +27,23 @@
         select a.*
         from asset a
         <where>
+            <if test="asset.category !=null and asset.category!=''">
+                and a.category  = #{asset.category}
+            </if>
             <if test="asset.type !=null and asset.type!=''">
-                and asset.type like concat('%',#{asset.type},'%')
+                and a.type like concat('%',#{asset.type},'%')
             </if>
             <if test="asset.brand !=null and asset.brand!=''">
-                and asset.brand like concat('%',#{asset.brand},'%')
+                and a.brand like concat('%',#{asset.brand},'%')
             </if>
             <if test="asset.status !=null and asset.status!=''">
-                and asset.status like concat('%',#{asset.status},'%')
+                and a.status like concat('%',#{asset.status},'%')
             </if>
             <if test="asset.charger !=null and asset.charger!=''">
-                and asset.charger like concat('%',#{asset.charger},'%')
+                and a.charger like concat('%',#{asset.charger},'%')
             </if>
             <if test="beginDateScope !=null">
-                and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+                and a.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
             </if>
         </where>
         <if test="page !=null and size!=null">
@@ -50,21 +54,24 @@
         select count(*) from asset a
         <where>
             <if test="asset!=null">
+                <if test="asset.category !=null and asset.category!=''">
+                    and a.category  = #{asset.category}
+                </if>
                 <if test="asset.type !=null and asset.type!=''">
-                    and asset.type like concat('%',#{asset.type},'%')
+                    and a.type like concat('%',#{asset.type},'%')
                 </if>
                 <if test="asset.brand !=null and asset.brand!=''">
-                    and asset.brand like concat('%',#{asset.brand},'%')
+                    and a.brand like concat('%',#{asset.brand},'%')
                 </if>
                 <if test="asset.status !=null and asset.status!=''">
-                    and asset.status like concat('%',#{asset.status},'%')
+                    and a.status like concat('%',#{asset.status},'%')
                 </if>
                 <if test="asset.charger !=null and asset.owner!=''">
-                    and asset.charger like concat('%',#{asset.charger},'%')
+                    and a.charger like concat('%',#{asset.charger},'%')
                 </if>
             </if>
             <if test="beginDateScope !=null">
-                and e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+                and a.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
             </if>
         </where>
     </select>
@@ -82,8 +89,8 @@
     <insert id="insertSelective" parameterType="com.bupt.lams.model.Asset" useGeneratedKeys="true" keyProperty="id">
         insert into asset
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
+            <if test="category !=null and category!=''">
+                category,
             </if>
             <if test="type != null">
                 type,
@@ -132,8 +139,8 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id},
+            <if test="category != null">
+                #{category},
             </if>
             <if test="type != null">
                 #{type},

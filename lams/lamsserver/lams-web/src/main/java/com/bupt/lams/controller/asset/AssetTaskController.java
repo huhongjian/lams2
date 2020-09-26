@@ -50,35 +50,26 @@ public class AssetTaskController {
     @ResponseBody
     public RespBean getCandidateTaskBranchInfo(@RequestParam Long id) {
         RespBean response = new RespBean();
-        WorkflowTaskOperateInfoDto opInfoDto = new WorkflowTaskOperateInfoDto();
+        WorkflowTaskOperateInfoDto opInfoDto;
+        Hr user = UserInfoUtils.getLoginedUser();
+        // 1. 获取资产信息
+        Asset asset = assetService.selectByPrimaryKey(id);
+        if (asset == null) {
+            response.setStatus(500);
+            response.setMsg("指定工单不存在！");
+            return response;
+        }
         try {
-            Hr user = UserInfoUtils.getLoginedUser();
-            // 1. 获取工单
-            Asset asset = assetService.selectByPrimaryKey(id);
-            if (asset == null) {
-                response.setStatus(500);
-                response.setMsg("指定工单不存在！");
-                return response;
-            }
-            // 如果当前用户是工单创建人并且工单不是关闭状态
-            if (asset.getCharger().equals(user.getName()) && !asset.getStatus().equals(AssetStatusEnum.READY.getIndex())) {
-                try {
-                    opInfoDto = taskOperateService.getCandidateOrAssignedOrderWorkflowTaskOperateInfo(user.getName(), id);
-                } catch (RuntimeException e) {
-                    logger.info("获取操作信息失败" + e.getMessage(), e);
-                } finally {
-                    // 撤销操作
-                    WorkflowOperate cancel = new WorkflowOperate();
-                    cancel.setOperateType(OperateTypeEnum.CANCEL.getIndex());
-                    cancel.setOperate(OperateTypeEnum.CANCEL.getName());
-                    opInfoDto.getOperateList().add(cancel);
-                }
-            } else {
-                // 2. 根据查询来源设置操作信息
-                opInfoDto = taskOperateService.getCandidateOrAssignedOrderWorkflowTaskOperateInfo(user.getName(), id);
-            }
+            opInfoDto = taskOperateService.getCandidateOrAssignedOrderWorkflowTaskOperateInfo(user.getName(), id);
         } catch (Exception e) {
             opInfoDto = new WorkflowTaskOperateInfoDto();
+        }
+        // 如果当前用户是工单创建人并且工单不是终止状态
+        if (asset.getCharger().equals(user.getName()) && !asset.getStatus().equals(AssetStatusEnum.READY.getName())) {
+            WorkflowOperate cancel = new WorkflowOperate();
+            cancel.setOperateType(OperateTypeEnum.CANCEL.getIndex());
+            cancel.setOperate(OperateTypeEnum.CANCEL.getName());
+            opInfoDto.getOperateList().add(cancel);
         }
         response.setObj(opInfoDto);
         response.setStatus(200);

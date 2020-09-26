@@ -1,10 +1,10 @@
 package com.bupt.lams.controller.asset;
 
-import com.bupt.lams.constants.AssetStatusEnum;
-import com.bupt.lams.constants.ProcessTypeEnum;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.*;
 import com.bupt.lams.utils.POIUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +20,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/asset/basic")
 public class AssetBasicController {
+
+    private Logger logger = LoggerFactory.getLogger(AssetBasicController.class);
+
     @Autowired
     EmployeeService employeeService;
     @Autowired
@@ -43,15 +46,25 @@ public class AssetBasicController {
 
     @PostMapping("/add")
     public RespBean addAsset(@RequestBody Asset asset) {
-        asset.setCategory(ProcessTypeEnum.IN.getIndex());
-        asset.setChargerByApplicant();
-        asset.setStatus(AssetStatusEnum.CREATE.getName());
-        asset.setApplyDate(new Date());
         Integer res = assetService.addAssetIn(asset);
         if (res == 1) {
             return RespBean.ok("资产申请采购成功！");
         }
         return RespBean.error("资产申请采购失败！");
+    }
+
+    @PostMapping("/borrow")
+    public RespBean borrowAsset(@RequestBody Asset asset) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        try {
+            assetService.borrowAsset(asset);
+        } catch (Exception e) {
+            logger.error("资产借出异常！", e);
+            response.setStatus(500);
+            response.setMsg("资产借出异常，请稍后重试");
+        }
+        return response;
     }
 
     @DeleteMapping("/{id}")

@@ -54,7 +54,7 @@ public class TaskOperateService {
         Asset asset = assetMapper.selectByPrimaryKey(record.getAid());
         // 1. 查找关联工作流definition
         String workflowKey = operateTypeWorkflowService.selectWorkflowKeyByOperateType(record.getType());
-        String procInstId = processManagerService.submitStartFormDataByProcessDefinitionKey(workflowKey, asset.getId().toString(), startParamMap, asset.getApplicant());
+        String procInstId = processManagerService.submitStartFormDataByProcessDefinitionKey(workflowKey, asset.getId().toString(), startParamMap, asset.getCharger());
         // 2. 保存资产工作流关联关系
         AssetWorkflow assetWorkflow = new AssetWorkflow();
         assetWorkflow.setAid(asset.getId());
@@ -63,7 +63,7 @@ public class TaskOperateService {
         assetWorkflowService.saveAssetWorkflow(assetWorkflow);
         TaskDto taskDto = getCandidateTskInfoByAssetIdAndUsername(record.getAid(), null);
         Map<String, String> variablesMap = new HashMap<>();
-        variablesMap.put("nextUser", record.getOperator());
+        variablesMap.put(WorkflowConstant.NEXT_USER, record.getOperator());
         taskService.setVariables(taskDto.getTaskId(), variablesMap);
     }
 

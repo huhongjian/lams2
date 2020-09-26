@@ -12,7 +12,8 @@ public enum OperateTypeEnum {
     CONFIRM("确认转交", 6),
     CANCEL("撤回", 7),
     REFUSE("拒绝", 8),
-    RETURN("归还", 9);
+    RETURN("归还", 9),
+    BORROW("借用", 10);
 
     private String name;
     private int index;

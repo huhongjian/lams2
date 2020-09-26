@@ -2,9 +2,14 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
   <process id="assetOut" name="assetOut" isExecutable="true">
     <startEvent id="startEvent1" name="start"></startEvent>
-    <userTask id="sid-D8107108-196E-4B3B-8E78-301C237CBB11" name="管理员审批" activiti:candidateGroups="6"></userTask>
+    <userTask id="sid-D8107108-196E-4B3B-8E78-301C237CBB11" name="管理员审批" activiti:candidateGroups="6">
+      <extensionElements>
+        <activiti:formProperty id="operateType" name="确认转交/拒绝" type="string" expression="{&quot;ops&quot;:[{&quot;operateType&quot;:6,&quot;operate&quot;:&quot;确认转交&quot;},{&quot;operateType&quot;:8,&quot;operate&quot;:&quot;拒绝&quot;}]}" required="true"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
     <userTask id="sid-DA0B81E6-0675-4896-98A2-79E29847D2DE" name="学生借用" activiti:assignee="${nextUser}">
       <extensionElements>
+        <activiti:formProperty id="operateType" name="转交/归还" type="string" expression="{&quot;ops&quot;:[{&quot;operateType&quot;:5,&quot;operate&quot;:&quot;转交&quot;},{&quot;operateType&quot;:9,&quot;operate&quot;:&quot;归还&quot;}]}" required="true"></activiti:formProperty>
         <modeler:initiator-can-complete xmlns:modeler="http://activiti.com/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
       </extensionElements>
     </userTask>
@@ -20,8 +25,8 @@
     <sequenceFlow id="sid-65FDFAA9-6588-4A42-AE1C-D8444266C032" name="转交" sourceRef="sid-1935556A-44FD-4551-8A33-CD2641479641" targetRef="sid-DA0B81E6-0675-4896-98A2-79E29847D2DE">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${operateType=='5'}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="sid-BFCFB609-DE9A-4D4C-B07C-5E10D9CE41BD" name="归还" sourceRef="sid-1935556A-44FD-4551-8A33-CD2641479641" targetRef="sid-4238BE96-6BD7-4491-A5CE-4FF151DD7538"></sequenceFlow>
     <sequenceFlow id="sid-2FE9E70E-3DA4-42DE-90F2-5EA8F769E2CE" name="拒绝" sourceRef="sid-1970E711-9200-4165-8B30-5469BF3547BD" targetRef="sid-4238BE96-6BD7-4491-A5CE-4FF151DD7538"></sequenceFlow>
+    <sequenceFlow id="sid-BFCFB609-DE9A-4D4C-B07C-5E10D9CE41BD" name="归还" sourceRef="sid-1935556A-44FD-4551-8A33-CD2641479641" targetRef="sid-4238BE96-6BD7-4491-A5CE-4FF151DD7538"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_assetOut">
     <bpmndi:BPMNPlane bpmnElement="assetOut" id="BPMNPlane_assetOut">

@@ -28,7 +28,7 @@
         from asset a
         <where>
             <if test="asset.category !=null and asset.category!=''">
-                and a.category  = #{asset.category}
+                and a.category = #{asset.category}
             </if>
             <if test="asset.type !=null and asset.type!=''">
                 and a.type like concat('%',#{asset.type},'%')
@@ -55,7 +55,7 @@
         <where>
             <if test="asset!=null">
                 <if test="asset.category !=null and asset.category!=''">
-                    and a.category  = #{asset.category}
+                    and a.category = #{asset.category}
                 </if>
                 <if test="asset.type !=null and asset.type!=''">
                     and a.type like concat('%',#{asset.type},'%')
@@ -85,6 +85,61 @@
         update asset a
         set a.status = #{status}
         where a.id = #{id}
+    </update>
+    <update id="updateAsset" parameterType="com.bupt.lams.model.Asset">
+        update asset
+        set
+        <if test="category !=null and category!=''">
+            category = #{category},
+        </if>
+        <if test="type != null">
+            type = #{type},
+        </if>
+        <if test="did != null">
+            did = #{did},
+        </if>
+        <if test="brand != null">
+            brand = #{brand},
+        </if>
+        <if test="status != null">
+            status = #{status},
+        </if>
+        <if test="price != null">
+            price = #{price},
+        </if>
+        <if test="applicant != null">
+            applicant = #{applicant},
+        </if>
+        <if test="applicantEmail != null">
+            applicant_email = #{applicantEmail},
+        </if>
+        <if test="applicantPhone != null">
+            applicant_phone = #{applicantPhone},
+        </if>
+        <if test="readyDate != null">
+            readyDate = #{readyDate},
+        </if>
+        <if test="charger != null">
+            charger = #{charger},
+        </if>
+        <if test="chargerEmail != null">
+            charger_email = #{chargerEmail},
+        </if>
+        <if test="chargerPhone != null">
+            charger_phone = #{chargerPhone},
+        </if>
+        <if test="applyDate != null">
+            applyDate = #{applyDate},
+        </if>
+        <if test="duration != null">
+            duration = #{duration},
+        </if>
+        <if test="reason != null">
+            reason = #{reason}
+        </if>
+        <where>
+            id = #{id}
+        </where>
     </update>
     <insert id="insertSelective" parameterType="com.bupt.lams.model.Asset" useGeneratedKeys="true" keyProperty="id">
         insert into asset

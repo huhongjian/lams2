@@ -156,7 +156,7 @@
             align="left"
             width="90">
           <template slot-scope="scope">
-            <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
+            <el-button size="mini" @click="getCandidateBranchInfo(scope.row)">{{ scope.row.id }}</el-button>
           </template>
         </el-table-column>
         <el-table-column
@@ -210,7 +210,7 @@
         </el-table-column>
         <el-table-column
             fixed="right"
-            width="200"
+            width="100"
             label="操作">
           <template slot-scope="scope">
             <el-button @click="showEditEmpView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
@@ -335,10 +335,10 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible2 = false">取 消</el-button>
     <template v-for="op in candidateBranches.operateList">
       <el-button type="primary" @click="handle(op)">{{ op.operate }}</el-button>
     </template>
+        <el-button @click="dialogVisible2 = false">取 消</el-button>
   </span>
     </el-dialog>
   </div>
@@ -378,15 +378,7 @@ export default {
       joblevels: [],
       politicsstatus: [],
       positions: [],
-      candidateBranches: {
-        operateList: [
-          {
-            operateType: 2,
-            operate: '同意'
-          }
-        ],
-        candidateUser: null
-      },
+      candidateBranches: {},
       taskHandleDto: {
         id: null,
         operateType: null,
@@ -532,13 +524,13 @@ export default {
     showDetailView(data) {
       this.title = '资产详情';
       this.asset = data;
-      this.getCandidateBranchInfo(data);
       this.dialogVisible2 = true;
     },
     getCandidateBranchInfo(data) {
       this.getRequest('/asset/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
         if (resp) {
           this.candidateBranches = resp.obj;
+          this.showDetailView(data);
         }
       });
     },
@@ -548,6 +540,7 @@ export default {
       this.taskHandleDto.candidateUser = this.candidateBranches.candidateUser;
       this.postRequest("/asset/task/handleTask", this.taskHandleDto).then(resp => {
         if (resp) {
+          this.dialogVisible2 = false;
           this.initEmps();
         }
       })

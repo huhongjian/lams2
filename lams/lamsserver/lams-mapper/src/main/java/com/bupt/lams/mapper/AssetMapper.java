@@ -16,5 +16,7 @@ public interface AssetMapper {
 
     void updateAssetStatusById(Asset asset);
 
+    void updateAsset(Asset asset);
+
     int insertSelective(Asset assetIn);
 }

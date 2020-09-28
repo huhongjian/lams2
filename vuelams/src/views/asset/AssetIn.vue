@@ -234,21 +234,23 @@
         :visible.sync="dialogVisible"
         width="80%">
       <div>
-        <el-form :model="asset" :rules="rules" ref="empForm">
+        <el-form :model="asset" :rules="rules" ref="assetForm">
           <el-row>
             <el-col :span="6">
               <el-form-item label="品牌:" prop="brand">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="asset.brand"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="6">
               <el-form-item label="类型:" prop="type">
-                <el-radio-group v-model="asset.type">
-                  <el-radio label="手机">手机</el-radio>
-                  <el-radio label="主机">主机</el-radio>
-                  <el-radio label="交换机">交换机</el-radio>
-                  <el-radio label="测距仪">测距仪</el-radio>
-                </el-radio-group>
+                <el-select v-model="asset.type" placeholder="请选择">
+                  <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -265,20 +267,88 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="申请人电话:" prop="applicantPhone">
+              <el-form-item label="电话:" prop="applicantPhone">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                           v-model="asset.applicantPhone"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="申请人邮件:" prop="applicantEmail">
+              <el-form-item label="邮件:" prop="applicantEmail">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                           v-model="asset.applicantEmail"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="10">
-              <el-form-item label="申请理由:" prop="reason">
+            <el-col :span="20">
+              <el-form-item label="理由:" prop="reason">
                 <el-input size="mini" style="width: 300px" prefix-icon="el-icon-edit" v-model="asset.reason"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <el-form v-show="asset.type=='手机'" :model="mobile" :rules="rules" ref="assetForm">
+          <el-row>
+            <el-col :span="6">
+              <el-form-item label="内存:" prop="brand">
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                          v-model="mobile.memory"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="屏幕尺寸:" prop="brand">
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                          v-model="mobile.screenSize"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <el-form v-show="asset.type=='交换机'" :model="switchData" :rules="rules" ref="assetForm">
+          <el-row>
+            <el-col :span="6">
+              <el-form-item label="接口数:" prop="brand">
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                          v-model="switchData.nums"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="类型:" prop="brand">
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                          v-model="switchData.type"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <el-form v-show="asset.type=='主机'" :model="pc" :rules="rules" ref="assetForm">
+          <el-row>
+            <el-col :span="6">
+              <el-form-item label="cpu:" prop="brand">
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="pc.cpu"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="内存:" prop="brand">
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="pc.memory"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <el-form v-show="asset.type=='测距仪'" :model="rangeData" :rules="rules" ref="assetForm">
+          <el-row>
+            <el-col :span="6">
+              <el-form-item label="精度:" prop="brand">
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                          v-model="rangeData.precision"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="距离:" prop="brand">
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                          v-model="rangeData.distance"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="方式:" prop="brand">
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                          v-model="rangeData.methods"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -294,7 +364,7 @@
         :visible.sync="dialogVisible2"
         width="80%">
       <div>
-        <el-form :model="asset" :rules="rules" ref="empForm">
+        <el-form :model="asset" :rules="rules" ref="assetForm">
           <el-row>
             <el-col :span="6">
               <el-form-item label="品牌:" prop="brand">
@@ -319,17 +389,17 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="申请人电话:" prop="applicantPhone">
+              <el-form-item label="电话:" prop="applicantPhone">
                 {{ asset.applicantPhone }}
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="申请人邮件:" prop="applicantEmail">
+              <el-form-item label="邮件:" prop="applicantEmail">
                 {{ asset.applicantEmail }}
               </el-form-item>
             </el-col>
-            <el-col :span="10">
-              <el-form-item label="申请理由:" prop="reason">{{ asset.reason }}</el-form-item>
+            <el-col :span="6">
+              <el-form-item label="理由:" prop="reason">{{ asset.reason }}</el-form-item>
             </el-col>
           </el-row>
         </el-form>
@@ -369,6 +439,7 @@ export default {
       popVisible: false,
       popVisible2: false,
       dialogVisible: false,
+      // 详情页可见性
       dialogVisible2: false,
       total: 0,
       page: 1,
@@ -386,20 +457,17 @@ export default {
       },
       tiptopDegrees: ['本科', '大专', '硕士', '博士', '高中', '初中', '小学', '其他'],
       options: [{
-        value: '选项1',
-        label: '黄金糕'
+        value: '手机',
+        label: '手机'
       }, {
-        value: '选项2',
-        label: '双皮奶'
+        value: '主机',
+        label: '主机'
       }, {
-        value: '选项3',
-        label: '蚵仔煎'
+        value: '交换机',
+        label: '交换机'
       }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
+        value: '测距仪',
+        label: '测距仪'
       }],
       inputDepName: '所属部门',
       asset: {
@@ -407,10 +475,28 @@ export default {
         brand: "华为",
         type: "手机",
         price: "4000",
-        applicant: "胡宏建",
+        applicant: "系统管理员",
         applicantPhone: "188",
         applicantEmail: "29411",
-        reason: "测试"
+        reason: "测试",
+        adv: null
+      },
+      mobile: {
+        memory: '8G',
+        screenSize: '5英寸'
+      },
+      pc: {
+        cpu: null,
+        memory: null
+      },
+      switchData: {
+        nums: null,
+        type: null
+      },
+      rangeData: {
+        precision: null,
+        distance: null,
+        methods: null
       },
       defaultProps: {
         children: 'children',
@@ -564,10 +650,10 @@ export default {
       });
     },
     doAddAsset() {
-      if (this.emp.id) {
-        this.$refs['empForm'].validate(valid => {
+      if (this.asset.id) {
+        this.$refs['assetForm'].validate(valid => {
           if (valid) {
-            this.putRequest("/employee/basic/", this.emp).then(resp => {
+            this.putRequest("/asset/basic/edit", this.asset).then(resp => {
               if (resp) {
                 this.dialogVisible = false;
                 this.initEmps();
@@ -576,8 +662,17 @@ export default {
           }
         });
       } else {
-        this.$refs['empForm'].validate(valid => {
+        this.$refs['assetForm'].validate(valid => {
           if (valid) {
+            if (this.asset.type == '手机') {
+              this.asset.adv = this.mobile;
+            } else if (this.asset.type == '主机') {
+              this.asset.adv = this.pc;
+            } else if (this.asset.type == '交换机') {
+              this.asset.adv = this.switchData;
+            } else {
+              this.asset.adv = this.rangeData;
+            }
             this.postRequest("/asset/basic/add", this.asset).then(resp => {
               if (resp) {
                 this.dialogVisible = false;
@@ -665,7 +760,7 @@ export default {
     },
     showAddEmpView() {
       this.emptyEmp();
-      this.title = '添加员工';
+      this.title = '资产采购申请';
       this.getMaxWordID();
       this.dialogVisible = true;
     },

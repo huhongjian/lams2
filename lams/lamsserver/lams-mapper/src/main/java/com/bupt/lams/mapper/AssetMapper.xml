@@ -19,9 +19,10 @@
         <result column="applyDate" property="applyDate"/>
         <result column="duration" property="duration"/>
         <result column="reason" property="reason"/>
+        <result column="adv" property="adv" typeHandler="com.bupt.lams.mybatis.JsonToObjectTypeHandler"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, type, did, brand, status, price, applicant, applicant_email, applicant_phone, readyDate, charger, charger_email, charger_phone, applyDate, duration, reason
+    id, type, did, brand, status, price, applicant, applicant_email, applicant_phone, readyDate, charger, charger_email, charger_phone, applyDate, duration, reason, adv
   </sql>
     <select id="getAssetByPage" resultMap="BaseResultMap">
         select a.*
@@ -135,7 +136,10 @@
             duration = #{duration},
         </if>
         <if test="reason != null">
-            reason = #{reason}
+            reason = #{reason},
+        </if>
+        <if test="adv != null">
+            adv = #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler}
         </if>
         <where>
             id = #{id}
@@ -192,6 +196,9 @@
             <if test="reason != null">
                 reason,
             </if>
+            <if test="adv != null">
+                adv,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="category != null">
@@ -241,6 +248,9 @@
             </if>
             <if test="reason != null">
                 #{reason},
+            </if>
+            <if test="adv != null">
+                #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler},
             </if>
         </trim>
     </insert>

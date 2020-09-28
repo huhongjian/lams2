@@ -75,6 +75,7 @@
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.3" level="project" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.47" level="project" />
+    <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.8" level="project" />
     <orderEntry type="library" name="Maven: org.activiti:activiti-spring-boot-starter-basic:6.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.activiti:activiti-engine:6.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.activiti:activiti-bpmn-converter:6.0.0" level="project" />

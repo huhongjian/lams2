@@ -75,7 +75,7 @@ public class AssetBasicController {
         return RespBean.error("删除失败!");
     }
 
-    @PutMapping("/")
+    @PutMapping("/edit")
     public RespBean updateEmp(@RequestBody Employee employee) {
         if (employeeService.updateEmp(employee) == 1) {
             return RespBean.ok("更新成功!");

@@ -61,6 +61,7 @@
       </template>
     </div>
     <span slot="footer" class="dialog-footer">
+      <el-button v-if="asset.status=='已入库'&&out" type="primary" @click="borrow()">借用</el-button>
     <template v-for="op in candidateBranches.operateList">
       <el-button type="primary" @click="handle(op)">{{ op.operate }}</el-button>
     </template>
@@ -72,7 +73,7 @@
 <script>
 export default {
   name: "AssetDetail",
-  props: ['asset', 'title', 'dialogVisible2', 'candidateBranches', 'rules'],
+  props: ['out', 'asset', 'title', 'dialogVisible2', 'candidateBranches', 'rules'],
   data() {
     return {
       taskHandleDto: {
@@ -93,7 +94,15 @@ export default {
           this.initEmps();
         }
       })
-    }
+    },
+    borrow() {
+      this.postRequest("/asset/basic/borrow", this.asset).then(resp => {
+        if (resp) {
+          this.initEmps();
+          this.$emit('close');
+        }
+      });
+    },
   }
 }
 </script>

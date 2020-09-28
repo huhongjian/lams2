@@ -406,11 +406,6 @@ export default {
       politicsstatus: [],
       positions: [],
       candidateBranches: {},
-      taskHandleDto: {
-        id: null,
-        operateType: null,
-        candidateUser: null
-      },
       tiptopDegrees: ['本科', '大专', '硕士', '博士', '高中', '初中', '小学', '其他'],
       options: [{
         value: '手机',
@@ -513,7 +508,7 @@ export default {
     exportData() {
       window.open('/employee/basic/export', '_parent');
     },
-    emptyEmp() {
+    emptyAsset() {
       this.asset = {
         id: "",
         brand: "华为",
@@ -664,7 +659,7 @@ export default {
       this.initEmps('advanced');
     },
     showAddEmpView() {
-      this.emptyEmp();
+      this.emptyAsset();
       this.title = '资产采购申请';
       this.getMaxWordID();
       this.dialogVisible = true;

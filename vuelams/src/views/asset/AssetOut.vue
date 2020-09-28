@@ -460,67 +460,20 @@
     <el-button type="primary" @click="doAddEmp">确 定</el-button>
   </span>
     </el-dialog>
-    <el-dialog
-        :title="title"
-        :visible.sync="dialogVisible2"
-        width="80%">
-      <div>
-        <el-form :model="asset" :rules="rules" ref="empForm">
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="品牌:" prop="brand">
-                {{ asset.brand }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="类型:" prop="type">
-                {{ asset.type }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="价格:" prop="price">
-                {{ asset.price }}
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="申请人:" prop="applicant">
-                {{ asset.applicant }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="申请人电话:" prop="applicantPhone">
-                {{ asset.applicantPhone }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="申请人邮件:" prop="applicantEmail">
-                {{ asset.applicantEmail }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item label="申请理由:" prop="reason">{{ asset.reason }}</el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button v-if="asset.status=='已入库'" type="primary" @click="borrow()">借用</el-button>
-    <template v-for="op in candidateBranches.operateList">
-      <el-button type="primary" @click="handle(op)">{{ op.operate }}</el-button>
-    </template>
-        <el-button @click="dialogVisible2 = false">取 消</el-button>
-  </span>
-    </el-dialog>
+    <AssetDetail v-on:close="dialogVisible2 = false" :out="out" :dialogVisible2="dialogVisible2" :asset="asset"
+                 :title="title"
+                 :candidateBranches='candidateBranches' :rules='rules'></AssetDetail>
   </div>
 </template>
 
 <script>
+import AssetDetail from '../../components/sys/basic/AssetDetail';
+
 export default {
   name: "EmpBasic",
   data() {
     return {
+      out: true,
       searchValue: {
         politicId: null,
         nationId: null,
@@ -557,32 +510,17 @@ export default {
         candidateUser: null
       },
       tiptopDegrees: ['本科', '大专', '硕士', '博士', '高中', '初中', '小学', '其他'],
-      options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
       inputDepName: '所属部门',
       asset: {
         id: "",
         brand: "华为",
         type: "手机",
         price: "4000",
-        applicant: "胡宏建",
+        applicant: "系统管理员",
         applicantPhone: "188",
         applicantEmail: "29411",
-        reason: "测试"
+        reason: "测试",
+        adv: {}
       },
       defaultProps: {
         children: 'children',
@@ -627,6 +565,9 @@ export default {
       }
     }
   },
+  components: {
+    AssetDetail
+  },
   mounted() {
     this.initEmps();
     this.initData();
@@ -657,34 +598,17 @@ export default {
     exportData() {
       window.open('/employee/basic/export', '_parent');
     },
-    emptyEmp() {
-      this.emp = {
-        name: "",
-        gender: "",
-        birthday: "",
-        idCard: "",
-        wedlock: "",
-        nationId: 1,
-        nativePlace: "",
-        politicId: 13,
-        email: "",
-        phone: "",
-        address: "",
-        departmentId: null,
-        jobLevelId: 9,
-        posId: 29,
-        engageForm: "",
-        tiptopDegree: "",
-        specialty: "",
-        school: "",
-        beginDate: "",
-        workID: "",
-        contractTerm: 2,
-        conversionTime: "",
-        notworkDate: null,
-        beginContract: "",
-        endContract: "",
-        workAge: null
+    emptyAsset() {
+      this.asset = {
+        id: "",
+        brand: "华为",
+        type: "手机",
+        price: "4000",
+        applicant: "系统管理员",
+        applicantPhone: "188",
+        applicantEmail: "29411",
+        reason: "测试",
+        adv: {}
       }
       this.inputDepName = '';
     },
@@ -694,14 +618,6 @@ export default {
       this.emp = data;
       this.inputDepName = data.department.name;
       this.dialogVisible = true;
-    },
-    borrow() {
-      this.postRequest("/asset/basic/borrow", this.asset).then(resp => {
-        if (resp) {
-          this.initEmps();
-          this.dialogVisible2 = false;
-        }
-      });
     },
     showDetailView(data) {
       this.title = '资产详情';
@@ -715,18 +631,6 @@ export default {
           this.showDetailView(data);
         }
       });
-    }
-    ,
-    handle(data) {
-      this.taskHandleDto.id = this.asset.id;
-      this.taskHandleDto.operateType = data.operateType;
-      this.taskHandleDto.candidateUser = this.candidateBranches.candidateUser;
-      this.postRequest("/asset/task/handleTask", this.taskHandleDto).then(resp => {
-        if (resp) {
-          this.dialogVisible2 = false;
-          this.initEmps();
-        }
-      })
     }
     ,
     deleteEmp(data) {
@@ -855,13 +759,6 @@ export default {
     currentChange(currentPage) {
       this.page = currentPage;
       this.initEmps('advanced');
-    }
-    ,
-    showAddEmpView() {
-      this.emptyEmp();
-      this.title = '添加员工';
-      this.getMaxWordID();
-      this.dialogVisible = true;
     }
     ,
     initEmps(type) {

@@ -218,248 +218,8 @@
         </el-pagination>
       </div>
     </div>
-    <el-dialog
-        :title="title"
-        :visible.sync="dialogVisible"
-        width="80%">
-      <div>
-        <el-form :model="asset" :rules="rules" ref="empForm">
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="姓名:" prop="name">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="asset.name"
-                          placeholder="请输入员工姓名"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="5">
-              <el-form-item label="性别:" prop="gender">
-                <el-radio-group v-model="asset.gender">
-                  <el-radio label="男">男</el-radio>
-                  <el-radio label="女">女</el-radio>
-                </el-radio-group>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="出生日期:" prop="birthday">
-                <el-date-picker
-                    v-model="asset.birthday"
-                    size="mini"
-                    type="date"
-                    value-format="yyyy-MM-dd"
-                    style="width: 150px;"
-                    placeholder="出生日期">
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="7">
-              <el-form-item label="政治面貌:" prop="politicId">
-                <el-select v-model="asset.politicId" placeholder="政治面貌" size="mini" style="width: 200px;">
-                  <el-option
-                      v-for="item in politicsstatus"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="民族:" prop="nationId">
-                <el-select v-model="asset.nationId" placeholder="民族" size="mini" style="width: 150px;">
-                  <el-option
-                      v-for="item in nations"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="5">
-              <el-form-item label="籍贯:" prop="nativePlace">
-                <el-input size="mini" style="width: 120px" prefix-icon="el-icon-edit"
-                          v-model="asset.nativePlace" placeholder="请输入籍贯"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="电子邮箱:" prop="email">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-message"
-                          v-model="asset.email" placeholder="请输入电子邮箱"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="7">
-              <el-form-item label="联系地址:" prop="address">
-                <el-input size="mini" style="width: 200px" prefix-icon="el-icon-edit"
-                          v-model="asset.address" placeholder="请输入联系地址"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="职位:" prop="posId">
-                <el-select v-model="asset.posId" placeholder="职位" size="mini" style="width: 150px;">
-                  <el-option
-                      v-for="item in positions"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="5">
-              <el-form-item label="职称:" prop="jobLevelId">
-                <el-select v-model="asset.jobLevelId" placeholder="职称" size="mini" style="width: 150px;">
-                  <el-option
-                      v-for="item in joblevels"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="所属部门:" prop="departmentId">
-                <el-popover
-                    placement="right"
-                    title="请选择部门"
-                    width="200"
-                    trigger="manual"
-                    v-model="popVisible">
-                  <el-tree default-expand-all :data="allDeps" :props="defaultProps"
-                           @node-click="handleNodeClick"></el-tree>
-                  <div slot="reference"
-                       style="width: 150px;display: inline-flex;font-size: 13px;border: 1px solid #dedede;height: 26px;border-radius: 5px;cursor: pointer;align-items: center;padding-left: 8px;box-sizing: border-box"
-                       @click="showDepView">{{ inputDepName }}
-                  </div>
-                </el-popover>
-              </el-form-item>
-            </el-col>
-            <el-col :span="7">
-              <el-form-item label="电话号码:" prop="phone">
-                <el-input size="mini" style="width: 200px" prefix-icon="el-icon-phone"
-                          v-model="asset.phone" placeholder="电话号码"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="工号:" prop="workID">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                          v-model="asset.workID" placeholder="工号" disabled></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="5">
-              <el-form-item label="学历:" prop="tiptopDegree">
-                <el-select v-model="asset.tiptopDegree" placeholder="学历" size="mini"
-                           style="width: 150px;">
-                  <el-option
-                      v-for="item in tiptopDegrees"
-                      :key="item"
-                      :label="item"
-                      :value="item">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="毕业院校:" prop="school">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                          v-model="asset.school" placeholder="毕业院校名称"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="7">
-              <el-form-item label="专业名称:" prop="specialty">
-                <el-input size="mini" style="width: 200px" prefix-icon="el-icon-edit"
-                          v-model="asset.specialty" placeholder="请输入专业名称"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="入职日期:" prop="beginDate">
-                <el-date-picker
-                    v-model="asset.beginDate"
-                    size="mini"
-                    type="date"
-                    value-format="yyyy-MM-dd"
-                    style="width: 130px;"
-                    placeholder="入职日期">
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="转正日期:" prop="conversionTime">
-                <el-date-picker
-                    v-model="asset.conversionTime"
-                    size="mini"
-                    type="date"
-                    value-format="yyyy-MM-dd"
-                    style="width: 130px;"
-                    placeholder="转正日期">
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="合同起始日期:" prop="beginContract">
-                <el-date-picker
-                    v-model="asset.beginContract"
-                    size="mini"
-                    type="date"
-                    value-format="yyyy-MM-dd"
-                    style="width: 130px;"
-                    placeholder="合同起始日期">
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="合同终止日期:" prop="endContract">
-                <el-date-picker
-                    v-model="asset.endContract"
-                    size="mini"
-                    type="date"
-                    value-format="yyyy-MM-dd"
-                    style="width: 150px;"
-                    placeholder="合同终止日期">
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="8">
-              <el-form-item label="身份证号码:" prop="idCard">
-                <el-input size="mini" style="width: 180px" prefix-icon="el-icon-edit"
-                          v-model="asset.idCard" placeholder="请输入身份证号码"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="聘用形式:" prop="engageForm">
-                <el-radio-group v-model="asset.engageForm">
-                  <el-radio label="劳动合同">劳动合同</el-radio>
-                  <el-radio label="劳务合同">劳务合同</el-radio>
-                </el-radio-group>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="婚姻状况:" prop="wedlock">
-                <el-radio-group v-model="asset.wedlock">
-                  <el-radio label="已婚">已婚</el-radio>
-                  <el-radio label="未婚">未婚</el-radio>
-                  <el-radio label="离异">离异</el-radio>
-                </el-radio-group>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-      </div>
-      <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="doAddEmp">确 定</el-button>
-  </span>
-    </el-dialog>
+    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :asset="asset" :title="title"
+               :rules='rules'></AssetEdit>
     <AssetDetail v-on:close="dialogVisible2 = false" :out="out" :dialogVisible2="dialogVisible2" :asset="asset"
                  :title="title"
                  :candidateBranches='candidateBranches' :rules='rules'></AssetDetail>
@@ -467,7 +227,8 @@
 </template>
 
 <script>
-import AssetDetail from '../../components/sys/basic/AssetDetail';
+import AssetDetail from "@/components/sys/basic/AssetDetail";
+import AssetEdit from "@/components/sys/basic/AssetEdit";
 
 export default {
   name: "EmpBasic",
@@ -566,7 +327,8 @@ export default {
     }
   },
   components: {
-    AssetDetail
+    AssetDetail,
+    AssetEdit
   },
   mounted() {
     this.initEmps();
@@ -613,10 +375,8 @@ export default {
       this.inputDepName = '';
     },
     showEditEmpView(data) {
-      this.initPositions();
-      this.title = '编辑员工信息';
-      this.emp = data;
-      this.inputDepName = data.department.name;
+      this.title = '编辑资产信息';
+      this.asset = data;
       this.dialogVisible = true;
     },
     showDetailView(data) {
@@ -650,32 +410,6 @@ export default {
           message: '已取消删除'
         });
       });
-    }
-    ,
-    doAddEmp() {
-      if (this.emp.id) {
-        this.$refs['empForm'].validate(valid => {
-          if (valid) {
-            this.putRequest("/employee/basic/", this.emp).then(resp => {
-              if (resp) {
-                this.dialogVisible = false;
-                this.initEmps();
-              }
-            })
-          }
-        });
-      } else {
-        this.$refs['empForm'].validate(valid => {
-          if (valid) {
-            this.postRequest("/employee/basic/", this.emp).then(resp => {
-              if (resp) {
-                this.dialogVisible = false;
-                this.initEmps();
-              }
-            })
-          }
-        });
-      }
     }
     ,
     handleNodeClick(data) {

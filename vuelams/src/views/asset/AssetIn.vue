@@ -285,136 +285,92 @@
             </el-col>
           </el-row>
         </el-form>
-        <el-form v-show="asset.type=='手机'" :model="mobile" :rules="rules" ref="assetForm">
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="内存:" prop="brand">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                          v-model="mobile.memory"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="屏幕尺寸:" prop="brand">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                          v-model="mobile.screenSize"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-        <el-form v-show="asset.type=='交换机'" :model="switchData" :rules="rules" ref="assetForm">
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="接口数:" prop="brand">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                          v-model="switchData.nums"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="类型:" prop="brand">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                          v-model="switchData.type"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-        <el-form v-show="asset.type=='主机'" :model="pc" :rules="rules" ref="assetForm">
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="cpu:" prop="brand">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="pc.cpu"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="内存:" prop="brand">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit" v-model="pc.memory"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-        <el-form v-show="asset.type=='测距仪'" :model="rangeData" :rules="rules" ref="assetForm">
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="精度:" prop="brand">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                          v-model="rangeData.precision"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="距离:" prop="brand">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                          v-model="rangeData.distance"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="方式:" prop="brand">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                          v-model="rangeData.methods"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
+        <template v-if="asset.adv">
+          <el-form v-show="asset.type=='手机'" :model="asset.adv" :rules="rules" ref="assetForm">
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="内存:" prop="brand">
+                  <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                            v-model="asset.adv.memory"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="屏幕尺寸:" prop="brand">
+                  <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                            v-model="asset.adv.screenSize"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <el-form v-show="asset.type=='交换机'" :model="asset.adv" :rules="rules" ref="assetForm">
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="接口数:" prop="brand">
+                  <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                            v-model="asset.adv.nums"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="类型:" prop="type">
+                  <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                            v-model="asset.adv.type"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <el-form v-show="asset.type=='主机'" :model="asset.adv" :rules="rules" ref="assetForm">
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="cpu:" prop="cpu">
+                  <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                            v-model="asset.adv.cpu"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="内存:" prop="memory">
+                  <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                            v-model="asset.adv.memory"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <el-form v-show="asset.type=='测距仪'" :model="asset.adv" :rules="rules" ref="assetForm">
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="精度:" prop="brand">
+                  <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                            v-model="asset.adv.precision"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="距离:" prop="brand">
+                  <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                            v-model="asset.adv.distance"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="方式:" prop="brand">
+                  <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                            v-model="asset.adv.methods"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </template>
       </div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="doAddAsset">确 定</el-button>
   </span>
     </el-dialog>
-    <el-dialog
-        :title="title"
-        :visible.sync="dialogVisible2"
-        width="80%">
-      <div>
-        <el-form :model="asset" :rules="rules" ref="assetForm">
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="品牌:" prop="brand">
-                {{ asset.brand }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="类型:" prop="type">
-                {{ asset.type }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="价格:" prop="price">
-                {{ asset.price }}
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="申请人:" prop="applicant">
-                {{ asset.applicant }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="电话:" prop="applicantPhone">
-                {{ asset.applicantPhone }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="邮件:" prop="applicantEmail">
-                {{ asset.applicantEmail }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="理由:" prop="reason">{{ asset.reason }}</el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-      </div>
-      <span slot="footer" class="dialog-footer">
-    <template v-for="op in candidateBranches.operateList">
-      <el-button type="primary" @click="handle(op)">{{ op.operate }}</el-button>
-    </template>
-        <el-button @click="dialogVisible2 = false">取 消</el-button>
-  </span>
-    </el-dialog>
+    <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset" :title="title"
+                 :candidateBranches='candidateBranches' :rules='rules'></AssetDetail>
   </div>
 </template>
 
 <script>
+import AssetDetail from '../../components/sys/basic/AssetDetail';
+
 export default {
   name: "EmpBasic",
   data() {
@@ -479,24 +435,7 @@ export default {
         applicantPhone: "188",
         applicantEmail: "29411",
         reason: "测试",
-        adv: null
-      },
-      mobile: {
-        memory: '8G',
-        screenSize: '5英寸'
-      },
-      pc: {
-        cpu: null,
-        memory: null
-      },
-      switchData: {
-        nums: null,
-        type: null
-      },
-      rangeData: {
-        precision: null,
-        distance: null,
-        methods: null
+        adv: {}
       },
       defaultProps: {
         children: 'children',
@@ -541,6 +480,9 @@ export default {
       }
     }
   },
+  components: {
+    AssetDetail
+  },
   mounted() {
     this.initEmps();
     this.initData();
@@ -572,33 +514,16 @@ export default {
       window.open('/employee/basic/export', '_parent');
     },
     emptyEmp() {
-      this.emp = {
-        name: "",
-        gender: "",
-        birthday: "",
-        idCard: "",
-        wedlock: "",
-        nationId: 1,
-        nativePlace: "",
-        politicId: 13,
-        email: "",
-        phone: "",
-        address: "",
-        departmentId: null,
-        jobLevelId: 9,
-        posId: 29,
-        engageForm: "",
-        tiptopDegree: "",
-        specialty: "",
-        school: "",
-        beginDate: "",
-        workID: "",
-        contractTerm: 2,
-        conversionTime: "",
-        notworkDate: null,
-        beginContract: "",
-        endContract: "",
-        workAge: null
+      this.asset = {
+        id: "",
+        brand: "华为",
+        type: "手机",
+        price: "4000",
+        applicant: "系统管理员",
+        applicantPhone: "188",
+        applicantEmail: "29411",
+        reason: "测试",
+        adv: {}
       }
       this.inputDepName = '';
     },
@@ -619,17 +544,6 @@ export default {
           this.showDetailView(data);
         }
       });
-    },
-    handle(data) {
-      this.taskHandleDto.id = this.asset.id;
-      this.taskHandleDto.operateType = data.operateType;
-      this.taskHandleDto.candidateUser = this.candidateBranches.candidateUser;
-      this.postRequest("/asset/task/handleTask", this.taskHandleDto).then(resp => {
-        if (resp) {
-          this.dialogVisible2 = false;
-          this.initEmps();
-        }
-      })
     },
     deleteEmp(data) {
       this.$confirm('此操作将永久删除【' + data.name + '】, 是否继续?', '提示', {
@@ -664,15 +578,6 @@ export default {
       } else {
         this.$refs['assetForm'].validate(valid => {
           if (valid) {
-            if (this.asset.type == '手机') {
-              this.asset.adv = this.mobile;
-            } else if (this.asset.type == '主机') {
-              this.asset.adv = this.pc;
-            } else if (this.asset.type == '交换机') {
-              this.asset.adv = this.switchData;
-            } else {
-              this.asset.adv = this.rangeData;
-            }
             this.postRequest("/asset/basic/add", this.asset).then(resp => {
               if (resp) {
                 this.dialogVisible = false;

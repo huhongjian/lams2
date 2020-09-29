@@ -23,7 +23,7 @@ public interface LamsUserMapper {
 
     List<Role> getHrRolesById(Integer id);
 
-    List<LamsUser> getAllHrs(@Param("uid") Integer hrid, @Param("keywords") String keywords);
+    List<LamsUser> getAllHrs(@Param("uid") Integer uid, @Param("keywords") String keywords);
 
     List<LamsUser> getAllHrsExceptCurrentHr(Integer id);
 

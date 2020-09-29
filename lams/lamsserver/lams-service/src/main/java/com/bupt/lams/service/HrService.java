@@ -39,6 +39,12 @@ public class HrService implements UserDetailsService {
         return lamsUserMapper.getAllHrs(HrUtils.getCurrentHr().getId(), keywords);
     }
 
+    public Integer addUser(LamsUser lamsUser) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        lamsUser.setPassword(encoder.encode(lamsUser.getPassword()));
+        return lamsUserMapper.insert(lamsUser);
+    }
+
     public Integer updateHr(LamsUser lamsUser) {
         return lamsUserMapper.updateByPrimaryKeySelective(lamsUser);
     }

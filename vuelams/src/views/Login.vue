@@ -12,19 +12,22 @@
             <h3 class="loginTitle">系统登录</h3>
             <el-form-item prop="username">
                 <el-input size="normal" type="text" v-model="loginForm.username" auto-complete="off"
-                          placeholder="请输入用户名"></el-input>
+                          placeholder="请输入用户名" clearable></el-input>
             </el-form-item>
             <el-form-item prop="password">
                 <el-input size="normal" type="password" v-model="loginForm.password" auto-complete="off"
-                          placeholder="请输入密码"></el-input>
+                          placeholder="请输入密码" clearable></el-input>
             </el-form-item>
-            <el-form-item prop="code">
+            <el-form-item ref="code" prop="code">
                 <el-input size="normal" type="text" v-model="loginForm.code" auto-complete="off"
-                          placeholder="点击图片更换验证码" @keydown.enter.native="submitLogin" style="width: 250px"></el-input>
+                          placeholder="点击图片更换验证码" @keydown.enter.native="submitLogin" style="width: 250px" clearable></el-input>
                 <img :src="vcUrl" @click="updateVerifyCode" alt="" style="cursor: pointer">
             </el-form-item>
             <el-checkbox size="normal" class="loginRemember" v-model="checked"></el-checkbox>
-            <el-button size="normal" type="primary" style="width: 100%;" @click="submitLogin">登录</el-button>
+          <el-row>
+            <el-button size="normal" type="primary" style="width: 75%;" @click="submitLogin">登录</el-button>
+            <el-button size="normal" style="width: 20%;" @click="sighUp">注册</el-button>
+          </el-row>
         </el-form>
     </div>
 </template>
@@ -66,6 +69,7 @@
                                 let path = this.$route.query.redirect;
                                 this.$router.replace((path == '/' || path == undefined) ? '/home' : path);
                             }else{
+                                this.loginForm.code = '';
                                 this.vcUrl = '/verifyCode?time='+new Date();
                             }
                         })
@@ -73,7 +77,10 @@
                         return false;
                     }
                 });
-            }
+            },
+          sighUp() {
+            this.$router.push("/signUp");
+          }
         }
     }
 </script>

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -105,9 +106,7 @@ public class AssetBasicController {
 
     @GetMapping("/maxWorkID")
     public RespBean maxWorkID() {
-        RespBean respBean = RespBean.build().setStatus(200)
-                .setObj(String.format("%08d", employeeService.maxWorkID() + 1));
-        return respBean;
+        return RespBean.build().setStatus(200).setObj(String.format("%08d", employeeService.maxWorkID() + 1));
     }
 
     @GetMapping("/deps")

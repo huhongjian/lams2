@@ -10,7 +10,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public class Hr implements UserDetails {
+/**
+ * 资产管理系统用户
+ */
+public class LamsUser implements UserDetails {
     private Integer id;
 
     private String name;
@@ -36,8 +39,8 @@ public class Hr implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Hr hr = (Hr) o;
-        return Objects.equals(username, hr.username);
+        LamsUser lamsUser = (LamsUser) o;
+        return Objects.equals(username, lamsUser.username);
     }
 
     @Override

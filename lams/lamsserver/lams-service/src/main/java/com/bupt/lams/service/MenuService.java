@@ -1,9 +1,9 @@
 package com.bupt.lams.service;
 
 import com.bupt.lams.mapper.MenuMapper;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.Menu;
 import com.bupt.lams.mapper.MenuRoleMapper;
-import com.bupt.lams.model.Hr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,9 +20,9 @@ import java.util.List;
 @Service
 @CacheConfig(cacheNames = "menus_cache")
 public class MenuService {
-    @Autowired
+    @Resource
     MenuMapper menuMapper;
-    @Autowired
+    @Resource
     MenuRoleMapper menuRoleMapper;
 
     /**
@@ -32,7 +33,7 @@ public class MenuService {
      * @return
      */
     public List<Menu> getMenusByHrId() {
-        return menuMapper.getMenusByHrId(((Hr) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
+        return menuMapper.getMenusByUid(((LamsUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
     }
 
     @Cacheable

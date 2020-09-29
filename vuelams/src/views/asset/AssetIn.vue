@@ -189,7 +189,7 @@
         </el-table-column>
         <el-table-column
             prop="applicantEmail"
-            width="95"
+            width="150"
             align="left"
             label="申请人邮箱">
         </el-table-column>
@@ -282,9 +282,9 @@ export default {
         brand: "华为",
         type: "手机",
         price: "4000",
-        applicant: "系统管理员",
-        applicantPhone: "188",
-        applicantEmail: "29411",
+        applicant: "胡宏建",
+        applicantPhone: "18840833079",
+        applicantEmail: "admin",
         reason: "测试",
         adv: {}
       },
@@ -371,9 +371,9 @@ export default {
         brand: "华为",
         type: "手机",
         price: "4000",
-        applicant: "系统管理员",
-        applicantPhone: "188",
-        applicantEmail: "29411",
+        applicant: "胡宏建",
+        applicantPhone: "18840833079",
+        applicantEmail: "admin",
         reason: "测试",
         adv: {}
       }

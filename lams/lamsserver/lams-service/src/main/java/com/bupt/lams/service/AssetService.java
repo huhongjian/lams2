@@ -6,7 +6,7 @@ import com.bupt.lams.constants.ProcessTypeEnum;
 import com.bupt.lams.constants.WorkflowConstant;
 import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.model.Asset;
-import com.bupt.lams.model.Hr;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.Record;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.utils.UserInfoUtils;
@@ -72,8 +72,8 @@ public class AssetService {
 
     @Transactional(rollbackFor = Exception.class)
     public void borrowAsset(Asset asset) {
-        Hr user = UserInfoUtils.getLoginedUser();
-        asset.setCharger(user.getName());
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        asset.setCharger(user.getUsername());
         asset.setStatus(AssetStatusEnum.ASK.getName());
         asset.setApplyDate(new Date());
         assetMapper.updateAsset(asset);

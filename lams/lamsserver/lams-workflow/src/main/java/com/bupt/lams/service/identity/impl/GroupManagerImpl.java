@@ -1,6 +1,6 @@
 package com.bupt.lams.service.identity.impl;
 
-import com.bupt.lams.model.Hr;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.service.identity.GroupManager;
 import com.bupt.lams.utils.ActivitiUtil;
 import com.bupt.lams.utils.UserInfoUtils;
@@ -24,7 +24,7 @@ public class GroupManagerImpl implements GroupManager {
 	@Override
 	public List<Group> findByUserName(String username) {
 		logger.info("根据用户账号获取用户角色信息：" + username);
-		Hr user = UserInfoUtils.getLoginedUser();
+		LamsUser user = UserInfoUtils.getLoginedUser();
 		List<Group> roleList = ActivitiUtil.toActivitiGroups(user.getRoles());
 		return roleList;
 	}

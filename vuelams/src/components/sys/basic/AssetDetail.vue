@@ -79,7 +79,8 @@
         </el-row>
         <el-row style="margin:0 auto;width: 300px">
           <el-form-item label="姓名:">
-            <el-input size="mini" style="width: 200px" prefix-icon="el-icon-edit"></el-input>
+            <el-input size="mini" style="width: 200px" prefix-icon="el-icon-edit"
+                      v-model="name"></el-input>
           </el-form-item>
         </el-row>
         <el-row style="margin:0 auto;width: 300px">
@@ -104,6 +105,7 @@ export default {
   data() {
     return {
       visible: false,
+      name: '',
       taskHandleDto: {
         id: null,
         operateType: null,

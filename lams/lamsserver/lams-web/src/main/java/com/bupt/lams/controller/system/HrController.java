@@ -1,7 +1,7 @@
 package com.bupt.lams.controller.system;
 
 import com.bupt.lams.model.Role;
-import com.bupt.lams.model.Hr;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.service.HrService;
 import com.bupt.lams.service.RoleService;
@@ -27,13 +27,13 @@ public class HrController {
     @Autowired
     RoleService roleService;
     @GetMapping("/")
-    public List<Hr> getAllHrs(String keywords) {
+    public List<LamsUser> getAllHrs(String keywords) {
         return hrService.getAllHrs(keywords);
     }
 
     @PutMapping("/")
-    public RespBean updateHr(@RequestBody Hr hr) {
-        if (hrService.updateHr(hr) == 1) {
+    public RespBean updateHr(@RequestBody LamsUser lamsUser) {
+        if (hrService.updateHr(lamsUser) == 1) {
             return RespBean.ok("更新成功!");
         }
         return RespBean.error("更新失败!");

@@ -1,6 +1,6 @@
 package com.bupt.lams.controller;
 
-import com.bupt.lams.model.Hr;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.service.HrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +15,7 @@ public class ChatController {
     @Autowired
     HrService hrService;
     @GetMapping("/hrs")
-    public List<Hr> getAllHrs() {
+    public List<LamsUser> getAllUsers() {
         return hrService.getAllHrsExceptCurrentHr();
     }
 }

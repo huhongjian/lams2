@@ -177,7 +177,7 @@
         </el-table-column>
         <el-table-column
             prop="chargerEmail"
-            width="100"
+            width="150"
             label="负责人邮箱">
         </el-table-column>
         <el-table-column
@@ -278,8 +278,8 @@ export default {
         type: "手机",
         price: "4000",
         applicant: "系统管理员",
-        applicantPhone: "188",
-        applicantEmail: "29411",
+        applicantPhone: "18840833079",
+        applicantEmail: "294116824@qq.com",
         reason: "测试",
         adv: {}
       },
@@ -367,8 +367,8 @@ export default {
         type: "手机",
         price: "4000",
         applicant: "系统管理员",
-        applicantPhone: "188",
-        applicantEmail: "29411",
+        applicantPhone: "18840833079",
+        applicantEmail: "2941168242@qq.com",
         reason: "测试",
         adv: {}
       }

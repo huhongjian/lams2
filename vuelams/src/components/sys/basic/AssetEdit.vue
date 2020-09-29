@@ -44,7 +44,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="邮件:" prop="applicantEmail">
-              <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+              <el-input size="mini" style="width: 200px" prefix-icon="el-icon-edit"
                         v-model="asset.applicantEmail"></el-input>
             </el-form-item>
           </el-col>
@@ -175,7 +175,7 @@ export default {
             this.postRequest("/asset/basic/add", this.asset).then(resp => {
               if (resp) {
                 this.$emit('close');
-                this.initEmps();
+                this.$parent.initEmps();
               }
             })
           }

@@ -1,8 +1,8 @@
 package com.bupt.lams.config;
 
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.utils.UserInfoUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.bupt.lams.model.Hr;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.service.HrService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,10 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         loginFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {
                     response.setContentType("application/json;charset=utf-8");
                     PrintWriter out = response.getWriter();
-                    Hr hr = (Hr) authentication.getPrincipal();
-                    hr.setPassword(null);
-                    UserInfoUtils.setContext(hr);
-                    RespBean ok = RespBean.ok("登录成功!", hr);
+                    LamsUser lamsUser = (LamsUser) authentication.getPrincipal();
+                    lamsUser.setPassword(null);
+                    UserInfoUtils.setContext(lamsUser);
+                    RespBean ok = RespBean.ok("登录成功!", lamsUser);
                     String s = new ObjectMapper().writeValueAsString(ok);
                     out.write(s);
                     out.flush();

@@ -1,10 +1,9 @@
 package com.bupt.lams.controller;
 
 import com.bupt.lams.config.FastDFSUtils;
-import com.bupt.lams.model.Hr;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.service.HrService;
-import com.bupt.lams.utils.UserInfoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,15 +27,15 @@ public class HrInfoController {
     String nginxHost;
 
     @GetMapping("/hr/info")
-    public Hr getCurrentHr(Authentication authentication) {
-        Hr currentUser = (Hr) authentication.getPrincipal();
+    public LamsUser getCurrentHr(Authentication authentication) {
+        LamsUser currentUser = (LamsUser) authentication.getPrincipal();
         return currentUser;
     }
 
     @PutMapping("/hr/info")
-    public RespBean updateHr(@RequestBody Hr hr, Authentication authentication) {
-        if (hrService.updateHr(hr) == 1) {
-            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(hr, authentication.getCredentials(), authentication.getAuthorities()));
+    public RespBean updateHr(@RequestBody LamsUser lamsUser, Authentication authentication) {
+        if (hrService.updateHr(lamsUser) == 1) {
+            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(lamsUser, authentication.getCredentials(), authentication.getAuthorities()));
             return RespBean.ok("更新成功!");
         }
         return RespBean.error("更新失败!");
@@ -58,9 +57,9 @@ public class HrInfoController {
         String fileId = FastDFSUtils.upload(file);
         String url = nginxHost + fileId;
         if (hrService.updateUserface(url, id) == 1) {
-            Hr hr = (Hr) authentication.getPrincipal();
-            hr.setUserface(url);
-            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(hr, authentication.getCredentials(), authentication.getAuthorities()));
+            LamsUser lamsUser = (LamsUser) authentication.getPrincipal();
+            lamsUser.setUserface(url);
+            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(lamsUser, authentication.getCredentials(), authentication.getAuthorities()));
             return RespBean.ok("更新成功!", url);
         }
         return RespBean.error("更新失败!");

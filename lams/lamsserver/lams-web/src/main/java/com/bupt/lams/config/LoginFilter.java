@@ -1,7 +1,7 @@
 package com.bupt.lams.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.bupt.lams.model.Hr;
+import com.bupt.lams.model.LamsUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -56,7 +56,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
                     username, password);
             setDetails(request, authRequest);
-            Hr principal = new Hr();
+            LamsUser principal = new LamsUser();
             principal.setUsername(username);
             sessionRegistry.registerNewSession(request.getSession(true).getId(), principal);
             return this.getAuthenticationManager().authenticate(authRequest);

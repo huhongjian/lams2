@@ -11,7 +11,7 @@ import com.bupt.lams.dto.TaskHandleDto;
 import com.bupt.lams.dto.TaskQueryDto;
 import com.bupt.lams.dto.WorkflowTaskOperateInfoDto;
 import com.bupt.lams.mapper.AssetMapper;
-import com.bupt.lams.mapper.HrMapper;
+import com.bupt.lams.mapper.LamsUserMapper;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.process.ProcessManagerService;
 import com.bupt.lams.service.task.TaskManagerService;
@@ -43,7 +43,7 @@ public class TaskOperateService {
     @Resource
     TaskService taskService;
     @Resource
-    HrMapper hrMapper;
+    LamsUserMapper hrMapper;
     @Resource
     OperateTypeWorkflowService operateTypeWorkflowService;
     @Resource
@@ -71,7 +71,7 @@ public class TaskOperateService {
     public void handleTask(TaskHandleDto taskHandleDto) {
         Long id = taskHandleDto.getId();
         String candidateUser = taskHandleDto.getCandidateUser();
-        Hr user = UserInfoUtils.getLoginedUser();
+        LamsUser user = UserInfoUtils.getLoginedUser();
         // 查询资产工作流关联关系
         AssetWorkflow assetWorkflow = assetWorkflowService.getAssetWorkflowByAid(id);
         Asset asset = this.assetMapper.selectByPrimaryKey(id);
@@ -79,7 +79,7 @@ public class TaskOperateService {
             throw new RuntimeException("未查询到关联流程信息");
         }
         // 获取当前任务信息
-        TaskDto taskDto = getAssignedTaskInfoByOrderIdAndUserName(id, user.getName());
+        TaskDto taskDto = getAssignedTaskInfoByOrderIdAndUserName(id, user.getUsername());
         Map<String, Object> paramsMap = new HashMap<>();
         Map<String, Object> variableMap = taskDto.getVariablesMap();
         String nextUser = (String) variableMap.get(WorkflowConstant.NEXT_USER);
@@ -92,7 +92,7 @@ public class TaskOperateService {
             paramsMap.put(WorkflowConstant.NEXT_USER, candidateUser);
         }
         // 完成当前操作
-        taskManagerService.completeTask(taskDto.getTaskId(), paramsMap, user.getName());
+        taskManagerService.completeTask(taskDto.getTaskId(), paramsMap, user.getUsername());
         // 如果是批准采购则更新资产状态
         if (taskHandleDto.getOperateType() == OperateTypeEnum.APPROVE.getIndex()) {
             asset.setStatus(AssetStatusEnum.APPROVE.getName());
@@ -125,9 +125,9 @@ public class TaskOperateService {
         // 获取待办任务
         TaskDto taskDto = getCandidateTskInfoByAssetIdAndUsername(taskHandleDto.getId(), null);
         // 接受用户任务
-        Hr user = UserInfoUtils.getLoginedUser();
-        taskService.claim(taskDto.getTaskId(), user.getName());
-        logger.info("[end]接单，工单ID:" + taskHandleDto.getId() + ";用户账号：" + user.getName());
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        taskService.claim(taskDto.getTaskId(), user.getUsername());
+        logger.info("[end]接单，工单ID:" + taskHandleDto.getId() + ";用户账号：" + user.getUsername());
         // 处理资产操作
         this.handleTask(taskHandleDto);
     }
@@ -162,15 +162,15 @@ public class TaskOperateService {
      * @return
      */
     public String getAssigneeUsername(Map<String, Object> variableMap, String assigneeKey) {
-        Hr user = null;
+        LamsUser user = null;
         if (variableMap != null && variableMap.get(assigneeKey) != null) {
             try {
                 user = this.hrMapper.loadUserByUsername((String) variableMap.get(assigneeKey));
             } catch (Exception e) {
-                logger.info("查询用户失败: " + (String) variableMap.get(assigneeKey), e);
+                logger.info("查询用户失败: " + variableMap.get(assigneeKey), e);
             }
         }
-        return user != null && CollectionUtils.isNotEmpty(user.getRoles()) ? user.getName() : null;
+        return user != null && CollectionUtils.isNotEmpty(user.getRoles()) ? user.getUsername() : null;
     }
 
     /**

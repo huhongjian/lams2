@@ -5,7 +5,7 @@ import com.bupt.lams.constants.OperateTypeEnum;
 import com.bupt.lams.dto.TaskHandleDto;
 import com.bupt.lams.dto.WorkflowTaskOperateInfoDto;
 import com.bupt.lams.model.Asset;
-import com.bupt.lams.model.Hr;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.WorkflowOperate;
 import com.bupt.lams.service.AssetService;
@@ -51,7 +51,7 @@ public class AssetTaskController {
     public RespBean getCandidateTaskBranchInfo(@RequestParam Long id) {
         RespBean response = new RespBean();
         WorkflowTaskOperateInfoDto opInfoDto;
-        Hr user = UserInfoUtils.getLoginedUser();
+        LamsUser user = UserInfoUtils.getLoginedUser();
         // 1. 获取资产信息
         Asset asset = assetService.selectByPrimaryKey(id);
         if (asset == null) {
@@ -60,12 +60,12 @@ public class AssetTaskController {
             return response;
         }
         try {
-            opInfoDto = taskOperateService.getCandidateOrAssignedOrderWorkflowTaskOperateInfo(user.getName(), id);
+            opInfoDto = taskOperateService.getCandidateOrAssignedOrderWorkflowTaskOperateInfo(user.getUsername(), id);
         } catch (Exception e) {
             opInfoDto = new WorkflowTaskOperateInfoDto();
         }
         // 如果当前用户是工单创建人并且工单不是终止状态
-        if (asset.getCharger().equals(user.getName()) && !asset.getStatus().equals(AssetStatusEnum.READY.getName())) {
+        if (asset.getChargerEmail().equals(user.getUsername()) && !asset.getStatus().equals(AssetStatusEnum.READY.getName())) {
             WorkflowOperate cancel = new WorkflowOperate();
             cancel.setOperateType(OperateTypeEnum.CANCEL.getIndex());
             cancel.setOperate(OperateTypeEnum.CANCEL.getName());

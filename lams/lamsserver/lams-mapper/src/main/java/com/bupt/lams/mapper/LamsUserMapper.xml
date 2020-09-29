@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bupt.lams.mapper.HrMapper">
-    <resultMap id="BaseResultMap" type="com.bupt.lams.model.Hr">
+<mapper namespace="com.bupt.lams.mapper.LamsUserMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.LamsUser">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="phone" property="phone" jdbcType="CHAR"/>
@@ -13,7 +13,7 @@
         <result column="userface" property="userface" jdbcType="VARCHAR"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
     </resultMap>
-    <resultMap id="HrWithRoles" type="com.bupt.lams.model.Hr" extends="BaseResultMap">
+    <resultMap id="UserWithRoles" type="com.bupt.lams.model.LamsUser" extends="BaseResultMap">
         <collection property="roles" ofType="com.bupt.lams.model.Role">
             <id column="rid" property="id"/>
             <result column="rname" property="name"/>
@@ -24,45 +24,52 @@
     id, name, phone, telephone, address, enabled, username, password, userface, remark
   </sql>
     <select id="getAllHrsExceptCurrentHr" resultMap="BaseResultMap">
-        select * from hr where id !=#{id};
+        select * from lams_user where id !=#{id};
     </select>
-    <select id="getAllHrs" resultMap="HrWithRoles">
-        select hr.id, hr.name, hr.phone, hr.telephone, hr.address, hr.enabled, hr.username, hr.userface,
-        hr.remark,r.`id` as rid,r.`name` as rname,r.`nameZh` as rnameZh from hr left join hr_role hrr on
-        hr.`id`=hrr.`hrid` left join role r on hrr.`rid`=r.`id` where hr.`id`!=#{hrid}
+    <select id="getAllHrs" resultMap="UserWithRoles">
+        select u.*,
+        r.`id` as rid,
+        r.`name` as rname,
+        r.`nameZh` as rnameZh
+        from lams_user u
+        left join lams_user_role lrr
+        on u.`id`=lrr.`uid`
+        left join role r
+        on lrr.`rid`=r.`id`
+        where u.`id`!=#{uid}
         <if test="keywords!=null">
-            and hr.name like concat('%',#{keywords},'%')
+            and u.name like concat('%',#{keywords},'%')
         </if>
-        order by hr.id
+        order by u.id
     </select>
     <select id="getHrRolesById" resultType="com.bupt.lams.model.Role">
-    select r.* from role r,hr_role hrr where hrr.`rid`=r.`id` and hrr.`hrid`=#{id}
+    select r.* from role r,lams_user_role lrr where lrr.`rid`=r.`id` and lrr.`uid`=#{id}
   </select>
     <select id="loadUserByUsername" resultMap="BaseResultMap">
-    select * from hr where username=#{username}
+    select * from lams_user where username=#{username}
   </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from hr
+        from lams_user
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from hr
+    delete from lams_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.bupt.lams.model.Hr">
-    insert into hr (id, name, phone, 
+    <insert id="insert" parameterType="com.bupt.lams.model.LamsUser">
+    insert into lams_user (id, name, phone,
       telephone, address, enabled, 
-      username, password, userface, 
+      username, password, userface,
       remark)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR}, 
       #{telephone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT}, 
-      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{userface,jdbcType=VARCHAR}, 
+      #{userEmail,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{userface,jdbcType=VARCHAR},
       #{remark,jdbcType=VARCHAR})
   </insert>
-    <insert id="insertSelective" parameterType="com.bupt.lams.model.Hr">
-        insert into hr
+    <insert id="insertSelective" parameterType="com.bupt.lams.model.LamsUser">
+        insert into lams_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -128,8 +135,8 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.bupt.lams.model.Hr">
-        update hr
+    <update id="updateByPrimaryKeySelective" parameterType="com.bupt.lams.model.LamsUser">
+        update lams_user
         <set>
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
@@ -162,13 +169,13 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateUserface">
-        update hr set userface = #{url} where id=#{id};
+        update lams_user set userface = #{url} where id=#{id};
     </update>
     <update id="updatePasswd">
-        update hr set password = #{encodePass} where id=#{hrid};
+        update lams_user set password = #{encodePass} where id=#{uid};
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.bupt.lams.model.Hr">
-    update hr
+    <update id="updateByPrimaryKey" parameterType="com.bupt.lams.model.LamsUser">
+    update lams_user
     set name = #{name,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=CHAR},
       telephone = #{telephone,jdbcType=VARCHAR},

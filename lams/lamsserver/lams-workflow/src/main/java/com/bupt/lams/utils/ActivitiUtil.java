@@ -3,7 +3,7 @@ package com.bupt.lams.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bupt.lams.model.Hr;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.Role;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.impl.persistence.entity.GroupEntityImpl;
@@ -20,17 +20,17 @@ public class ActivitiUtil {
     /**
      * 将系统中User转换为Activiti相应的User对象
      *
-     * @param hr 系统用户对象
+     * @param lamsUser 系统用户对象
      * @return Activiti用户实体对象
      */
-    public static UserEntity toActivitiUser(Hr hr) {
+    public static UserEntity toActivitiUser(LamsUser lamsUser) {
         UserEntityImpl userEntity = null;
-        if (hr != null) {
+        if (lamsUser != null) {
             userEntity = new UserEntityImpl();
-            userEntity.setId(hr.getName());
-            userEntity.setFirstName(hr.getName());
-            userEntity.setLastName(hr.getName());
-            userEntity.setEmail(hr.getPhone());
+            userEntity.setId(lamsUser.getUsername());
+            userEntity.setFirstName(lamsUser.getUsername());
+            userEntity.setLastName(lamsUser.getName());
+            userEntity.setEmail(lamsUser.getUsername());
             // 乐观锁版本，保持不变
             userEntity.setRevision(1);
         }

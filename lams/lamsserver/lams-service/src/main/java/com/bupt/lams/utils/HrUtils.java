@@ -1,6 +1,6 @@
 package com.bupt.lams.utils;
 
-import com.bupt.lams.model.Hr;
+import com.bupt.lams.model.LamsUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @时间 2019-10-24 8:11
  */
 public class HrUtils {
-    public static Hr getCurrentHr() {
-        return ((Hr) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    public static LamsUser getCurrentHr() {
+        return ((LamsUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 }

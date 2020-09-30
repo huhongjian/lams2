@@ -117,7 +117,7 @@ Vue.prototype.getRequest = getRequest;
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-    if (to.path == '/') {
+    if (to.path == '/' || to.path == '/signUp') {
         next();
     } else {
         if (window.sessionStorage.getItem("user")) {

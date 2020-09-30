@@ -174,7 +174,7 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.ruleForm.hrid = this.hr.id;
-                        this.putRequest("/hr/pass", this.ruleForm).then(resp => {
+                        this.putRequest("/user/pass", this.ruleForm).then(resp => {
                             if (resp) {
                                 this.getRequest("/logout");
                                 window.sessionStorage.removeItem("user")

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bupt.lams.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.Order">
+        <id column="id" property="id"/>
+        <result column="category" property="category"/>
+        <result column="status" property="status"/>
+        <result column="duration" property="duration"/>
+        <result column="reason" property="reason"/>
+        <result column="applicant" property="applicant"/>
+        <result column="applicant_email" property="applicantEmail"/>
+        <result column="applicant_phone" property="applicantPhone"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+    </resultMap>
+    <resultMap id="AllOrderInfo" type="com.bupt.lams.model.Order" extends="BaseResultMap">
+        <association property="asset" javaType="com.bupt.lams.model.Asset">
+            <id column="id" property="id"/>
+            <result column="type" property="type"/>
+            <result column="brand" property="brand"/>
+            <result column="price" property="price"/>
+            <result column="charger" property="charger"/>
+            <result column="charger_email" property="chargerEmail"/>
+            <result column="charger_phone" property="chargerPhone"/>
+            <result column="adv" property="adv" typeHandler="com.bupt.lams.mybatis.JsonToObjectTypeHandler"/>
+            <result column="readyDate" property="readyDate"/>
+            <result column="updateTime" property="updateTime"/>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, category, status, duration, reason, applicant, applicant_email, applicant_phone, createTime, updateTime
+  </sql>
+    <select id="getOrderByPage" resultMap="AllOrderInfo">
+        select o.*,a.type,a.brand,a.price,a.charger,a.charger_email,a.charger_phone,a.adv,a.readyDate
+        from
+        `order` o,
+        order_asset oa,
+        asset a
+        <where>
+            o.id = oa.oid
+            and a.id = oa.aid
+            <if test="order!=null">
+                <if test="order.category !=null and order.category!=''">
+                    and o.category = #{order.category}
+                </if>
+                <if test="order.status !=null and order.status!=''">
+                    and o.status like concat('%',#{order.status},'%')
+                </if>
+                <if test="beginDateScope !=null">
+                    and o.createTime between #{beginDateScope[0]} and #{beginDateScope[1]}
+                </if>
+                <if test="order.asset!=null">
+                    <if test="order.asset.type !=null and order.asset.type!=''">
+                        and a.type like concat('%',#{order.asset.type},'%')
+                    </if>
+                    <if test="order.asset.brand !=null and order.asset.brand!=''">
+                        and a.brand like concat('%',#{order.asset.brand},'%')
+                    </if>
+                    <if test="order.asset.charger !=null and order.asset.charger!=''">
+                        and a.charger like concat('%',#{order.asset.charger},'%')
+                    </if>
+                </if>
+            </if>
+        </where>
+        <if test="page !=null and size!=null">
+            limit #{page},#{size}
+        </if>
+    </select>
+    <select id="getTotal" resultType="java.lang.Long">
+        select count(*) from `order` o
+        <where>
+            <if test="order!=null">
+                <if test="order.category !=null and order.category!=''">
+                    and o.category = #{order.category}
+                </if>
+                <if test="order.status !=null and order.status!=''">
+                    and o.status like concat('%',#{order.status},'%')
+                </if>
+                <if test="order.applicant !=null and order.applicant!=''">
+                    and o.applicant like concat('%',#{order.applicant},'%')
+                </if>
+            </if>
+            <if test="beginDateScope !=null">
+                and o.createTime between #{beginDateScope[0]} and #{beginDateScope[1]}
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from `order`
+        where id = #{id}
+    </select>
+    <update id="updateOrderStatusById" parameterType="com.bupt.lams.model.Order">
+        update `order` o
+        set o.status = #{status}
+        where o.id = #{id}
+    </update>
+    <update id="updateOrder" parameterType="com.bupt.lams.model.Order">
+        update `order`
+        set
+        <if test="category !=null and category!=''">
+            category = #{category},
+        </if>
+        <if test="status != null">
+            status = #{status},
+        </if>
+        <if test="duration != null">
+            duration = #{duration},
+        </if>
+        <if test="reason != null">
+            reason = #{reason},
+        </if>
+        <if test="applicant != null">
+            applicant = #{applicant},
+        </if>
+        <if test="applicantEmail != null">
+            applicant_email = #{applicantEmail},
+        </if>
+        <if test="applicantPhone != null">
+            applicant_phone = #{applicantPhone},
+        </if>
+        <if test="createTime != null">
+            createTime = #{createTime},
+        </if>
+        <if test="updateTime != null">
+            updateTime = #{updateTime},
+        </if>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <insert id="insertSelective" parameterType="com.bupt.lams.model.Order" useGeneratedKeys="true" keyProperty="id">
+        insert into `order`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="category !=null and category!=''">
+                category,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="duration != null">
+                duration,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+            <if test="applicant != null">
+                applicant,
+            </if>
+            <if test="applicantEmail != null">
+                applicant_email,
+            </if>
+            <if test="applicantPhone != null">
+                applicant_phone,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="updateTime != null">
+                updateTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="category != null">
+                #{category},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="duration != null">
+                #{duration},
+            </if>
+            <if test="reason != null">
+                #{reason},
+            </if>
+            <if test="applicant != null">
+                #{applicant},
+            </if>
+            <if test="applicantEmail != null">
+                #{applicantEmail},
+            </if>
+            <if test="applicantPhone != null">
+                #{applicantPhone},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+</mapper>

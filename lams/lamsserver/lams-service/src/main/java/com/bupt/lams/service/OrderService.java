@@ -1,14 +1,13 @@
 package com.bupt.lams.service;
 
-import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.constants.OperateTypeEnum;
+import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.constants.ProcessTypeEnum;
 import com.bupt.lams.constants.WorkflowConstant;
 import com.bupt.lams.mapper.AssetMapper;
-import com.bupt.lams.model.Asset;
-import com.bupt.lams.model.LamsUser;
-import com.bupt.lams.model.Record;
-import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.mapper.OrderAssetMapper;
+import com.bupt.lams.mapper.OrderMapper;
+import com.bupt.lams.model.*;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,23 +21,27 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 资产service
+ * 工单service
  */
 @Service
-public class AssetService {
-    private Logger logger = LoggerFactory.getLogger(AssetService.class);
+public class OrderService {
+    private Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     @Resource
     AssetMapper assetMapper;
     @Resource
+    OrderMapper orderMapper;
+    @Resource
+    OrderAssetMapper orderAssetMapper;
+    @Resource
     TaskOperateService taskOperateService;
 
-    public RespPageBean getAssetByPage(Integer page, Integer size, Asset asset, Date[] beginDateScope) {
+    public RespPageBean getOrderByPage(Integer page, Integer size, Order order, Date[] beginDateScope) {
         if (page != null && size != null) {
             page = (page - 1) * size;
         }
-        List<Asset> data = assetMapper.getAssetByPage(page, size, asset, beginDateScope);
-        Long total = assetMapper.getTotal(asset, beginDateScope);
+        List<Order> data = orderMapper.getOrderByPage(page, size, order, beginDateScope);
+        Long total = orderMapper.getTotal(order, beginDateScope);
         RespPageBean bean = new RespPageBean();
         bean.setData(data);
         bean.setTotal(total);
@@ -46,46 +49,53 @@ public class AssetService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Integer addAssetIn(Asset asset) {
-        asset.setCategory(ProcessTypeEnum.IN.getIndex());
-        asset.setChargerByApplicant();
-        asset.setStatus(AssetStatusEnum.CREATE.getName());
-        asset.setApplyDate(new Date());
-        int result = assetMapper.insertSelective(asset);
+    public void addOrderIn(Order order) {
+        order.setCategory(ProcessTypeEnum.IN.getIndex());
+        order.setStatus(OrderStatusEnum.CREATE.getName());
+        order.setCreateTime(new Date());
+        orderMapper.insertSelective(order);
+        assetMapper.insertSelective(order.getAsset());
+        OrderAsset orderAsset = new OrderAsset();
+        orderAsset.setAid(order.getAsset().getId());
+        orderAsset.setOid(order.getId());
+        orderAssetMapper.insertSelective(orderAsset);
         // 构造record
         Record record = new Record();
-        record.setAid(asset.getId());
+        record.setOid(order.getId());
         record.setType(ProcessTypeEnum.IN.getIndex());
         record.setOperate(OperateTypeEnum.CREATE.getName());
         record.setOperateType(OperateTypeEnum.CREATE.getIndex());
-        record.setOperator(asset.getApplicant());
-        record.setOperatorMail(asset.getApplicantEmail());
-        record.setOperateTime(asset.getApplyDate());
+        record.setOperator(order.getApplicant());
+        record.setOperatorMail(order.getApplicantEmail());
+        record.setOperateTime(order.getCreateTime());
         try {
             taskOperateService.startWorkFlow(record, null);
         } catch (Exception e) {
             logger.error("启动工作流失败", e);
             throw e;
         }
-        return result;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void borrowAsset(Asset asset) {
+    public void borrowAsset(Order order) {
+        Asset asset = order.getAsset();
         LamsUser user = UserInfoUtils.getLoginedUser();
-        asset.setCharger(user.getUsername());
-        asset.setStatus(AssetStatusEnum.ASK.getName());
-        asset.setApplyDate(new Date());
+        asset.setCharger(user.getName());
+        asset.setChargerEmail(user.getUsername());
+        asset.setChargerPhone(user.getPhone());
+        order.setStatus(OrderStatusEnum.ASK.getName());
+        order.setCreateTime(new Date());
+        orderMapper.updateOrder(order);
         assetMapper.updateAsset(asset);
         // 构造record
         Record record = new Record();
-        record.setAid(asset.getId());
+        record.setOid(order.getId());
         record.setType(ProcessTypeEnum.OUT.getIndex());
         record.setOperate(OperateTypeEnum.BORROW.getName());
         record.setOperateType(OperateTypeEnum.BORROW.getIndex());
-        record.setOperator(asset.getCharger());
-        record.setOperatorMail(asset.getChargerEmail());
-        record.setOperateTime(asset.getApplyDate());
+        record.setOperator(order.getApplicant());
+        record.setOperatorMail(order.getApplicantEmail());
+        record.setOperateTime(order.getCreateTime());
         Map<String, String> variablesMap = new HashMap<>();
         variablesMap.put(WorkflowConstant.NEXT_USER, record.getOperator());
         try {
@@ -96,7 +106,7 @@ public class AssetService {
         }
     }
 
-    public Asset selectByPrimaryKey(Long id) {
-        return assetMapper.selectByPrimaryKey(id);
+    public Order selectByPrimaryKey(Long id) {
+        return orderMapper.selectByPrimaryKey(id);
     }
 }

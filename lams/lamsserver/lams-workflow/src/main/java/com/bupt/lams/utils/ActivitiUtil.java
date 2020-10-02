@@ -67,7 +67,7 @@ public class ActivitiUtil {
      */
     public static List<Group> toActivitiGroups(List<Role> roles) {
 
-        List<Group> groupEntitys = new ArrayList<Group>();
+        List<Group> groupEntitys = new ArrayList<>();
 
         for (Role r : roles) {
             Group group = toActivitiGroup(r);

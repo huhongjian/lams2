@@ -8,14 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface AssetMapper {
-    List<Asset> getAssetByPage(@Param("page") Integer page, @Param("size") Integer size, @Param("asset") Asset asset, @Param("beginDateScope") Date[] beginDateScope);
-
-    Long getTotal(@Param("asset") Asset asset, @Param("beginDateScope") Date[] beginDateScope);
-
-    Asset selectByPrimaryKey(Long id);
-
-    void updateAssetStatusById(Asset asset);
-
     void updateAsset(Asset asset);
 
     int insertSelective(Asset assetIn);

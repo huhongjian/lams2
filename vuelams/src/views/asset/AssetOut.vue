@@ -227,8 +227,8 @@
 </template>
 
 <script>
-import AssetDetail from "@/components/sys/basic/AssetDetail";
-import AssetEdit from "@/components/sys/basic/AssetEdit";
+import AssetDetail from "@/components/asset/AssetDetail";
+import AssetEdit from "@/components/asset/AssetEdit";
 
 export default {
   name: "EmpBasic",

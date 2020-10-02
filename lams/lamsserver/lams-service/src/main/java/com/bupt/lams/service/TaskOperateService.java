@@ -2,7 +2,7 @@ package com.bupt.lams.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.bupt.lams.constants.AssetStatusEnum;
+import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.constants.OperateTypeEnum;
 import com.bupt.lams.constants.ProcessTypeEnum;
 import com.bupt.lams.constants.WorkflowConstant;
@@ -12,6 +12,7 @@ import com.bupt.lams.dto.TaskQueryDto;
 import com.bupt.lams.dto.WorkflowTaskOperateInfoDto;
 import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.mapper.LamsUserMapper;
+import com.bupt.lams.mapper.OrderMapper;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.process.ProcessManagerService;
 import com.bupt.lams.service.task.TaskManagerService;
@@ -35,9 +36,11 @@ public class TaskOperateService {
     private Logger logger = LoggerFactory.getLogger(TaskOperateService.class);
 
     @Resource
-    AssetWorkflowService assetWorkflowService;
+    OrderWorkflowService orderWorkflowService;
     @Resource
     AssetMapper assetMapper;
+    @Resource
+    OrderMapper orderMapper;
     @Resource
     TaskManagerService taskManagerService;
     @Resource
@@ -51,17 +54,17 @@ public class TaskOperateService {
 
 
     public void startWorkFlow(Record record, Map<String, String> startParamMap) {
-        Asset asset = assetMapper.selectByPrimaryKey(record.getAid());
+        Order order = orderMapper.selectByPrimaryKey(record.getOid());
         // 1. 查找关联工作流definition
         String workflowKey = operateTypeWorkflowService.selectWorkflowKeyByOperateType(record.getType());
-        String procInstId = processManagerService.submitStartFormDataByProcessDefinitionKey(workflowKey, asset.getId().toString(), startParamMap, asset.getCharger());
-        // 2. 保存资产工作流关联关系
-        AssetWorkflow assetWorkflow = new AssetWorkflow();
-        assetWorkflow.setAid(asset.getId());
-        assetWorkflow.setWorkflowInstId(Long.parseLong(procInstId));
-        assetWorkflow.setWorkflowStartTime(new Date());
-        assetWorkflowService.saveAssetWorkflow(assetWorkflow);
-        TaskDto taskDto = getCandidateTskInfoByAssetIdAndUsername(record.getAid(), null);
+        String procInstId = processManagerService.submitStartFormDataByProcessDefinitionKey(workflowKey, order.getId().toString(), startParamMap, order.getApplicant());
+        // 2. 保存工单工作流关联关系
+        OrderWorkflow orderWorkflow = new OrderWorkflow();
+        orderWorkflow.setOid(order.getId());
+        orderWorkflow.setWorkflowInstId(Long.parseLong(procInstId));
+        orderWorkflow.setWorkflowStartTime(new Date());
+        orderWorkflowService.saveOrderWorkflow(orderWorkflow);
+        TaskDto taskDto = getCandidateTskInfoByOrderIdAndUsername(record.getOid(), null);
         Map<String, String> variablesMap = new HashMap<>();
         variablesMap.put(WorkflowConstant.NEXT_USER, record.getOperator());
         taskService.setVariables(taskDto.getTaskId(), variablesMap);
@@ -72,10 +75,10 @@ public class TaskOperateService {
         Long id = taskHandleDto.getId();
         String candidateUser = taskHandleDto.getCandidateUser();
         LamsUser user = UserInfoUtils.getLoginedUser();
-        // 查询资产工作流关联关系
-        AssetWorkflow assetWorkflow = assetWorkflowService.getAssetWorkflowByAid(id);
-        Asset asset = this.assetMapper.selectByPrimaryKey(id);
-        if (assetWorkflow == null) {
+        // 查询工单工作流关联关系
+        OrderWorkflow orderWorkflow = orderWorkflowService.getOrderWorkflowByAid(id);
+        Order order = this.orderMapper.selectByPrimaryKey(id);
+        if (orderWorkflow == null) {
             throw new RuntimeException("未查询到关联流程信息");
         }
         // 获取当前任务信息
@@ -95,27 +98,27 @@ public class TaskOperateService {
         taskManagerService.completeTask(taskDto.getTaskId(), paramsMap, user.getUsername());
         // 如果是批准采购则更新资产状态
         if (taskHandleDto.getOperateType() == OperateTypeEnum.APPROVE.getIndex()) {
-            asset.setStatus(AssetStatusEnum.APPROVE.getName());
-            assetMapper.updateAssetStatusById(asset);
+            order.setStatus(OrderStatusEnum.APPROVE.getName());
+            orderMapper.updateOrderStatusById(order);
             return;
         }
         // 如果是入库则新增入库资产
         if (taskHandleDto.getOperateType() == OperateTypeEnum.IN.getIndex()) {
-            asset.setCategory(ProcessTypeEnum.OUT.getIndex());
-            asset.setStatus(AssetStatusEnum.READY.getName());
-            assetMapper.insertSelective(asset);
+            order.setCategory(ProcessTypeEnum.OUT.getIndex());
+            order.setStatus(OrderStatusEnum.READY.getName());
+            orderMapper.insertSelective(order);
             return;
         }
-        // 如果是确认转交则更新资产状态
+        // 如果是确认转交则更新工单状态
         if (taskHandleDto.getOperateType() == OperateTypeEnum.CONFIRM.getIndex()) {
-            asset.setStatus(AssetStatusEnum.OCCUPIED.getName());
-            assetMapper.updateAssetStatusById(asset);
+            order.setStatus(OrderStatusEnum.OCCUPIED.getName());
+            orderMapper.updateOrderStatusById(order);
             return;
         }
-        // 如果是新资产申请被拒绝，则更新资产状态
+        // 如果是新资产申请被拒绝，则更新工单状态
         if (taskHandleDto.getOperateType() == OperateTypeEnum.REJECT.getIndex()) {
-            asset.setStatus(AssetStatusEnum.REJECTED.getName());
-            assetMapper.updateAssetStatusById(asset);
+            order.setStatus(OrderStatusEnum.REJECTED.getName());
+            orderMapper.updateOrderStatusById(order);
             return;
         }
     }
@@ -123,7 +126,7 @@ public class TaskOperateService {
     @Transactional(rollbackFor = Exception.class)
     public void claimAndHandleTask(TaskHandleDto taskHandleDto) {
         // 获取待办任务
-        TaskDto taskDto = getCandidateTskInfoByAssetIdAndUsername(taskHandleDto.getId(), null);
+        TaskDto taskDto = getCandidateTskInfoByOrderIdAndUsername(taskHandleDto.getId(), null);
         // 接受用户任务
         LamsUser user = UserInfoUtils.getLoginedUser();
         taskService.claim(taskDto.getTaskId(), user.getUsername());
@@ -180,7 +183,7 @@ public class TaskOperateService {
      * @param username 用户账号
      * @return
      */
-    private TaskDto getCandidateTskInfoByAssetIdAndUsername(Long orderId, String username) {
+    private TaskDto getCandidateTskInfoByOrderIdAndUsername(Long orderId, String username) {
         TaskQueryDto taskQueryDto = new TaskQueryDto();
         taskQueryDto.setBusinessKey(orderId.toString());
         taskQueryDto.setUserName(username);

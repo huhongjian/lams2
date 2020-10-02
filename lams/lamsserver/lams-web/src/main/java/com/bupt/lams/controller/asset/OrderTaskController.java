@@ -1,14 +1,14 @@
 package com.bupt.lams.controller.asset;
 
-import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.constants.OperateTypeEnum;
+import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.dto.TaskHandleDto;
 import com.bupt.lams.dto.WorkflowTaskOperateInfoDto;
-import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.LamsUser;
+import com.bupt.lams.model.Order;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.WorkflowOperate;
-import com.bupt.lams.service.AssetService;
+import com.bupt.lams.service.OrderService;
 import com.bupt.lams.service.TaskOperateService;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.slf4j.Logger;
@@ -22,14 +22,14 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/asset/task")
-public class AssetTaskController {
+public class OrderTaskController {
 
     @Resource
     TaskOperateService taskOperateService;
     @Resource
-    AssetService assetService;
+    OrderService orderService;
 
-    private Logger logger = LoggerFactory.getLogger(AssetTaskController.class);
+    private Logger logger = LoggerFactory.getLogger(OrderTaskController.class);
 
     @RequestMapping("handleTask")
     @ResponseBody
@@ -53,8 +53,8 @@ public class AssetTaskController {
         WorkflowTaskOperateInfoDto opInfoDto;
         LamsUser user = UserInfoUtils.getLoginedUser();
         // 1. 获取资产信息
-        Asset asset = assetService.selectByPrimaryKey(id);
-        if (asset == null) {
+        Order order = orderService.selectByPrimaryKey(id);
+        if (order == null) {
             response.setStatus(500);
             response.setMsg("指定工单不存在！");
             return response;
@@ -65,7 +65,7 @@ public class AssetTaskController {
             opInfoDto = new WorkflowTaskOperateInfoDto();
         }
         // 如果当前用户是工单创建人并且工单不是终止状态
-        if (asset.getChargerEmail().equals(user.getUsername()) && !asset.getStatus().equals(AssetStatusEnum.READY.getName())) {
+        if (order.getApplicantEmail().equals(user.getUsername()) && !order.getStatus().equals(OrderStatusEnum.READY.getName())) {
             WorkflowOperate cancel = new WorkflowOperate();
             cancel.setOperateType(OperateTypeEnum.CANCEL.getIndex());
             cancel.setOperate(OperateTypeEnum.CANCEL.getName());

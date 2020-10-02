@@ -3,90 +3,19 @@
 <mapper namespace="com.bupt.lams.mapper.AssetMapper">
     <resultMap id="BaseResultMap" type="com.bupt.lams.model.Asset">
         <id column="id" property="id"/>
-        <result column="category" property="category"/>
         <result column="type" property="type"/>
-        <result column="did" property="did"/>
         <result column="brand" property="brand"/>
-        <result column="status" property="status"/>
         <result column="price" property="price"/>
-        <result column="applicant" property="applicant"/>
-        <result column="applicant_email" property="applicantEmail"/>
-        <result column="applicant_phone" property="applicantPhone"/>
-        <result column="readyDate" property="readyDate"/>
         <result column="charger" property="charger"/>
         <result column="charger_email" property="chargerEmail"/>
         <result column="charger_phone" property="chargerPhone"/>
-        <result column="applyDate" property="applyDate"/>
-        <result column="duration" property="duration"/>
-        <result column="reason" property="reason"/>
         <result column="adv" property="adv" typeHandler="com.bupt.lams.mybatis.JsonToObjectTypeHandler"/>
+        <result column="readyDate" property="readyDate"/>
+        <result column="updateTime" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, type, did, brand, status, price, applicant, applicant_email, applicant_phone, readyDate, charger, charger_email, charger_phone, applyDate, duration, reason, adv
+    id, type, brand, price, charger, charger_email, charger_phone, adv, readyDate, updateTime
   </sql>
-    <select id="getAssetByPage" resultMap="BaseResultMap">
-        select a.*
-        from asset a
-        <where>
-            <if test="asset.category !=null and asset.category!=''">
-                and a.category = #{asset.category}
-            </if>
-            <if test="asset.type !=null and asset.type!=''">
-                and a.type like concat('%',#{asset.type},'%')
-            </if>
-            <if test="asset.brand !=null and asset.brand!=''">
-                and a.brand like concat('%',#{asset.brand},'%')
-            </if>
-            <if test="asset.status !=null and asset.status!=''">
-                and a.status like concat('%',#{asset.status},'%')
-            </if>
-            <if test="asset.charger !=null and asset.charger!=''">
-                and a.charger like concat('%',#{asset.charger},'%')
-            </if>
-            <if test="beginDateScope !=null">
-                and a.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
-            </if>
-        </where>
-        <if test="page !=null and size!=null">
-            limit #{page},#{size}
-        </if>
-    </select>
-    <select id="getTotal" resultType="java.lang.Long">
-        select count(*) from asset a
-        <where>
-            <if test="asset!=null">
-                <if test="asset.category !=null and asset.category!=''">
-                    and a.category = #{asset.category}
-                </if>
-                <if test="asset.type !=null and asset.type!=''">
-                    and a.type like concat('%',#{asset.type},'%')
-                </if>
-                <if test="asset.brand !=null and asset.brand!=''">
-                    and a.brand like concat('%',#{asset.brand},'%')
-                </if>
-                <if test="asset.status !=null and asset.status!=''">
-                    and a.status like concat('%',#{asset.status},'%')
-                </if>
-                <if test="asset.charger !=null and asset.owner!=''">
-                    and a.charger like concat('%',#{asset.charger},'%')
-                </if>
-            </if>
-            <if test="beginDateScope !=null">
-                and a.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
-            </if>
-        </where>
-    </select>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        select
-        <include refid="Base_Column_List"/>
-        from asset
-        where id = #{id}
-    </select>
-    <update id="updateAssetStatusById" parameterType="com.bupt.lams.model.Asset">
-        update asset a
-        set a.status = #{status}
-        where a.id = #{id}
-    </update>
     <update id="updateAsset" parameterType="com.bupt.lams.model.Asset">
         update asset
         set
@@ -148,35 +77,14 @@
     <insert id="insertSelective" parameterType="com.bupt.lams.model.Asset" useGeneratedKeys="true" keyProperty="id">
         insert into asset
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="category !=null and category!=''">
-                category,
-            </if>
             <if test="type != null">
                 type,
-            </if>
-            <if test="did != null">
-                did,
             </if>
             <if test="brand != null">
                 brand,
             </if>
-            <if test="status != null">
-                status,
-            </if>
             <if test="price != null">
                 price,
-            </if>
-            <if test="applicant != null">
-                applicant,
-            </if>
-            <if test="applicantEmail != null">
-                applicant_email,
-            </if>
-            <if test="applicantPhone != null">
-                applicant_phone,
-            </if>
-            <if test="readyDate != null">
-                readyDate,
             </if>
             <if test="charger != null">
                 charger,
@@ -187,49 +95,25 @@
             <if test="chargerPhone != null">
                 charger_phone,
             </if>
-            <if test="applyDate != null">
-                applyDate,
-            </if>
-            <if test="duration != null">
-                duration,
-            </if>
-            <if test="reason != null">
-                reason,
-            </if>
             <if test="adv != null">
                 adv,
             </if>
+            <if test="readyDate != null">
+                readyDate,
+            </if>
+            <if test="updateTime != null">
+                updateTime,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="category != null">
-                #{category},
-            </if>
             <if test="type != null">
                 #{type},
-            </if>
-            <if test="did != null">
-                #{did},
             </if>
             <if test="brand != null">
                 #{brand},
             </if>
-            <if test="status != null">
-                #{status},
-            </if>
             <if test="price != null">
                 #{price},
-            </if>
-            <if test="applicant != null">
-                #{applicant},
-            </if>
-            <if test="applicantEmail != null">
-                #{applicantEmail},
-            </if>
-            <if test="applicantPhone != null">
-                #{applicantPhone},
-            </if>
-            <if test="readyDate != null">
-                #{readyDate},
             </if>
             <if test="charger != null">
                 #{charger},
@@ -240,17 +124,14 @@
             <if test="chargerPhone != null">
                 #{chargerPhone},
             </if>
-            <if test="applyDate != null">
-                #{applyDate},
-            </if>
-            <if test="duration != null">
-                #{duration},
-            </if>
-            <if test="reason != null">
-                #{reason},
-            </if>
             <if test="adv != null">
                 #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler},
+            </if>
+            <if test="readyDate != null">
+                #{readyDate},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
             </if>
         </trim>
     </insert>

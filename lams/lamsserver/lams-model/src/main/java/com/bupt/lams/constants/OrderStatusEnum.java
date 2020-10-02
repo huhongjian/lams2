@@ -1,9 +1,9 @@
 package com.bupt.lams.constants;
 
 /**
- * 资产状态
+ * 工单状态
  */
-public enum AssetStatusEnum {
+public enum OrderStatusEnum {
     CREATE("申请采购", 0),
     APPROVE("审批通过", 1),
     READY("已入库", 2),
@@ -15,7 +15,7 @@ public enum AssetStatusEnum {
     private String name;
     private int index;
 
-    AssetStatusEnum(String name, int index) {
+    OrderStatusEnum(String name, int index) {
         this.name = name;
         this.index = index;
     }

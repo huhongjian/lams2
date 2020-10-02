@@ -3,25 +3,7 @@
     <div>
       <div style="display: flex;justify-content: space-between">
         <div>
-          <el-button type="primary" icon="el-icon-plus" @click="showAddEmpView">
-            新增资产
-          </el-button>
-          <el-upload
-              :show-file-list="false"
-              :before-upload="beforeUpload"
-              :on-success="onSuccess"
-              :on-error="onError"
-              :disabled="importDataDisabled"
-              style="display: inline-flex;margin-left: 8px"
-              action="/employee/basic/import">
-            <el-button :disabled="importDataDisabled" type="success" :icon="importDataBtnIcon">
-              {{ importDataBtnText }}
-            </el-button>
-          </el-upload>
-          <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
-                     icon="el-icon-download">
-            导出数据
-          </el-button>
+          <p style="display: inline-flex;margin-left: 8px"></p>
         </div>
         <div>
           <el-input placeholder="请输入资产名称进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
@@ -114,7 +96,7 @@
     </div>
     <div style="margin-top: 10px">
       <el-table
-          :data="orders"
+          :data="assets"
           stripe
           border
           v-loading="loading"
@@ -129,70 +111,34 @@
         <el-table-column
             fixed
             label="ID"
-            align="left"
-            width="90">
+            align="left">
           <template slot-scope="scope">
             <el-button size="mini" @click="getCandidateBranchInfo(scope.row)">{{ scope.row.id }}</el-button>
           </template>
         </el-table-column>
         <el-table-column
-            prop="asset.type"
+            prop="type"
             align="left"
-            label="类型"
-            width="90">
+            label="类型">
         </el-table-column>
         <el-table-column
-            prop="asset.brand"
+            prop="brand"
             label="品牌"
-            align="left"
-            width="80">
+            align="left">
         </el-table-column>
         <el-table-column
             prop="status"
-            width="70"
             label="状态">
         </el-table-column>
         <el-table-column
-            prop="asset.price"
-            width="80"
-            label="价格">
-        </el-table-column>
-        <el-table-column
-            prop="applicant"
-            width="95"
-            align="left"
-            label="申请人">
-        </el-table-column>
-        <el-table-column
-            prop="applicantEmail"
-            width="150"
-            align="left"
-            label="申请人邮箱">
-        </el-table-column>
-        <el-table-column
-            prop="applicantPhone"
-            width="100"
-            label="申请人电话">
-        </el-table-column>
-        <el-table-column
-            prop="reason"
-            label="申请理由">
-        </el-table-column>
-        <el-table-column
-            prop="createTime"
-            width="180"
+            prop="applyDate"
             align="left"
             label="申请时间">
         </el-table-column>
         <el-table-column
-            fixed="right"
-            width="100"
-            label="操作">
-          <template slot-scope="scope">
-            <el-button @click="showEditEmpView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
-            <el-button @click="deleteEmp(scope.row)" style="padding: 3px" size="mini" type="danger">删除
-            </el-button>
-          </template>
+            prop="updateDate"
+            align="left"
+            label="更新时间">
         </el-table-column>
       </el-table>
       <div style="display: flex;justify-content: flex-end">
@@ -205,9 +151,9 @@
         </el-pagination>
       </div>
     </div>
-    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :title="title"
+    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :asset="asset" :title="title"
                :rules='rules'></AssetEdit>
-    <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
+    <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset" :title="title"
                  :candidateBranches='candidateBranches' :rules='rules'></AssetDetail>
   </div>
 </template>
@@ -217,7 +163,7 @@ import AssetDetail from "@/components/asset/AssetDetail";
 import AssetEdit from "@/components/asset/AssetEdit";
 
 export default {
-  name: "EmpBasic",
+  name: "MyAppy",
   data() {
     return {
       searchValue: {
@@ -235,7 +181,7 @@ export default {
       importDataDisabled: false,
       showAdvanceSearchView: false,
       allDeps: [],
-      orders: [],
+      assets: [],
       loading: false,
       popVisible: false,
       popVisible2: false,
@@ -279,21 +225,16 @@ export default {
       candidateBranches: {},
       tiptopDegrees: ['本科', '大专', '硕士', '博士', '高中', '初中', '小学', '其他'],
       inputDepName: '所属部门',
-      order: {
+      asset: {
         id: "",
-        status: "",
-        reason: "测试",
+        brand: "华为",
+        type: "手机",
+        price: "4000",
         applicant: "胡宏建",
         applicantPhone: "18840833079",
         applicantEmail: "admin",
-        createTime: "",
-        asset: {
-          id: "",
-          brand: "华为",
-          type: "手机",
-          price: "4000",
-          adv: {},
-        },
+        reason: "测试",
+        adv: {}
       },
       defaultProps: {
         children: 'children',
@@ -505,7 +446,7 @@ export default {
     },
     initEmps(type) {
       this.loading = true;
-      let url = '/order/basic/get/?category=1&page=' + this.page + '&size=' + this.size;
+      let url = '/asset/basic/get/?category=1&page=' + this.page + '&size=' + this.size;
       if (type && type == 'advanced') {
         if (this.searchValue.politicId) {
           url += '&politicId=' + this.searchValue.politicId;
@@ -534,7 +475,7 @@ export default {
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
-          this.orders = resp.data;
+          this.assets = resp.data;
           this.total = resp.total;
         }
       });

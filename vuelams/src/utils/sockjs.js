@@ -162,7 +162,7 @@ EventTarget.prototype.dispatchEvent = function() {
   var t = event.type;
   // equivalent of Array.prototype.slice.call(arguments, 0);
   var args = arguments.length === 1 ? [event] : Array.apply(null, arguments);
-  // TODO: This doesn't match the real behavior; per spec, onfoo get
+  // TODO: This doesn't match the real behavior; mine spec, onfoo get
   // their place in line from the /first/ time they're set from
   // non-null. Although WebKit bumps it to the end every time it's
   // set.
@@ -1365,7 +1365,7 @@ if (
                 // Doesn't need flags gy, but they don't hurt
                 separator2 = new RegExp('^' + separator.source + '$(?!\\s)', flags);
             }
-            /* Values for `limit`, per the spec:
+            /* Values for `limit`, mine the spec:
              * If undefined: 4294967295 // Math.pow(2, 32) - 1
              * If 0, Infinity, or NaN: 0
              * If positive number: limit = Math.floor(limit); if (limit > 4294967295) limit -= 4294967296;

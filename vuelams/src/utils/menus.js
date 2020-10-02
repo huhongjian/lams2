@@ -38,8 +38,8 @@ export const formatRoutes = (routes) => {
                     require(['../views/' + component + '.vue'], resolve);
                 } else if (component.startsWith("Asset")) {
                     require(['../views/asset/' + component + '.vue'], resolve);
-                } else if (component.startsWith("Per")) {
-                    require(['../views/per/' + component + '.vue'], resolve);
+                } else if (component.startsWith("My")) {
+                    require(['../views/mine/' + component + '.vue'], resolve);
                 } else if (component.startsWith("Sal")) {
                     require(['../views/sal/' + component + '.vue'], resolve);
                 } else if (component.startsWith("Sta")) {

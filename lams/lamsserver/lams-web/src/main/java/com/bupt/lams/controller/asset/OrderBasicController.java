@@ -3,6 +3,7 @@ package com.bupt.lams.controller.asset;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.*;
 import com.bupt.lams.utils.POIUtils;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,24 +11,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 资产信息相关
+ * 工单信息相关
  */
 @RestController
-@RequestMapping("/asset/basic")
-public class AssetBasicController {
+@RequestMapping("/order/basic")
+public class OrderBasicController {
 
-    private Logger logger = LoggerFactory.getLogger(AssetBasicController.class);
+    private Logger logger = LoggerFactory.getLogger(OrderBasicController.class);
 
     @Autowired
     EmployeeService employeeService;
     @Autowired
-    AssetService assetService;
+    OrderService orderService;
     @Autowired
     NationService nationService;
     @Autowired
@@ -40,26 +40,28 @@ public class AssetBasicController {
     DepartmentService departmentService;
 
     @GetMapping("/get")
-    public RespPageBean getAssetInByPage(@RequestParam Integer category, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Asset asset, Date[] beginDateScope) {
-        asset.setCategory(category);
-        return assetService.getAssetByPage(page, size, asset, beginDateScope);
+    public RespPageBean getOrderInByPage(@RequestParam Integer category, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Order order, Date[] beginDateScope) {
+        order.setCategory(category);
+        return orderService.getOrderByPage(page, size, order, beginDateScope);
     }
 
     @PostMapping("/add")
-    public RespBean addAsset(@RequestBody Asset asset) {
-        Integer res = assetService.addAssetIn(asset);
-        if (res == 1) {
-            return RespBean.ok("资产申请采购成功！");
+    public RespBean addAsset(@RequestBody Order order) {
+        try {
+            orderService.addOrderIn(order);
+        } catch (Exception e) {
+            logger.error("新增资产失败", e);
+            return RespBean.error("资产申请采购失败！");
         }
-        return RespBean.error("资产申请采购失败！");
+        return RespBean.ok("资产申请采购成功！");
     }
 
     @PostMapping("/borrow")
-    public RespBean borrowAsset(@RequestBody Asset asset) {
+    public RespBean borrowAsset(@RequestBody Order order) {
         RespBean response = new RespBean();
         response.setStatus(200);
         try {
-            assetService.borrowAsset(asset);
+            orderService.borrowAsset(order);
         } catch (Exception e) {
             logger.error("资产借出异常！", e);
             response.setStatus(500);

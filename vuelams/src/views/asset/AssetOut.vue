@@ -8,10 +8,10 @@
         <div>
           <el-input placeholder="请输入资产名称进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
                     clearable
-                    @clear="initEmps"
+                    @clear="initOrders"
                     style="width: 350px;margin-right: 10px" v-model="keyword"
-                    @keydown.enter.native="initEmps" :disabled="showAdvanceSearchView"></el-input>
-          <el-button icon="el-icon-search" type="primary" @click="initEmps" :disabled="showAdvanceSearchView">
+                    @keydown.enter.native="initOrders" :disabled="showAdvanceSearchView"></el-input>
+          <el-button icon="el-icon-search" type="primary" @click="initOrders" :disabled="showAdvanceSearchView">
             搜索
           </el-button>
           <el-button type="primary" @click="showAdvanceSearchView = !showAdvanceSearchView">
@@ -112,7 +112,7 @@
             </el-col>
             <el-col :span="5" :offset="4">
               <el-button size="mini">取消</el-button>
-              <el-button size="mini" icon="el-icon-search" type="primary" @click="initEmps('advanced')">搜索</el-button>
+              <el-button size="mini" icon="el-icon-search" type="primary" @click="initOrders('advanced')">搜索</el-button>
             </el-col>
           </el-row>
         </div>
@@ -342,7 +342,7 @@ export default {
     AssetEdit
   },
   mounted() {
-    this.initEmps();
+    this.initOrders();
     this.initData();
     this.initPositions();
   },
@@ -361,7 +361,7 @@ export default {
       this.importDataBtnText = '导入数据';
       this.importDataBtnIcon = 'el-icon-upload2';
       this.importDataDisabled = false;
-      this.initEmps();
+      this.initOrders();
     },
     beforeUpload() {
       this.importDataBtnText = '正在导入';
@@ -416,7 +416,7 @@ export default {
       }).then(() => {
         this.deleteRequest("/employee/basic/" + data.id).then(resp => {
           if (resp) {
-            this.initEmps();
+            this.initOrders();
           }
         })
       }).catch(() => {
@@ -502,15 +502,15 @@ export default {
     ,
     sizeChange(currentSize) {
       this.size = currentSize;
-      this.initEmps();
+      this.initOrders();
     }
     ,
     currentChange(currentPage) {
       this.page = currentPage;
-      this.initEmps('advanced');
+      this.initOrders('advanced');
     }
     ,
-    initEmps(type) {
+    initOrders(type) {
       this.loading = true;
       let url = '/order/basic/get/?category=2&page=' + this.page + '&size=' + this.size;
       if (type && type == 'advanced') {

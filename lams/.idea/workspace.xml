@@ -22,20 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/OrderQueryCondition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/PageInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../vuelams/src/components/asset/Mine.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/ProcessTypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/ProcessTypeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/OrderTaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/OrderTaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyAppy.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyAppy.vue" afterDir="false" />
-    </list>
+    <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -155,7 +142,7 @@
       <workItem from="1601172525670" duration="2336000" />
       <workItem from="1601265552926" duration="32788000" />
       <workItem from="1601612360903" duration="28128000" />
-      <workItem from="1601716693875" duration="8497000" />
+      <workItem from="1601716693875" duration="9175000" />
     </task>
     <task id="LOCAL-00001" summary="lams第二版">
       <created>1600352784505</created>
@@ -374,7 +361,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601707218310</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="我的任务开发">
+      <created>1601726666460</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1601726666460</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,7 +387,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="尝试引入activiti" />
     <MESSAGE value="activiti整合debug" />
     <MESSAGE value="添加资产类" />
     <MESSAGE value="改改配置" />
@@ -418,7 +411,8 @@
     <MESSAGE value="用户注册开发" />
     <MESSAGE value="调整表结构" />
     <MESSAGE value="调整表结构，之后的debug" />
-    <option name="LAST_COMMIT_MESSAGE" value="调整表结构，之后的debug" />
+    <MESSAGE value="我的任务开发" />
+    <option name="LAST_COMMIT_MESSAGE" value="我的任务开发" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1600784045187">
@@ -453,10 +447,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1601721061488" />
-    <state x="304" y="0" key="CommitChangelistDialog2" timestamp="1601707216055">
+    <state x="304" y="0" key="CommitChangelistDialog2" timestamp="1601726659346">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="304" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1601707216055" />
+    <state x="304" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1601726659346" />
     <state width="798" height="438" key="DebuggerActiveHint" timestamp="1601725931959">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -525,10 +519,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1601277436324" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1601707239248">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1601726708843">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1601707239248" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1601726708843" />
     <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1601721057888">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

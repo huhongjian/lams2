@@ -165,7 +165,7 @@ export default {
             this.putRequest("/order/basic/edit", this.order).then(resp => {
               if (resp) {
                 this.$emit('close');
-                this.initEmps();
+                this.initOrders();
               }
             })
           }
@@ -176,7 +176,7 @@ export default {
             this.postRequest("/order/basic/add", this.order).then(resp => {
               if (resp) {
                 this.$emit('close');
-                this.$parent.initEmps();
+                this.$parent.initOrders();
               }
             })
           }

@@ -120,7 +120,7 @@ export default {
         if (resp) {
           this.visible = false;
           this.$emit('close');
-          this.$parent.initEmps();
+          this.$parent.initOrders();
         }
       })
     },
@@ -135,7 +135,7 @@ export default {
     borrow() {
       this.postRequest("/order/basic/borrow", this.order).then(resp => {
         if (resp) {
-          this.$parent.initEmps();
+          this.$parent.initOrders();
           this.$emit('close');
         }
       });

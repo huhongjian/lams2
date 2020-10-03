@@ -1,10 +1,9 @@
 package com.bupt.lams.config;
 
 import com.bupt.lams.model.LamsUser;
-import com.bupt.lams.utils.UserInfoUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.bupt.lams.model.RespBean;
-import com.bupt.lams.service.HrService;
+import com.bupt.lams.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +35,7 @@ import java.io.PrintWriter;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    HrService hrService;
+    UserService userService;
     @Autowired
     CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource;
     @Autowired
@@ -49,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(hrService);
+        auth.userDetailsService(userService);
     }
 
     @Override
@@ -65,7 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     PrintWriter out = response.getWriter();
                     LamsUser lamsUser = (LamsUser) authentication.getPrincipal();
                     lamsUser.setPassword(null);
-                    UserInfoUtils.setContext(lamsUser);
                     RespBean ok = RespBean.ok("登录成功!", lamsUser);
                     String s = new ObjectMapper().writeValueAsString(ok);
                     out.write(s);

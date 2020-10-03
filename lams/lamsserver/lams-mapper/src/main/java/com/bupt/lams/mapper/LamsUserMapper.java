@@ -23,11 +23,13 @@ public interface LamsUserMapper {
 
     List<Role> getHrRolesById(Integer id);
 
-    List<LamsUser> getAllHrs(@Param("uid") Integer uid, @Param("keywords") String keywords);
+    List<Integer> getUserIdsByPage(@Param("uid") Integer uid, @Param("keywords") String keywords, @Param("page") Integer page, @Param("size") Integer size);
 
-    List<LamsUser> getAllHrsExceptCurrentHr(Integer id);
+    List<LamsUser> getUsersByIds(@Param("ids") List<Integer> ids);
+
+    Long getTotal(@Param("uid") Integer uid);
+
+    List<LamsUser> getAllUsersExceptCurrentHr(Integer id);
 
     Integer updatePasswd(@Param("uid") Integer hrid, @Param("encodePass") String encodePass);
-
-    Integer updateUserface(@Param("url") String url, @Param("id") Integer id);
 }

@@ -18,10 +18,24 @@
     <sql id="Base_Column_List">
     id, name, phone, telephone, address, enabled, username, password, userface, remark
   </sql>
-    <select id="getAllHrsExceptCurrentHr" resultMap="BaseResultMap">
+    <select id="getAllUsersExceptCurrentHr" resultMap="BaseResultMap">
         select * from lams_user where id !=#{id};
     </select>
-    <select id="getAllHrs" resultMap="UserWithRoles">
+    <select id="getHrRolesById" resultType="com.bupt.lams.model.Role">
+    select r.* from role r,lams_user_role lrr where lrr.`rid`=r.`id` and lrr.`uid`=#{id}
+  </select>
+    <select id="getUserIdsByPage" resultType="java.lang.Integer">
+        select u.id
+        from lams_user u
+        where u.`id`!=#{uid}
+        <if test="keywords!=null">
+            and u.name like concat('%',#{keywords},'%')
+        </if>
+        <if test="page !=null and size!=null">
+            limit #{page},#{size}
+        </if>
+    </select>
+    <select id="getUsersByIds" resultMap="UserWithRoles">
         select u.*,
         r.`id` as rid,
         r.`name` as rname,
@@ -31,15 +45,26 @@
         on u.`id`=lrr.`uid`
         left join role r
         on lrr.`rid`=r.`id`
-        where u.`id`!=#{uid}
-        <if test="keywords!=null">
-            and u.name like concat('%',#{keywords},'%')
+        where
+        <if test="ids != null">
+            <choose>
+                <when test="ids.size>0">
+                     u.id in
+                    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                        #{id}
+                    </foreach>
+                </when>
+                <otherwise>
+                     o.id=-1
+                </otherwise>
+            </choose>
         </if>
         order by u.id
     </select>
-    <select id="getHrRolesById" resultType="com.bupt.lams.model.Role">
-    select r.* from role r,lams_user_role lrr where lrr.`rid`=r.`id` and lrr.`uid`=#{id}
-  </select>
+    <select id="getTotal" resultType="java.lang.Long">
+        select count(*) from lams_user u
+        where u.`id`!=#{uid}
+    </select>
     <select id="loadUserByUsername" resultMap="BaseResultMap">
     select * from lams_user where username=#{username}
   </select>
@@ -183,9 +208,6 @@
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateUserface">
-        update lams_user set userface = #{url} where id=#{id};
     </update>
     <update id="updatePasswd">
         update lams_user set password = #{encodePass} where id=#{uid};

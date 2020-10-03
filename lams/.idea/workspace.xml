@@ -22,7 +22,27 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="" />
+    <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../vuelams/src/views/sys/SysPermission.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../vuelams/src/views/sys/SysUser.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/LamsUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/LamsUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/LamsUserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/LamsUserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/utils/UserInfoUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/utils/UserInfoUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/HrService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/utils/HrUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/HrInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/HrInfoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/system/HrController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/system/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/sys/basic/DepMana.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/sys/basic/EcMana.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/sys/basic/JobLevelMana.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/sys/basic/PermissMana.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/sys/basic/PosMana.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/sys/SysBasic.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/sys/SysHr.vue" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -142,7 +162,8 @@
       <workItem from="1601172525670" duration="2336000" />
       <workItem from="1601265552926" duration="32788000" />
       <workItem from="1601612360903" duration="28128000" />
-      <workItem from="1601716693875" duration="9175000" />
+      <workItem from="1601716693875" duration="15550000" />
+      <workItem from="1601741289673" duration="2312000" />
     </task>
     <task id="LOCAL-00001" summary="lams第二版">
       <created>1600352784505</created>
@@ -368,7 +389,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601726666460</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="我的任务开发">
+      <created>1601727347520</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1601727347520</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -435,26 +463,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="522" y="245" key="#com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodDialog/0.0.1536.824@0.0.1536.824" timestamp="1600847892549" />
-    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1601646575875">
+    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1601738318770">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1601646575875" />
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601647304582">
+    <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1601738318770" />
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601737192514">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1601647304582" />
-    <state x="607" y="180" key="#xdebugger.evaluate" timestamp="1601721061488">
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1601737192514" />
+    <state x="607" y="180" key="#xdebugger.evaluate" timestamp="1601740295008">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1601721061488" />
-    <state x="304" y="0" key="CommitChangelistDialog2" timestamp="1601726659346">
+    <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1601740295008" />
+    <state x="304" y="0" key="CommitChangelistDialog2" timestamp="1601727335668">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="304" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1601726659346" />
-    <state width="798" height="438" key="DebuggerActiveHint" timestamp="1601725931959">
+    <state x="304" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1601727335668" />
+    <state width="798" height="438" key="DebuggerActiveHint" timestamp="1601740538659">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="798" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1601725931959" />
+    <state width="798" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1601740538659" />
     <state x="28" y="15" width="1461" height="794" key="DiffContextDialog" timestamp="1601404405611">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -463,54 +491,54 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1601404272404" />
-    <state width="1493" height="220" key="GridCell.Tab.0.bottom" timestamp="1601726626217">
+    <state width="1493" height="363" key="GridCell.Tab.0.bottom" timestamp="1601745621900">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="220" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601726626217" />
-    <state width="1493" height="220" key="GridCell.Tab.0.center" timestamp="1601726626216">
+    <state width="1493" height="363" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601745621900" />
+    <state width="1493" height="363" key="GridCell.Tab.0.center" timestamp="1601745621900">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="220" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1601726626216" />
-    <state width="1493" height="220" key="GridCell.Tab.0.left" timestamp="1601726626216">
+    <state width="1493" height="363" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1601745621900" />
+    <state width="1493" height="363" key="GridCell.Tab.0.left" timestamp="1601745621900">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="220" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1601726626216" />
-    <state width="1493" height="220" key="GridCell.Tab.0.right" timestamp="1601726626216">
+    <state width="1493" height="363" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1601745621900" />
+    <state width="1493" height="363" key="GridCell.Tab.0.right" timestamp="1601745621900">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="220" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1601726626216" />
-    <state width="1493" height="220" key="GridCell.Tab.1.bottom" timestamp="1601726626217">
+    <state width="1493" height="363" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1601745621900" />
+    <state width="1493" height="363" key="GridCell.Tab.1.bottom" timestamp="1601745621900">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="220" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601726626217" />
-    <state width="1493" height="220" key="GridCell.Tab.1.center" timestamp="1601726626217">
+    <state width="1493" height="363" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601745621900" />
+    <state width="1493" height="363" key="GridCell.Tab.1.center" timestamp="1601745621900">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="220" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1601726626217" />
-    <state width="1493" height="220" key="GridCell.Tab.1.left" timestamp="1601726626217">
+    <state width="1493" height="363" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1601745621900" />
+    <state width="1493" height="363" key="GridCell.Tab.1.left" timestamp="1601745621900">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="220" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1601726626217" />
-    <state width="1493" height="220" key="GridCell.Tab.1.right" timestamp="1601726626217">
+    <state width="1493" height="363" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1601745621900" />
+    <state width="1493" height="363" key="GridCell.Tab.1.right" timestamp="1601745621900">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="220" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1601726626217" />
-    <state width="1493" height="220" key="GridCell.Tab.2.bottom" timestamp="1601726626217">
+    <state width="1493" height="363" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1601745621900" />
+    <state width="1493" height="363" key="GridCell.Tab.2.bottom" timestamp="1601745621900">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="220" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601726626217" />
-    <state width="1493" height="220" key="GridCell.Tab.2.center" timestamp="1601726626217">
+    <state width="1493" height="363" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601745621900" />
+    <state width="1493" height="363" key="GridCell.Tab.2.center" timestamp="1601745621900">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="220" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1601726626217" />
-    <state width="1493" height="220" key="GridCell.Tab.2.left" timestamp="1601726626217">
+    <state width="1493" height="363" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1601745621900" />
+    <state width="1493" height="363" key="GridCell.Tab.2.left" timestamp="1601745621900">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="220" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1601726626217" />
-    <state width="1493" height="220" key="GridCell.Tab.2.right" timestamp="1601726626217">
+    <state width="1493" height="363" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1601745621900" />
+    <state width="1493" height="363" key="GridCell.Tab.2.right" timestamp="1601745621900">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="220" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1601726626217" />
+    <state width="1493" height="363" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1601745621900" />
     <state x="502" y="114" key="RollbackChangesDialog" timestamp="1601385858314">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -519,18 +547,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1601277436324" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1601726708843">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1601727468456">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1601726708843" />
-    <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1601721057888">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1601727468456" />
+    <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1601740293895">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="775" height="419" key="XDebugger.FullValuePopup/0.0.1536.824@0.0.1536.824" timestamp="1601721057888" />
-    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1601725633805">
+    <state width="775" height="419" key="XDebugger.FullValuePopup/0.0.1536.824@0.0.1536.824" timestamp="1601740293895" />
+    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1601745359662">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1601725633805" />
+    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1601745359662" />
     <state x="468" y="144" width="690" height="536" key="find.popup" timestamp="1601633501412">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -551,36 +579,5 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1601385738804" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/OrderTaskController.java</url>
-          <line>85</line>
-          <option name="timeStamp" value="52" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="53" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java</url>
-          <line>190</line>
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java</url>
-          <line>131</line>
-          <option name="timeStamp" value="55" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/OrderTaskController.java</url>
-          <line>41</line>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

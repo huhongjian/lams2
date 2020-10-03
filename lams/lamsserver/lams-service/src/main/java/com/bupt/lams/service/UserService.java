@@ -1,10 +1,10 @@
 package com.bupt.lams.service;
 
-import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.mapper.LamsUserMapper;
 import com.bupt.lams.mapper.LamsUserRoleMapper;
-import com.bupt.lams.utils.HrUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.bupt.lams.model.LamsUser;
+import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,7 +19,7 @@ import java.util.List;
  * 用户server
  */
 @Service
-public class HrService implements UserDetailsService {
+public class UserService implements UserDetailsService {
     @Resource
     LamsUserMapper lamsUserMapper;
     @Resource
@@ -35,8 +35,18 @@ public class HrService implements UserDetailsService {
         return lamsUser;
     }
 
-    public List<LamsUser> getAllHrs(String keywords) {
-        return lamsUserMapper.getAllHrs(HrUtils.getCurrentHr().getId(), keywords);
+    public RespPageBean getUsersByPage(String keywords, Integer page, Integer size) {
+        Integer uid = UserInfoUtils.getLoginedUser().getId();
+        if (page != null && size != null) {
+            page = (page - 1) * size;
+        }
+        List<Integer> ids = lamsUserMapper.getUserIdsByPage(uid, keywords, page, size);
+        List<LamsUser> data = lamsUserMapper.getUsersByIds(ids);
+        Long total = lamsUserMapper.getTotal(uid);
+        RespPageBean bean = new RespPageBean();
+        bean.setData(data);
+        bean.setTotal(total);
+        return bean;
     }
 
     public Integer addUser(LamsUser lamsUser) {
@@ -45,42 +55,40 @@ public class HrService implements UserDetailsService {
         return lamsUserMapper.insert(lamsUser);
     }
 
-    public Integer updateHr(LamsUser lamsUser) {
+    public Integer updateUser(LamsUser lamsUser) {
         return lamsUserMapper.updateByPrimaryKeySelective(lamsUser);
     }
 
     @Transactional
-    public boolean updateHrRole(Integer hrid, Integer[] rids) {
-        lamsUserRoleMapper.deleteByHrid(hrid);
-        return lamsUserRoleMapper.addRole(hrid, rids) == rids.length;
+    public void updateUserRole(Integer uid, Integer[] rids) {
+        lamsUserRoleMapper.deleteByHrid(uid);
+        if (rids != null && rids.length > 0) {
+            lamsUserRoleMapper.addRole(uid, rids);
+        }
     }
 
-    public Integer deleteHrById(Integer id) {
+    public Integer deleteUserById(Integer id) {
         return lamsUserMapper.deleteByPrimaryKey(id);
     }
 
     public List<LamsUser> getAllHrsExceptCurrentHr() {
-        return lamsUserMapper.getAllHrsExceptCurrentHr(HrUtils.getCurrentHr().getId());
+        return lamsUserMapper.getAllUsersExceptCurrentHr(UserInfoUtils.getLoginedUser().getId());
     }
 
-    public Integer updateHyById(LamsUser lamsUser) {
+    public Integer updateUserById(LamsUser lamsUser) {
         return lamsUserMapper.updateByPrimaryKeySelective(lamsUser);
     }
 
-    public boolean updateHrPasswd(String oldpass, String pass, Integer hrid) {
-        LamsUser lamsUser = lamsUserMapper.selectByPrimaryKey(hrid);
+    public boolean updateUserPasswd(String oldpass, String pass, Integer uid) {
+        LamsUser lamsUser = lamsUserMapper.selectByPrimaryKey(uid);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (encoder.matches(oldpass, lamsUser.getPassword())) {
             String encodePass = encoder.encode(pass);
-            Integer result = lamsUserMapper.updatePasswd(hrid, encodePass);
+            Integer result = lamsUserMapper.updatePasswd(uid, encodePass);
             if (result == 1) {
                 return true;
             }
         }
         return false;
-    }
-
-    public Integer updateUserface(String url, Integer id) {
-        return lamsUserMapper.updateUserface(url, id);
     }
 }

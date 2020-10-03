@@ -2,7 +2,7 @@ package com.bupt.lams.controller;
 
 import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.RespBean;
-import com.bupt.lams.service.HrService;
+import com.bupt.lams.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class HrInfoController {
 
     @Autowired
-    HrService hrService;
+    UserService userService;
 
     @Value("${fastdfs.nginx.host}")
     String nginxHost;
@@ -35,7 +35,7 @@ public class HrInfoController {
 
     @PutMapping("/user/add")
     public RespBean addUser(@RequestBody LamsUser lamsUser) {
-        if (hrService.addUser(lamsUser) == 1) {
+        if (userService.addUser(lamsUser) == 1) {
             return RespBean.ok("注册成功!");
         }
         return RespBean.error("注册失败!");
@@ -43,7 +43,7 @@ public class HrInfoController {
 
     @PutMapping("/hr/info")
     public RespBean updateHr(@RequestBody LamsUser lamsUser, Authentication authentication) {
-        if (hrService.updateHr(lamsUser) == 1) {
+        if (userService.updateUser(lamsUser) == 1) {
             SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(lamsUser, authentication.getCredentials(), authentication.getAuthorities()));
             return RespBean.ok("更新成功!");
         }
@@ -55,7 +55,7 @@ public class HrInfoController {
         String oldpass = (String) info.get("oldpass");
         String pass = (String) info.get("pass");
         Integer hrid = (Integer) info.get("hrid");
-        if (hrService.updateHrPasswd(oldpass, pass, hrid)) {
+        if (userService.updateUserPasswd(oldpass, pass, hrid)) {
             return RespBean.ok("更新成功!");
         }
         return RespBean.error("更新失败!");

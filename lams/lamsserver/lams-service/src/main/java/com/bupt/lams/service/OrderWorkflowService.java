@@ -14,8 +14,8 @@ public class OrderWorkflowService {
     @Resource
     OrderWorkflowMapper orderWorkflowMapper;
 
-    public OrderWorkflow getOrderWorkflowByAid(Long aid) {
-        return orderWorkflowMapper.getOrderWorkflowByAid(aid);
+    public OrderWorkflow getOrderWorkflowByOid(Long oid) {
+        return orderWorkflowMapper.getOrderWorkflowByAid(oid);
     }
 
     public void saveOrderWorkflow(OrderWorkflow orderWorkflow) {

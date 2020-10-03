@@ -1,15 +1,530 @@
 <template>
+  <div>
     <div>
-        员工培训
+      <div style="display: flex;justify-content: space-between">
+        <div>
+          <p style="display: inline-flex;margin-left: 8px"></p>
+        </div>
+        <div>
+          <el-input placeholder="请输入资产名称进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
+                    clearable
+                    @clear="initEmps"
+                    style="width: 350px;margin-right: 10px" v-model="keyword"
+                    @keydown.enter.native="initEmps" :disabled="showAdvanceSearchView"></el-input>
+          <el-button icon="el-icon-search" type="primary" @click="initEmps" :disabled="showAdvanceSearchView">
+            搜索
+          </el-button>
+          <el-button type="primary" @click="showAdvanceSearchView = !showAdvanceSearchView">
+            <i :class="showAdvanceSearchView?'fa fa-angle-double-up':'fa fa-angle-double-down'"
+               aria-hidden="true"></i>
+            高级搜索
+          </el-button>
+        </div>
+      </div>
+      <transition name="slide-fade">
+        <div v-show="showAdvanceSearchView"
+             style="border: 1px solid #409eff;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;">
+          <el-row>
+            <el-col :span="5">
+              类型:
+              <el-select v-model="searchValue.type" placeholder="类型" size="mini"
+                         style="width: 130px;">
+                <el-option
+                    v-for="item in types"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="4">
+              品牌:
+              <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
+                        v-model="searchValue.brand"></el-input>
+            </el-col>
+            <el-col :span="4">
+              状态:
+              <el-select v-model="searchValue.status" placeholder="状态" size="mini" style="width: 130px;">
+                <el-option
+                    v-for="item in statuses"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="4">
+              申请人:
+              <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
+                        v-model="searchValue.applicant"></el-input>
+            </el-col>
+            <el-col :span="4">
+              申请人邮箱:
+              <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
+                        v-model="searchValue.applicantEmail"></el-input>
+            </el-col>
+          </el-row>
+          <el-row style="margin-top: 10px">
+            <el-col :span="6">
+              价格:
+              <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
+                        v-model="searchValue.priceLow"></el-input>
+              至:
+              <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
+                        v-model="searchValue.priceHigh"></el-input>
+            </el-col>
+            <el-col :span="9">
+              入职日期:
+              <el-date-picker
+                  v-model="searchValue.beginDateScope"
+                  type="daterange"
+                  size="mini"
+                  unlink-panels
+                  value-format="yyyy-MM-dd"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期">
+              </el-date-picker>
+            </el-col>
+            <el-col :span="5" :offset="3">
+              <el-button size="mini">取消</el-button>
+              <el-button size="mini" icon="el-icon-search" type="primary" @click="initEmps('advanced')">搜索</el-button>
+            </el-col>
+          </el-row>
+        </div>
+      </transition>
     </div>
+    <div style="margin-top: 10px">
+      <el-table
+          :data="assets"
+          stripe
+          border
+          v-loading="loading"
+          element-loading-text="正在加载..."
+          element-loading-spinner="el-icon-loading"
+          element-loading-background="rgba(0, 0, 0, 0.8)"
+          style="width: 100%">
+        <el-table-column
+            type="selection"
+            width="55">
+        </el-table-column>
+        <el-table-column
+            fixed
+            label="ID"
+            align="left"
+            width="90">
+          <template slot-scope="scope">
+            <el-button size="mini" @click="getCandidateBranchInfo(scope.row)">{{ scope.row.id }}</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column
+            prop="category"
+            align="left"
+            label="流程"
+            width="90">
+        </el-table-column>
+        <el-table-column
+            prop="status"
+            label="状态"
+            width="90">
+        </el-table-column>
+        <el-table-column
+            prop="duration"
+            label="用时"
+            width="90">
+        </el-table-column>
+        <el-table-column
+            prop="reason"
+            label="理由">
+        </el-table-column>
+        <el-table-column
+            prop="applicant"
+            width="95"
+            align="left"
+            label="申请人">
+        </el-table-column>
+        <el-table-column
+            prop="applicantEmail"
+            width="150"
+            align="left"
+            label="申请人邮箱">
+        </el-table-column>
+        <el-table-column
+            prop="applicantPhone"
+            width="100"
+            label="申请人电话">
+        </el-table-column>
+        <el-table-column
+            prop="createTime"
+            align="left"
+            label="申请时间"
+            width="180">
+        </el-table-column>
+        <el-table-column
+            prop="updateTime"
+            align="left"
+            label="更新时间"
+            width="180">
+        </el-table-column>
+      </el-table>
+      <div style="display: flex;justify-content: flex-end">
+        <el-pagination
+            background
+            @current-change="currentChange"
+            @size-change="sizeChange"
+            layout="sizes, prev, pager, next, jumper, ->, total, slot"
+            :total="total">
+        </el-pagination>
+      </div>
+    </div>
+    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :asset="asset" :title="title"
+               :rules='rules'></AssetEdit>
+    <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset" :title="title"
+                 :candidateBranches='candidateBranches' :rules='rules'></AssetDetail>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "PerTrain"
+import AssetDetail from "@/components/asset/AssetDetail";
+import AssetEdit from "@/components/asset/AssetEdit";
+
+export default {
+  name: "MyOut",
+  data() {
+    return {
+      searchValue: {
+        type: null,
+        nationId: null,
+        jobLevelId: null,
+        posId: null,
+        engageForm: null,
+        departmentId: null,
+        beginDateScope: null
+      },
+      title: '',
+      importDataBtnText: '导入数据',
+      importDataBtnIcon: 'el-icon-upload2',
+      importDataDisabled: false,
+      showAdvanceSearchView: false,
+      allDeps: [],
+      assets: [],
+      loading: false,
+      popVisible: false,
+      popVisible2: false,
+      dialogVisible: false,
+      // 详情页可见性
+      dialogVisible2: false,
+      total: 0,
+      page: 1,
+      keyword: '',
+      size: 10,
+      nations: [],
+      joblevels: [],
+      types: [
+        {
+          id: 1,
+          name: '手机'
+        }, {
+          id: 2,
+          name: '主机'
+        }, {
+          id: 3,
+          name: '交换机'
+        }, {
+          id: 4,
+          name: '测距仪'
+        }],
+      statuses: [
+        {
+          id: 0,
+          name: "申请采购"
+        },
+        {
+          id: 0,
+          name: "审批通过"
+        },
+        {
+          id: 0,
+          name: "审批未通过"
+        }
+      ],
+      candidateBranches: {},
+      tiptopDegrees: ['本科', '大专', '硕士', '博士', '高中', '初中', '小学', '其他'],
+      inputDepName: '所属部门',
+      asset: {
+        id: "",
+        brand: "华为",
+        type: "手机",
+        price: "4000",
+        applicant: "胡宏建",
+        applicantPhone: "18840833079",
+        applicantEmail: "admin",
+        reason: "测试",
+        adv: {}
+      },
+      defaultProps: {
+        children: 'children',
+        label: 'name'
+      },
+      rules: {
+        name: [{required: true, message: '请输入用户名', trigger: 'blur'}],
+        gender: [{required: true, message: '请输入性别', trigger: 'blur'}],
+        birthday: [{required: true, message: '请输入出生日期', trigger: 'blur'}],
+        idCard: [{required: true, message: '请输入身份证号码', trigger: 'blur'}, {
+          pattern: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
+          message: '身份证号码格式不正确',
+          trigger: 'blur'
+        }],
+        wedlock: [{required: true, message: '请输入婚姻状况', trigger: 'blur'}],
+        nationId: [{required: true, message: '请输入您组', trigger: 'blur'}],
+        nativePlace: [{required: true, message: '请输入籍贯', trigger: 'blur'}],
+        politicId: [{required: true, message: '请输入政治面貌', trigger: 'blur'}],
+        email: [{required: true, message: '请输入邮箱地址', trigger: 'blur'}, {
+          type: 'email',
+          message: '邮箱格式不正确',
+          trigger: 'blur'
+        }],
+        phone: [{required: true, message: '请输入电话号码', trigger: 'blur'}],
+        address: [{required: true, message: '请输入员工地址', trigger: 'blur'}],
+        departmentId: [{required: true, message: '请输入部门名称', trigger: 'blur'}],
+        jobLevelId: [{required: true, message: '请输入职称', trigger: 'blur'}],
+        posId: [{required: true, message: '请输入职位', trigger: 'blur'}],
+        engageForm: [{required: true, message: '请输入聘用形式', trigger: 'blur'}],
+        tiptopDegree: [{required: true, message: '请输入学历', trigger: 'blur'}],
+        specialty: [{required: true, message: '请输入专业', trigger: 'blur'}],
+        school: [{required: true, message: '请输入毕业院校', trigger: 'blur'}],
+        beginDate: [{required: true, message: '请输入入职日期', trigger: 'blur'}],
+        workState: [{required: true, message: '请输入工作状态', trigger: 'blur'}],
+        workID: [{required: true, message: '请输入工号', trigger: 'blur'}],
+        contractTerm: [{required: true, message: '请输入合同期限', trigger: 'blur'}],
+        conversionTime: [{required: true, message: '请输入转正日期', trigger: 'blur'}],
+        notworkDate: [{required: true, message: '请输入离职日期', trigger: 'blur'}],
+        beginContract: [{required: true, message: '请输入合同起始日期', trigger: 'blur'}],
+        endContract: [{required: true, message: '请输入合同结束日期', trigger: 'blur'}],
+        workAge: [{required: true, message: '请输入工龄', trigger: 'blur'}],
+      }
     }
+  },
+  components: {
+    AssetDetail,
+    AssetEdit
+  },
+  mounted() {
+    this.initEmps();
+    this.initData();
+    this.initPositions();
+  },
+  methods: {
+    searvhViewHandleNodeClick(data) {
+      this.inputDepName = data.name;
+      this.searchValue.departmentId = data.id;
+      this.popVisible2 = !this.popVisible2
+    },
+    onError(err, file, fileList) {
+      this.importDataBtnText = '导入数据';
+      this.importDataBtnIcon = 'el-icon-upload2';
+      this.importDataDisabled = false;
+    },
+    onSuccess(response, file, fileList) {
+      this.importDataBtnText = '导入数据';
+      this.importDataBtnIcon = 'el-icon-upload2';
+      this.importDataDisabled = false;
+      this.initEmps();
+    },
+    beforeUpload() {
+      this.importDataBtnText = '正在导入';
+      this.importDataBtnIcon = 'el-icon-loading';
+      this.importDataDisabled = true;
+    },
+    exportData() {
+      window.open('/employee/basic/export', '_parent');
+    },
+    emptyAsset() {
+      this.asset = {
+        id: "",
+        brand: "华为",
+        type: "手机",
+        price: "4000",
+        applicant: "胡宏建",
+        applicantPhone: "18840833079",
+        applicantEmail: "admin",
+        reason: "测试",
+        adv: {}
+      }
+      this.inputDepName = '';
+    },
+    showEditEmpView(data) {
+      this.title = '编辑资产信息';
+      this.asset = data;
+      this.dialogVisible = true;
+    },
+    showDetailView(data) {
+      this.title = '资产详情';
+      this.asset = data;
+      this.dialogVisible2 = true;
+    },
+    getCandidateBranchInfo(data) {
+      this.getRequest('/asset/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
+        if (resp) {
+          this.candidateBranches = resp.obj;
+          this.showDetailView(data);
+        }
+      });
+    },
+    deleteEmp(data) {
+      this.$confirm('此操作将永久删除【' + data.name + '】, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteRequest("/employee/basic/" + data.id).then(resp => {
+          if (resp) {
+            this.initEmps();
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
+    handleNodeClick(data) {
+      this.inputDepName = data.name;
+      this.emp.departmentId = data.id;
+      this.popVisible = !this.popVisible
+    },
+    showDepView() {
+      this.popVisible = !this.popVisible
+    },
+    showDepView2() {
+      this.popVisible2 = !this.popVisible2
+    },
+    initPositions() {
+      this.getRequest('/employee/basic/positions').then(resp => {
+        if (resp) {
+          this.positions = resp;
+        }
+      })
+    },
+    getMaxWordID() {
+      this.getRequest("/employee/basic/maxWorkID").then(resp => {
+        if (resp) {
+          this.emp.workID = resp.obj;
+        }
+      })
+    },
+    initData() {
+      if (!window.sessionStorage.getItem("nations")) {
+        this.getRequest('/employee/basic/nations').then(resp => {
+          if (resp) {
+            this.nations = resp;
+            window.sessionStorage.setItem("nations", JSON.stringify(resp));
+          }
+        })
+      } else {
+        this.nations = JSON.parse(window.sessionStorage.getItem("nations"));
+      }
+      if (!window.sessionStorage.getItem("joblevels")) {
+        this.getRequest('/employee/basic/joblevels').then(resp => {
+          if (resp) {
+            this.joblevels = resp;
+            window.sessionStorage.setItem("joblevels", JSON.stringify(resp));
+          }
+        })
+      } else {
+        this.joblevels = JSON.parse(window.sessionStorage.getItem("joblevels"));
+      }
+      if (!window.sessionStorage.getItem("politicsstatus")) {
+        this.getRequest('/employee/basic/politicsstatus').then(resp => {
+          if (resp) {
+            this.politicsstatus = resp;
+            window.sessionStorage.setItem("politicsstatus", JSON.stringify(resp));
+          }
+        })
+      } else {
+        this.politicsstatus = JSON.parse(window.sessionStorage.getItem("politicsstatus"));
+      }
+      if (!window.sessionStorage.getItem("deps")) {
+        this.getRequest('/employee/basic/deps').then(resp => {
+          if (resp) {
+            this.allDeps = resp;
+            window.sessionStorage.setItem("deps", JSON.stringify(resp));
+          }
+        })
+      } else {
+        this.allDeps = JSON.parse(window.sessionStorage.getItem("deps"));
+      }
+    },
+    sizeChange(currentSize) {
+      this.size = currentSize;
+      this.initEmps();
+    },
+    currentChange(currentPage) {
+      this.page = currentPage;
+      this.initEmps('advanced');
+    },
+    showAddEmpView() {
+      this.emptyAsset();
+      this.title = '资产采购申请';
+      this.getMaxWordID();
+      this.dialogVisible = true;
+    },
+    initEmps(type) {
+      this.loading = true;
+      let url = '/asset/basic/get/?category=1&page=' + this.page + '&size=' + this.size;
+      if (type && type == 'advanced') {
+        if (this.searchValue.politicId) {
+          url += '&politicId=' + this.searchValue.politicId;
+        }
+        if (this.searchValue.nationId) {
+          url += '&nationId=' + this.searchValue.nationId;
+        }
+        if (this.searchValue.jobLevelId) {
+          url += '&jobLevelId=' + this.searchValue.jobLevelId;
+        }
+        if (this.searchValue.posId) {
+          url += '&posId=' + this.searchValue.posId;
+        }
+        if (this.searchValue.engageForm) {
+          url += '&engageForm=' + this.searchValue.engageForm;
+        }
+        if (this.searchValue.departmentId) {
+          url += '&departmentId=' + this.searchValue.departmentId;
+        }
+        if (this.searchValue.beginDateScope) {
+          url += '&beginDateScope=' + this.searchValue.beginDateScope;
+        }
+      } else {
+        url += "&name=" + this.keyword;
+      }
+      this.getRequest(url).then(resp => {
+        this.loading = false;
+        if (resp) {
+          this.assets = resp.data;
+          this.total = resp.total;
+        }
+      });
+    }
+  }
+}
 </script>
 
-<style scoped>
+<style>
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.slide-fade-enter-active {
+  transition: all .8s ease;
+}
 
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active for below version 2.1.8 */
+{
+  transform: translateX(10px);
+  opacity: 0;
+}
 </style>

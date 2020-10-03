@@ -19,35 +19,14 @@
     <update id="updateAsset" parameterType="com.bupt.lams.model.Asset">
         update asset
         set
-        <if test="category !=null and category!=''">
-            category = #{category},
-        </if>
         <if test="type != null">
             type = #{type},
-        </if>
-        <if test="did != null">
-            did = #{did},
         </if>
         <if test="brand != null">
             brand = #{brand},
         </if>
-        <if test="status != null">
-            status = #{status},
-        </if>
         <if test="price != null">
             price = #{price},
-        </if>
-        <if test="applicant != null">
-            applicant = #{applicant},
-        </if>
-        <if test="applicantEmail != null">
-            applicant_email = #{applicantEmail},
-        </if>
-        <if test="applicantPhone != null">
-            applicant_phone = #{applicantPhone},
-        </if>
-        <if test="readyDate != null">
-            readyDate = #{readyDate},
         </if>
         <if test="charger != null">
             charger = #{charger},
@@ -58,17 +37,14 @@
         <if test="chargerPhone != null">
             charger_phone = #{chargerPhone},
         </if>
-        <if test="applyDate != null">
-            applyDate = #{applyDate},
-        </if>
-        <if test="duration != null">
-            duration = #{duration},
-        </if>
-        <if test="reason != null">
-            reason = #{reason},
-        </if>
         <if test="adv != null">
-            adv = #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler}
+            adv = #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler},
+        </if>
+        <if test="readyDate != null">
+            readyDate = #{readyDate},
+        </if>
+        <if test="updateTime != null">
+            updateTime = #{updateTime}
         </if>
         <where>
             id = #{id}

@@ -46,4 +46,9 @@
             </if>
         </trim>
     </insert>
+    <select id="getAidByOid" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select aid
+        from order_asset
+        where oid = #{oid}
+    </select>
 </mapper>

@@ -23,42 +23,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderAssetMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderAssetMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderWorkflowMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Order.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/OrderAsset.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyAppy.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetWorkflowMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetWorkflowMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderWorkflowMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/AssetStatusEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/OrderStatusEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Asset.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Asset.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/AssetWorkflow.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/OrderWorkflow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Record.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/Record.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/RespPageBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/RespPageBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetWorkflowService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderWorkflowService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderAssetMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderAssetMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderAssetMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderAssetMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderWorkflowService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderWorkflowService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetBasicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/OrderBasicController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetTaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/OrderTaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/utils/ActivitiUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/utils/ActivitiUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/sys/basic/AssetDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/asset/AssetDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/sys/basic/AssetEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/asset/AssetEdit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/utils/menus.js" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/utils/menus.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/utils/sockjs.js" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/utils/sockjs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetAdv.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/OrderTaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/OrderTaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/asset/AssetDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/asset/AssetDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetOut.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetOut.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/per/PerEc.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyTask.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/per/PerEmp.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/per/PerMv.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/PerMv.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/per/PerSalary.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/PerSalary.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/per/PerTrain.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyOut.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyAppy.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyAppy.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyOut.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyOut.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyTask.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/PerMv.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/PerSalary.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/sta/StaPers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/sta/StaPers.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/sta/StaScore.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/sta/StaScore.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +174,7 @@
       <workItem from="1601134574217" duration="9195000" />
       <workItem from="1601172525670" duration="2336000" />
       <workItem from="1601265552926" duration="32788000" />
-      <workItem from="1601612360903" duration="14598000" />
+      <workItem from="1601612360903" duration="24042000" />
     </task>
     <task id="LOCAL-00001" summary="lams第二版">
       <created>1600352784505</created>
@@ -396,7 +379,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601405789451</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="调整表结构">
+      <created>1601655362906</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1601655362906</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -415,7 +405,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="修改了页面&amp;添加了一些注释" />
     <MESSAGE value="改名称" />
     <MESSAGE value="尝试引入activiti" />
     <MESSAGE value="activiti整合debug" />
@@ -440,7 +429,8 @@
     <MESSAGE value="转交人页面开发" />
     <MESSAGE value="处理用户信息" />
     <MESSAGE value="用户注册开发" />
-    <option name="LAST_COMMIT_MESSAGE" value="用户注册开发" />
+    <MESSAGE value="调整表结构" />
+    <option name="LAST_COMMIT_MESSAGE" value="调整表结构" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1600784045187">
@@ -475,14 +465,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1601653905782" />
-    <state x="304" y="0" key="CommitChangelistDialog2" timestamp="1601405783503">
+    <state x="304" y="0" key="CommitChangelistDialog2" timestamp="1601655350904">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="304" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1601405783503" />
-    <state width="798" height="438" key="DebuggerActiveHint" timestamp="1601654264460">
+    <state x="304" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1601655350904" />
+    <state width="798" height="438" key="DebuggerActiveHint" timestamp="1601706891123">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="798" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1601654264460" />
+    <state width="798" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1601706891123" />
     <state x="28" y="15" width="1461" height="794" key="DiffContextDialog" timestamp="1601404405611">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -491,54 +481,54 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1601404272404" />
-    <state width="1493" height="322" key="GridCell.Tab.0.bottom" timestamp="1601654499955">
+    <state width="1493" height="206" key="GridCell.Tab.0.bottom" timestamp="1601707009442">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="322" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601654499955" />
-    <state width="1493" height="322" key="GridCell.Tab.0.center" timestamp="1601654499954">
+    <state width="1493" height="206" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601707009442" />
+    <state width="1493" height="206" key="GridCell.Tab.0.center" timestamp="1601707009442">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="322" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1601654499954" />
-    <state width="1493" height="322" key="GridCell.Tab.0.left" timestamp="1601654499954">
+    <state width="1493" height="206" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1601707009442" />
+    <state width="1493" height="206" key="GridCell.Tab.0.left" timestamp="1601707009442">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="322" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1601654499954" />
-    <state width="1493" height="322" key="GridCell.Tab.0.right" timestamp="1601654499955">
+    <state width="1493" height="206" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1601707009442" />
+    <state width="1493" height="206" key="GridCell.Tab.0.right" timestamp="1601707009442">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="322" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1601654499955" />
-    <state width="1493" height="322" key="GridCell.Tab.1.bottom" timestamp="1601654499955">
+    <state width="1493" height="206" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1601707009442" />
+    <state width="1493" height="206" key="GridCell.Tab.1.bottom" timestamp="1601707009162">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="322" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601654499955" />
-    <state width="1493" height="322" key="GridCell.Tab.1.center" timestamp="1601654499955">
+    <state width="1493" height="206" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601707009162" />
+    <state width="1493" height="206" key="GridCell.Tab.1.center" timestamp="1601707009162">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="322" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1601654499955" />
-    <state width="1493" height="322" key="GridCell.Tab.1.left" timestamp="1601654499955">
+    <state width="1493" height="206" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1601707009162" />
+    <state width="1493" height="206" key="GridCell.Tab.1.left" timestamp="1601707009162">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="322" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1601654499955" />
-    <state width="1493" height="322" key="GridCell.Tab.1.right" timestamp="1601654499955">
+    <state width="1493" height="206" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1601707009162" />
+    <state width="1493" height="206" key="GridCell.Tab.1.right" timestamp="1601707009162">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="322" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1601654499955" />
-    <state width="1493" height="322" key="GridCell.Tab.2.bottom" timestamp="1601654499955">
+    <state width="1493" height="206" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1601707009162" />
+    <state width="1493" height="206" key="GridCell.Tab.2.bottom" timestamp="1601707009163">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="322" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601654499955" />
-    <state width="1493" height="322" key="GridCell.Tab.2.center" timestamp="1601654499955">
+    <state width="1493" height="206" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601707009163" />
+    <state width="1493" height="206" key="GridCell.Tab.2.center" timestamp="1601707009162">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="322" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1601654499955" />
-    <state width="1493" height="322" key="GridCell.Tab.2.left" timestamp="1601654499955">
+    <state width="1493" height="206" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1601707009162" />
+    <state width="1493" height="206" key="GridCell.Tab.2.left" timestamp="1601707009162">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="322" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1601654499955" />
-    <state width="1493" height="322" key="GridCell.Tab.2.right" timestamp="1601654499955">
+    <state width="1493" height="206" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1601707009162" />
+    <state width="1493" height="206" key="GridCell.Tab.2.right" timestamp="1601707009162">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="322" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1601654499955" />
+    <state width="1493" height="206" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1601707009162" />
     <state x="502" y="114" key="RollbackChangesDialog" timestamp="1601385858314">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -547,18 +537,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1601277436324" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1601405792909">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1601655366738">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1601405792909" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1601655366738" />
     <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1601653784541">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="775" height="419" key="XDebugger.FullValuePopup/0.0.1536.824@0.0.1536.824" timestamp="1601653784541" />
-    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1601652183672">
+    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1601706229339">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1601652183672" />
+    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1601706229339" />
     <state x="468" y="144" width="690" height="536" key="find.popup" timestamp="1601633501412">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -584,19 +574,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java</url>
-          <line>52</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/OrderBasicController.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="16" />
+          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

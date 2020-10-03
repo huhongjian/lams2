@@ -5,56 +5,56 @@
         :visible.sync="dialogVisible2"
         width="80%">
       <div>
-        <el-form :model="asset" :rules="rules" ref="assetForm">
+        <el-form :model="order.asset" :rules="rules" ref="assetForm">
           <el-row>
             <el-col :span="6">
               <el-form-item label="品牌:" prop="brand">
-                {{ asset.brand }}
+                {{ order.asset.brand }}
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="类型:" prop="type">
-                {{ asset.type }}
+                {{ order.asset.type }}
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="价格:" prop="price">
-                {{ asset.price }}
+                {{ order.asset.price }}
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="6">
               <el-form-item label="申请人:" prop="applicant">
-                {{ asset.applicant }}
+                {{ order.applicant }}
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="电话:" prop="applicantPhone">
-                {{ asset.applicantPhone }}
+                {{ order.applicantPhone }}
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="邮件:" prop="applicantEmail">
-                {{ asset.applicantEmail }}
+                {{ order.applicantEmail }}
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="理由:" prop="reason">{{ asset.reason }}</el-form-item>
+              <el-form-item label="理由:" prop="reason">{{ order.reason }}</el-form-item>
             </el-col>
           </el-row>
         </el-form>
-        <template v-if="asset.adv">
-          <el-form v-show="asset.type=='手机'" :model="asset.adv" :rules="rules" ref="assetForm">
+        <template v-if="order.asset.adv">
+          <el-form v-show="order.asset.type=='手机'" :model="order.asset.adv" :rules="rules" ref="orderForm">
             <el-row>
               <el-col :span="6">
                 <el-form-item label="内存:" prop="memory">
-                  {{ asset.adv.memory }}
+                  {{ order.asset.adv.memory }}
                 </el-form-item>
               </el-col>
               <el-col :span="6">
                 <el-form-item label="屏幕尺寸:" prop="screenSize">
-                  {{ asset.adv.screenSize }}
+                  {{ order.asset.adv.screenSize }}
                 </el-form-item>
               </el-col>
             </el-row>
@@ -62,7 +62,7 @@
         </template>
       </div>
       <span slot="footer" class="dialog-footer">
-      <el-button v-if="asset.status=='已入库'&&out" type="primary" @click="borrow()">借用</el-button>
+      <el-button v-if="order.status=='已入库'&&out" type="primary" @click="borrow()">借用</el-button>
     <template v-for="op in candidateBranches.operateList">
       <el-button type="primary" @click="checkAndHandle(op.operateType)">{{ op.operate }}</el-button>
     </template>
@@ -101,7 +101,7 @@
 <script>
 export default {
   name: "AssetDetail",
-  props: ['out', 'asset', 'title', 'dialogVisible2', 'candidateBranches', 'rules'],
+  props: ['out', 'order', 'title', 'dialogVisible2', 'candidateBranches', 'rules'],
   data() {
     return {
       visible: false,
@@ -115,8 +115,8 @@ export default {
   },
   methods: {
     handle() {
-      this.taskHandleDto.id = this.asset.id;
-      this.postRequest("/asset/task/handleTask", this.taskHandleDto).then(resp => {
+      this.taskHandleDto.id = this.order.id;
+      this.postRequest("/order/task/handleTask", this.taskHandleDto).then(resp => {
         if (resp) {
           this.visible = false;
           this.$emit('close');
@@ -133,7 +133,7 @@ export default {
       }
     },
     borrow() {
-      this.postRequest("/asset/basic/borrow", this.asset).then(resp => {
+      this.postRequest("/order/basic/borrow", this.order).then(resp => {
         if (resp) {
           this.$parent.initEmps();
           this.$emit('close');

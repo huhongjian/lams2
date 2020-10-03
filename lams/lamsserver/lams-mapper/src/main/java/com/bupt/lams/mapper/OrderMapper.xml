@@ -15,7 +15,7 @@
     </resultMap>
     <resultMap id="AllOrderInfo" type="com.bupt.lams.model.Order" extends="BaseResultMap">
         <association property="asset" javaType="com.bupt.lams.model.Asset">
-            <id column="id" property="id"/>
+            <id column="aid" property="id"/>
             <result column="type" property="type"/>
             <result column="brand" property="brand"/>
             <result column="price" property="price"/>
@@ -31,7 +31,7 @@
     id, category, status, duration, reason, applicant, applicant_email, applicant_phone, createTime, updateTime
   </sql>
     <select id="getOrderByPage" resultMap="AllOrderInfo">
-        select o.*,a.type,a.brand,a.price,a.charger,a.charger_email,a.charger_phone,a.adv,a.readyDate
+        select o.*,a.id as aid,a.type,a.brand,a.price,a.charger,a.charger_email,a.charger_phone,a.adv,a.readyDate
         from
         `order` o,
         order_asset oa,
@@ -124,7 +124,7 @@
             createTime = #{createTime},
         </if>
         <if test="updateTime != null">
-            updateTime = #{updateTime},
+            updateTime = #{updateTime}
         </if>
         <where>
             id = #{id}

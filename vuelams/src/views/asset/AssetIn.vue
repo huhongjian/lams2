@@ -136,6 +136,12 @@
           </template>
         </el-table-column>
         <el-table-column
+            prop="asset.id"
+            align="left"
+            label="资产编号"
+            width="90">
+        </el-table-column>
+        <el-table-column
             prop="asset.type"
             align="left"
             label="类型"
@@ -388,16 +394,16 @@ export default {
     },
     showEditEmpView(data) {
       this.title = '编辑资产信息';
-      this.asset = data;
+      this.order = data;
       this.dialogVisible = true;
     },
     showDetailView(data) {
       this.title = '资产详情';
-      this.asset = data;
+      this.order = data;
       this.dialogVisible2 = true;
     },
     getCandidateBranchInfo(data) {
-      this.getRequest('/asset/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
+      this.getRequest('/order/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
         if (resp) {
           this.candidateBranches = resp.obj;
           this.showDetailView(data);

@@ -58,6 +58,8 @@ public class OrderService {
         OrderAsset orderAsset = new OrderAsset();
         orderAsset.setAid(order.getAsset().getId());
         orderAsset.setOid(order.getId());
+        orderAsset.setCreateTime(new Date());
+        orderAsset.setUpdateTime(new Date());
         orderAssetMapper.insertSelective(orderAsset);
         // 构造record
         Record record = new Record();
@@ -96,10 +98,9 @@ public class OrderService {
         record.setOperator(order.getApplicant());
         record.setOperatorMail(order.getApplicantEmail());
         record.setOperateTime(order.getCreateTime());
-        Map<String, String> variablesMap = new HashMap<>();
-        variablesMap.put(WorkflowConstant.NEXT_USER, record.getOperator());
         try {
-            taskOperateService.startWorkFlow(record, variablesMap);
+            // 这个map是开启工作流时间的数据，并不是流转过程中的数据
+            taskOperateService.startWorkFlow(record, null);
         } catch (Exception e) {
             logger.error("启动工作流失败", e);
             throw e;

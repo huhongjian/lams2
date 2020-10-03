@@ -1,6 +1,6 @@
 <template>
     <div>
-        员工积分统计
+      资产报修
     </div>
 </template>
 

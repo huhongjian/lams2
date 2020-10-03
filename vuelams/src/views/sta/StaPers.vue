@@ -1,6 +1,6 @@
 <template>
     <div>
-        人事信息统计
+      清理报废
     </div>
 </template>
 

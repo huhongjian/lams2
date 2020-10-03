@@ -111,34 +111,60 @@
         <el-table-column
             fixed
             label="ID"
-            align="left">
+            align="left"
+            width="90">
           <template slot-scope="scope">
             <el-button size="mini" @click="getCandidateBranchInfo(scope.row)">{{ scope.row.id }}</el-button>
           </template>
         </el-table-column>
         <el-table-column
-            prop="type"
+            prop="category"
             align="left"
-            label="类型">
-        </el-table-column>
-        <el-table-column
-            prop="brand"
-            label="品牌"
-            align="left">
+            label="流程"
+            width="90">
         </el-table-column>
         <el-table-column
             prop="status"
-            label="状态">
+            label="状态"
+            width="90">
         </el-table-column>
         <el-table-column
-            prop="applyDate"
-            align="left"
-            label="申请时间">
+            prop="duration"
+            label="用时"
+            width="90">
         </el-table-column>
         <el-table-column
-            prop="updateDate"
+            prop="reason"
+            label="理由">
+        </el-table-column>
+        <el-table-column
+            prop="applicant"
+            width="95"
             align="left"
-            label="更新时间">
+            label="申请人">
+        </el-table-column>
+        <el-table-column
+            prop="applicantEmail"
+            width="150"
+            align="left"
+            label="申请人邮箱">
+        </el-table-column>
+        <el-table-column
+            prop="applicantPhone"
+            width="100"
+            label="申请人电话">
+        </el-table-column>
+        <el-table-column
+            prop="createTime"
+            align="left"
+            label="申请时间"
+            width="180">
+        </el-table-column>
+        <el-table-column
+            prop="updateTime"
+            align="left"
+            label="更新时间"
+            width="180">
         </el-table-column>
       </el-table>
       <div style="display: flex;justify-content: flex-end">

@@ -120,7 +120,7 @@
     </div>
     <div style="margin-top: 10px">
       <el-table
-          :data="assets"
+          :data="orders"
           stripe
           border
           v-loading="loading"
@@ -143,13 +143,19 @@
           </template>
         </el-table-column>
         <el-table-column
-            prop="type"
+            prop="asset.id"
+            align="left"
+            label="资产编号"
+            width="90">
+        </el-table-column>
+        <el-table-column
+            prop="asset.type"
             align="left"
             label="类型"
             width="90">
         </el-table-column>
         <el-table-column
-            prop="brand"
+            prop="asset.brand"
             label="品牌"
             align="left"
             width="80">
@@ -170,29 +176,29 @@
             label="申请理由">
         </el-table-column>
         <el-table-column
-            prop="charger"
+            prop="asset.charger"
             width="95"
             align="left"
             label="负责人">
         </el-table-column>
         <el-table-column
-            prop="chargerEmail"
+            prop="asset.chargerEmail"
             width="150"
             label="负责人邮箱">
         </el-table-column>
         <el-table-column
-            prop="chargerPhone"
+            prop="asset.chargerPhone"
             width="100"
             label="负责人电话">
         </el-table-column>
         <el-table-column
-            prop="applyDate"
+            prop="createTime"
             width="100"
             align="left"
             label="申请时间">
         </el-table-column>
         <el-table-column
-            prop="readyDate"
+            prop="asset.readyDate"
             width="100"
             align="left"
             label="入库时间">
@@ -218,9 +224,9 @@
         </el-pagination>
       </div>
     </div>
-    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :asset="asset" :title="title"
+    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :title="title"
                :rules='rules'></AssetEdit>
-    <AssetDetail v-on:close="dialogVisible2 = false" :out="out" :dialogVisible2="dialogVisible2" :asset="asset"
+    <AssetDetail v-on:close="dialogVisible2 = false" :out="out" :dialogVisible2="dialogVisible2" :order="order"
                  :title="title"
                  :candidateBranches='candidateBranches' :rules='rules'></AssetDetail>
   </div>
@@ -250,7 +256,7 @@ export default {
       importDataDisabled: false,
       showAdvanceSearchView: false,
       allDeps: [],
-      assets: [],
+      orders: [],
       loading: false,
       popVisible: false,
       popVisible2: false,
@@ -272,16 +278,21 @@ export default {
       },
       tiptopDegrees: ['本科', '大专', '硕士', '博士', '高中', '初中', '小学', '其他'],
       inputDepName: '所属部门',
-      asset: {
+      order: {
         id: "",
-        brand: "华为",
-        type: "手机",
-        price: "4000",
-        applicant: "系统管理员",
-        applicantPhone: "18840833079",
-        applicantEmail: "294116824@qq.com",
+        status: "",
         reason: "测试",
-        adv: {}
+        applicant: "胡宏建",
+        applicantPhone: "18840833079",
+        applicantEmail: "admin",
+        createTime: "",
+        asset: {
+          id: "",
+          brand: "华为",
+          type: "手机",
+          price: "4000",
+          adv: {},
+        },
       },
       defaultProps: {
         children: 'children',
@@ -360,32 +371,36 @@ export default {
     exportData() {
       window.open('/employee/basic/export', '_parent');
     },
-    emptyAsset() {
-      this.asset = {
+    emptyOrder() {
+      this.order = {
         id: "",
-        brand: "华为",
-        type: "手机",
-        price: "4000",
-        applicant: "系统管理员",
-        applicantPhone: "18840833079",
-        applicantEmail: "2941168242@qq.com",
+        status: "",
         reason: "测试",
-        adv: {}
+        applicant: "胡宏建",
+        applicantPhone: "18840833079",
+        applicantEmail: "admin",
+        createTime: "",
+        asset: {
+          id: "",
+          brand: "华为",
+          type: "手机",
+          price: "4000",
+          adv: {},
+        },
       }
-      this.inputDepName = '';
     },
     showEditEmpView(data) {
       this.title = '编辑资产信息';
-      this.asset = data;
+      this.order = data;
       this.dialogVisible = true;
     },
     showDetailView(data) {
       this.title = '资产详情';
-      this.asset = data;
+      this.order = data;
       this.dialogVisible2 = true;
     },
     getCandidateBranchInfo(data) {
-      this.getRequest('/asset/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
+      this.getRequest('/order/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
         if (resp) {
           this.candidateBranches = resp.obj;
           this.showDetailView(data);
@@ -497,7 +512,7 @@ export default {
     ,
     initEmps(type) {
       this.loading = true;
-      let url = '/asset/basic/get/?category=2&page=' + this.page + '&size=' + this.size;
+      let url = '/order/basic/get/?category=2&page=' + this.page + '&size=' + this.size;
       if (type && type == 'advanced') {
         if (this.searchValue.politicId) {
           url += '&politicId=' + this.searchValue.politicId;
@@ -526,7 +541,7 @@ export default {
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
-          this.assets = resp.data;
+          this.orders = resp.data;
           this.total = resp.total;
         }
       });

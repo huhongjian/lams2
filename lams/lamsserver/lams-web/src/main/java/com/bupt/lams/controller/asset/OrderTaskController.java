@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  * 资产状态流转相关
  */
 @RestController
-@RequestMapping("/asset/task")
+@RequestMapping("/order/task")
 public class OrderTaskController {
 
     @Resource

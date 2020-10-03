@@ -2,16 +2,16 @@ package com.bupt.lams.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.constants.OperateTypeEnum;
+import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.constants.ProcessTypeEnum;
 import com.bupt.lams.constants.WorkflowConstant;
 import com.bupt.lams.dto.TaskDto;
 import com.bupt.lams.dto.TaskHandleDto;
 import com.bupt.lams.dto.TaskQueryDto;
 import com.bupt.lams.dto.WorkflowTaskOperateInfoDto;
-import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.mapper.LamsUserMapper;
+import com.bupt.lams.mapper.OrderAssetMapper;
 import com.bupt.lams.mapper.OrderMapper;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.process.ProcessManagerService;
@@ -38,7 +38,7 @@ public class TaskOperateService {
     @Resource
     OrderWorkflowService orderWorkflowService;
     @Resource
-    AssetMapper assetMapper;
+    OrderAssetMapper orderAssetMapper;
     @Resource
     OrderMapper orderMapper;
     @Resource
@@ -66,7 +66,7 @@ public class TaskOperateService {
         orderWorkflowService.saveOrderWorkflow(orderWorkflow);
         TaskDto taskDto = getCandidateTskInfoByOrderIdAndUsername(record.getOid(), null);
         Map<String, String> variablesMap = new HashMap<>();
-        variablesMap.put(WorkflowConstant.NEXT_USER, record.getOperator());
+        variablesMap.put(WorkflowConstant.NEXT_USER, record.getOperatorMail());
         taskService.setVariables(taskDto.getTaskId(), variablesMap);
     }
 
@@ -76,7 +76,7 @@ public class TaskOperateService {
         String candidateUser = taskHandleDto.getCandidateUser();
         LamsUser user = UserInfoUtils.getLoginedUser();
         // 查询工单工作流关联关系
-        OrderWorkflow orderWorkflow = orderWorkflowService.getOrderWorkflowByAid(id);
+        OrderWorkflow orderWorkflow = orderWorkflowService.getOrderWorkflowByOid(id);
         Order order = this.orderMapper.selectByPrimaryKey(id);
         if (orderWorkflow == null) {
             throw new RuntimeException("未查询到关联流程信息");
@@ -107,6 +107,12 @@ public class TaskOperateService {
             order.setCategory(ProcessTypeEnum.OUT.getIndex());
             order.setStatus(OrderStatusEnum.READY.getName());
             orderMapper.insertSelective(order);
+            OrderAsset orderAsset = new OrderAsset();
+            orderAsset.setAid(orderAssetMapper.getAidByOid(id));
+            orderAsset.setOid(order.getId());
+            orderAsset.setCreateTime(new Date());
+            orderAsset.setUpdateTime(new Date());
+            orderAssetMapper.insertSelective(orderAsset);
             return;
         }
         // 如果是确认转交则更新工单状态

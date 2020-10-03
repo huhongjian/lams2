@@ -26,10 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TaskOperateService {
@@ -270,5 +267,37 @@ public class TaskOperateService {
         JSONObject ops = JSONObject.parseObject(formProperty.getValue());
         List<WorkflowOperate> operateList = JSONArray.parseArray(ops.getJSONArray("ops").toJSONString(), WorkflowOperate.class);
         operateInfoDto.setOperateList(operateList);
+    }
+
+    public List<Long> getAssignedOrderIds(String userName) {
+        return getOrderIdsFromTasks(getAssignedTasks(userName));
+    }
+
+    public List<TaskDto> getAssignedTasks(String userName) {
+        logger.info("获取用户已签收任务，用户账号" + userName);
+        TaskQueryDto taskQueryDto = new TaskQueryDto();
+        taskQueryDto.setUserName(userName);
+        return this.taskManagerService.getAssignedTasks(taskQueryDto);
+    }
+
+    public List<Long> getCandidateOrderIds(String userName) {
+        return getOrderIdsFromTasks(getCandidateTasks(userName));
+    }
+
+    public List<TaskDto> getCandidateTasks(String userName) {
+        logger.info("获取用户未签收任务，用户账号" + userName);
+        TaskQueryDto taskQueryDto = new TaskQueryDto();
+        taskQueryDto.setUserName(userName);
+        return this.taskManagerService.getCandidateTasks(taskQueryDto);
+    }
+
+    private List<Long> getOrderIdsFromTasks(List<TaskDto> tasks) {
+        List<Long> result = new ArrayList<Long>();
+        if (tasks != null) {
+            for (TaskDto task : tasks) {
+                result.add(Long.valueOf(task.getBusinessKey()));
+            }
+        }
+        return result;
     }
 }

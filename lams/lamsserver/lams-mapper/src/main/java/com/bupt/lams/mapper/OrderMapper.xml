@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="com.bupt.lams.model.Order">
         <id column="id" property="id"/>
         <result column="category" property="category"/>
+        <result column="categoryName" property="categoryName"/>
         <result column="status" property="status"/>
         <result column="duration" property="duration"/>
         <result column="reason" property="reason"/>
@@ -46,6 +47,9 @@
                 <if test="order.status !=null and order.status!=''">
                     and o.status like concat('%',#{order.status},'%')
                 </if>
+                <if test="order.applicantEmail !=null and order.applicantEmail!=''">
+                    and o.applicant_email like concat('%',#{order.applicantEmail},'%')
+                </if>
                 <if test="beginDateScope !=null">
                     and o.createTime between #{beginDateScope[0]} and #{beginDateScope[1]}
                 </if>
@@ -76,8 +80,8 @@
                 <if test="order.status !=null and order.status!=''">
                     and o.status like concat('%',#{order.status},'%')
                 </if>
-                <if test="order.applicant !=null and order.applicant!=''">
-                    and o.applicant like concat('%',#{order.applicant},'%')
+                <if test="order.applicantEmail !=null and order.applicantEmail!=''">
+                    and o.applicant_email like concat('%',#{order.applicantEmail},'%')
                 </if>
             </if>
             <if test="beginDateScope !=null">
@@ -191,4 +195,53 @@
             </if>
         </trim>
     </insert>
+    <select id="getOrderByCondition" parameterType="com.bupt.lams.dto.OrderQueryCondition" resultMap="AllOrderInfo">
+        select o.*,a.id as aid,a.type,a.brand,a.price,a.charger,a.charger_email,a.charger_phone,a.adv,a.readyDate
+        from
+        `order` o,
+        order_asset oa,
+        asset a
+        <where>
+            o.id = oa.oid
+            and a.id = oa.aid
+            <if test="order!=null">
+                <if test="order.category !=null and order.category!=''">
+                    and o.category = #{order.category}
+                </if>
+                <if test="order.status !=null and order.status!=''">
+                    and o.status like concat('%',#{order.status},'%')
+                </if>
+                <if test="order.asset!=null">
+                    <if test="order.asset.type !=null and order.asset.type!=''">
+                        and a.type like concat('%',#{order.asset.type},'%')
+                    </if>
+                    <if test="order.asset.brand !=null and order.asset.brand!=''">
+                        and a.brand like concat('%',#{order.asset.brand},'%')
+                    </if>
+                    <if test="order.asset.charger !=null and order.asset.charger!=''">
+                        and a.charger like concat('%',#{order.asset.charger},'%')
+                    </if>
+                </if>
+            </if>
+            <if test="beginDateScope !=null">
+                and o.createTime between #{beginDateScope[0]} and #{beginDateScope[1]}
+            </if>
+            <if test="ids != null">
+                <choose>
+                    <when test="ids.size>0">
+                        and o.id in
+                        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </when>
+                    <otherwise>
+                        and o.id=-1
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+        <if test="page !=null and size!=null">
+            limit #{page},#{size}
+        </if>
+    </select>
 </mapper>

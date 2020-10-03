@@ -1,6 +1,6 @@
 package com.bupt.lams.mapper;
 
-import com.bupt.lams.model.Asset;
+import com.bupt.lams.dto.OrderQueryCondition;
 import com.bupt.lams.model.Order;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,4 +19,6 @@ public interface OrderMapper {
     void updateOrder(Order order);
 
     int insertSelective(Order order);
+
+    List<Order> getOrderByCondition(OrderQueryCondition condition);
 }

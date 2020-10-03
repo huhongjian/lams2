@@ -5,7 +5,8 @@ package com.bupt.lams.constants;
  */
 public enum ProcessTypeEnum {
     IN("入库", 1),
-    OUT("出库", 2);
+    OUT("出库", 2),
+    LEAVE("离退", 3);
 
     private String name;
     private int index;
@@ -29,5 +30,20 @@ public enum ProcessTypeEnum {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    /**
+     * 根据index获取去name
+     *
+     * @param index
+     * @return
+     */
+    public static String getNameByIndex(Integer index) {
+        for (OperateTypeEnum e : OperateTypeEnum.values()) {
+            if (index.equals(e.getIndex())) {
+                return e.getName();
+            }
+        }
+        return null;
     }
 }

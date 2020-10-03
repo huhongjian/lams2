@@ -1,5 +1,6 @@
 package com.bupt.lams.model;
 
+import com.bupt.lams.constants.ProcessTypeEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -15,7 +16,11 @@ public class Order implements Serializable {
     /**
      * 流程类型：1.入库，2.出库，3.离退
      */
-    private int category;
+    private Integer category;
+    /**
+     * 流程类型：1.入库，2.出库，3.离退
+     */
+    private String categoryName;
     /**
      * 状态
      */
@@ -54,4 +59,9 @@ public class Order implements Serializable {
      * 关联的资产信息
      */
     private Asset asset;
+
+    public void setCategory(int category) {
+        this.category = category;
+        this.categoryName = ProcessTypeEnum.getNameByIndex(category);
+    }
 }

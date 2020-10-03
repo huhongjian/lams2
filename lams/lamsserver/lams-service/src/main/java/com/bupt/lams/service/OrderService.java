@@ -3,7 +3,7 @@ package com.bupt.lams.service;
 import com.bupt.lams.constants.OperateTypeEnum;
 import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.constants.ProcessTypeEnum;
-import com.bupt.lams.constants.WorkflowConstant;
+import com.bupt.lams.dto.OrderQueryCondition;
 import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.mapper.OrderAssetMapper;
 import com.bupt.lams.mapper.OrderMapper;
@@ -16,9 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 工单service
@@ -45,6 +43,20 @@ public class OrderService {
         RespPageBean bean = new RespPageBean();
         bean.setData(data);
         bean.setTotal(total);
+        return bean;
+    }
+
+    public RespPageBean getOrderByCondition(OrderQueryCondition condition) {
+        Integer page = condition.getPage();
+        Integer size = condition.getSize();
+        if (page != null && size != null) {
+            page = (page - 1) * size;
+        }
+        condition.setPage(page);
+        List<Order> data = orderMapper.getOrderByCondition(condition);
+        RespPageBean bean = new RespPageBean();
+        bean.setData(data);
+        bean.setTotal(new Long(condition.getIds().size()));
         return bean;
     }
 

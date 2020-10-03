@@ -2,12 +2,10 @@ package com.bupt.lams.controller.asset;
 
 import com.bupt.lams.constants.OperateTypeEnum;
 import com.bupt.lams.constants.OrderStatusEnum;
+import com.bupt.lams.dto.OrderQueryCondition;
 import com.bupt.lams.dto.TaskHandleDto;
 import com.bupt.lams.dto.WorkflowTaskOperateInfoDto;
-import com.bupt.lams.model.LamsUser;
-import com.bupt.lams.model.Order;
-import com.bupt.lams.model.RespBean;
-import com.bupt.lams.model.WorkflowOperate;
+import com.bupt.lams.model.*;
 import com.bupt.lams.service.OrderService;
 import com.bupt.lams.service.TaskOperateService;
 import com.bupt.lams.utils.UserInfoUtils;
@@ -16,6 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 资产状态流转相关
@@ -74,5 +76,30 @@ public class OrderTaskController {
         response.setObj(opInfoDto);
         response.setStatus(200);
         return response;
+    }
+
+    @RequestMapping("getMyApply")
+    @ResponseBody
+    public RespPageBean getMyApply(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Order order, Date[] beginDateScope) {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        order.setApplicantEmail(user.getUsername());
+        return orderService.getOrderByPage(page, size, order, beginDateScope);
+    }
+
+    @RequestMapping("getMyTask")
+    @ResponseBody
+    public RespPageBean getMyTask(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Order order, Date[] beginDateScope) {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        List<Long> assignedOrderIds = taskOperateService.getAssignedOrderIds(user.getUsername());
+        List<Long> candidateOrderIds = taskOperateService.getCandidateOrderIds(user.getUsername());
+        Set<Long> oids = new HashSet<>();
+        for (Long id : assignedOrderIds) {
+            oids.add(id);
+        }
+        for (Long id : candidateOrderIds) {
+            oids.add(id);
+        }
+        OrderQueryCondition condition = new OrderQueryCondition(order, page, size, oids, beginDateScope);
+        return orderService.getOrderByCondition(condition);
     }
 }

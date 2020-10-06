@@ -343,8 +343,6 @@ export default {
   },
   mounted() {
     this.initOrders();
-    this.initData();
-    this.initPositions();
   },
   methods: {
     searvhViewHandleNodeClick(data) {
@@ -439,65 +437,6 @@ export default {
     ,
     showDepView2() {
       this.popVisible2 = !this.popVisible2
-    }
-    ,
-    initPositions() {
-      this.getRequest('/employee/basic/positions').then(resp => {
-        if (resp) {
-          this.positions = resp;
-        }
-      })
-    }
-    ,
-    getMaxWordID() {
-      this.getRequest("/employee/basic/maxWorkID").then(resp => {
-        if (resp) {
-          this.emp.workID = resp.obj;
-        }
-      })
-    }
-    ,
-    initData() {
-      if (!window.sessionStorage.getItem("nations")) {
-        this.getRequest('/employee/basic/nations').then(resp => {
-          if (resp) {
-            this.nations = resp;
-            window.sessionStorage.setItem("nations", JSON.stringify(resp));
-          }
-        })
-      } else {
-        this.nations = JSON.parse(window.sessionStorage.getItem("nations"));
-      }
-      if (!window.sessionStorage.getItem("joblevels")) {
-        this.getRequest('/employee/basic/joblevels').then(resp => {
-          if (resp) {
-            this.joblevels = resp;
-            window.sessionStorage.setItem("joblevels", JSON.stringify(resp));
-          }
-        })
-      } else {
-        this.joblevels = JSON.parse(window.sessionStorage.getItem("joblevels"));
-      }
-      if (!window.sessionStorage.getItem("politicsstatus")) {
-        this.getRequest('/employee/basic/politicsstatus').then(resp => {
-          if (resp) {
-            this.politicsstatus = resp;
-            window.sessionStorage.setItem("politicsstatus", JSON.stringify(resp));
-          }
-        })
-      } else {
-        this.politicsstatus = JSON.parse(window.sessionStorage.getItem("politicsstatus"));
-      }
-      if (!window.sessionStorage.getItem("deps")) {
-        this.getRequest('/employee/basic/deps').then(resp => {
-          if (resp) {
-            this.allDeps = resp;
-            window.sessionStorage.setItem("deps", JSON.stringify(resp));
-          }
-        })
-      } else {
-        this.allDeps = JSON.parse(window.sessionStorage.getItem("deps"));
-      }
     }
     ,
     sizeChange(currentSize) {

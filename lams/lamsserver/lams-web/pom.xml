@@ -10,7 +10,7 @@
     <groupId>bupt</groupId>
     <artifactId>lams-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <description>Demo project for Spring Boot</description>
+    <description>实验室资产管理系统</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -48,15 +48,40 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>product</id>
+            <properties>
+                <package.environment>product</package.environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <package.environment>dev</package.environment>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <!--1 先排除所有的profile文件 -->
+                <excludes>
+                    <exclude>application*.yml</exclude>
+                </excludes>
             </resource>
             <resource>
-                <directory>src/main/java</directory>
+                <directory>src/main/resources</directory>
+                <!--2 按需复制所有需的profile文件-->
+                <filtering>true</filtering>
                 <includes>
-                    <include>**/*.xml</include>
+                    <include>application.yml</include>
+                    <include>application-${package.environment}.yml</include>
                 </includes>
             </resource>
         </resources>
@@ -67,5 +92,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

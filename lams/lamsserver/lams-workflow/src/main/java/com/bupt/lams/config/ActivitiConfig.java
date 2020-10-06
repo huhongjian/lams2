@@ -38,7 +38,7 @@ public class ActivitiConfig {
 	public SpringProcessEngineConfiguration getProcessEngineConfiguration() throws IOException {
 		SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
 		org.springframework.core.io.Resource[] procDefResources = resourceLoader.getResources("classpath:processes/*.bpmn");
-		configuration.setDatabaseSchemaUpdate("false");
+		configuration.setDatabaseSchemaUpdate("true");
 		configuration.setDataSource(dataSource);
 		configuration.setTransactionManager(transactionManager);
 		configuration.setDeploymentResources(procDefResources);

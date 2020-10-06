@@ -24,9 +24,6 @@ public class HrInfoController {
     @Autowired
     UserService userService;
 
-    @Value("${fastdfs.nginx.host}")
-    String nginxHost;
-
     @GetMapping("/hr/info")
     public LamsUser getCurrentHr(Authentication authentication) {
         LamsUser currentUser = (LamsUser) authentication.getPrincipal();

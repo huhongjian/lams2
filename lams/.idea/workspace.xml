@@ -23,60 +23,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/app.5ec5ee6e.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/app.5ec5ee6e.css.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-5b9d1678.c5ccea89.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-631e6bf9.d3e3477c.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-65f35047.7157795b.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-fbf8515e.d3e3477c.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-vendors.3dbbb9bb.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-vendors.3dbbb9bb.css.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.a300073d.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.a300073d.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.a300073d.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-09661ee3.22787c50.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-09661ee3.22787c50.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-09661ee3.22787c50.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-2d0c9500.3749bd0a.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-2d0c9500.3749bd0a.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-5b9d1678.aa156fb7.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-5b9d1678.aa156fb7.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-5b9d1678.aa156fb7.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-631e6bf9.f204742a.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-631e6bf9.f204742a.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-631e6bf9.f204742a.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-644e69d8.0e3c406d.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-644e69d8.0e3c406d.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-644e69d8.0e3c406d.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-65f35047.5b58507b.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-65f35047.5b58507b.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-65f35047.5b58507b.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-f937c2ee.bc2f20a5.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-f937c2ee.bc2f20a5.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-f937c2ee.bc2f20a5.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-fbf8515e.5d6fbdbb.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-fbf8515e.5d6fbdbb.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-fbf8515e.5d6fbdbb.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-vendors.e89d9433.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-vendors.e89d9433.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-vendors.e89d9433.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/ProcessTypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/ProcessTypeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application-product.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application-product.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/index.html.gz" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/index.html.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html.gz" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetOut.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetOut.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyAppy.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyAppy.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyOut.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyOut.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyTask.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,11 +54,6 @@
       </MavenGeneralSettings>
     </option>
     <option name="enabledProfiles">
-      <list>
-        <option value="product" />
-      </list>
-    </option>
-    <option name="disabledProfiles">
       <list>
         <option value="dev" />
       </list>
@@ -228,7 +174,7 @@
       <workItem from="1601716693875" duration="15550000" />
       <workItem from="1601741289673" duration="2793000" />
       <workItem from="1601883036993" duration="19977000" />
-      <workItem from="1601977555572" duration="20541000" />
+      <workItem from="1601977555572" duration="22479000" />
     </task>
     <task id="LOCAL-00001" summary="lams第二版">
       <created>1600352784505</created>
@@ -475,7 +421,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601992988698</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="删除多余代码&amp;根据状态变颜色">
+      <created>1602056953028</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1602056953030</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -494,7 +447,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="改改配置" />
     <MESSAGE value="资产出库相关" />
     <MESSAGE value="资产入库相关开发" />
     <MESSAGE value="整合工作流开发" />
@@ -519,7 +471,8 @@
     <MESSAGE value="我的任务开发" />
     <MESSAGE value="用户管理&amp;权限管理开发" />
     <MESSAGE value="上线&amp;删除多余代码" />
-    <option name="LAST_COMMIT_MESSAGE" value="上线&amp;删除多余代码" />
+    <MESSAGE value="删除多余代码&amp;根据状态变颜色" />
+    <option name="LAST_COMMIT_MESSAGE" value="删除多余代码&amp;根据状态变颜色" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1600784045187">
@@ -554,14 +507,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1601740295008" />
-    <state x="304" y="0" key="CommitChangelistDialog2" timestamp="1601992985918">
+    <state x="304" y="0" key="CommitChangelistDialog2" timestamp="1602056950404">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="304" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1601992985918" />
-    <state width="798" height="438" key="DebuggerActiveHint" timestamp="1602050843284">
+    <state x="304" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1602056950404" />
+    <state width="798" height="438" key="DebuggerActiveHint" timestamp="1602075978573">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="798" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1602050843284" />
+    <state width="798" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1602075978573" />
     <state x="28" y="15" width="1461" height="794" key="DiffContextDialog" timestamp="1601986275990">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -570,54 +523,54 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1601404272404" />
-    <state width="1493" height="373" key="GridCell.Tab.0.bottom" timestamp="1602056254333">
+    <state width="1493" height="440" key="GridCell.Tab.0.bottom" timestamp="1602076290697">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="373" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1602056254333" />
-    <state width="1493" height="373" key="GridCell.Tab.0.center" timestamp="1602056254333">
+    <state width="1493" height="440" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1602076290697" />
+    <state width="1493" height="440" key="GridCell.Tab.0.center" timestamp="1602076290697">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="373" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1602056254333" />
-    <state width="1493" height="373" key="GridCell.Tab.0.left" timestamp="1602056254333">
+    <state width="1493" height="440" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1602076290697" />
+    <state width="1493" height="440" key="GridCell.Tab.0.left" timestamp="1602076290697">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="373" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1602056254333" />
-    <state width="1493" height="373" key="GridCell.Tab.0.right" timestamp="1602056254333">
+    <state width="1493" height="440" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1602076290697" />
+    <state width="1493" height="440" key="GridCell.Tab.0.right" timestamp="1602076290697">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="373" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1602056254333" />
-    <state width="1493" height="363" key="GridCell.Tab.1.bottom" timestamp="1602054014496">
+    <state width="1493" height="440" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1602076290697" />
+    <state width="1493" height="440" key="GridCell.Tab.1.bottom" timestamp="1602076290697">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
-    <state width="1493" height="363" key="GridCell.Tab.1.center" timestamp="1602054014496">
+    <state width="1493" height="440" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1602076290697" />
+    <state width="1493" height="440" key="GridCell.Tab.1.center" timestamp="1602076290697">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
-    <state width="1493" height="363" key="GridCell.Tab.1.left" timestamp="1602054014496">
+    <state width="1493" height="440" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1602076290697" />
+    <state width="1493" height="440" key="GridCell.Tab.1.left" timestamp="1602076290697">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
-    <state width="1493" height="363" key="GridCell.Tab.1.right" timestamp="1602054014496">
+    <state width="1493" height="440" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1602076290697" />
+    <state width="1493" height="440" key="GridCell.Tab.1.right" timestamp="1602076290697">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
-    <state width="1493" height="363" key="GridCell.Tab.2.bottom" timestamp="1602054014496">
+    <state width="1493" height="440" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1602076290697" />
+    <state width="1493" height="440" key="GridCell.Tab.2.bottom" timestamp="1602076290697">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
-    <state width="1493" height="363" key="GridCell.Tab.2.center" timestamp="1602054014496">
+    <state width="1493" height="440" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1602076290697" />
+    <state width="1493" height="440" key="GridCell.Tab.2.center" timestamp="1602076290697">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
-    <state width="1493" height="363" key="GridCell.Tab.2.left" timestamp="1602054014496">
+    <state width="1493" height="440" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1602076290697" />
+    <state width="1493" height="440" key="GridCell.Tab.2.left" timestamp="1602076290697">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
-    <state width="1493" height="363" key="GridCell.Tab.2.right" timestamp="1602054014496">
+    <state width="1493" height="440" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1602076290697" />
+    <state width="1493" height="440" key="GridCell.Tab.2.right" timestamp="1602076290697">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
+    <state width="1493" height="440" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1602076290697" />
     <state x="502" y="114" key="RollbackChangesDialog" timestamp="1601385858314">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -626,10 +579,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1601976970035" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1601992992353">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1602056956540">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1601992992353" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1602056956540" />
     <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1601740293895">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

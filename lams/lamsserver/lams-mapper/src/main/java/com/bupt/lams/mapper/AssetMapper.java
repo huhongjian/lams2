@@ -11,4 +11,6 @@ public interface AssetMapper {
     void updateAsset(Asset asset);
 
     int insertSelective(Asset assetIn);
+
+    Asset getAssetById(Long aid);
 }

@@ -99,12 +99,8 @@ public class TaskOperateService {
         // 如果是批准采购则更新资产状态
         if (taskHandleDto.getOperateType() == OperateTypeEnum.APPROVE.getIndex()) {
             order.setStatus(OrderStatusEnum.APPROVE.getName());
-            Asset asset = order.getAsset();
-            asset.setReadyDate(new Date());
             // 更新工单状态
             orderMapper.updateOrderStatusById(order);
-            // 更新资产入库时间
-            assetMapper.updateAsset(asset);
             return;
         }
         // 如果是入库则新增入库资产
@@ -113,11 +109,17 @@ public class TaskOperateService {
             order.setStatus(OrderStatusEnum.READY.getName());
             orderMapper.insertSelective(order);
             OrderAsset orderAsset = new OrderAsset();
-            orderAsset.setAid(orderAssetMapper.getAidByOid(id));
+            Long aid = orderAssetMapper.getAidByOid(id);
+            orderAsset.setAid(aid);
             orderAsset.setOid(order.getId());
             orderAsset.setCreateTime(new Date());
             orderAsset.setUpdateTime(new Date());
             orderAssetMapper.insertSelective(orderAsset);
+            // 更新资产入库时间
+            Asset asset = new Asset();
+            asset.setId(aid);
+            asset.setReadyDate(new Date());
+            assetMapper.updateAsset(asset);
             return;
         }
         // 如果是确认转交则更新工单状态

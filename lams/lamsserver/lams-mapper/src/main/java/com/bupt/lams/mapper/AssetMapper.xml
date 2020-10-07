@@ -19,33 +19,35 @@
     <update id="updateAsset" parameterType="com.bupt.lams.model.Asset">
         update asset
         set
-        <if test="type != null">
-            type = #{type},
-        </if>
-        <if test="brand != null">
-            brand = #{brand},
-        </if>
-        <if test="price != null">
-            price = #{price},
-        </if>
-        <if test="charger != null">
-            charger = #{charger},
-        </if>
-        <if test="chargerEmail != null">
-            charger_email = #{chargerEmail},
-        </if>
-        <if test="chargerPhone != null">
-            charger_phone = #{chargerPhone},
-        </if>
-        <if test="adv != null">
-            adv = #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler},
-        </if>
-        <if test="readyDate != null">
-            readyDate = #{readyDate},
-        </if>
-        <if test="updateTime != null">
-            updateTime = #{updateTime}
-        </if>
+        <trim suffixOverrides=",">
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="brand != null">
+                brand = #{brand},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="charger != null">
+                charger = #{charger},
+            </if>
+            <if test="chargerEmail != null">
+                charger_email = #{chargerEmail},
+            </if>
+            <if test="chargerPhone != null">
+                charger_phone = #{chargerPhone},
+            </if>
+            <if test="adv != null">
+                adv = #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler},
+            </if>
+            <if test="readyDate != null">
+                readyDate = #{readyDate},
+            </if>
+            <if test="updateTime != null">
+                updateTime = #{updateTime}
+            </if>
+        </trim>
         <where>
             id = #{id}
         </where>
@@ -111,4 +113,8 @@
             </if>
         </trim>
     </insert>
+    <select id="getAssetById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * from asset
+        where id = #{aid}
+    </select>
 </mapper>

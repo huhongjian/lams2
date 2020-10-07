@@ -62,7 +62,7 @@
         </template>
       </div>
       <span slot="footer" class="dialog-footer">
-      <el-button v-if="order.status=='已入库'&&out" type="primary" @click="borrow()">借用</el-button>
+      <el-button v-if="order.status=='已入库'" type="primary" @click="borrow()">借用</el-button>
     <template v-for="op in candidateBranches.operateList">
       <el-button type="primary" @click="checkAndHandle(op.operateType)">{{ op.operate }}</el-button>
     </template>
@@ -101,7 +101,7 @@
 <script>
 export default {
   name: "AssetDetail",
-  props: ['out', 'order', 'title', 'dialogVisible2', 'candidateBranches', 'rules'],
+  props: ['order', 'title', 'dialogVisible2', 'candidateBranches', 'rules'],
   data() {
     return {
       visible: false,
@@ -124,10 +124,22 @@ export default {
         }
       })
     },
+    cancel() {
+      this.taskHandleDto.id = this.order.id;
+      this.postRequest("/order/task/cancel", this.taskHandleDto).then(resp => {
+        if (resp) {
+          this.visible = false;
+          this.$emit('close');
+          this.$parent.initOrders();
+        }
+      })
+    },
     checkAndHandle(data) {
       this.taskHandleDto.operateType = data;
       if (data == '5') {
         this.visible = true;
+      } else if (data == '7') {
+        this.cancel();
       } else {
         this.handle();
       }

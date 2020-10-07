@@ -35,9 +35,11 @@
             NOW()
         </trim>
     </insert>
-    <select id="getOrderWorkflowByAid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="getOrderWorkflowByOid" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select ow.*
         from order_workflow ow
-        where oid = #{oid};
+        where oid = #{oid}
+        order by id desc
+        limit 0,1;
     </select>
 </mapper>

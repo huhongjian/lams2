@@ -198,7 +198,7 @@ export default {
       this.dialogVisible2 = true;
     },
     getCandidateBranchInfo(data) {
-      this.getRequest('/asset/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
+      this.getRequest('/order/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
         if (resp) {
           this.candidateBranches = resp.obj;
           this.showDetailView(data);

@@ -15,7 +15,7 @@ public class OrderWorkflowService {
     OrderWorkflowMapper orderWorkflowMapper;
 
     public OrderWorkflow getOrderWorkflowByOid(Long oid) {
-        return orderWorkflowMapper.getOrderWorkflowByAid(oid);
+        return orderWorkflowMapper.getOrderWorkflowByOid(oid);
     }
 
     public void saveOrderWorkflow(OrderWorkflow orderWorkflow) {

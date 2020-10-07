@@ -145,7 +145,7 @@
             prop="asset.type"
             align="left"
             label="类型"
-            width="90">
+            width="60">
         </el-table-column>
         <el-table-column
             prop="asset.brand"
@@ -155,13 +155,15 @@
         </el-table-column>
         <el-table-column
             prop="status"
-            width="70"
+            width="90"
             label="状态">
           <template slot-scope="scope">
             <span style="color: #00e079; font-weight: bold"
                   v-if="scope.row.status=='审批通过'||scope.row.status=='已入库'">{{ scope.row.status }}</span>
             <span style="color: #ff4777; font-weight: bold"
-                  v-else-if="scope.row.status=='已借出'||scope.row.status=='审批未通过'">{{ scope.row.status }}</span>
+                  v-else-if="scope.row.status=='审批未通过'">{{ scope.row.status }}</span>
+            <span style="color: #c0c0c0;"
+                  v-else-if="scope.row.status=='已借出'||scope.row.status=='已关闭'">{{ scope.row.status }}</span>
             <span v-else>{{ scope.row.status }}</span>
           </template>
         </el-table-column>

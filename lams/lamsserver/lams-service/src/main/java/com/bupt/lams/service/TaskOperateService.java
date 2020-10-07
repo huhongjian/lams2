@@ -53,6 +53,32 @@ public class TaskOperateService {
     ProcessManagerService processManagerService;
 
 
+    @Transactional(rollbackFor = Exception.class)
+    public boolean cancelOrder(TaskHandleDto taskHandleDto) {
+        logger.info("[start]取消工单，工单ID:" + taskHandleDto.getId());
+        Long oid = taskHandleDto.getId();
+        Order order = orderMapper.selectByPrimaryKey(oid);
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        if (!order.getApplicantEmail().equals(user.getUsername())) {
+            throw new RuntimeException("仅创建人可发起撤销操作！");
+        }
+        if (order.getStatus() == OrderStatusEnum.CLOSED.getName()) {
+            return true;
+        }
+        order.setStatus(OrderStatusEnum.CLOSED.getName());
+
+        // 设置工单状态
+        orderMapper.updateOrderStatusById(order);
+
+        // 3. 查询工单工作流关联关系
+        OrderWorkflow orderWorkflow = orderWorkflowService.getOrderWorkflowByOid(oid);
+        if (orderWorkflow != null) {
+            this.processManagerService.hungUpProcessInstanceByBizKey(oid.toString());
+        }
+        logger.info("[end]取消工单，工单ID:" + taskHandleDto.getId());
+        return true;
+    }
+
     public void startWorkFlow(Record record, Map<String, String> startParamMap) {
         Order order = orderMapper.selectByPrimaryKey(record.getOid());
         // 1. 查找关联工作流definition
@@ -96,44 +122,8 @@ public class TaskOperateService {
         }
         // 完成当前操作
         taskManagerService.completeTask(taskDto.getTaskId(), paramsMap, user.getUsername());
-        // 如果是批准采购则更新资产状态
-        if (taskHandleDto.getOperateType() == OperateTypeEnum.APPROVE.getIndex()) {
-            order.setStatus(OrderStatusEnum.APPROVE.getName());
-            // 更新工单状态
-            orderMapper.updateOrderStatusById(order);
-            return;
-        }
-        // 如果是入库则新增入库资产
-        if (taskHandleDto.getOperateType() == OperateTypeEnum.IN.getIndex()) {
-            order.setCategory(ProcessTypeEnum.OUT.getIndex());
-            order.setStatus(OrderStatusEnum.READY.getName());
-            orderMapper.insertSelective(order);
-            OrderAsset orderAsset = new OrderAsset();
-            Long aid = orderAssetMapper.getAidByOid(id);
-            orderAsset.setAid(aid);
-            orderAsset.setOid(order.getId());
-            orderAsset.setCreateTime(new Date());
-            orderAsset.setUpdateTime(new Date());
-            orderAssetMapper.insertSelective(orderAsset);
-            // 更新资产入库时间
-            Asset asset = new Asset();
-            asset.setId(aid);
-            asset.setReadyDate(new Date());
-            assetMapper.updateAsset(asset);
-            return;
-        }
-        // 如果是确认转交则更新工单状态
-        if (taskHandleDto.getOperateType() == OperateTypeEnum.CONFIRM.getIndex()) {
-            order.setStatus(OrderStatusEnum.OCCUPIED.getName());
-            orderMapper.updateOrderStatusById(order);
-            return;
-        }
-        // 如果是新资产申请被拒绝，则更新工单状态
-        if (taskHandleDto.getOperateType() == OperateTypeEnum.REJECT.getIndex()) {
-            order.setStatus(OrderStatusEnum.REJECTED.getName());
-            orderMapper.updateOrderStatusById(order);
-            return;
-        }
+        // 更新相关状态
+        updateStage(taskHandleDto, order);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -309,5 +299,65 @@ public class TaskOperateService {
             }
         }
         return result;
+    }
+
+    /**
+     * 完成工作流任务后，更新相关状态
+     *
+     * @param taskHandleDto
+     * @param order
+     */
+    private void updateStage(TaskHandleDto taskHandleDto, Order order) {
+        Long id = taskHandleDto.getId();
+        // 如果是批准采购则更新资产状态
+        if (taskHandleDto.getOperateType() == OperateTypeEnum.APPROVE.getIndex()) {
+            order.setStatus(OrderStatusEnum.APPROVE.getName());
+            // 更新工单状态
+            orderMapper.updateOrderStatusById(order);
+            return;
+        }
+        // 如果是入库则新增入库资产
+        if (taskHandleDto.getOperateType() == OperateTypeEnum.IN.getIndex()) {
+            order.setCategory(ProcessTypeEnum.OUT.getIndex());
+            order.setStatus(OrderStatusEnum.READY.getName());
+            orderMapper.insertSelective(order);
+            OrderAsset orderAsset = new OrderAsset();
+            Long aid = orderAssetMapper.getAidByOid(id);
+            orderAsset.setAid(aid);
+            orderAsset.setOid(order.getId());
+            orderAsset.setCreateTime(new Date());
+            orderAsset.setUpdateTime(new Date());
+            orderAssetMapper.insertSelective(orderAsset);
+            // 更新资产入库时间
+            Asset asset = new Asset();
+            asset.setId(aid);
+            asset.setReadyDate(new Date());
+            assetMapper.updateAsset(asset);
+            return;
+        }
+        // 如果是新资产申请被拒绝，则更新工单状态
+        if (taskHandleDto.getOperateType() == OperateTypeEnum.REJECT.getIndex()) {
+            order.setStatus(OrderStatusEnum.REJECTED.getName());
+            orderMapper.updateOrderStatusById(order);
+            return;
+        }
+        // 如果是确认转交则更新工单状态
+        if (taskHandleDto.getOperateType() == OperateTypeEnum.CONFIRM.getIndex()) {
+            order.setStatus(OrderStatusEnum.OCCUPIED.getName());
+            orderMapper.updateOrderStatusById(order);
+            return;
+        }
+        // 如果是归还则更新工单状态
+        if (taskHandleDto.getOperateType() == OperateTypeEnum.RETURN.getIndex()) {
+            order.setStatus(OrderStatusEnum.READY.getName());
+            orderMapper.updateOrderStatusById(order);
+            return;
+        }
+        // 如果是拒绝借用则更新工单状态
+        if (taskHandleDto.getOperateType() == OperateTypeEnum.REFUSE.getIndex()) {
+            order.setStatus(OrderStatusEnum.REJECTED.getName());
+            orderMapper.updateOrderStatusById(order);
+            return;
+        }
     }
 }

@@ -33,6 +33,37 @@ public class OrderTaskController {
 
     private Logger logger = LoggerFactory.getLogger(OrderTaskController.class);
 
+    /**
+     * 取消工单
+     *
+     * @param taskHandleDto
+     * @return
+     */
+    @RequestMapping("cancel")
+    public RespBean cancelOrder(@RequestBody TaskHandleDto taskHandleDto) {
+        RespBean response = new RespBean();
+        if (taskHandleDto != null) {
+            Integer operateType = taskHandleDto.getOperateType();
+            // 验证操作类型
+            if (operateType == null || !operateType.equals(OperateTypeEnum.CANCEL.getIndex())) {
+                logger.warn("/order/task/cancel,取消工单操作类型错误，应为取消，实际传入的operateType=" + operateType);
+                response.setStatus(500);
+                response.setMsg("操作类型错误，请重试");
+                return response;
+            }
+            try {
+                // 取消工单
+                taskOperateService.cancelOrder(taskHandleDto);
+                response.setStatus(200);
+            } catch (Exception e) {
+                logger.error("取消工单异常：", e);
+                response.setStatus(500);
+                response.setMsg("取消工单异常，请重试");
+            }
+        }
+        return response;
+    }
+
     @RequestMapping("handleTask")
     @ResponseBody
     public RespBean handleTask(@RequestBody TaskHandleDto taskHandleDto) {

@@ -3,6 +3,9 @@ spring:
     active: @package.environment@
   main:
     allow-bean-definition-overriding: true
+  flyway:
+    baseline-on-migrate: true
+    validate-on-migrate: false
 server:
   port: 8081
   compression:

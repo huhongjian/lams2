@@ -39,7 +39,7 @@ public enum ProcessTypeEnum {
      * @return
      */
     public static String getNameByIndex(Integer index) {
-        for (OperateTypeEnum e : OperateTypeEnum.values()) {
+        for (ProcessTypeEnum e : ProcessTypeEnum.values()) {
             if (index.equals(e.getIndex())) {
                 return e.getName();
             }

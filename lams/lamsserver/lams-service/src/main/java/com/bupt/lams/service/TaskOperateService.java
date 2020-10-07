@@ -10,6 +10,7 @@ import com.bupt.lams.dto.TaskDto;
 import com.bupt.lams.dto.TaskHandleDto;
 import com.bupt.lams.dto.TaskQueryDto;
 import com.bupt.lams.dto.WorkflowTaskOperateInfoDto;
+import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.mapper.LamsUserMapper;
 import com.bupt.lams.mapper.OrderAssetMapper;
 import com.bupt.lams.mapper.OrderMapper;
@@ -39,11 +40,13 @@ public class TaskOperateService {
     @Resource
     OrderMapper orderMapper;
     @Resource
+    AssetMapper assetMapper;
+    @Resource
     TaskManagerService taskManagerService;
     @Resource
     TaskService taskService;
     @Resource
-    LamsUserMapper hrMapper;
+    LamsUserMapper lamsUserMapper;
     @Resource
     OperateTypeWorkflowService operateTypeWorkflowService;
     @Resource
@@ -96,7 +99,12 @@ public class TaskOperateService {
         // 如果是批准采购则更新资产状态
         if (taskHandleDto.getOperateType() == OperateTypeEnum.APPROVE.getIndex()) {
             order.setStatus(OrderStatusEnum.APPROVE.getName());
+            Asset asset = order.getAsset();
+            asset.setReadyDate(new Date());
+            // 更新工单状态
             orderMapper.updateOrderStatusById(order);
+            // 更新资产入库时间
+            assetMapper.updateAsset(asset);
             return;
         }
         // 如果是入库则新增入库资产
@@ -171,7 +179,7 @@ public class TaskOperateService {
         LamsUser user = null;
         if (variableMap != null && variableMap.get(assigneeKey) != null) {
             try {
-                user = this.hrMapper.loadUserByUsername((String) variableMap.get(assigneeKey));
+                user = this.lamsUserMapper.loadUserByUsername((String) variableMap.get(assigneeKey));
             } catch (Exception e) {
                 logger.info("查询用户失败: " + variableMap.get(assigneeKey), e);
             }

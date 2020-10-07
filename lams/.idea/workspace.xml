@@ -23,237 +23,60 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application-dev.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application-product.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/db/migration/V1.1__lams.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/app.5ec5ee6e.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/app.5ec5ee6e.css.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-5b9d1678.c5ccea89.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-631e6bf9.d3e3477c.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-65f35047.7468e2af.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-65f35047.7157795b.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-fbf8515e.d3e3477c.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.abbb8f25.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.abbb8f25.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.abbb8f25.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-vendors.3dbbb9bb.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-vendors.3dbbb9bb.css.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.a300073d.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.a300073d.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.a300073d.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-09661ee3.22787c50.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-09661ee3.22787c50.js.gz" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-09661ee3.22787c50.js.map" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-2d0c9500.3749bd0a.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-2d0c9500.3749bd0a.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-5b9d1678.066701e9.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-5b9d1678.066701e9.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-5b9d1678.066701e9.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-5b9d1678.aa156fb7.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-5b9d1678.aa156fb7.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-5b9d1678.aa156fb7.js.map" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-631e6bf9.f204742a.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-631e6bf9.f204742a.js.gz" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-631e6bf9.f204742a.js.map" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-644e69d8.0e3c406d.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-644e69d8.0e3c406d.js.gz" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-644e69d8.0e3c406d.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-65f35047.b1471d80.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-65f35047.b1471d80.js.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-65f35047.b1471d80.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-65f35047.5b58507b.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-65f35047.5b58507b.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-65f35047.5b58507b.js.map" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-f937c2ee.bc2f20a5.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-f937c2ee.bc2f20a5.js.gz" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-f937c2ee.bc2f20a5.js.map" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-fbf8515e.5d6fbdbb.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-fbf8515e.5d6fbdbb.js.gz" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-fbf8515e.5d6fbdbb.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-vendors.e89d9433.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-vendors.e89d9433.js.gz" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-vendors.e89d9433.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AdjustSalaryMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AdjustSalaryMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AppraiseMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AppraiseMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/DepartmentMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/DepartmentMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/EmpSalaryMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/EmpSalaryMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/EmployeeMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/EmployeeMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/EmployeeecMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/EmployeeecMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/EmployeeremoveMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/EmployeeremoveMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/EmployeetrainMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/EmployeetrainMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/JobLevelMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/JobLevelMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/MailSendLogMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/MailSendLogMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/MsgContentMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/MsgContentMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/NationMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/NationMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OpLogMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OpLogMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PoliticsstatusMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PoliticsstatusMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PositionMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PositionMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/SalaryMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/SalaryMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/SysMsgMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/SysMsgMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/config/RabbitConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/DepartmentService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/EmployeeService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/JobLevelService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/MailSendLogService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/NationService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/PoliticsstatusService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/PositionService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/SalaryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/task/MailSendTask.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/lams-web.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/lams-web.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/config/FastDFSUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/HrInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/HrInfoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/EmpBasicController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/OrderBasicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/OrderBasicController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/salary/SalaryController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/salary/SobConfigController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/system/basic/DepartmentController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/system/basic/JobLevelController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/system/basic/PositionController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/ProcessTypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/ProcessTypeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application-product.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application-product.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/db/migration/V1__vhr.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/fastdfs-client.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/app.4e8a7623.css" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/app.5ec5ee6e.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/app.4e8a7623.css.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-0c17a57a.42916da5.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-64435448.3755e146.css" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-5b9d1678.74ebf95d.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-vendors.c805ba07.css" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-vendors.3dbbb9bb.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-vendors.c805ba07.css.gz" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/css/chunk-vendors.3dbbb9bb.css.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/index.html.gz" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/index.html.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.36643c7a.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.36643c7a.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.36643c7a.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-0c17a57a.3d783b80.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-0c17a57a.3d783b80.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-0c17a57a.3d783b80.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-18458ebc.2dd3c93a.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-18458ebc.2dd3c93a.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-18458ebc.2dd3c93a.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-2d0d03c8.3a093d55.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-2d0d03c8.3a093d55.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-2d237c54.0b312051.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-2d237c54.0b312051.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-33b8cd94.a94483af.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-33b8cd94.a94483af.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-33b8cd94.a94483af.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-4e552d82.57eb10c5.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-4e552d82.57eb10c5.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-4e552d82.57eb10c5.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-64435448.c8d2ed8f.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-64435448.c8d2ed8f.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-64435448.c8d2ed8f.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-df7e035a.c9947309.js" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-09661ee3.22787c50.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-df7e035a.c9947309.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-df7e035a.c9947309.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-vendors.0a8f9d11.js" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-vendors.e89d9433.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-vendors.0a8f9d11.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-vendors.0a8f9d11.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/db/migration/V1__vhr.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/fastdfs-client.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/css/app.4e8a7623.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/css/app.4e8a7623.css.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/css/chunk-0c17a57a.42916da5.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/css/chunk-64435448.3755e146.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/css/chunk-vendors.c805ba07.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/css/chunk-vendors.c805ba07.css.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/img/fontawesome-webfont.912ec66d.svg" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/img/fontawesome-webfont.912ec66d.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html.gz" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/app.36643c7a.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/app.36643c7a.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/app.36643c7a.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-0c17a57a.3d783b80.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-0c17a57a.3d783b80.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-0c17a57a.3d783b80.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-18458ebc.2dd3c93a.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-18458ebc.2dd3c93a.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-18458ebc.2dd3c93a.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-2d0d03c8.3a093d55.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-2d0d03c8.3a093d55.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-2d237c54.0b312051.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-2d237c54.0b312051.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-33b8cd94.a94483af.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-33b8cd94.a94483af.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-33b8cd94.a94483af.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-4e552d82.57eb10c5.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-4e552d82.57eb10c5.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-4e552d82.57eb10c5.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-64435448.c8d2ed8f.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-64435448.c8d2ed8f.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-64435448.c8d2ed8f.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-df7e035a.c9947309.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-df7e035a.c9947309.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-df7e035a.c9947309.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-vendors.0a8f9d11.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-vendors.0a8f9d11.js.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/js/chunk-vendors.0a8f9d11.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/config/ActivitiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/java/com/bupt/lams/config/ActivitiConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/META-INF/maven/sogou/workorder-workflow/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/META-INF/maven/sogou/workorder-workflow/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/META-INF/workorder-workflow.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/config/ActivitiConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/config/ActivitiConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/convertor/ProcessDtoConvertor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/convertor/ProcessDtoConvertor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/convertor/TaskDtoConvertor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/convertor/TaskDtoConvertor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/dto/ExecutionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/dto/ExecutionDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/dto/ProcessDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/dto/ProcessDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/dto/ProcessQueryDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/dto/ProcessQueryDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/dto/QueryBaseDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/dto/QueryBaseDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/dto/TaskDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/dto/TaskDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/dto/TaskQueryDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/dto/TaskQueryDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/identity/GroupManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/identity/GroupManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/identity/UserManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/identity/UserManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/identity/impl/GroupDataCustomManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/identity/impl/GroupDataCustomManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/identity/impl/GroupManagerImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/identity/impl/GroupManagerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/identity/impl/UserDataCustomManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/identity/impl/UserDataCustomManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/identity/impl/UserManagerImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/identity/impl/UserManagerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/process/ProcessManagerService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/process/ProcessManagerService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/process/impl/ProcessManagerServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/process/impl/ProcessManagerServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/repository/ResourceManageService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/repository/ResourceManageService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/repository/impl/ResourceManageServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/repository/impl/ResourceManageServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/task/TaskManagerService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/task/TaskManagerService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/task/impl/TaskManagerServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/service/task/impl/TaskManagerServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/utils/ActivitiUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/utils/ActivitiUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/utils/VelocityUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/classes/com/sogou/admin/workorder/workflow/utils/VelocityUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/test-classes/com/sogou/admin/workorder/workflow/service/ProcessManagerServiceTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/test-classes/com/sogou/admin/workorder/workflow/service/TaskManagerServiceTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/test-classes/main/WorkflowApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/workorder-workflow-1.1.3.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetOut.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetOut.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyAppy.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyAppy.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyOut.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyOut.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyTask.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -309,7 +132,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -322,8 +145,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources\static" />
+      <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources\env\product" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources\env\dev" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-mapper\src\main\java\com\bupt\lams\mapper" />
@@ -405,7 +228,7 @@
       <workItem from="1601716693875" duration="15550000" />
       <workItem from="1601741289673" duration="2793000" />
       <workItem from="1601883036993" duration="19977000" />
-      <workItem from="1601977555572" duration="9691000" />
+      <workItem from="1601977555572" duration="20541000" />
     </task>
     <task id="LOCAL-00001" summary="lams第二版">
       <created>1600352784505</created>
@@ -645,7 +468,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601745680778</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="上线&amp;删除多余代码">
+      <created>1601992988698</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1601992988698</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -664,7 +494,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="添加资产类" />
     <MESSAGE value="改改配置" />
     <MESSAGE value="资产出库相关" />
     <MESSAGE value="资产入库相关开发" />
@@ -689,7 +518,8 @@
     <MESSAGE value="调整表结构，之后的debug" />
     <MESSAGE value="我的任务开发" />
     <MESSAGE value="用户管理&amp;权限管理开发" />
-    <option name="LAST_COMMIT_MESSAGE" value="用户管理&amp;权限管理开发" />
+    <MESSAGE value="上线&amp;删除多余代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="上线&amp;删除多余代码" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1600784045187">
@@ -724,14 +554,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1601740295008" />
-    <state x="304" y="0" key="CommitChangelistDialog2" timestamp="1601745670078">
+    <state x="304" y="0" key="CommitChangelistDialog2" timestamp="1601992985918">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="304" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1601745670078" />
-    <state width="798" height="438" key="DebuggerActiveHint" timestamp="1601971803236">
+    <state x="304" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1601992985918" />
+    <state width="798" height="438" key="DebuggerActiveHint" timestamp="1602050843284">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="798" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1601971803236" />
+    <state width="798" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1602050843284" />
     <state x="28" y="15" width="1461" height="794" key="DiffContextDialog" timestamp="1601986275990">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -740,54 +570,54 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1601404272404" />
-    <state width="1493" height="373" key="GridCell.Tab.0.bottom" timestamp="1601990459426">
+    <state width="1493" height="373" key="GridCell.Tab.0.bottom" timestamp="1602056254333">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="373" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601990459426" />
-    <state width="1493" height="373" key="GridCell.Tab.0.center" timestamp="1601990459426">
+    <state width="1493" height="373" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1602056254333" />
+    <state width="1493" height="373" key="GridCell.Tab.0.center" timestamp="1602056254333">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="373" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1601990459426" />
-    <state width="1493" height="373" key="GridCell.Tab.0.left" timestamp="1601990459426">
+    <state width="1493" height="373" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1602056254333" />
+    <state width="1493" height="373" key="GridCell.Tab.0.left" timestamp="1602056254333">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="373" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1601990459426" />
-    <state width="1493" height="373" key="GridCell.Tab.0.right" timestamp="1601990459426">
+    <state width="1493" height="373" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1602056254333" />
+    <state width="1493" height="373" key="GridCell.Tab.0.right" timestamp="1602056254333">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="373" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1601990459426" />
-    <state width="1493" height="363" key="GridCell.Tab.1.bottom" timestamp="1601990413962">
+    <state width="1493" height="373" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1602056254333" />
+    <state width="1493" height="363" key="GridCell.Tab.1.bottom" timestamp="1602054014496">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601990413962" />
-    <state width="1493" height="363" key="GridCell.Tab.1.center" timestamp="1601990413962">
+    <state width="1493" height="363" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
+    <state width="1493" height="363" key="GridCell.Tab.1.center" timestamp="1602054014496">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1601990413962" />
-    <state width="1493" height="363" key="GridCell.Tab.1.left" timestamp="1601990413962">
+    <state width="1493" height="363" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
+    <state width="1493" height="363" key="GridCell.Tab.1.left" timestamp="1602054014496">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1601990413962" />
-    <state width="1493" height="363" key="GridCell.Tab.1.right" timestamp="1601990413962">
+    <state width="1493" height="363" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
+    <state width="1493" height="363" key="GridCell.Tab.1.right" timestamp="1602054014496">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1601990413962" />
-    <state width="1493" height="363" key="GridCell.Tab.2.bottom" timestamp="1601990413962">
+    <state width="1493" height="363" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
+    <state width="1493" height="363" key="GridCell.Tab.2.bottom" timestamp="1602054014496">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601990413962" />
-    <state width="1493" height="363" key="GridCell.Tab.2.center" timestamp="1601990413962">
+    <state width="1493" height="363" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
+    <state width="1493" height="363" key="GridCell.Tab.2.center" timestamp="1602054014496">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1601990413962" />
-    <state width="1493" height="363" key="GridCell.Tab.2.left" timestamp="1601990413962">
+    <state width="1493" height="363" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
+    <state width="1493" height="363" key="GridCell.Tab.2.left" timestamp="1602054014496">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1601990413962" />
-    <state width="1493" height="363" key="GridCell.Tab.2.right" timestamp="1601990413962">
+    <state width="1493" height="363" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
+    <state width="1493" height="363" key="GridCell.Tab.2.right" timestamp="1602054014496">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="363" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1601990413962" />
+    <state width="1493" height="363" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1602054014496" />
     <state x="502" y="114" key="RollbackChangesDialog" timestamp="1601385858314">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -796,10 +626,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1601976970035" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1601745684437">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1601992992353">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1601745684437" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1601992992353" />
     <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1601740293895">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -812,10 +642,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="468" y="144" width="690" height="536" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1601989120352" />
-    <state x="578" y="306" key="git4idea.ui.GitResetDialog" timestamp="1601101097144">
+    <state x="578" y="306" key="git4idea.ui.GitResetDialog" timestamp="1601992900884">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="578" y="306" key="git4idea.ui.GitResetDialog/0.0.1536.824@0.0.1536.824" timestamp="1601101097144" />
+    <state x="578" y="306" key="git4idea.ui.GitResetDialog/0.0.1536.824@0.0.1536.824" timestamp="1601992900884" />
     <state x="199" y="22" key="new project wizard" timestamp="1600715198868">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -833,14 +663,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/OrderBasicController.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/exception/GlobalExceptionHandler.java</url>
           <line>16</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -137,8 +137,11 @@
     <insert id="insertSelective" parameterType="com.bupt.lams.model.Order" useGeneratedKeys="true" keyProperty="id">
         insert into `order`
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="category !=null and category!=''">
+            <if test="category !=null">
                 category,
+            </if>
+            <if test="categoryName !=null and categoryName!=''">
+                categoryName,
             </if>
             <if test="status != null">
                 status,
@@ -168,6 +171,9 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="category != null">
                 #{category},
+            </if>
+            <if test="categoryName !=null and categoryName!=''">
+                #{categoryName},
             </if>
             <if test="status != null">
                 #{status},

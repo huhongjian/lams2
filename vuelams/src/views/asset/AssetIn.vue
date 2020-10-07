@@ -157,6 +157,13 @@
             prop="status"
             width="70"
             label="状态">
+          <template slot-scope="scope">
+            <span style="color: #00e079; font-weight: bold"
+                  v-if="scope.row.status=='审批通过'||scope.row.status=='已入库'">{{ scope.row.status }}</span>
+            <span style="color: #ff4777; font-weight: bold"
+                  v-else-if="scope.row.status=='已借出'||scope.row.status=='审批未通过'">{{ scope.row.status }}</span>
+            <span v-else>{{ scope.row.status }}</span>
+          </template>
         </el-table-column>
         <el-table-column
             prop="asset.price"
@@ -252,8 +259,6 @@ export default {
       page: 1,
       keyword: '',
       size: 10,
-      nations: [],
-      joblevels: [],
       types: [
         {
           id: 1,
@@ -283,7 +288,6 @@ export default {
         }
       ],
       candidateBranches: {},
-      tiptopDegrees: ['本科', '大专', '硕士', '博士', '高中', '初中', '小学', '其他'],
       inputDepName: '所属部门',
       order: {
         id: "",
@@ -301,46 +305,14 @@ export default {
           adv: {},
         },
       },
-      defaultProps: {
-        children: 'children',
-        label: 'name'
-      },
       rules: {
         name: [{required: true, message: '请输入用户名', trigger: 'blur'}],
-        gender: [{required: true, message: '请输入性别', trigger: 'blur'}],
-        birthday: [{required: true, message: '请输入出生日期', trigger: 'blur'}],
-        idCard: [{required: true, message: '请输入身份证号码', trigger: 'blur'}, {
-          pattern: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
-          message: '身份证号码格式不正确',
-          trigger: 'blur'
-        }],
-        wedlock: [{required: true, message: '请输入婚姻状况', trigger: 'blur'}],
-        nationId: [{required: true, message: '请输入您组', trigger: 'blur'}],
-        nativePlace: [{required: true, message: '请输入籍贯', trigger: 'blur'}],
-        politicId: [{required: true, message: '请输入政治面貌', trigger: 'blur'}],
         email: [{required: true, message: '请输入邮箱地址', trigger: 'blur'}, {
           type: 'email',
           message: '邮箱格式不正确',
           trigger: 'blur'
         }],
-        phone: [{required: true, message: '请输入电话号码', trigger: 'blur'}],
-        address: [{required: true, message: '请输入员工地址', trigger: 'blur'}],
-        departmentId: [{required: true, message: '请输入部门名称', trigger: 'blur'}],
-        jobLevelId: [{required: true, message: '请输入职称', trigger: 'blur'}],
-        posId: [{required: true, message: '请输入职位', trigger: 'blur'}],
-        engageForm: [{required: true, message: '请输入聘用形式', trigger: 'blur'}],
-        tiptopDegree: [{required: true, message: '请输入学历', trigger: 'blur'}],
-        specialty: [{required: true, message: '请输入专业', trigger: 'blur'}],
-        school: [{required: true, message: '请输入毕业院校', trigger: 'blur'}],
-        beginDate: [{required: true, message: '请输入入职日期', trigger: 'blur'}],
-        workState: [{required: true, message: '请输入工作状态', trigger: 'blur'}],
-        workID: [{required: true, message: '请输入工号', trigger: 'blur'}],
-        contractTerm: [{required: true, message: '请输入合同期限', trigger: 'blur'}],
-        conversionTime: [{required: true, message: '请输入转正日期', trigger: 'blur'}],
-        notworkDate: [{required: true, message: '请输入离职日期', trigger: 'blur'}],
-        beginContract: [{required: true, message: '请输入合同起始日期', trigger: 'blur'}],
-        endContract: [{required: true, message: '请输入合同结束日期', trigger: 'blur'}],
-        workAge: [{required: true, message: '请输入工龄', trigger: 'blur'}],
+        phone: [{required: true, message: '请输入电话号码', trigger: 'blur'}]
       }
     }
   },
@@ -444,13 +416,6 @@ export default {
         }
       })
     },
-    getMaxWordID() {
-      this.getRequest("/employee/basic/maxWorkID").then(resp => {
-        if (resp) {
-          this.emp.workID = resp.obj;
-        }
-      })
-    },
     sizeChange(currentSize) {
       this.size = currentSize;
       this.initOrders();
@@ -462,7 +427,6 @@ export default {
     showAddEmpView() {
       this.emptyAsset();
       this.title = '资产采购申请';
-      this.getMaxWordID();
       this.dialogVisible = true;
     },
     initOrders(type) {

@@ -67,7 +67,7 @@
                     v-for="item in statuses"
                     :key="item.id"
                     :label="item.name"
-                    :value="item.id">
+                    :value="item.name">
                 </el-option>
               </el-select>
             </el-col>
@@ -277,15 +277,15 @@ export default {
         }],
       statuses: [
         {
-          id: 0,
+          id: 1,
           name: "申请采购"
         },
         {
-          id: 0,
+          id: 2,
           name: "审批通过"
         },
         {
-          id: 0,
+          id: 3,
           name: "审批未通过"
         }
       ],

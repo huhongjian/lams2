@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -34,7 +34,7 @@ CREATE TABLE `asset` (
   `readyDate` timestamp NULL DEFAULT NULL COMMENT '入库时间',
   `updateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '资产数据更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,7 +53,7 @@ CREATE TABLE `lams_user` (
   `enabled` tinyint(1) DEFAULT '1',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,7 +82,7 @@ CREATE TABLE `lams_user_role` (
   KEY `hr_role_ibfk_1` (`uid`),
   CONSTRAINT `lams_user_role_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `lams_user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `lams_user_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +115,7 @@ CREATE TABLE `menu` (
   `enabled` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `parentId` (`parentId`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,25 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'/',NULL,NULL,'所有',NULL,NULL,NULL,NULL,1),(2,'/','/home','Home','资产管理','fa fa-laptop',NULL,1,1,1),(3,'/','/home','Home','我的','fa fa-address-card-o',NULL,1,1,1),(4,'/','/home','Home','项目管理','fa fa-tasks',NULL,1,1,1),(5,'/','/home','Home','我的申请','fa fa-user-circle-o',NULL,1,1,1),(6,'/','/home','Home','系统管理','fa fa-windows',NULL,1,1,1),(7,'/employee/basic/**','/asset/in','AssetIn','资产入库',NULL,NULL,1,2,1),(8,'/employee/advanced/**','/emp/adv','EmpAdv','高级资料',NULL,NULL,1,5,1),(9,'/personnel/emp/**','/mine/apply','MyAppy','我的申请',NULL,NULL,1,3,1),(10,'/personnel/ec/**','/mine/task','MyTask','我的任务',NULL,NULL,1,3,1),(11,'/personnel/train/**','/mine/out','MyOut','离退流程',NULL,NULL,1,3,1),(14,'/salary/sob/**','/sal/sob','SalSob','test3',NULL,NULL,1,4,1),(15,'/salary/sobcfg/**','/sal/sobcfg','SalSobCfg','test4',NULL,NULL,1,4,1),(16,'/salary/table/**','/sal/table','SalTable','test5',NULL,NULL,1,4,1),(17,'/salary/month/**','/sal/month','SalMonth','test6',NULL,NULL,1,4,1),(18,'/salary/search/**','/sal/search','SalSearch','test7',NULL,NULL,1,4,1),(19,'/employee/basic/**','/asset/out','AssetOut','出库借用',NULL,NULL,1,2,1),(20,'/statistics/score/**','/sta/score','StaScore','资产报修',NULL,NULL,1,2,1),(21,'/statistics/personnel/**','/sta/pers','StaPers','清理报废',NULL,NULL,1,2,1),(23,'/system/basic/**','/sys/basic','SysPermission','权限管理',NULL,NULL,1,6,1),(25,'/system/log/**','/sys/log','SysLog','日志管理',NULL,NULL,1,6,1),(26,'/system/hr/**','/sys/hr','SysUser','用户管理',NULL,NULL,1,6,1);
+INSERT INTO `menu`
+VALUES (1, '/', NULL, NULL, '所有', NULL, NULL, NULL, NULL, 1),
+       (2, '/', '/home', 'Home', '资产概况', 'fa fa-dashboard', NULL, 1, 1, 1),
+       (3, '/', '/home', 'Home', '资产管理', 'fa fa-laptop', NULL, 1, 1, 1),
+       (4, '/', '/home', 'Home', '我的', 'fa fa-address-card-o', NULL, 1, 1, 1),
+       (5, '/', '/home', 'Home', '项目管理', 'fa fa-tasks', NULL, 1, 1, 1),
+       (6, '/', '/home', 'Home', '系统管理', 'fa fa-windows', NULL, 1, 1, 1),
+       (7, '/employee/advanced/**', '/emp/adv', 'EmpAdv', '仪表盘', NULL, NULL, 1, 2, 1),
+       (8, '/employee/basic/**', '/asset/in', 'AssetIn', '资产入库', NULL, NULL, 1, 3, 1),
+       (9, '/employee/basic/**', '/asset/out', 'AssetOut', '出库借用', NULL, NULL, 1, 3, 1),
+       (10, '/statistics/score/**', '/sta/a', 'StaScore', '资产信息', NULL, NULL, 1, 3, 1),
+       (11, '/statistics/personnel/**', '/sta/pers', 'StaPers', '资产报修', NULL, NULL, 1, 3, 1),
+       (12, '/statistics/score/**', '/sta/score', 'StaPers', '清理报废', NULL, NULL, 1, 3, 1),
+       (13, '/personnel/emp/**', '/mine/apply', 'MyAppy', '我的申请', NULL, NULL, 1, 4, 1),
+       (14, '/personnel/ec/**', '/mine/task', 'MyTask', '我的任务', NULL, NULL, 1, 4, 1),
+       (15, '/personnel/train/**', '/mine/out', 'MyOut', '离退流程', NULL, NULL, 1, 4, 1),
+       (16, '/system/basic/**', '/sys/basic', 'SysPermission', '权限管理', NULL, NULL, 1, 6, 1),
+       (17, '/system/log/**', '/sys/log', 'SysLog', '日志管理', NULL, NULL, 1, 6, 1),
+       (18, '/system/hr/**', '/sys/hr', 'SysUser', '用户管理', NULL, NULL, 1, 6, 1);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +162,7 @@ CREATE TABLE `menu_role` (
   KEY `rid` (`rid`),
   CONSTRAINT `menu_role_ibfk_1` FOREIGN KEY (`mid`) REFERENCES `menu` (`id`),
   CONSTRAINT `menu_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +171,19 @@ CREATE TABLE `menu_role` (
 
 LOCK TABLES `menu_role` WRITE;
 /*!40000 ALTER TABLE `menu_role` DISABLE KEYS */;
-INSERT INTO `menu_role` VALUES (162,7,6),(163,9,6),(164,10,6),(165,11,6),(168,14,6),(169,15,6),(170,16,6),(171,17,6),(172,18,6),(173,19,6),(174,20,6),(175,21,6),(177,23,6),(178,25,6),(179,26,6),(285,7,22),(286,19,22),(287,20,22),(288,21,22),(289,9,22),(290,10,22),(291,11,22),(292,14,22),(293,15,22),(294,16,22),(295,17,22),(296,18,22),(297,8,22),(298,23,22),(299,25,22),(300,26,22);
+INSERT INTO `menu_role`
+VALUES (null, 7, 6),
+       (null, 8, 6),
+       (null, 9, 6),
+       (null, 10, 6),
+       (null, 11, 6),
+       (null, 12, 6),
+       (null, 13, 6),
+       (null, 14, 6),
+       (null, 15, 6),
+       (null, 16, 6),
+       (null, 17, 6),
+       (null, 18, 6);
 /*!40000 ALTER TABLE `menu_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +234,7 @@ CREATE TABLE `order` (
   `createTime` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `updateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,7 +251,7 @@ CREATE TABLE `order_asset` (
   `createTime` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `updateTime` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +267,7 @@ CREATE TABLE `order_workflow` (
   `workflow_inst_id` bigint DEFAULT NULL COMMENT '工作流实例id',
   `workflow_start_time` date DEFAULT NULL COMMENT '工作流开始时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,7 +288,7 @@ CREATE TABLE `record` (
   `operate` varchar(10) DEFAULT NULL COMMENT '操作名称',
   `operateTime` date DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -282,7 +312,7 @@ CREATE TABLE `role` (
   `name` varchar(64) DEFAULT NULL,
   `nameZh` varchar(64) DEFAULT NULL COMMENT '角色名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -32,7 +32,7 @@ public class MenuService {
      *
      * @return
      */
-    public List<Menu> getMenusByHrId() {
+    public List<Menu> getMenusByUid() {
         return menuMapper.getMenusByUid(((LamsUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
     }
 

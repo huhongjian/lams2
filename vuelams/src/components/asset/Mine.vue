@@ -24,7 +24,7 @@
       </div>
       <transition name="slide-fade">
         <div v-show="showAdvanceSearchView"
-             style="border: 1px solid #409eff;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;">
+             style="border: 1px solid #759ad1;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;">
           <el-row>
             <el-col :span="5">
               类型:

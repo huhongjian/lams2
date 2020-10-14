@@ -3,57 +3,64 @@
     <div width="100%">
       <el-card class="box-card" style="background-color: #fff143">
         <div slot="header" class="clearfix">
-          <span>总资产数</span>
+          <span class="box-title">总资产数</span>
         </div>
-        <div>
+        <div class="box-value">
           1
         </div>
       </el-card>
       <el-card class="box-card" style="background-color: #44cef6">
         <div slot="header" class="clearfix">
-          <span>使用中数量</span>
+          <span class="box-title">使用中数量</span>
         </div>
-        <div>
+        <div class="box-value">
           2
         </div>
       </el-card>
       <el-card class="box-card" style="background-color: #9ed048">
         <div slot="header" class="clearfix">
-          <span>闲置数量</span>
+          <span class="box-title">闲置数量</span>
         </div>
-        <div>
+        <div class="box-value">
           3
         </div>
       </el-card>
       <el-card class="box-card" style="background-color: #cca4e3">
         <div slot="header" class="clearfix">
-          <span>维修中数量</span>
+          <span class="box-title">维修中数量</span>
         </div>
-        <div>
+        <div class="box-value">
           4
         </div>
       </el-card>
       <el-card class="box-card" style="background-color: #f9906f">
         <div slot="header" class="clearfix">
-          <span>资产总金额</span>
+          <span class="box-title">资产总金额</span>
         </div>
-        <div>
+        <div class="box-value">
           5
         </div>
       </el-card>
       <el-card class="box-card" style="background-color: #c2ccd0">
         <div slot="header" class="clearfix">
-          <span>报废数量</span>
+          <span class="box-title">报废数量</span>
         </div>
-        <div>
+        <div class="box-value">
           6
         </div>
       </el-card>
     </div>
     <el-card class="chart-card" style="width: 100%">
       <div slot="header" class="clearfix">
-        <span>卡片名称</span>
-        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+        <span>资产概况</span>
+        <el-select v-model="value" style="float: right; padding: 3px 0" placeholder="请选择">
+          <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+          </el-option>
+        </el-select>
       </div>
       <el-table
           :data="tableData"
@@ -78,21 +85,26 @@
     <div style="width: 100%">
       <el-card class="chart-card" style="width: 49%; float: left">
         <div slot="header" class="clearfix">
-          <span>卡片名称</span>
-          <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-          <div>
-            <ve-line :data="chartData"></ve-line>
-          </div>
+          <span>资产增长趋势</span>
+          <el-date-picker
+              style="float: right; padding: 3px 0"
+              v-model="value2"
+              type="monthrange"
+              align="right"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始月份"
+              end-placeholder="结束月份"
+              :picker-options="pickerOptions">
+          </el-date-picker>
         </div>
+        <ve-line :data="chartData"></ve-line>
       </el-card>
       <el-card class="chart-card" style="width: 49%; float: right">
         <div slot="header" class="clearfix">
-          <span>卡片名称</span>
-          <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-          <div>
-            <ve-bar :data="chartData"></ve-bar>
-          </div>
+          <span>资产分类统计</span>
         </div>
+        <ve-bar :data="chartData"></ve-bar>
       </el-card>
     </div>
   </div>
@@ -107,6 +119,48 @@ export default {
   name: "AssetDashBoard",
   data() {
     return {
+      pickerOptions: {
+        shortcuts: [{
+          text: '本月',
+          onClick(picker) {
+            picker.$emit('pick', [new Date(), new Date()]);
+          }
+        }, {
+          text: '今年至今',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date(new Date().getFullYear(), 0);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近六个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setMonth(start.getMonth() - 6);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
+      value1: '',
+      value2: '',
+      options: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+      value: '',
       tableData: [{
         date: '2016-05-02',
         name: '王小虎',
@@ -161,7 +215,19 @@ export default {
 }
 
 .box-card {
-  width: 15%;
+  width: 16.5%;
   float: left;
+}
+
+.box-title {
+  font-size: 14px;
+  font-family: 微软雅黑;
+  font-weight: bold;
+}
+
+.box-value {
+  font-size: 14px;
+  font-family: 微软雅黑;
+  font-weight: bold;
 }
 </style>

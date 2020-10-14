@@ -35,8 +35,8 @@
             <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item>{{ this.$router.currentRoute.name }}</el-breadcrumb-item>
           </el-breadcrumb>
-          <div class="homeWelcome" v-if="this.$router.currentRoute.path=='/home'">
-            欢迎使用实验室资产管理系统！
+          <div v-if="this.$router.currentRoute.path=='/home'">
+            <AssetDashBoard></AssetDashBoard>
           </div>
           <router-view class="homeRouterView"/>
         </el-main>
@@ -46,12 +46,17 @@
 </template>
 
 <script>
+import AssetDashBoard from "@/views/asset/AssetDashBoard";
+
 export default {
   name: "Home",
   data() {
     return {
       // user: JSON.parse(window.sessionStorage.getItem("user"))
     }
+  },
+  components: {
+    AssetDashBoard
   },
   computed: {
     routes() {
@@ -93,14 +98,6 @@ export default {
 <style>
 .homeRouterView {
   margin-top: 10px;
-}
-
-.homeWelcome {
-  text-align: center;
-  font-size: 30px;
-  font-family: 微软雅黑;
-  color: #759ad1;
-  padding-top: 50px;
 }
 
 .homeHeader {

@@ -34,17 +34,13 @@ public class Order implements Serializable {
      */
     private String reason;
     /**
-     * 申请人
+     * 用户邮箱
      */
-    private String applicant;
+    private String userEmail;
     /**
-     * 申请人邮箱
+     * 用户
      */
-    private String applicantEmail;
-    /**
-     * 申请人电话
-     */
-    private String applicantPhone;
+    private LamsUser user;
     /**
      * 创建时间
      */

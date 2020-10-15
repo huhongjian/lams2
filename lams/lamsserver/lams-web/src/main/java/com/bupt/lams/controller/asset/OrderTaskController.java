@@ -98,7 +98,7 @@ public class OrderTaskController {
             opInfoDto = new WorkflowTaskOperateInfoDto();
         }
         // 如果当前用户是工单创建人并且工单不是终止状态
-        if (order.getApplicantEmail().equals(user.getUsername()) && !order.getStatus().equals(OrderStatusEnum.READY.getName())) {
+        if (order.getUserEmail().equals(user.getUsername()) && !order.getStatus().equals(OrderStatusEnum.READY.getName())) {
             WorkflowOperate cancel = new WorkflowOperate();
             cancel.setOperateType(OperateTypeEnum.CANCEL.getIndex());
             cancel.setOperate(OperateTypeEnum.CANCEL.getName());
@@ -113,7 +113,7 @@ public class OrderTaskController {
     @ResponseBody
     public RespPageBean getMyApply(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Order order, Date[] beginDateScope) {
         LamsUser user = UserInfoUtils.getLoginedUser();
-        order.setApplicantEmail(user.getUsername());
+        order.setUserEmail(user.getUsername());
         return orderService.getOrderByPage(page, size, order, beginDateScope);
     }
 

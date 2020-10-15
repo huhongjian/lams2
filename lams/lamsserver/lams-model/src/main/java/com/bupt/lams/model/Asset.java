@@ -16,18 +16,6 @@ public class Asset implements Serializable {
     private String brand;
     private Double price;
     /**
-     * 负责人
-     */
-    private String charger;
-    /**
-     * 负责人邮箱
-     */
-    private String chargerEmail;
-    /**
-     * 负责人电话
-     */
-    private String chargerPhone;
-    /**
      * 详细信息
      */
     private Object adv;

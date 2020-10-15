@@ -59,7 +59,7 @@ public class TaskOperateService {
         Long oid = taskHandleDto.getId();
         Order order = orderMapper.selectByPrimaryKey(oid);
         LamsUser user = UserInfoUtils.getLoginedUser();
-        if (!order.getApplicantEmail().equals(user.getUsername())) {
+        if (!order.getUserEmail().equals(user.getUsername())) {
             throw new RuntimeException("仅创建人可发起撤销操作！");
         }
         if (order.getStatus() == OrderStatusEnum.CLOSED.getName()) {
@@ -83,7 +83,7 @@ public class TaskOperateService {
         Order order = orderMapper.selectByPrimaryKey(record.getOid());
         // 1. 查找关联工作流definition
         String workflowKey = operateTypeWorkflowService.selectWorkflowKeyByOperateType(record.getType());
-        String procInstId = processManagerService.submitStartFormDataByProcessDefinitionKey(workflowKey, order.getId().toString(), startParamMap, order.getApplicant());
+        String procInstId = processManagerService.submitStartFormDataByProcessDefinitionKey(workflowKey, order.getId().toString(), startParamMap, order.getUserEmail());
         // 2. 保存工单工作流关联关系
         OrderWorkflow orderWorkflow = new OrderWorkflow();
         orderWorkflow.setOid(order.getId());

@@ -62,6 +62,7 @@ public class OrderService {
 
     @Transactional(rollbackFor = Exception.class)
     public void addOrderIn(Order order) {
+        LamsUser user = UserInfoUtils.getLoginedUser();
         order.setCategory(ProcessTypeEnum.IN.getIndex());
         order.setStatus(OrderStatusEnum.CREATE.getName());
         order.setCreateTime(new Date());
@@ -79,8 +80,8 @@ public class OrderService {
         record.setType(ProcessTypeEnum.IN.getIndex());
         record.setOperate(OperateTypeEnum.CREATE.getName());
         record.setOperateType(OperateTypeEnum.CREATE.getIndex());
-        record.setOperator(order.getApplicant());
-        record.setOperatorMail(order.getApplicantEmail());
+        record.setOperator(user.getName());
+        record.setOperatorMail(user.getUsername());
         record.setOperateTime(order.getCreateTime());
         try {
             taskOperateService.startWorkFlow(record, null);
@@ -94,9 +95,6 @@ public class OrderService {
     public void borrowAsset(Order order) {
         Asset asset = order.getAsset();
         LamsUser user = UserInfoUtils.getLoginedUser();
-        asset.setCharger(user.getName());
-        asset.setChargerEmail(user.getUsername());
-        asset.setChargerPhone(user.getPhone());
         order.setStatus(OrderStatusEnum.ASK.getName());
         order.setCreateTime(new Date());
         orderMapper.updateOrder(order);
@@ -107,8 +105,8 @@ public class OrderService {
         record.setType(ProcessTypeEnum.OUT.getIndex());
         record.setOperate(OperateTypeEnum.BORROW.getName());
         record.setOperateType(OperateTypeEnum.BORROW.getIndex());
-        record.setOperator(order.getApplicant());
-        record.setOperatorMail(order.getApplicantEmail());
+        record.setOperator(user.getName());
+        record.setOperatorMail(user.getUsername());
         record.setOperateTime(order.getCreateTime());
         try {
             // 这个map是开启工作流时间的数据，并不是流转过程中的数据

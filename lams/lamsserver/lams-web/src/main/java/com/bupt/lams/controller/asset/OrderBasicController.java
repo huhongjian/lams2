@@ -1,9 +1,11 @@
 package com.bupt.lams.controller.asset;
 
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.Order;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.OrderService;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,9 @@ public class OrderBasicController {
 
     @GetMapping("/get")
     public RespPageBean getOrderInByPage(@RequestParam Integer category, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Order order, Date[] beginDateScope) {
+        LamsUser user = UserInfoUtils.getLoginedUser();
         order.setCategory(category);
+        order.setUserEmail(user.getUsername());
         return orderService.getOrderByPage(page, size, order, beginDateScope);
     }
 

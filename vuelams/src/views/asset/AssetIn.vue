@@ -176,19 +176,19 @@
             label="价格">
         </el-table-column>
         <el-table-column
-            prop="applicant"
+            prop="user.name"
             width="95"
             align="left"
             label="申请人">
         </el-table-column>
         <el-table-column
-            prop="applicantEmail"
+            prop="user.username"
             width="150"
             align="left"
             label="申请人邮箱">
         </el-table-column>
         <el-table-column
-            prop="applicantPhone"
+            prop="user.phone"
             width="100"
             label="申请人电话">
         </el-table-column>

@@ -8,21 +8,22 @@
         <result column="status" property="status"/>
         <result column="duration" property="duration"/>
         <result column="reason" property="reason"/>
-        <result column="applicant" property="applicant"/>
-        <result column="applicant_email" property="applicantEmail"/>
-        <result column="applicant_phone" property="applicantPhone"/>
+        <result column="userEmail" property="userEmail"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
     </resultMap>
     <resultMap id="AllOrderInfo" type="com.bupt.lams.model.Order" extends="BaseResultMap">
+        <association property="user" javaType="com.bupt.lams.model.LamsUser">
+            <id column="uid" property="id"/>
+            <result column="name" property="name"/>
+            <result column="phone" property="phone"/>
+            <result column="username" property="username"/>
+        </association>
         <association property="asset" javaType="com.bupt.lams.model.Asset">
             <id column="aid" property="id"/>
             <result column="type" property="type"/>
             <result column="brand" property="brand"/>
             <result column="price" property="price"/>
-            <result column="charger" property="charger"/>
-            <result column="charger_email" property="chargerEmail"/>
-            <result column="charger_phone" property="chargerPhone"/>
             <result column="adv" property="adv" typeHandler="com.bupt.lams.mybatis.JsonToObjectTypeHandler"/>
             <result column="readyDate" property="readyDate"/>
             <result column="updateTime" property="updateTime"/>
@@ -32,14 +33,19 @@
     id, category, status, duration, reason, applicant, applicant_email, applicant_phone, createTime, updateTime
   </sql>
     <select id="getOrderByPage" resultMap="AllOrderInfo">
-        select o.*,a.id as aid,a.type,a.brand,a.price,a.charger,a.charger_email,a.charger_phone,a.adv,a.readyDate
+        select o.*,
+        a.id as aid,a.type,a.brand,a.price,a.adv,a.readyDate,
+        u.id as uid, u.name, u.phone, u.username
         from
         `order` o,
         order_asset oa,
-        asset a
+        asset a,
+        lams_user u
         <where>
             o.id = oa.oid
             and a.id = oa.aid
+            and o.userEmail = u.username
+            and u.enabled = 1
             <if test="order!=null">
                 <if test="order.category !=null and order.category!=''">
                     and o.category = #{order.category}
@@ -47,8 +53,8 @@
                 <if test="order.status !=null and order.status!=''">
                     and o.status like concat('%',#{order.status},'%')
                 </if>
-                <if test="order.applicantEmail !=null and order.applicantEmail!=''">
-                    and o.applicant_email like concat('%',#{order.applicantEmail},'%')
+                <if test="order.userEmail !=null and order.userEmail!=''">
+                    and o.userEmail like concat('%',#{order.userEmail},'%')
                 </if>
                 <if test="beginDateScope !=null">
                     and o.createTime between #{beginDateScope[0]} and #{beginDateScope[1]}
@@ -59,9 +65,6 @@
                     </if>
                     <if test="order.asset.brand !=null and order.asset.brand!=''">
                         and a.brand like concat('%',#{order.asset.brand},'%')
-                    </if>
-                    <if test="order.asset.charger !=null and order.asset.charger!=''">
-                        and a.charger like concat('%',#{order.asset.charger},'%')
                     </if>
                 </if>
             </if>
@@ -80,8 +83,8 @@
                 <if test="order.status !=null and order.status!=''">
                     and o.status like concat('%',#{order.status},'%')
                 </if>
-                <if test="order.applicantEmail !=null and order.applicantEmail!=''">
-                    and o.applicant_email like concat('%',#{order.applicantEmail},'%')
+                <if test="order.userEmail !=null and order.userEmail!=''">
+                    and o.userEmail like concat('%',#{order.userEmail},'%')
                 </if>
             </if>
             <if test="beginDateScope !=null">

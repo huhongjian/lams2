@@ -135,7 +135,7 @@
         <el-table-column
             prop="id"
             fixed
-            label="ID"
+            label="借用单号"
             align="left"
             width="90">
           <template slot-scope="scope">
@@ -144,6 +144,7 @@
         </el-table-column>
         <el-table-column
             prop="asset.id"
+            fixed
             align="left"
             label="资产编号"
             width="90">

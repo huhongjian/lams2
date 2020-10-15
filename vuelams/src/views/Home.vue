@@ -63,7 +63,7 @@ export default {
       return this.$store.state.routes;
     },
     user() {
-      return this.$store.state.currentHr;
+      return this.$store.state.currentUser;
     }
   },
   methods: {

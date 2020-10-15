@@ -9,7 +9,6 @@ export const initMenu = (router, store) => {
             let fmtRoutes = formatRoutes(data);
             router.addRoutes(fmtRoutes);
             store.commit('initRoutes', fmtRoutes);
-            store.dispatch('connect');
         }
     })
 }
@@ -42,8 +41,6 @@ export const formatRoutes = (routes) => {
                     require(['../views/mine/' + component + '.vue'], resolve);
                 } else if (component.startsWith("Sal")) {
                     require(['../views/sal/' + component + '.vue'], resolve);
-                } else if (component.startsWith("Sta")) {
-                    require(['../views/sta/' + component + '.vue'], resolve);
                 } else if (component.startsWith("Sys")) {
                     require(['../views/sys/' + component + '.vue'], resolve);
                 }

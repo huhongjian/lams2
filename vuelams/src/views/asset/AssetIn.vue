@@ -22,6 +22,8 @@
                      icon="el-icon-download">
             导出数据
           </el-button>
+          <el-button @click="deleteEmp(scope.row)" style="display: inline-flex;margin-left: 8px" type="danger">删除
+          </el-button>
         </div>
         <div>
           <el-input placeholder="请输入资产名称进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
@@ -206,8 +208,6 @@
             label="操作">
           <template slot-scope="scope">
             <el-button @click="showEditEmpView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
-            <el-button @click="deleteEmp(scope.row)" style="padding: 3px" size="mini" type="danger">删除
-            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -221,8 +221,8 @@
         </el-pagination>
       </div>
     </div>
-    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :title="title"
-               :rules='rules'></AssetEdit>
+    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order"
+               :title="title"></AssetEdit>
     <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
                  :candidateBranches='candidateBranches' :rules='rules'></AssetDetail>
   </div>
@@ -307,15 +307,7 @@ export default {
           price: "4000",
           adv: {},
         },
-      },
-      rules: {
-        name: [{required: true, message: '请输入用户名', trigger: 'blur'}],
-        email: [{required: true, message: '请输入邮箱地址', trigger: 'blur'}, {
-          type: 'email',
-          message: '邮箱格式不正确',
-          trigger: 'blur'
-        }],
-        phone: [{required: true, message: '请输入电话号码', trigger: 'blur'}]
+        user: JSON.parse(window.sessionStorage.getItem("user"))
       }
     }
   },

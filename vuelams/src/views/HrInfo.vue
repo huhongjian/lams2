@@ -199,7 +199,7 @@
                         this.hr = resp;
                         this.hr2 = Object.assign({}, this.hr);
                         window.sessionStorage.setItem("user", JSON.stringify(resp));
-                        this.$store.commit('INIT_CURRENTHR', resp);
+                        this.$store.commit('INIT_CURRENTUSER', resp);
                     }
                 })
             }

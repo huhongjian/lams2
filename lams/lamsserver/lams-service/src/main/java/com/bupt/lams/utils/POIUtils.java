@@ -109,7 +109,7 @@ public class POIUtils {
             row.createCell(1).setCellValue(order.getAsset().getId());
             row.createCell(2).setCellValue(order.getAsset().getType());
             row.createCell(3).setCellValue(order.getAsset().getBrand());
-            row.createCell(4).setCellValue(order.getStatus());
+            row.createCell(4).setCellValue(order.getStatusName());
             row.createCell(5).setCellValue(order.getAsset().getPrice());
             row.createCell(6).setCellValue(order.getUser().getName());
             row.createCell(7).setCellValue(order.getUserEmail());

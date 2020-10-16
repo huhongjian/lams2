@@ -323,7 +323,7 @@ export default {
   },
   methods: {
     exportData() {
-      let url = '/order/basic/get/?category=1';
+      let url = '/order/basic/export/?category=1';
       if (this.type && this.type == 'advanced') {
         if (this.searchValue.type) {
           url += '&type=' + this.searchValue.type;

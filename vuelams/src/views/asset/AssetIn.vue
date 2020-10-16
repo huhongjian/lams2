@@ -6,18 +6,6 @@
           <el-button type="primary" icon="el-icon-plus" @click="showAddEmpView">
             新增资产
           </el-button>
-          <el-upload
-              :show-file-list="false"
-              :before-upload="beforeUpload"
-              :on-success="onSuccess"
-              :on-error="onError"
-              :disabled="importDataDisabled"
-              style="display: inline-flex;margin-left: 8px"
-              action="/employee/basic/import">
-            <el-button :disabled="importDataDisabled" type="success" :icon="importDataBtnIcon">
-              {{ importDataBtnText }}
-            </el-button>
-          </el-upload>
           <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
                      icon="el-icon-download">
             导出数据
@@ -111,7 +99,7 @@
             <el-col :span="5" :offset="4">
               <el-button size="mini" @click="clearSearchValue">重置</el-button>
               <el-button size="mini" @click="showAdvanceSearchView = false">取消</el-button>
-              <el-button size="mini" icon="el-icon-search" type="primary" @click="initOrders('advanced')">搜索</el-button>
+              <el-button size="mini" icon="el-icon-search" type="primary" @click="initOrdersAdv">搜索</el-button>
             </el-col>
           </el-row>
         </div>
@@ -322,7 +310,8 @@ export default {
           price: "4000",
           adv: {},
         }
-      }
+      },
+      type: ""
     }
   },
   components: {
@@ -333,29 +322,34 @@ export default {
     this.initOrders();
   },
   methods: {
-    searvhViewHandleNodeClick(data) {
-      this.inputDepName = data.name;
-      this.searchValue.departmentId = data.id;
-      this.popVisible2 = !this.popVisible2
-    },
-    onError(err, file, fileList) {
-      this.importDataBtnText = '导入数据';
-      this.importDataBtnIcon = 'el-icon-upload2';
-      this.importDataDisabled = false;
-    },
-    onSuccess(response, file, fileList) {
-      this.importDataBtnText = '导入数据';
-      this.importDataBtnIcon = 'el-icon-upload2';
-      this.importDataDisabled = false;
-      this.initOrders();
-    },
-    beforeUpload() {
-      this.importDataBtnText = '正在导入';
-      this.importDataBtnIcon = 'el-icon-loading';
-      this.importDataDisabled = true;
-    },
     exportData() {
-      window.open('/employee/basic/export', '_parent');
+      let url = '/order/basic/get/?category=1';
+      if (this.type && this.type == 'advanced') {
+        if (this.searchValue.type) {
+          url += '&type=' + this.searchValue.type;
+        }
+        if (this.searchValue.brand) {
+          url += '&brand=' + this.searchValue.brand;
+        }
+        if (this.searchValue.status) {
+          url += '&status=' + this.searchValue.status;
+        }
+        if (this.searchValue.userEmail) {
+          url += '&userEmail=' + this.searchValue.userEmail;
+        }
+        if (this.searchValue.priceLow) {
+          url += '&priceLow=' + this.searchValue.priceLow;
+        }
+        if (this.searchValue.priceHigh) {
+          url += '&priceHigh=' + this.searchValue.priceHigh;
+        }
+        if (this.searchValue.beginDateScope) {
+          url += '&beginDateScope=' + this.searchValue.beginDateScope;
+        }
+      } else {
+        url += "&id=" + this.keyword;
+      }
+      window.open(url, '_parent');
     },
     emptyOrder() {
       this.order = {
@@ -433,44 +427,61 @@ export default {
     },
     sizeChange(currentSize) {
       this.size = currentSize;
-      this.initOrders();
+      if (this.type && this.type == 'advanced') {
+        this.initOrdersAdv();
+      } else {
+        this.initOrders();
+      }
     },
     currentChange(currentPage) {
       this.page = currentPage;
-      this.initOrders('advanced');
+      if (this.type && this.type == 'advanced') {
+        this.initOrdersAdv();
+      } else {
+        this.initOrders();
+      }
     },
     showAddEmpView() {
       this.emptyOrder();
       this.title = '资产采购申请';
       this.dialogVisible = true;
     },
-    initOrders(type) {
+    initOrders() {
+      this.type = '';
+      this.loading = true;
+      let url = '/order/basic/get/?category=1&page=' + this.page + '&size=' + this.size + "&id=" + this.keyword;
+      this.getRequest(url).then(resp => {
+        this.loading = false;
+        if (resp) {
+          this.orders = resp.data;
+          this.total = resp.total;
+        }
+      });
+    },
+    initOrdersAdv() {
+      this.type = 'advanced'
       this.loading = true;
       let url = '/order/basic/get/?category=1&page=' + this.page + '&size=' + this.size;
-      if (type && type == 'advanced') {
-        if (this.searchValue.type) {
-          url += '&type=' + this.searchValue.type;
-        }
-        if (this.searchValue.brand) {
-          url += '&brand=' + this.searchValue.brand;
-        }
-        if (this.searchValue.status) {
-          url += '&status=' + this.searchValue.status;
-        }
-        if (this.searchValue.userEmail) {
-          url += '&userEmail=' + this.searchValue.userEmail;
-        }
-        if (this.searchValue.priceLow) {
-          url += '&priceLow=' + this.searchValue.priceLow;
-        }
-        if (this.searchValue.priceHigh) {
-          url += '&priceHigh=' + this.searchValue.priceHigh;
-        }
-        if (this.searchValue.beginDateScope) {
-          url += '&beginDateScope=' + this.searchValue.beginDateScope;
-        }
-      } else {
-        url += "&id=" + this.keyword;
+      if (this.searchValue.type) {
+        url += '&type=' + this.searchValue.type;
+      }
+      if (this.searchValue.brand) {
+        url += '&brand=' + this.searchValue.brand;
+      }
+      if (this.searchValue.status) {
+        url += '&status=' + this.searchValue.status;
+      }
+      if (this.searchValue.userEmail) {
+        url += '&userEmail=' + this.searchValue.userEmail;
+      }
+      if (this.searchValue.priceLow) {
+        url += '&priceLow=' + this.searchValue.priceLow;
+      }
+      if (this.searchValue.priceHigh) {
+        url += '&priceHigh=' + this.searchValue.priceHigh;
+      }
+      if (this.searchValue.beginDateScope) {
+        url += '&beginDateScope=' + this.searchValue.beginDateScope;
       }
       this.getRequest(url).then(resp => {
         this.loading = false;

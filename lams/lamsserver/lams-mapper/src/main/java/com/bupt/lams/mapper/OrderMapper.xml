@@ -101,7 +101,9 @@
     </select>
     <update id="updateOrderStatusById" parameterType="com.bupt.lams.model.Order">
         update `order` o
-        set o.status = #{status}
+        set
+            o.status = #{status},
+            o.statusName = #{statusName}
         where o.id = #{id}
     </update>
     <update id="updateOrder" parameterType="com.bupt.lams.model.Order">

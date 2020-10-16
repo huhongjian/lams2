@@ -25,9 +25,7 @@ public class OrderBasicController {
 
     @GetMapping("/get")
     public RespPageBean getOrderInByPage(@RequestParam Integer category, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Order order, Date[] beginDateScope) {
-        LamsUser user = UserInfoUtils.getLoginedUser();
         order.setCategory(category);
-        order.setUserEmail(user.getUsername());
         return orderService.getOrderByPage(page, size, order, beginDateScope);
     }
 

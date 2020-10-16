@@ -294,20 +294,28 @@ export default {
       inputDepName: '所属部门',
       order: {
         id: "",
+        category: "",
+        categoryName: "",
         status: "",
+        statusName: "",
+        duration: "",
         reason: "测试",
-        applicant: "胡宏建",
-        applicantPhone: "18840833079",
-        applicantEmail: "admin",
+        userEmail: "admin",
+        user: {
+          id: "",
+          name: "",
+          phone: "",
+          username: "",
+        },
         createTime: "",
+        updateTime: "",
         asset: {
           id: "",
           brand: "华为",
           type: "手机",
           price: "4000",
           adv: {},
-        },
-        user: JSON.parse(window.sessionStorage.getItem("user"))
+        }
       }
     }
   },
@@ -343,19 +351,23 @@ export default {
     exportData() {
       window.open('/employee/basic/export', '_parent');
     },
-    emptyAsset() {
-      this.asset = {
+    emptyOrder() {
+      this.order = {
         id: "",
-        brand: "华为",
-        type: "手机",
-        price: "4000",
+        status: "",
+        reason: "测试",
         applicant: "胡宏建",
         applicantPhone: "18840833079",
         applicantEmail: "admin",
-        reason: "测试",
-        adv: {}
-      }
-      this.inputDepName = '';
+        createTime: "",
+        asset: {
+          id: "",
+          brand: "华为",
+          type: "手机",
+          price: "4000",
+          adv: {}
+        }
+      };
     },
     showEditEmpView(data) {
       this.title = '编辑资产信息';
@@ -420,7 +432,7 @@ export default {
       this.initOrders('advanced');
     },
     showAddEmpView() {
-      this.emptyAsset();
+      this.emptyOrder();
       this.title = '资产采购申请';
       this.dialogVisible = true;
     },

@@ -63,6 +63,7 @@ public class OrderService {
     @Transactional(rollbackFor = Exception.class)
     public void addOrderIn(Order order) {
         LamsUser user = UserInfoUtils.getLoginedUser();
+        order.setUserEmail(user.getUsername());
         order.setCategory(ProcessTypeEnum.IN.getIndex());
         order.setStatus(OrderStatusEnum.CREATE.getIndex());
         order.setCreateTime(new Date());

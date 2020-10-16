@@ -127,6 +127,12 @@ public class OrderService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteOrders(List<Integer> oids) {
+        orderMapper.deleteManyByOids(oids);
+        orderAssetMapper.deleteManyByOids(oids);
+    }
+
     public Order selectByPrimaryKey(Long id) {
         return orderMapper.selectByPrimaryKey(id);
     }

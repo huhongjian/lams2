@@ -85,13 +85,19 @@ public class OrderBasicController {
         return false;
     }
 
-//    @DeleteMapping("/{id}")
-//    public RespBean deleteEmpByEid(@PathVariable Integer id) {
-//        if (employeeService.deleteEmpByEid(id) == 1) {
-//            return RespBean.ok("删除成功!");
-//        }
-//        return RespBean.error("删除失败!");
-//    }
+    @DeleteMapping("/delete")
+    public RespBean deleteOrders(@RequestBody List<Integer> oids) {
+        // 工单只允许管理员删除
+        if (isAdmin() == false) {
+            return RespBean.error("没有删除权限，请联系管理员!");
+        }
+        try {
+            orderService.deleteOrders(oids);
+        } catch (Exception e) {
+            return RespBean.error("删除失败!");
+        }
+        return RespBean.ok("删除成功!");
+    }
 //
 //    @GetMapping("/nations")
 //    public List<Nation> getAllNations() {

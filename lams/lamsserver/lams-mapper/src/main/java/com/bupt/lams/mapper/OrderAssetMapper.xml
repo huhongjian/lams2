@@ -51,4 +51,13 @@
         from order_asset
         where oid = #{oid}
     </select>
+    <delete id="deleteManyByOids" parameterType="list">
+        delete
+        from `order_asset`
+        where
+        oid in
+        <foreach collection="list" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

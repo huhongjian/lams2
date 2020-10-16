@@ -20,5 +20,7 @@ public interface OrderMapper {
 
     int insertSelective(Order order);
 
+    void deleteManyByOids(List<Integer> oids);
+
     List<Order> getOrderByCondition(OrderQueryCondition condition);
 }

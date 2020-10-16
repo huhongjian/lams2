@@ -162,17 +162,17 @@
             width="80">
         </el-table-column>
         <el-table-column
-            prop="status"
+            prop="statusName"
             width="90"
             label="状态">
           <template slot-scope="scope">
             <span style="color: #00e079; font-weight: bold"
-                  v-if="scope.row.status=='审批通过'||scope.row.status=='已入库'">{{ scope.row.status }}</span>
+                  v-if="scope.row.status=='2'||scope.row.status=='3'">{{ scope.row.statusName }}</span>
             <span style="color: #ff4777; font-weight: bold"
-                  v-else-if="scope.row.status=='审批未通过'">{{ scope.row.status }}</span>
+                  v-else-if="scope.row.status=='6'">{{ scope.row.status }}</span>
             <span style="color: #c0c0c0;"
-                  v-else-if="scope.row.status=='已借出'||scope.row.status=='已关闭'">{{ scope.row.status }}</span>
-            <span v-else>{{ scope.row.status }}</span>
+                  v-else-if="scope.row.status=='5'||scope.row.status=='7'">{{ scope.row.statusName }}</span>
+            <span v-else>{{ scope.row.statusName }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -186,18 +186,18 @@
             label="申请理由">
         </el-table-column>
         <el-table-column
-            prop="asset.charger"
+            prop="user.name"
             width="95"
             align="left"
             label="负责人">
         </el-table-column>
         <el-table-column
-            prop="asset.chargerEmail"
+            prop="user.username"
             width="150"
             label="负责人邮箱">
         </el-table-column>
         <el-table-column
-            prop="asset.chargerPhone"
+            prop="user.phone"
             width="100"
             label="负责人电话">
         </el-table-column>
@@ -290,19 +290,28 @@ export default {
       inputDepName: '所属部门',
       order: {
         id: "",
+        category: "",
+        categoryName: "",
         status: "",
+        statusName: "",
+        duration: "",
         reason: "测试",
-        applicant: "胡宏建",
-        applicantPhone: "18840833079",
-        applicantEmail: "admin",
+        userEmail: "admin",
+        user: {
+          id: "",
+          name: "",
+          phone: "",
+          username: "",
+        },
         createTime: "",
+        updateTime: "",
         asset: {
           id: "",
           brand: "华为",
           type: "手机",
           price: "4000",
           adv: {},
-        },
+        }
       },
       defaultProps: {
         children: 'children',

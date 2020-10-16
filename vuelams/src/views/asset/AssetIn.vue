@@ -22,7 +22,8 @@
                      icon="el-icon-download">
             导出数据
           </el-button>
-          <el-button @click="deleteEmp(scope.row)" style="display: inline-flex;margin-left: 8px" type="danger">删除
+          <el-button @click="deleteOrder" style="display: inline-flex;margin-left: 8px" type="danger">
+            删除
           </el-button>
         </div>
         <div>
@@ -117,6 +118,7 @@
     <div style="margin-top: 10px">
       <el-table
           :data="orders"
+          @selection-change="handleSelectionChange"
           stripe
           border
           v-loading="loading"
@@ -224,7 +226,7 @@
     <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order"
                :title="title"></AssetEdit>
     <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
-                 :candidateBranches='candidateBranches' :rules='rules'></AssetDetail>
+                 :candidateBranches='candidateBranches'></AssetDetail>
   </div>
 </template>
 
@@ -292,6 +294,7 @@ export default {
       ],
       candidateBranches: {},
       inputDepName: '所属部门',
+      orderIds: [],
       order: {
         id: "",
         category: "",
@@ -387,13 +390,13 @@ export default {
         }
       });
     },
-    deleteEmp(data) {
-      this.$confirm('此操作将永久删除【' + data.name + '】, 是否继续?', '提示', {
+    deleteOrder() {
+      this.$confirm('此操作将永久删除选中的记录, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.deleteRequest("/employee/basic/" + data.id).then(resp => {
+        this.deleteRequestWithData("/order/basic/delete", this.orderIds).then(resp => {
           if (resp) {
             this.initOrders();
           }
@@ -415,13 +418,6 @@ export default {
     },
     showDepView2() {
       this.popVisible2 = !this.popVisible2
-    },
-    initPositions() {
-      this.getRequest('/employee/basic/positions').then(resp => {
-        if (resp) {
-          this.positions = resp;
-        }
-      })
     },
     sizeChange(currentSize) {
       this.size = currentSize;
@@ -471,6 +467,11 @@ export default {
           this.total = resp.total;
         }
       });
+    },
+    handleSelectionChange(val) {
+      for (let i = 0; i < val.length; i++) {
+        this.orderIds.push(val[i].id);
+      }
     }
   }
 }

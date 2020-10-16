@@ -199,6 +199,15 @@
             </if>
         </trim>
     </insert>
+    <delete id="deleteManyByOids" parameterType="list">
+        delete
+        from `order`
+        where
+        id in
+        <foreach collection="list" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
     <select id="getOrderByCondition" parameterType="com.bupt.lams.dto.OrderQueryCondition" resultMap="AllOrderInfo">
         select o.*,a.id as aid,a.type,a.brand,a.price,a.charger,a.charger_email,a.charger_phone,a.adv,a.readyDate
         from

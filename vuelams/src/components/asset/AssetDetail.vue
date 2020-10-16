@@ -6,7 +6,7 @@
         :before-close="handleClose"
         width="80%">
       <div>
-        <el-form :model="order.asset" :rules="rules" ref="assetForm">
+        <el-form :model="order.asset">
           <el-row>
             <el-col :span="6">
               <el-form-item label="品牌:" prop="brand">
@@ -41,12 +41,14 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="理由:" prop="reason">{{ order.reason }}</el-form-item>
+              <el-form-item label="理由:" prop="reason">
+                {{ order.reason }}
+              </el-form-item>
             </el-col>
           </el-row>
         </el-form>
         <template v-if="order.asset.adv">
-          <el-form v-show="order.asset.type=='手机'" :model="order.asset.adv" :rules="rules" ref="orderForm">
+          <el-form v-show="order.asset.type=='手机'" :model="order.asset.adv">
             <el-row>
               <el-col :span="6">
                 <el-form-item label="内存（G）:" prop="adv">
@@ -60,7 +62,7 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form v-show="order.asset.type=='交换机'" :model="order.asset.adv" :rules="rules" ref="orderForm">
+          <el-form v-show="order.asset.type=='交换机'" :model="order.asset.adv">
             <el-row>
               <el-col :span="6">
                 <el-form-item label="接口数:" prop="adv">
@@ -74,7 +76,7 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form v-show="order.asset.type=='主机'" :model="order.asset.adv" :rules="rules" ref="orderForm">
+          <el-form v-show="order.asset.type=='主机'" :model="order.asset.adv">
             <el-row>
               <el-col :span="6">
                 <el-form-item label="cpu:" prop="adv">
@@ -88,7 +90,7 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form v-show="order.asset.type=='测距仪'" :model="order.asset.adv" :rules="rules" ref="orderForm">
+          <el-form v-show="order.asset.type=='测距仪'" :model="order.asset.adv">
             <el-row>
               <el-col :span="6">
                 <el-form-item label="精度:" prop="adv">
@@ -126,7 +128,7 @@
           </el-form-item>
         </el-row>
         <el-row style="margin:0 auto;width: 300px">
-          <el-form-item label="姓名:">
+          <el-form-item label="姓名:" prop="name">
             <el-input size="mini" style="width: 200px" prefix-icon="el-icon-edit"
                       v-model="name"></el-input>
           </el-form-item>
@@ -149,7 +151,7 @@
 <script>
 export default {
   name: "AssetDetail",
-  props: ['order', 'title', 'dialogVisible2', 'candidateBranches', 'rules'],
+  props: ['order', 'title', 'dialogVisible2', 'candidateBranches'],
   data() {
     return {
       visible: false,
@@ -158,19 +160,26 @@ export default {
         id: null,
         operateType: null,
         candidateUser: null
+      },
+      rules: {
+        candidateUser: [{required: true, message: '请输入价格', trigger: 'blur'}]
       }
     }
   },
   methods: {
     handle() {
-      this.taskHandleDto.id = this.order.id;
-      this.postRequest("/order/task/handleTask", this.taskHandleDto).then(resp => {
-        if (resp) {
-          this.visible = false;
-          this.$emit('close');
-          this.$parent.initOrders();
+      this.$refs['transForm'].validate(valid => {
+        if (valid) {
+          this.taskHandleDto.id = this.order.id;
+          this.postRequest("/order/task/handleTask", this.taskHandleDto).then(resp => {
+            if (resp) {
+              this.visible = false;
+              this.$emit('close');
+              this.$parent.initOrders();
+            }
+          })
         }
-      })
+      });
     },
     cancel() {
       this.taskHandleDto.id = this.order.id;

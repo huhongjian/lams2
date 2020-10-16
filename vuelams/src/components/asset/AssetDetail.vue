@@ -3,6 +3,7 @@
     <el-dialog
         :title="title"
         :visible.sync="dialogVisible2"
+        :before-close="handleClose"
         width="80%">
       <div>
         <el-form :model="order.asset" :rules="rules" ref="assetForm">
@@ -18,7 +19,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="价格:" prop="price">
+              <el-form-item label="价格（元）:" prop="price">
                 {{ order.asset.price }}
               </el-form-item>
             </el-col>
@@ -26,17 +27,17 @@
           <el-row>
             <el-col :span="6">
               <el-form-item label="申请人:" prop="applicant">
-                {{ order.applicant }}
+                {{ order.user.name }}
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="电话:" prop="applicantPhone">
-                {{ order.applicantPhone }}
+                {{ order.user.phone }}
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="邮件:" prop="applicantEmail">
-                {{ order.applicantEmail }}
+                {{ order.user.username }}
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -48,13 +49,60 @@
           <el-form v-show="order.asset.type=='手机'" :model="order.asset.adv" :rules="rules" ref="orderForm">
             <el-row>
               <el-col :span="6">
-                <el-form-item label="内存:" prop="memory">
+                <el-form-item label="内存（G）:" prop="adv">
                   {{ order.asset.adv.memory }}
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="屏幕尺寸:" prop="screenSize">
+                <el-form-item label="屏幕尺寸（寸）:" prop="adv">
                   {{ order.asset.adv.screenSize }}
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <el-form v-show="order.asset.type=='交换机'" :model="order.asset.adv" :rules="rules" ref="orderForm">
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="接口数:" prop="adv">
+                  {{ order.asset.adv.nums }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="类型:" prop="adv">
+                  {{ order.asset.adv.type }}
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <el-form v-show="order.asset.type=='主机'" :model="order.asset.adv" :rules="rules" ref="orderForm">
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="cpu:" prop="adv">
+                  {{ order.asset.adv.cpu }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="内存（G）:" prop="adv">
+                  {{ order.asset.adv.memory }}
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <el-form v-show="order.asset.type=='测距仪'" :model="order.asset.adv" :rules="rules" ref="orderForm">
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="精度:" prop="adv">
+                  {{ order.asset.adv.precision }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="距离:" prop="adv">
+                  {{ order.asset.adv.distance }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="方式:" prop="adv">
+                  {{ order.asset.adv.methods }}
                 </el-form-item>
               </el-col>
             </el-row>
@@ -152,6 +200,9 @@ export default {
         }
       });
     },
+    handleClose() {
+      this.$emit('close');
+    }
   }
 }
 </script>

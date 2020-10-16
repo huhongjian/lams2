@@ -77,3 +77,10 @@ export const deleteRequest = (url, params) => {
         params: params
     })
 }
+export const deleteRequestWithData = (url, data) => {
+    return axios({
+        method: 'delete',
+        url: `${base}${url}`,
+        data: data
+    })
+}

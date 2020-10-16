@@ -1,10 +1,10 @@
 package com.bupt.lams.dto;
 
+import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.Order;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -12,15 +12,18 @@ import java.util.Set;
  */
 @Data
 public class OrderQueryCondition {
+    private Long oid;
     /**
-     * 工单信息
+     * 工单相关信息
      */
-    private Order order;
+    private Integer category;
+    private Integer status;
+    private String userEmail;
     /**
      * 分页信息
      */
-    private Integer page;
-    private Integer size;
+    private Integer page = 1;
+    private Integer size = 10;
     /**
      * ID列表，用于批量查询
      */
@@ -29,16 +32,31 @@ public class OrderQueryCondition {
      * 时间范围
      */
     private Date[] beginDateScope;
+    /**
+     * 价格范围
+     */
+    private Double priceLow;
+    private Double priceHigh;
+    /**
+     * 资产信息
+     */
+    private String type;
+    private String brand;
 
-    public OrderQueryCondition() {
-        super();
+    public void setOrderInfo(Order order) {
+        if (order == null) {
+            return;
+        }
+        this.category = order.getCategory();
+        this.status = order.getStatus();
+        this.userEmail = order.getUserEmail();
     }
 
-    public OrderQueryCondition(Order order, Integer page, Integer size, Set<Long> ids, Date[] beginDateScope) {
-        this.order = order;
-        this.page = page;
-        this.size = size;
-        this.ids = ids;
-        this.beginDateScope = beginDateScope;
+    public void setAssetInfo(Asset asset) {
+        if (asset == null) {
+            return;
+        }
+        this.type = asset.getType();
+        this.brand = asset.getBrand();
     }
 }

@@ -34,18 +34,6 @@ public class OrderService {
     @Resource
     TaskOperateService taskOperateService;
 
-    public RespPageBean getOrderByPage(Integer page, Integer size, Order order, Date[] beginDateScope) {
-        if (page != null && size != null) {
-            page = (page - 1) * size;
-        }
-        List<Order> data = orderMapper.getOrderByPage(page, size, order, beginDateScope);
-        Long total = orderMapper.getTotal(order, beginDateScope);
-        RespPageBean bean = new RespPageBean();
-        bean.setData(data);
-        bean.setTotal(total);
-        return bean;
-    }
-
     public RespPageBean getOrderByCondition(OrderQueryCondition condition) {
         Integer page = condition.getPage();
         Integer size = condition.getSize();
@@ -54,9 +42,10 @@ public class OrderService {
         }
         condition.setPage(page);
         List<Order> data = orderMapper.getOrderByCondition(condition);
+        Long total = orderMapper.getTotalByCondition(condition);
         RespPageBean bean = new RespPageBean();
         bean.setData(data);
-        bean.setTotal(new Long(condition.getIds().size()));
+        bean.setTotal(total);
         return bean;
     }
 

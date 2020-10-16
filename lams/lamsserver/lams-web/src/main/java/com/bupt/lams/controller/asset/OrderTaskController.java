@@ -111,10 +111,10 @@ public class OrderTaskController {
 
     @RequestMapping("getMyApply")
     @ResponseBody
-    public RespPageBean getMyApply(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Order order, Date[] beginDateScope) {
+    public RespPageBean getMyApply(OrderQueryCondition orderQueryCondition) {
         LamsUser user = UserInfoUtils.getLoginedUser();
-        order.setUserEmail(user.getUsername());
-        return orderService.getOrderByPage(page, size, order, beginDateScope);
+        orderQueryCondition.setUserEmail(user.getUsername());
+        return orderService.getOrderByCondition(orderQueryCondition);
     }
 
     @RequestMapping("getMyTask")
@@ -130,7 +130,12 @@ public class OrderTaskController {
         for (Long id : candidateOrderIds) {
             oids.add(id);
         }
-        OrderQueryCondition condition = new OrderQueryCondition(order, page, size, oids, beginDateScope);
+        OrderQueryCondition condition = new OrderQueryCondition();
+        condition.setOrderInfo(order);
+        condition.setPage(page);
+        condition.setSize(size);
+        condition.setIds(oids);
+        condition.setBeginDateScope(beginDateScope);
         return orderService.getOrderByCondition(condition);
     }
 }

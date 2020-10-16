@@ -2,15 +2,25 @@ package com.bupt.lams.mapper;
 
 import com.bupt.lams.dto.OrderQueryCondition;
 import com.bupt.lams.model.Order;
-import org.apache.ibatis.annotations.Param;
 
-import java.util.Date;
 import java.util.List;
 
 public interface OrderMapper {
-    List<Order> getOrderByPage(@Param("page") Integer page, @Param("size") Integer size, @Param("order") Order order, @Param("beginDateScope") Date[] beginDateScope);
+    /**
+     * 根据条件获取工单
+     *
+     * @param condition
+     * @return
+     */
+    List<Order> getOrderByCondition(OrderQueryCondition condition);
 
-    Long getTotal(@Param("order") Order order, @Param("beginDateScope") Date[] beginDateScope);
+    /**
+     * 获取符合条件的工单总数
+     *
+     * @param condition
+     * @return
+     */
+    Long getTotalByCondition(OrderQueryCondition condition);
 
     Order selectByPrimaryKey(Long id);
 
@@ -21,6 +31,4 @@ public interface OrderMapper {
     int insertSelective(Order order);
 
     void deleteManyByOids(List<Integer> oids);
-
-    List<Order> getOrderByCondition(OrderQueryCondition condition);
 }

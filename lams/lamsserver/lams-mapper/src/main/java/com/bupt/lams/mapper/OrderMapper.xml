@@ -32,7 +32,46 @@
     </resultMap>
     <sql id="Base_Column_List">
     id, category, categoryName, status, statusName, duration, reason, userEmail, createTime, updateTime
-  </sql>
+    </sql>
+    <sql id="baseInfoQuery">
+        <if test="oid !=null">
+            and o.id = #{oid}
+        </if>
+        <if test="category !=null">
+            and o.category = #{category}
+        </if>
+        <if test="status !=null">
+            and o.status = #{status}
+        </if>
+        <if test="userEmail !=null and userEmail!=''">
+            and o.userEmail like concat('%',#{userEmail},'%')
+        </if>
+        <if test="type !=null and type!=''">
+            and a.type like concat('%',#{type},'%')
+        </if>
+        <if test="brand !=null and brand!=''">
+            and a.brand like concat('%',#{brand},'%')
+        </if>
+        <if test="beginDateScope !=null">
+            and o.createTime between #{beginDateScope[0]} and #{beginDateScope[1]}
+        </if>
+        <if test="ids != null">
+            <choose>
+                <when test="ids.size>0">
+                    and o.id in
+                    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                        #{id}
+                    </foreach>
+                </when>
+                <otherwise>
+                    and o.id=-1
+                </otherwise>
+            </choose>
+        </if>
+        <if test="priceLow !=null and priceHigh !=null">
+            and a.price between #{priceLow} and #{priceHigh}
+        </if>
+    </sql>
     <select id="getOrderByPage" resultMap="AllOrderInfo">
         select o.*,
         a.id as aid,a.type,a.brand,a.price,a.adv,a.readyDate,
@@ -48,17 +87,17 @@
             and o.userEmail = u.username
             and u.enabled = 1
             <if test="order!=null">
-                <if test="order.category !=null and order.category!=''">
+                <if test="order.id !=null">
+                    and o.id = #{order.id}
+                </if>
+                <if test="order.category !=null">
                     and o.category = #{order.category}
                 </if>
-                <if test="order.status !=null and order.status!=''">
-                    and o.status like concat('%',#{order.status},'%')
+                <if test="order.status !=null">
+                    and o.status = #{order.status}
                 </if>
                 <if test="order.userEmail !=null and order.userEmail!=''">
                     and o.userEmail like concat('%',#{order.userEmail},'%')
-                </if>
-                <if test="beginDateScope !=null">
-                    and o.createTime between #{beginDateScope[0]} and #{beginDateScope[1]}
                 </if>
                 <if test="order.asset!=null">
                     <if test="order.asset.type !=null and order.asset.type!=''">
@@ -68,6 +107,12 @@
                         and a.brand like concat('%',#{order.asset.brand},'%')
                     </if>
                 </if>
+            </if>
+            <if test="beginDateScope !=null">
+                and o.createTime between #{beginDateScope[0]} and #{beginDateScope[1]}
+            </if>
+            <if test="priceLow !=null and priceHigh !=null">
+                and a.price between #{priceLow} and #{priceHigh}
             </if>
         </where>
         <if test="page !=null and size!=null">
@@ -91,6 +136,21 @@
             <if test="beginDateScope !=null">
                 and o.createTime between #{beginDateScope[0]} and #{beginDateScope[1]}
             </if>
+        </where>
+    </select>
+    <select id="getTotalByCondition" parameterType="com.bupt.lams.dto.OrderQueryCondition" resultType="java.lang.Long">
+        select count(*)
+        from
+        `order` o,
+        order_asset oa,
+        asset a,
+        lams_user u
+        <where>
+            o.id = oa.oid
+            and a.id = oa.aid
+            and o.userEmail = u.username
+            and u.enabled = 1
+            <include refid="baseInfoQuery"/>
         </where>
     </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -209,49 +269,20 @@
         </foreach>
     </delete>
     <select id="getOrderByCondition" parameterType="com.bupt.lams.dto.OrderQueryCondition" resultMap="AllOrderInfo">
-        select o.*,a.id as aid,a.type,a.brand,a.price,a.charger,a.charger_email,a.charger_phone,a.adv,a.readyDate
+        select o.*,
+        a.id as aid,a.type,a.brand,a.price,a.adv,a.readyDate,
+        u.id as uid, u.name, u.phone, u.username
         from
         `order` o,
         order_asset oa,
-        asset a
+        asset a,
+        lams_user u
         <where>
             o.id = oa.oid
             and a.id = oa.aid
-            <if test="order!=null">
-                <if test="order.category !=null and order.category!=''">
-                    and o.category = #{order.category}
-                </if>
-                <if test="order.status !=null and order.status!=''">
-                    and o.status like concat('%',#{order.status},'%')
-                </if>
-                <if test="order.asset!=null">
-                    <if test="order.asset.type !=null and order.asset.type!=''">
-                        and a.type like concat('%',#{order.asset.type},'%')
-                    </if>
-                    <if test="order.asset.brand !=null and order.asset.brand!=''">
-                        and a.brand like concat('%',#{order.asset.brand},'%')
-                    </if>
-                    <if test="order.asset.charger !=null and order.asset.charger!=''">
-                        and a.charger like concat('%',#{order.asset.charger},'%')
-                    </if>
-                </if>
-            </if>
-            <if test="beginDateScope !=null">
-                and o.createTime between #{beginDateScope[0]} and #{beginDateScope[1]}
-            </if>
-            <if test="ids != null">
-                <choose>
-                    <when test="ids.size>0">
-                        and o.id in
-                        <foreach collection="ids" item="id" open="(" close=")" separator=",">
-                            #{id}
-                        </foreach>
-                    </when>
-                    <otherwise>
-                        and o.id=-1
-                    </otherwise>
-                </choose>
-            </if>
+            and o.userEmail = u.username
+            and u.enabled = 1
+            <include refid="baseInfoQuery"/>
         </where>
         <if test="page !=null and size!=null">
             limit #{page},#{size}

@@ -391,20 +391,29 @@ export default {
     emptyOrder() {
       this.order = {
         id: "",
+        category: "",
+        categoryName: "",
         status: "",
+        statusName: "",
+        duration: "",
         reason: "测试",
-        applicant: "胡宏建",
-        applicantPhone: "18840833079",
-        applicantEmail: "admin",
+        userEmail: "admin",
+        user: {
+          id: "",
+          name: "",
+          phone: "",
+          username: "",
+        },
         createTime: "",
+        updateTime: "",
         asset: {
           id: "",
           brand: "华为",
           type: "手机",
           price: "4000",
           adv: {},
-        },
-      }
+        }
+      };
     },
     showEditEmpView(data) {
       this.title = '编辑资产信息';

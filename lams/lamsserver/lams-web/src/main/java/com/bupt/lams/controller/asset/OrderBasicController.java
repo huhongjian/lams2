@@ -1,5 +1,6 @@
 package com.bupt.lams.controller.asset;
 
+import com.bupt.lams.dto.OrderQueryCondition;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.OrderService;
 import com.bupt.lams.utils.UserInfoUtils;
@@ -8,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,9 +24,8 @@ public class OrderBasicController {
     OrderService orderService;
 
     @GetMapping("/get")
-    public RespPageBean getOrderInByPage(@RequestParam Integer category, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Order order, Date[] beginDateScope) {
-        order.setCategory(category);
-        return orderService.getOrderByPage(page, size, order, beginDateScope);
+    public RespPageBean getOrderInByPage(OrderQueryCondition orderQueryCondition) {
+        return orderService.getOrderByCondition(orderQueryCondition);
     }
 
     @PostMapping("/add")

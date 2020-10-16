@@ -64,7 +64,7 @@ public class OrderService {
     public void addOrderIn(Order order) {
         LamsUser user = UserInfoUtils.getLoginedUser();
         order.setCategory(ProcessTypeEnum.IN.getIndex());
-        order.setStatus(OrderStatusEnum.CREATE.getName());
+        order.setStatus(OrderStatusEnum.CREATE.getIndex());
         order.setCreateTime(new Date());
         orderMapper.insertSelective(order);
         assetMapper.insertSelective(order.getAsset());
@@ -95,7 +95,7 @@ public class OrderService {
     public void borrowAsset(Order order) {
         Asset asset = order.getAsset();
         LamsUser user = UserInfoUtils.getLoginedUser();
-        order.setStatus(OrderStatusEnum.ASK.getName());
+        order.setStatus(OrderStatusEnum.ASK.getIndex());
         order.setCreateTime(new Date());
         orderMapper.updateOrder(order);
         assetMapper.updateAsset(asset);
@@ -114,6 +114,15 @@ public class OrderService {
         } catch (Exception e) {
             logger.error("启动工作流失败", e);
             throw e;
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateOrder(Order order) {
+        orderMapper.updateOrder(order);
+        // 入库流程才可以更新资产信息，其他时候要更新资产信息需要在“资产信息管理中更新”
+        if (order.getCategory() == ProcessTypeEnum.IN.getIndex()) {
+            assetMapper.updateAsset(order.getAsset());
         }
     }
 

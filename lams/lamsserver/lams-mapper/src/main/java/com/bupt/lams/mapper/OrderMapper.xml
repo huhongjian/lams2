@@ -6,6 +6,7 @@
         <result column="category" property="category"/>
         <result column="categoryName" property="categoryName"/>
         <result column="status" property="status"/>
+        <result column="statusName" property="statusName"/>
         <result column="duration" property="duration"/>
         <result column="reason" property="reason"/>
         <result column="userEmail" property="userEmail"/>
@@ -30,7 +31,7 @@
         </association>
     </resultMap>
     <sql id="Base_Column_List">
-    id, category, status, duration, reason, applicant, applicant_email, applicant_phone, createTime, updateTime
+    id, category, categoryName, status, statusName, duration, reason, userEmail, createTime, updateTime
   </sql>
     <select id="getOrderByPage" resultMap="AllOrderInfo">
         select o.*,
@@ -106,33 +107,31 @@
     <update id="updateOrder" parameterType="com.bupt.lams.model.Order">
         update `order`
         set
-        <if test="category !=null and category!=''">
+        <if test="category !=null">
             category = #{category},
+        </if>
+        <if test="categoryName !=null and categoryName!=''">
+            categoryName = #{categoryName},
         </if>
         <if test="status != null">
             status = #{status},
         </if>
+        <if test="statusName !=null and statusName!=''">
+            statusName = #{statusName},
+        </if>
         <if test="duration != null">
             duration = #{duration},
         </if>
-        <if test="reason != null">
+        <if test="reason != null and reason!=''">
             reason = #{reason},
         </if>
-        <if test="applicant != null">
-            applicant = #{applicant},
-        </if>
-        <if test="applicantEmail != null">
-            applicant_email = #{applicantEmail},
-        </if>
-        <if test="applicantPhone != null">
-            applicant_phone = #{applicantPhone},
+        <if test="userEmail != null and userEmail!=''">
+            userEmail = #{userEmail},
         </if>
         <if test="createTime != null">
             createTime = #{createTime},
         </if>
-        <if test="updateTime != null">
-            updateTime = #{updateTime}
-        </if>
+        updateTime = NOW()
         <where>
             id = #{id}
         </where>
@@ -149,20 +148,17 @@
             <if test="status != null">
                 status,
             </if>
+            <if test="statusName !=null and statusName!=''">
+                statusName,
+            </if>
             <if test="duration != null">
                 duration,
             </if>
-            <if test="reason != null">
+            <if test="reason != null and reason!=''">
                 reason,
             </if>
-            <if test="applicant != null">
-                applicant,
-            </if>
-            <if test="applicantEmail != null">
-                applicant_email,
-            </if>
-            <if test="applicantPhone != null">
-                applicant_phone,
+            <if test="userEmail != null and userEmail!=''">
+                userEmail,
             </if>
             <if test="createTime != null">
                 createTime,
@@ -181,20 +177,17 @@
             <if test="status != null">
                 #{status},
             </if>
+            <if test="statusName !=null and statusName!=''">
+                #{statusName},
+            </if>
             <if test="duration != null">
                 #{duration},
             </if>
-            <if test="reason != null">
+            <if test="reason != null and reason!=''">
                 #{reason},
             </if>
-            <if test="applicant != null">
-                #{applicant},
-            </if>
-            <if test="applicantEmail != null">
-                #{applicantEmail},
-            </if>
-            <if test="applicantPhone != null">
-                #{applicantPhone},
+            <if test="userEmail != null and userEmail!=''">
+                #{userEmail},
             </if>
             <if test="createTime != null">
                 #{createTime},

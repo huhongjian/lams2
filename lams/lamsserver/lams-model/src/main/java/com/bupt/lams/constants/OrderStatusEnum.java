@@ -4,12 +4,11 @@ package com.bupt.lams.constants;
  * 工单状态
  */
 public enum OrderStatusEnum {
-    CREATE("申请采购", 0),
-    APPROVE("审批通过", 1),
-    READY("已入库", 2),
-    ASK("申请借用", 3),
-    OCCUPIED("已借出", 4),
-    TRANSFER("申请转交", 5),
+    CREATE("申请采购", 1),
+    APPROVE("审批通过", 2),
+    READY("已入库", 3),
+    ASK("申请借用", 4),
+    OCCUPIED("已借出", 5),
     REJECTED("审批未通过", 6),
     CLOSED("已关闭", 7);
 
@@ -35,5 +34,20 @@ public enum OrderStatusEnum {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    /**
+     * 根据index获取去name
+     *
+     * @param index
+     * @return
+     */
+    public static String getNameByIndex(Integer index) {
+        for (OrderStatusEnum e : OrderStatusEnum.values()) {
+            if (index.equals(e.getIndex())) {
+                return e.getName();
+            }
+        }
+        return null;
     }
 }

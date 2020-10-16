@@ -6,37 +6,25 @@
         <result column="type" property="type"/>
         <result column="brand" property="brand"/>
         <result column="price" property="price"/>
-        <result column="charger" property="charger"/>
-        <result column="charger_email" property="chargerEmail"/>
-        <result column="charger_phone" property="chargerPhone"/>
         <result column="adv" property="adv" typeHandler="com.bupt.lams.mybatis.JsonToObjectTypeHandler"/>
         <result column="readyDate" property="readyDate"/>
         <result column="updateTime" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, type, brand, price, charger, charger_email, charger_phone, adv, readyDate, updateTime
+    id, type, brand, price,  adv, readyDate, updateTime
   </sql>
     <update id="updateAsset" parameterType="com.bupt.lams.model.Asset">
         update asset
         set
         <trim suffixOverrides=",">
-            <if test="type != null">
+            <if test="type != null and type != ''">
                 type = #{type},
             </if>
-            <if test="brand != null">
+            <if test="brand != null and brand != ''">
                 brand = #{brand},
             </if>
             <if test="price != null">
                 price = #{price},
-            </if>
-            <if test="charger != null">
-                charger = #{charger},
-            </if>
-            <if test="chargerEmail != null">
-                charger_email = #{chargerEmail},
-            </if>
-            <if test="chargerPhone != null">
-                charger_phone = #{chargerPhone},
             </if>
             <if test="adv != null">
                 adv = #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler},
@@ -44,9 +32,7 @@
             <if test="readyDate != null">
                 readyDate = #{readyDate},
             </if>
-            <if test="updateTime != null">
-                updateTime = #{updateTime}
-            </if>
+            updateTime = NOW()
         </trim>
         <where>
             id = #{id}
@@ -55,25 +41,16 @@
     <insert id="insertSelective" parameterType="com.bupt.lams.model.Asset" useGeneratedKeys="true" keyProperty="id">
         insert into asset
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="type != null">
+            <if test="type != null and type != ''">
                 type,
             </if>
-            <if test="brand != null">
+            <if test="brand != null and brand != ''">
                 brand,
             </if>
             <if test="price != null">
                 price,
             </if>
-            <if test="charger != null">
-                charger,
-            </if>
-            <if test="chargerEmail != null">
-                charger_email,
-            </if>
-            <if test="chargerPhone != null">
-                charger_phone,
-            </if>
-            <if test="adv != null">
+            <if test="adv != null and adv != ''">
                 adv,
             </if>
             <if test="readyDate != null">
@@ -84,25 +61,16 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="type != null">
+            <if test="type != null and type != ''">
                 #{type},
             </if>
-            <if test="brand != null">
+            <if test="brand != null and brand != ''">
                 #{brand},
             </if>
             <if test="price != null">
                 #{price},
             </if>
-            <if test="charger != null">
-                #{charger},
-            </if>
-            <if test="chargerEmail != null">
-                #{chargerEmail},
-            </if>
-            <if test="chargerPhone != null">
-                #{chargerPhone},
-            </if>
-            <if test="adv != null">
+            <if test="adv != null and adv != ''">
                 #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler},
             </if>
             <if test="readyDate != null">

@@ -2,6 +2,7 @@
   <el-dialog
       :title="title"
       :visible.sync="dialogVisible"
+      :before-close="handleClose"
       width="80%">
     <div>
       <el-form :model="order" :rules="rules" ref="orderForm">
@@ -146,8 +147,7 @@ export default {
       rules: {
         brand: [{required: true, message: '请输入品牌', trigger: 'blur'}],
         price: [{required: true, message: '请输入价格', trigger: 'blur'}],
-        reason: [{required: true, message: '请输入价格', trigger: 'blur'}],
-        adv: [{required: true, message: '请输入价格', trigger: 'blur'}]
+        reason: [{required: true, message: '请输入价格', trigger: 'blur'}]
       }
     }
   },
@@ -177,6 +177,9 @@ export default {
         });
       }
     },
+    handleClose() {
+      this.$emit('close');
+    }
   }
 }
 </script>

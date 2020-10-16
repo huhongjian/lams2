@@ -1,17 +1,15 @@
 package com.bupt.lams.controller.asset;
 
-import com.bupt.lams.model.LamsUser;
-import com.bupt.lams.model.Order;
-import com.bupt.lams.model.RespBean;
-import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.model.*;
 import com.bupt.lams.service.OrderService;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 工单信息相关
@@ -22,7 +20,7 @@ public class OrderBasicController {
 
     private Logger logger = LoggerFactory.getLogger(OrderBasicController.class);
 
-    @Autowired
+    @Resource
     OrderService orderService;
 
     @GetMapping("/get")
@@ -58,20 +56,43 @@ public class OrderBasicController {
         return response;
     }
 
+    @PutMapping("/edit")
+    public RespBean updateOrder(@RequestBody Order order) {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        // 工单只允许创建人和管理员修改
+        if (!order.getUserEmail().equals(user.getUsername()) && isAdmin() == false) {
+            return RespBean.error("没有修改权限，请联系管理员!");
+        }
+        try {
+            orderService.updateOrder(order);
+        } catch (Exception e) {
+            return RespBean.error("更新失败!");
+        }
+        return RespBean.ok("更新成功!");
+    }
+
+    /**
+     * 当前用户是否有管理员权限
+     *
+     * @return
+     */
+    public boolean isAdmin() {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        List<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            if (role.getName().equals("ROLE_admin")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 //    @DeleteMapping("/{id}")
 //    public RespBean deleteEmpByEid(@PathVariable Integer id) {
 //        if (employeeService.deleteEmpByEid(id) == 1) {
 //            return RespBean.ok("删除成功!");
 //        }
 //        return RespBean.error("删除失败!");
-//    }
-
-//    @PutMapping("/edit")
-//    public RespBean updateEmp(@RequestBody Employee employee) {
-//        if (employeeService.updateEmp(employee) == 1) {
-//            return RespBean.ok("更新成功!");
-//        }
-//        return RespBean.error("更新失败!");
 //    }
 //
 //    @GetMapping("/nations")

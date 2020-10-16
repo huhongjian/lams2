@@ -157,17 +157,17 @@
             width="80">
         </el-table-column>
         <el-table-column
-            prop="status"
+            prop="statusName"
             width="90"
             label="状态">
           <template slot-scope="scope">
             <span style="color: #00e079; font-weight: bold"
-                  v-if="scope.row.status=='审批通过'||scope.row.status=='已入库'">{{ scope.row.status }}</span>
+                  v-if="scope.row.status=='2'||scope.row.status=='3'">{{ scope.row.statusName }}</span>
             <span style="color: #ff4777; font-weight: bold"
-                  v-else-if="scope.row.status=='审批未通过'">{{ scope.row.status }}</span>
+                  v-else-if="scope.row.status=='6'">{{ scope.row.status }}</span>
             <span style="color: #c0c0c0;"
-                  v-else-if="scope.row.status=='已借出'||scope.row.status=='已关闭'">{{ scope.row.status }}</span>
-            <span v-else>{{ scope.row.status }}</span>
+                  v-else-if="scope.row.status=='5'||scope.row.status=='7'">{{ scope.row.statusName }}</span>
+            <span v-else>{{ scope.row.statusName }}</span>
           </template>
         </el-table-column>
         <el-table-column

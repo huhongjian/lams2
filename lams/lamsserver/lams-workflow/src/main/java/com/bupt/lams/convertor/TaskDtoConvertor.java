@@ -25,7 +25,7 @@ public class TaskDtoConvertor {
 	 */
 	public static List<TaskDto> convertTaskToDtoList(List<Task> taskList, Map<String, String> procInstIdToBizKeyMap,
 	        Map<String, Map<String, Object>> taskVariablesMap) {
-		List<TaskDto> taskDtoList = new ArrayList<TaskDto>();
+		List<TaskDto> taskDtoList = new ArrayList<>();
 		if (taskList != null) {
 			TaskDto tmpTaskDto;
 			for (Task task : taskList) {

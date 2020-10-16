@@ -1,5 +1,6 @@
 package com.bupt.lams.model;
 
+import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.constants.ProcessTypeEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -22,9 +23,13 @@ public class Order implements Serializable {
      */
     private String categoryName;
     /**
-     * 状态
+     * 状态类型
      */
-    private String status;
+    private Integer status;
+    /**
+     * 状态名称
+     */
+    private String statusName;
     /**
      * 预计借用时间
      */
@@ -59,5 +64,10 @@ public class Order implements Serializable {
     public void setCategory(int category) {
         this.category = category;
         this.categoryName = ProcessTypeEnum.getNameByIndex(category);
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+        this.statusName = OrderStatusEnum.getNameByIndex(status);
     }
 }

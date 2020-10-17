@@ -166,7 +166,7 @@
             width="150"
             label="操作">
           <template slot-scope="scope">
-            <el-button @click="showEditView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
+            <el-button @click="showEditView(scope.row)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -326,6 +326,8 @@ export default {
       assets: [],
       asset: {
         id: "",
+        status: "",
+        statusName: "",
         brand: "华为",
         type: "手机",
         price: "4000",

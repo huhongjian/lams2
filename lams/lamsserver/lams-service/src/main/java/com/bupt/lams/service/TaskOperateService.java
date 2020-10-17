@@ -331,7 +331,7 @@ public class TaskOperateService {
             orderMapper.updateOrderStatusById(order);
             Asset asset = order.getAsset();
             asset.setStatus(AssetStatusEnum.REJECTED.getIndex());
-            assetMapper.updateAssetStatusById(asset);
+            assetMapper.updateAssetStatus(asset);
             return;
         }
         // 如果是确认转交则更新工单状态

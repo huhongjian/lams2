@@ -2,12 +2,7 @@
   <div>
     <div>
       <div style="display: flex;justify-content: space-between">
-        <div>
-          <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
-                     icon="el-icon-download">
-            导出数据
-          </el-button>
-        </div>
+        <div style="display: inline-flex;margin-left: 8px"></div>
         <div>
           <el-input placeholder="请输入资产编号进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
                     clearable
@@ -166,7 +161,7 @@
             width="150"
             label="操作">
           <template slot-scope="scope">
-            <el-button @click="showEditView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
+            <el-button @click="changeStatus(scope.row,'4')" type="danger">清退</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -326,6 +321,8 @@ export default {
       assets: [],
       asset: {
         id: "",
+        status: "",
+        statusName: "",
         brand: "华为",
         type: "手机",
         price: "4000",
@@ -384,35 +381,6 @@ export default {
     AssetDetail
   },
   methods: {
-    exportData() {
-      let url = '/order/basic/export/?category=1';
-      if (this.type && this.type == 'advanced') {
-        if (this.searchValue.type) {
-          url += '&type=' + this.searchValue.type;
-        }
-        if (this.searchValue.brand) {
-          url += '&brand=' + this.searchValue.brand;
-        }
-        if (this.searchValue.status) {
-          url += '&status=' + this.searchValue.status;
-        }
-        if (this.searchValue.userEmail) {
-          url += '&userEmail=' + this.searchValue.userEmail;
-        }
-        if (this.searchValue.priceLow) {
-          url += '&priceLow=' + this.searchValue.priceLow;
-        }
-        if (this.searchValue.priceHigh) {
-          url += '&priceHigh=' + this.searchValue.priceHigh;
-        }
-        if (this.searchValue.beginDateScope) {
-          url += '&beginDateScope=' + this.searchValue.beginDateScope;
-        }
-      } else {
-        url += "&id=" + this.keyword;
-      }
-      window.open(url, '_parent');
-    },
     sizeChange(currentSize) {
       this.size = currentSize;
       if (this.type && this.type == 'advanced') {
@@ -429,10 +397,11 @@ export default {
         this.initAssets();
       }
     },
-    showEditView(data) {
-      this.title = '编辑资产信息';
-      this.asset = data;
-      this.dialogVisible = true;
+    changeStatus(data, val) {
+      data.status = val;
+      this.putRequest("/asset/changeStatus", data).then(resp => {
+        this.initAssets();
+      });
     },
     showDetailView(data) {
       this.title = '资产信息详情';

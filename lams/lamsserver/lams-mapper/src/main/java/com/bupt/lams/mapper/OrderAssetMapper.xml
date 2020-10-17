@@ -51,6 +51,13 @@
         from order_asset
         where oid = #{oid}
     </select>
+    <select id="getLatestOidByAid" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select oid
+        from order_asset
+        where aid = #{aid}
+        order by oid desc
+        limit 1
+    </select>
     <delete id="deleteManyByOids" parameterType="list">
         delete
         from `order_asset`

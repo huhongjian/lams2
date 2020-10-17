@@ -23,7 +23,7 @@ public interface AssetMapper {
      */
     Long getTotalByCondition(AssetQueryCondition condition);
 
-    void updateAssetStatusById(Asset asset);
+    void updateAssetStatus(Asset asset);
 
     void updateAsset(Asset asset);
 

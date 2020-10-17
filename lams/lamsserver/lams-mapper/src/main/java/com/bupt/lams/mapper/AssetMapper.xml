@@ -56,7 +56,7 @@
             <include refid="baseInfoQuery"/>
         </where>
     </select>
-    <update id="updateAssetStatusById" parameterType="com.bupt.lams.model.Asset">
+    <update id="updateAssetStatus" parameterType="com.bupt.lams.model.Asset">
         update asset a
         set
             a.status = #{status},

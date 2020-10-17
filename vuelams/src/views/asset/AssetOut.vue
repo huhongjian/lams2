@@ -192,10 +192,10 @@
         </el-table-column>
         <el-table-column
             fixed="right"
-            width="60"
+            width="80"
             label="操作">
           <template slot-scope="scope">
-            <el-button @click="showEditEmpView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
+            <el-button @click="showEditEmpView(scope.row)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -298,10 +298,12 @@ export default {
         updateTime: "",
         asset: {
           id: "",
+          status: "",
+          statusName: "",
           brand: "华为",
           type: "手机",
           price: "4000",
-          adv: {},
+          adv: {}
         }
       },
       // 搜索类型，空是普通搜索，‘advanced’是高级搜索

@@ -32,6 +32,7 @@ public class OrderBasicController {
         List<Integer> assetStatus = new ArrayList<>();
         assetStatus.add(AssetStatusEnum.CREATE.getIndex());
         assetStatus.add(AssetStatusEnum.NORMAL.getIndex());
+        orderQueryCondition.setAssetStatuses(assetStatus);
         return orderService.getOrderByCondition(orderQueryCondition);
     }
 

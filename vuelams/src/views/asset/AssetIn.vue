@@ -193,16 +193,16 @@
         </el-table-column>
         <el-table-column
             prop="createTime"
-            width="180"
+            width="100"
             align="left"
             label="申请时间">
         </el-table-column>
         <el-table-column
             fixed="right"
-            width="60"
+            width="80"
             label="操作">
           <template slot-scope="scope">
-            <el-button @click="showEditView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
+            <el-button @click="showEditView(scope.row)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -306,6 +306,8 @@ export default {
         updateTime: "",
         asset: {
           id: "",
+          status: "",
+          statusName: "",
           brand: "华为",
           type: "手机",
           price: "4000",

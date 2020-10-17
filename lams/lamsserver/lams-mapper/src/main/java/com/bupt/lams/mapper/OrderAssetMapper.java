@@ -9,5 +9,13 @@ public interface OrderAssetMapper {
 
     Long getAidByOid(Long oid);
 
+    /**
+     * 根据资产编号获取最近的一个工单id
+     *
+     * @param aid
+     * @return
+     */
+    Long getLatestOidByAid(Long aid);
+
     void deleteManyByOids(List<Integer> oids);
 }

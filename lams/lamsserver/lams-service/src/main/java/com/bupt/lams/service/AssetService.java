@@ -35,4 +35,9 @@ public class AssetService {
     public void updateAsset(Asset asset) {
         assetMapper.updateAsset(asset);
     }
+
+    public void changeAssetStatus(Asset asset) {
+        asset.setStatus(asset.getStatus());
+        assetMapper.updateAssetStatus(asset);
+    }
 }

@@ -31,4 +31,8 @@ public class AssetService {
         bean.setTotal(total);
         return bean;
     }
+
+    public void updateAsset(Asset asset) {
+        assetMapper.updateAsset(asset);
+    }
 }

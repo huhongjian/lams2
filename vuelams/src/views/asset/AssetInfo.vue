@@ -193,8 +193,8 @@
         </template>
       </div>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="$emit('close')">取 消</el-button>
-    <el-button type="primary" @click="">确 定</el-button>
+    <el-button @click="dialogVisible=false">取 消</el-button>
+    <el-button type="primary" @click="editAsset">确 定</el-button>
   </span>
     </el-dialog>
   </div>
@@ -242,8 +242,7 @@ export default {
         }],
       rules: {
         brand: [{required: true, message: '请输入品牌', trigger: 'blur'}],
-        price: [{required: true, message: '请输入价格', trigger: 'blur'}],
-        reason: [{required: true, message: '请输入申请理由', trigger: 'blur'}]
+        price: [{required: true, message: '请输入价格', trigger: 'blur'}]
       },
       type: ""
     }
@@ -323,6 +322,18 @@ export default {
         }
       });
     },
+    editAsset() {
+      this.$refs['assetForm'].validate(valid => {
+        if (valid) {
+          this.putRequest("/asset/edit", this.asset).then(resp => {
+            if (resp) {
+              this.dialogVisible = false;
+              this.initAssets();
+            }
+          })
+        }
+      });
+    }
   }
 }
 </script>

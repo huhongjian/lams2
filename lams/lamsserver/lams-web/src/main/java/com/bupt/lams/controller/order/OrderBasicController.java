@@ -64,7 +64,7 @@ public class OrderBasicController {
     public RespBean updateOrder(@RequestBody Order order) {
         LamsUser user = UserInfoUtils.getLoginedUser();
         // 工单只允许创建人和管理员修改
-        if (!order.getUserEmail().equals(user.getUsername()) && isAdmin() == false) {
+        if (!order.getUserEmail().equals(user.getUsername()) && UserInfoUtils.isAdmin() == false) {
             return RespBean.error("没有修改权限，请联系管理员!");
         }
         try {
@@ -75,26 +75,10 @@ public class OrderBasicController {
         return RespBean.ok("更新成功!");
     }
 
-    /**
-     * 当前用户是否有管理员权限
-     *
-     * @return
-     */
-    public boolean isAdmin() {
-        LamsUser user = UserInfoUtils.getLoginedUser();
-        List<Role> roles = user.getRoles();
-        for (Role role : roles) {
-            if (role.getName().equals("ROLE_admin")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @DeleteMapping("/delete")
     public RespBean deleteOrders(@RequestBody List<Integer> oids) {
         // 工单只允许管理员删除
-        if (isAdmin() == false) {
+        if (UserInfoUtils.isAdmin() == false) {
             return RespBean.error("没有删除权限，请联系管理员!");
         }
         try {

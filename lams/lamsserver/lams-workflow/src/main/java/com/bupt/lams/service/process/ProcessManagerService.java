@@ -1,16 +1,12 @@
 package com.bupt.lams.service.process;
 
-import java.util.List;
+import com.bupt.lams.dto.ProcessQueryDto;
+
 import java.util.Map;
 import java.util.Set;
 
-import com.bupt.lams.dto.ProcessDto;
-import com.bupt.lams.dto.ProcessQueryDto;
-
 /**
  * 工作流流程服务
- *
- * @author shanglonghua
  */
 public interface ProcessManagerService {
 
@@ -29,15 +25,6 @@ public interface ProcessManagerService {
 	 */
 	String submitStartFormDataByProcessDefinitionKey(String processDefinitionKey, String businessKey,
 	        Map<String, String> variables, String startUserId);
-
-	/**
-	 * 查询指定用户参与的流程信息
-	 *
-	 * @param queryDto
-	 *            查询对象
-	 * @return 流程信息集合
-	 */
-	List<ProcessDto> getHistoryProcessInstance(ProcessQueryDto queryDto);
 
 	/**
 	 * 查询指定用户参与的流程总数

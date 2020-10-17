@@ -6,8 +6,6 @@ import org.activiti.engine.identity.Group;
 
 /**
  * 用户查询
- *
- * @author shanglonghua
  */
 public interface GroupManager {
 

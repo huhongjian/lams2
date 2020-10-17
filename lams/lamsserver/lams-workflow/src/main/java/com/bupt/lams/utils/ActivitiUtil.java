@@ -12,8 +12,6 @@ import org.activiti.engine.impl.persistence.entity.UserEntityImpl;
 
 /**
  * Activiti转换工具类
- *
- * @author shanglonghua
  */
 public class ActivitiUtil {
 

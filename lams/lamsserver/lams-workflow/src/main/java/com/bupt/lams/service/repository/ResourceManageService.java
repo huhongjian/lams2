@@ -2,8 +2,6 @@ package com.bupt.lams.service.repository;
 
 /**
  * 工作流资源相关Service
- *
- * @author shanglonghua
  */
 public interface ResourceManageService {
 

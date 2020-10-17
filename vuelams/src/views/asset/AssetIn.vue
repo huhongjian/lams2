@@ -239,15 +239,10 @@ export default {
         beginDateScope: null
       },
       title: '',
-      importDataBtnText: '导入数据',
-      importDataBtnIcon: 'el-icon-upload2',
-      importDataDisabled: false,
       showAdvanceSearchView: false,
-      allDeps: [],
       orders: [],
       loading: false,
-      popVisible: false,
-      popVisible2: false,
+      // 编辑页面/新增页面可见性
       dialogVisible: false,
       // 详情页可见性
       dialogVisible2: false,
@@ -284,7 +279,7 @@ export default {
         }
       ],
       candidateBranches: {},
-      inputDepName: '所属部门',
+      // 选中的工单id，删除时使用
       orderIds: [],
       order: {
         id: "",
@@ -311,6 +306,7 @@ export default {
           adv: {},
         }
       },
+      // 搜索类型，空是普通搜索，‘advanced’是高级搜索
       type: ""
     }
   },
@@ -413,17 +409,6 @@ export default {
           message: '已取消删除'
         });
       });
-    },
-    handleNodeClick(data) {
-      this.inputDepName = data.name;
-      this.emp.departmentId = data.id;
-      this.popVisible = !this.popVisible
-    },
-    showDepView() {
-      this.popVisible = !this.popVisible
-    },
-    showDepView2() {
-      this.popVisible2 = !this.popVisible2
     },
     sizeChange(currentSize) {
       this.size = currentSize;

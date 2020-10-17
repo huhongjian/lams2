@@ -40,8 +40,17 @@
                 {{ order.user.username }}
               </el-form-item>
             </el-col>
-            <el-col :span="6">
-              <el-form-item label="理由:" prop="reason">
+          </el-row>
+          <el-row>
+            <el-col :span="10">
+              <el-form-item v-show="order.expireTime" label="预计归还时间:" prop="expireTime">
+                {{ order.expireTime }}
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="10">
+              <el-form-item v-show="order.reason&&order.reason!=''" label="理由:" prop="reason">
                 {{ order.reason }}
               </el-form-item>
             </el-col>
@@ -112,7 +121,7 @@
         </template>
       </div>
       <span slot="footer" class="dialog-footer">
-      <el-button v-if="order.status=='已入库'" type="primary" @click="borrow()">借用</el-button>
+      <el-button v-if="order.status=='3'||order.status=='8'||order.status=='7'" type="primary" @click="visible2=true">借 用</el-button>
     <template v-for="op in candidateBranches.operateList">
       <el-button type="primary" @click="checkAndHandle(op.operateType)">{{ op.operate }}</el-button>
     </template>
@@ -141,8 +150,38 @@
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="handle()">转交</el-button>
+      <el-button type="primary" @click="transfer">转交</el-button>
         <el-button @click="visible=false">取 消</el-button>
+  </span>
+    </el-dialog>
+    <el-dialog
+        :visible.sync="visible2"
+        width="30%">
+      <el-form :model="order" :rules="borrowFormRules" ref="borrowForm">
+        <el-row style="margin:0 auto;width: 300px">
+          <el-form-item label="预计归还时间:" prop="expireTime">
+            <el-date-picker
+                v-model="order.expireTime"
+                type="date"
+                :picker-options="pickerOptions"
+                placeholder="选择日期"
+                format="yyyy 年 MM 月 dd 日"
+                value-format="yyyy-MM-dd">
+            </el-date-picker>
+          </el-form-item>
+        </el-row>
+        <el-row style="margin:0 auto;width: 300px">
+          <el-form-item label="申请理由:" prop="reason">
+            <el-input size="mini"
+                      type="textarea"
+                      :rows="2"
+                      v-model="order.reason"></el-input>
+          </el-form-item>
+        </el-row>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="borrow">确 认</el-button>
+        <el-button @click="clearBorrowForm">取 消</el-button>
   </span>
     </el-dialog>
   </div>
@@ -155,6 +194,7 @@ export default {
   data() {
     return {
       visible: false,
+      visible2: false,
       name: '',
       taskHandleDto: {
         id: null,
@@ -162,22 +202,34 @@ export default {
         candidateUser: null
       },
       rules: {
-        candidateUser: [{required: true, message: '请输入价格', trigger: 'blur'}]
+        candidateUser: [{required: true, message: '请输入转交人邮箱', trigger: 'blur'}]
+      },
+      borrowFormRules: {
+        expireTime: [{required: true, message: '请输入预计转交时间', trigger: 'blur'}],
+        reason: [{required: true, message: '请输入申请理由', trigger: 'blur'}]
+      },
+      pickerOptions: {
+        disabledDate: (time) => {
+          return this.dealDisabledDate(time);
+        }
       }
     }
   },
   methods: {
-    handle() {
+    transfer() {
       this.$refs['transForm'].validate(valid => {
         if (valid) {
-          this.taskHandleDto.id = this.order.id;
-          this.postRequest("/order/task/handleTask", this.taskHandleDto).then(resp => {
-            if (resp) {
-              this.visible = false;
-              this.$emit('close');
-              this.$parent.initOrders();
-            }
-          })
+          this.handle();
+        }
+      });
+    },
+    handle() {
+      this.taskHandleDto.id = this.order.id;
+      this.postRequest("/order/task/handleTask", this.taskHandleDto).then(resp => {
+        if (resp) {
+          this.visible = false;
+          this.$emit('close');
+          this.$parent.initOrders();
         }
       });
     },
@@ -202,15 +254,29 @@ export default {
       }
     },
     borrow() {
-      this.postRequest("/order/basic/borrow", this.order).then(resp => {
-        if (resp) {
-          this.$parent.initOrders();
-          this.$emit('close');
+      this.$refs['borrowForm'].validate(valid => {
+        if (valid) {
+          this.postRequest("/order/basic/borrow", this.order).then(resp => {
+            if (resp) {
+              this.visible2 = false;
+              this.$emit('close');
+              this.$parent.initOrders();
+            }
+          });
         }
       });
     },
     handleClose() {
       this.$emit('close');
+    },
+    dealDisabledDate(time) {
+      var times = Date.now() - 8.64e7;
+      return time.getTime() < times;
+    },
+    clearBorrowForm() {
+      this.order.expireTime = '';
+      this.order.reason = '';
+      this.visible2 = false;
     }
   }
 }

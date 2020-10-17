@@ -320,6 +320,7 @@ public class TaskOperateService {
         if (taskHandleDto.getOperateType() == OperateTypeEnum.IN.getIndex()) {
             order.setCategory(ProcessTypeEnum.OUT.getIndex());
             order.setStatus(OrderStatusEnum.READY.getIndex());
+            order.setReason(null);
             orderMapper.insertSelective(order);
             OrderAsset orderAsset = new OrderAsset();
             Long aid = orderAssetMapper.getAidByOid(id);
@@ -351,12 +352,16 @@ public class TaskOperateService {
         if (taskHandleDto.getOperateType() == OperateTypeEnum.RETURN.getIndex()) {
             order.setStatus(OrderStatusEnum.READY.getIndex());
             orderMapper.updateOrderStatusById(order);
+            // 清空过期时间和申请理由信息
+            orderMapper.resetOrderById(order.getId());
             return;
         }
         // 如果是拒绝借用则更新工单状态
         if (taskHandleDto.getOperateType() == OperateTypeEnum.REFUSE.getIndex()) {
-            order.setStatus(OrderStatusEnum.REJECTED.getIndex());
+            order.setStatus(OrderStatusEnum.REFUSED.getIndex());
             orderMapper.updateOrderStatusById(order);
+            // 清空过期时间和申请理由信息
+            orderMapper.resetOrderById(order.getId());
             return;
         }
     }

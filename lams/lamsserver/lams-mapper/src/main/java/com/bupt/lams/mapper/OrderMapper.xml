@@ -7,7 +7,7 @@
         <result column="categoryName" property="categoryName"/>
         <result column="status" property="status"/>
         <result column="statusName" property="statusName"/>
-        <result column="duration" property="duration"/>
+        <result column="expireTime" property="expireTime"/>
         <result column="reason" property="reason"/>
         <result column="userEmail" property="userEmail"/>
         <result column="createTime" property="createTime"/>
@@ -31,7 +31,7 @@
         </association>
     </resultMap>
     <sql id="Base_Column_List">
-    id, category, categoryName, status, statusName, duration, reason, userEmail, createTime, updateTime
+    id, category, categoryName, status, statusName, expireTime, reason, userEmail, createTime, updateTime
     </sql>
     <sql id="baseInfoQuery">
         <if test="oid !=null">
@@ -181,8 +181,8 @@
         <if test="statusName !=null and statusName!=''">
             statusName = #{statusName},
         </if>
-        <if test="duration != null">
-            duration = #{duration},
+        <if test="expireTime != null">
+            expireTime = #{expireTime},
         </if>
         <if test="reason != null and reason!=''">
             reason = #{reason},
@@ -197,6 +197,13 @@
         <where>
             id = #{id}
         </where>
+    </update>
+    <update id="resetOrderById" parameterType="java.lang.Long">
+        update `order` o
+        set
+            o.expireTime = null,
+            o.reason = null
+        where o.id = #{oid}
     </update>
     <insert id="insertSelective" parameterType="com.bupt.lams.model.Order" useGeneratedKeys="true" keyProperty="id">
         insert into `order`
@@ -213,8 +220,8 @@
             <if test="statusName !=null and statusName!=''">
                 statusName,
             </if>
-            <if test="duration != null">
-                duration,
+            <if test="expireTime != null">
+                expireTime,
             </if>
             <if test="reason != null and reason!=''">
                 reason,
@@ -242,8 +249,8 @@
             <if test="statusName !=null and statusName!=''">
                 #{statusName},
             </if>
-            <if test="duration != null">
-                #{duration},
+            <if test="expireTime != null">
+                #{expireTime},
             </if>
             <if test="reason != null and reason!=''">
                 #{reason},

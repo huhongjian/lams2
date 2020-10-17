@@ -98,7 +98,7 @@ public class OrderTaskController {
             opInfoDto = new WorkflowTaskOperateInfoDto();
         }
         // 如果当前用户是工单创建人并且工单不是终止状态
-        if (order.getUserEmail().equals(user.getUsername()) && !order.getStatus().equals(OrderStatusEnum.READY.getName())) {
+        if (order.getUserEmail().equals(user.getUsername()) && !order.getStatus().equals(OrderStatusEnum.READY.getIndex())) {
             WorkflowOperate cancel = new WorkflowOperate();
             cancel.setOperateType(OperateTypeEnum.CANCEL.getIndex());
             cancel.setOperate(OperateTypeEnum.CANCEL.getName());

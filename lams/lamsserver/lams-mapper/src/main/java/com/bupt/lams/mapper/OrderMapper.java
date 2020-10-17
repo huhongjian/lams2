@@ -2,6 +2,7 @@ package com.bupt.lams.mapper;
 
 import com.bupt.lams.dto.OrderQueryCondition;
 import com.bupt.lams.model.Order;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -27,6 +28,8 @@ public interface OrderMapper {
     void updateOrderStatusById(Order order);
 
     void updateOrder(Order order);
+
+    void resetOrderById(@Param("oid") Long oid);
 
     int insertSelective(Order order);
 

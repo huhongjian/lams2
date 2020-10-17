@@ -156,9 +156,9 @@
             <span style="color: #00e079; font-weight: bold"
                   v-if="scope.row.status=='2'||scope.row.status=='3'">{{ scope.row.statusName }}</span>
             <span style="color: #ff4777; font-weight: bold"
-                  v-else-if="scope.row.status=='6'">{{ scope.row.status }}</span>
+                  v-else-if="scope.row.status=='6'||scope.row.status=='8'||scope.row.status=='7'">{{ scope.row.statusName }}</span>
             <span style="color: #c0c0c0;"
-                  v-else-if="scope.row.status=='5'||scope.row.status=='7'">{{ scope.row.statusName }}</span>
+                  v-else-if="scope.row.status=='5'">{{ scope.row.statusName }}</span>
             <span v-else>{{ scope.row.statusName }}</span>
           </template>
         </el-table-column>
@@ -276,6 +276,10 @@ export default {
         {
           id: 6,
           name: "审批未通过"
+        },
+        {
+          id: 7,
+          name: "已关闭"
         }
       ],
       candidateBranches: {},
@@ -287,7 +291,7 @@ export default {
         categoryName: "",
         status: "",
         statusName: "",
-        duration: "",
+        expireTime: "",
         reason: "测试",
         userEmail: "admin",
         user: {
@@ -354,7 +358,7 @@ export default {
         categoryName: "",
         status: "",
         statusName: "",
-        duration: "",
+        expireTime: "",
         reason: "测试",
         userEmail: "admin",
         user: {
@@ -375,12 +379,12 @@ export default {
       };
     },
     showEditEmpView(data) {
-      this.title = '编辑资产信息';
+      this.title = '编辑申请信息';
       this.order = data;
       this.dialogVisible = true;
     },
     showDetailView(data) {
-      this.title = '资产详情';
+      this.title = '申请单详情';
       this.order = data;
       this.dialogVisible2 = true;
     },

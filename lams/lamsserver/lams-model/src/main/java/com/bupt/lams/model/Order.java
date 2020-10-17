@@ -31,9 +31,10 @@ public class Order implements Serializable {
      */
     private String statusName;
     /**
-     * 预计借用时间
+     * 预计归还时间
      */
-    private Integer duration;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
+    private Date expireTime;
     /**
      * 申请理由
      */

@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import AssetDetail from "@/components/asset/AssetDetail";
-import AssetEdit from "@/components/asset/AssetEdit";
-import Mine from "@/components/asset/Mine";
+import AssetDetail from "@/components/order/OrderDetail";
+import AssetEdit from "@/components/order/OrderEdit";
+import Mine from "@/components/order/Mine";
 
 export default {
   name: "MyTask",

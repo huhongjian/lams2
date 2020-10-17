@@ -202,7 +202,7 @@
             width="60"
             label="操作">
           <template slot-scope="scope">
-            <el-button @click="showEditEmpView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
+            <el-button @click="showEditView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -216,16 +216,16 @@
         </el-pagination>
       </div>
     </div>
-    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order"
-               :title="title"></AssetEdit>
-    <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
-                 :operateList='operateList'></AssetDetail>
+    <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order"
+               :title="title"></OrderEdit>
+    <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
+                 :operateList='operateList'></OrderDetail>
   </div>
 </template>
 
 <script>
-import AssetDetail from "@/components/asset/AssetDetail";
-import AssetEdit from "@/components/asset/AssetEdit";
+import OrderDetail from "@/components/order/OrderDetail";
+import OrderEdit from "@/components/order/OrderEdit";
 
 export default {
   name: "EmpBasic",
@@ -309,7 +309,7 @@ export default {
           brand: "华为",
           type: "手机",
           price: "4000",
-          adv: {},
+          adv: {}
         }
       },
       // 搜索类型，空是普通搜索，‘advanced’是高级搜索
@@ -317,8 +317,8 @@ export default {
     }
   },
   components: {
-    AssetDetail,
-    AssetEdit
+    OrderDetail,
+    OrderEdit
   },
   mounted() {
     this.initOrders();
@@ -380,7 +380,7 @@ export default {
         }
       };
     },
-    showEditEmpView(data) {
+    showEditView(data) {
       this.title = '编辑申请信息';
       this.order = data;
       this.dialogVisible = true;
@@ -440,7 +440,7 @@ export default {
     initOrders() {
       this.type = '';
       this.loading = true;
-      let url = '/order/basic/get/?category=1&page=' + this.page + '&size=' + this.size + "&id=" + this.keyword;
+      let url = '/order/basic/get/?category=1&page=' + this.page + '&size=' + this.size + "&oid=" + this.keyword;
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {

@@ -209,16 +209,16 @@
         </el-pagination>
       </div>
     </div>
-    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order"
-               :title="title"></AssetEdit>
-    <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order"
-                 :title="title" :operateList='operateList'></AssetDetail>
+    <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order"
+               :title="title"></OrderEdit>
+    <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order"
+                 :title="title" :operateList='operateList'></OrderDetail>
   </div>
 </template>
 
 <script>
-import AssetDetail from "@/components/asset/AssetDetail";
-import AssetEdit from "@/components/asset/AssetEdit";
+import OrderDetail from "@/components/order/OrderDetail";
+import OrderEdit from "@/components/order/OrderEdit";
 
 export default {
   name: "EmpBasic",
@@ -309,8 +309,8 @@ export default {
     }
   },
   components: {
-    AssetDetail,
-    AssetEdit
+    OrderDetail,
+    OrderEdit
   },
   mounted() {
     this.initOrders();
@@ -421,7 +421,7 @@ export default {
     initOrders() {
       this.type = '';
       this.loading = true;
-      let url = '/order/basic/get/?category=2&page=' + this.page + '&size=' + this.size + "&id=" + this.keyword;
+      let url = '/order/basic/get/?category=2&page=' + this.page + '&size=' + this.size + "&oid=" + this.keyword;
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {

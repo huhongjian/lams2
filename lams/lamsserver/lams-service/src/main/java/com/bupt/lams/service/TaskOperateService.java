@@ -329,6 +329,9 @@ public class TaskOperateService {
         if (taskHandleDto.getOperateType() == OperateTypeEnum.REJECT.getIndex()) {
             order.setStatus(OrderStatusEnum.REJECTED.getIndex());
             orderMapper.updateOrderStatusById(order);
+            Asset asset = order.getAsset();
+            asset.setStatus(AssetStatusEnum.REJECTED.getIndex());
+            assetMapper.updateAssetStatusById(asset);
             return;
         }
         // 如果是确认转交则更新工单状态

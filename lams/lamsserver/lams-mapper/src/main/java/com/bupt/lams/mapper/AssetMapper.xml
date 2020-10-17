@@ -15,6 +15,54 @@
     <sql id="Base_Column_List">
     id, status, statusName, `type`, brand, price, adv, readyDate, updateTime
   </sql>
+    <sql id="baseInfoQuery">
+        <if test="aid !=null">
+            and a.id = #{aid}
+        </if>
+        <if test="status !=null">
+            and a.status = #{status}
+        </if>
+        <if test="type !=null and type!=''">
+            and a.type like concat('%',#{type},'%')
+        </if>
+        <if test="brand !=null and brand!=''">
+            and a.brand like concat('%',#{brand},'%')
+        </if>
+        <if test="beginDateScope !=null">
+            and a.readyDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+        </if>
+        <if test="priceLow !=null and priceHigh !=null">
+            and a.price between #{priceLow} and #{priceHigh}
+        </if>
+    </sql>
+    <select id="getAssetByCondition" parameterType="com.bupt.lams.dto.AssetQueryCondition" resultMap="BaseResultMap">
+        select a.*
+        from
+        asset a
+        <where>
+            a.status != 5
+            and a.status != 1
+            <include refid="baseInfoQuery"/>
+        </where>
+        <if test="page !=null and size!=null">
+            limit #{page},#{size}
+        </if>
+    </select>
+    <select id="getTotalByCondition" parameterType="com.bupt.lams.dto.OrderQueryCondition" resultType="java.lang.Long">
+        select count(*)
+        from
+        asset a
+        <where>
+            <include refid="baseInfoQuery"/>
+        </where>
+    </select>
+    <update id="updateAssetStatusById" parameterType="com.bupt.lams.model.Asset">
+        update asset a
+        set
+            a.status = #{status},
+            a.statusName = #{statusName}
+        where a.id = #{id}
+    </update>
     <update id="updateAsset" parameterType="com.bupt.lams.model.Asset">
         update asset
         set

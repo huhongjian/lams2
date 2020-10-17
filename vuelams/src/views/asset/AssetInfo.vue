@@ -114,7 +114,7 @@
             align="left"
             width="100">
           <template slot-scope="scope">
-            <el-button size="mini" @click="dialogVisible2=true">{{ scope.row.id }}</el-button>
+            <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
           </template>
         </el-table-column>
         <el-table-column

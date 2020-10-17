@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bupt.lams.mapper.OperateTypeWorkflowMapper">
-    <resultMap id="BaseResultMap" type="com.bupt.lams.model.OperateTypeWorkflow">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.ProcessTypeWorkflow">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="operate_type" property="operateType"/>
         <result column="workflow_key" property="workflowKey"/>

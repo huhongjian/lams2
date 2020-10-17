@@ -114,7 +114,7 @@
             align="left"
             width="90">
           <template slot-scope="scope">
-            <el-button size="mini" @click="getCandidateBranchInfo(scope.row)">{{ scope.row.id }}</el-button>
+            <el-button size="mini" @click="getOperateList(scope.row)">{{ scope.row.id }}</el-button>
           </template>
         </el-table-column>
         <el-table-column
@@ -212,7 +212,7 @@
     <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order"
                :title="title"></AssetEdit>
     <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order"
-                 :title="title" :candidateBranches='candidateBranches'></AssetDetail>
+                 :title="title" :operateList='operateList'></AssetDetail>
   </div>
 </template>
 
@@ -278,12 +278,7 @@ export default {
           name: "已关闭"
         }
       ],
-      candidateBranches: {},
-      taskHandleDto: {
-        id: null,
-        operateType: null,
-        candidateUser: null
-      },
+      operateList: [],
       order: {
         id: "",
         category: "",
@@ -381,10 +376,10 @@ export default {
       this.order = data;
       this.dialogVisible2 = true;
     },
-    getCandidateBranchInfo(data) {
-      this.getRequest('/order/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
+    getOperateList(data) {
+      this.getRequest('/order/task/getOperateList?id=' + data.id).then(resp => {
         if (resp) {
-          this.candidateBranches = resp.obj;
+          this.operateList = resp.obj;
           this.showDetailView(data);
         }
       });

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 系统用户Controller
+ * 用户管理
  */
 @RestController
 @RequestMapping("/system/user")

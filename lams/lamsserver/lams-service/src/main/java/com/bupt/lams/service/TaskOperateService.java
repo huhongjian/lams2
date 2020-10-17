@@ -2,14 +2,10 @@ package com.bupt.lams.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.bupt.lams.constants.OperateTypeEnum;
-import com.bupt.lams.constants.OrderStatusEnum;
-import com.bupt.lams.constants.ProcessTypeEnum;
-import com.bupt.lams.constants.WorkflowConstant;
+import com.bupt.lams.constants.*;
 import com.bupt.lams.dto.TaskDto;
 import com.bupt.lams.dto.TaskHandleDto;
 import com.bupt.lams.dto.TaskQueryDto;
-import com.bupt.lams.dto.WorkflowTaskOperateInfoDto;
 import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.mapper.LamsUserMapper;
 import com.bupt.lams.mapper.OrderAssetMapper;
@@ -198,13 +194,13 @@ public class TaskOperateService {
         }
     }
 
-    public WorkflowTaskOperateInfoDto getCandidateOrAssignedOrderWorkflowTaskOperateInfo(String username, Long orderId) {
+    public List<Operate> getCandidateOrAssignedOrderWorkflowTaskOperateInfo(String username, Long orderId) {
         logger.info("[start]获取工作流操作表单信息，用户账号：" + username + "; 工单ID:" + orderId);
         // 获取待办任务
         TaskDto taskDto = this.getCandidateOrAssignedTaskInfoByOrderIdAndUsername(username, orderId);
-        WorkflowTaskOperateInfoDto operateInfoDto = getTaskOperateInfoDtoByTaskDto(taskDto);
+        List<Operate> operateList = getTaskOperateInfoDtoByTaskDto(taskDto);
         logger.info("[end]获取工作流操作表单信息，用户账号：" + username + "; 工单ID:" + orderId);
-        return operateInfoDto;
+        return operateList;
     }
 
     public TaskDto getCandidateOrAssignedTaskInfoByOrderIdAndUsername(String username, Long orderId) {
@@ -231,42 +227,34 @@ public class TaskOperateService {
      * @param taskDto
      * @return
      */
-    private WorkflowTaskOperateInfoDto getTaskOperateInfoDtoByTaskDto(TaskDto taskDto) {
-        WorkflowTaskOperateInfoDto operateInfoDto = null;
+    private List<Operate> getTaskOperateInfoDtoByTaskDto(TaskDto taskDto) {
+        List<Operate> operateList = new ArrayList<>();
         TaskQueryDto taskQueryDto = new TaskQueryDto();
         taskQueryDto.setTaskId(taskDto.getTaskId());
         // 获取待办任务表单信息
-        List<FormProperty> taskForm = this.taskManagerService
-                .getCandidateTaskFormData(taskQueryDto);
+        List<FormProperty> taskForm = this.taskManagerService.getCandidateTaskFormData(taskQueryDto);
         if (taskForm != null) {
-            operateInfoDto = new WorkflowTaskOperateInfoDto();
-            String formId;
             for (FormProperty formProperty : taskForm) {
-                formId = formProperty.getId();
+                String formId = formProperty.getId();
                 // operateType字段设置
                 if (formId.equalsIgnoreCase(WorkflowConstant.OPERATE_TYPE)) {
-                    this.initOperateTypes(operateInfoDto, formProperty);
-                }
-                // 转交组/人
-                else if (formId.equalsIgnoreCase(WorkflowConstant.WORKFLOW_PARAM_KEY_CANDIDATE_GROUPS_USERS)) {
-                    operateInfoDto.setCandidateUser(formProperty.getValue());
+                    operateList = initOperateTypes(formProperty);
                 }
             }
         }
-        return operateInfoDto;
+        return operateList;
     }
 
     /**
      * 设置操作类型
      *
-     * @param operateInfoDto
      * @param formProperty
+     * @return
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
-    private void initOperateTypes(WorkflowTaskOperateInfoDto operateInfoDto, FormProperty formProperty) {
+    private List<Operate> initOperateTypes(FormProperty formProperty) {
         JSONObject ops = JSONObject.parseObject(formProperty.getValue());
-        List<WorkflowOperate> operateList = JSONArray.parseArray(ops.getJSONArray("ops").toJSONString(), WorkflowOperate.class);
-        operateInfoDto.setOperateList(operateList);
+        return JSONArray.parseArray(ops.getJSONArray("ops").toJSONString(), Operate.class);
     }
 
     public List<Long> getAssignedOrderIds(String userName) {
@@ -309,7 +297,7 @@ public class TaskOperateService {
      */
     private void updateStage(TaskHandleDto taskHandleDto, Order order) {
         Long id = taskHandleDto.getId();
-        // 如果是批准采购则更新资产状态
+        // 如果是批准采购则更新工单状态
         if (taskHandleDto.getOperateType() == OperateTypeEnum.APPROVE.getIndex()) {
             order.setStatus(OrderStatusEnum.APPROVE.getIndex());
             // 更新工单状态
@@ -332,6 +320,7 @@ public class TaskOperateService {
             // 更新资产入库时间
             Asset asset = new Asset();
             asset.setId(aid);
+            asset.setStatus(AssetStatusEnum.NORMAL.getIndex());
             asset.setReadyDate(new Date());
             assetMapper.updateAsset(asset);
             return;

@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * 流程类型和工作流key的映射
  */
-public class OperateTypeWorkflow {
+public class ProcessTypeWorkflow {
     private Long id;
 
     private Integer operateType;

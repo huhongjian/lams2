@@ -1,5 +1,6 @@
 package com.bupt.lams.model;
 
+import com.bupt.lams.constants.AssetStatusEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -13,6 +14,8 @@ import java.util.Date;
 public class Asset implements Serializable {
     private Long id;
     private String type;
+    private Integer status;
+    private String statusName;
     private String brand;
     private Double price;
     /**
@@ -31,4 +34,9 @@ public class Asset implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date updateTime;
+
+    public void setStatus(Integer status) {
+        this.status = status;
+        this.statusName = AssetStatusEnum.getNameByIndex(status);
+    }
 }

@@ -1,7 +1,7 @@
 package com.bupt.lams.service;
 
 import com.bupt.lams.mapper.OperateTypeWorkflowMapper;
-import com.bupt.lams.model.OperateTypeWorkflow;
+import com.bupt.lams.model.ProcessTypeWorkflow;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,9 +18,9 @@ public class OperateTypeWorkflowService {
      * @return
      */
     public String selectWorkflowKeyByOperateType(Integer operateType) {
-        OperateTypeWorkflow operateTypeWorkflow = operateTypeWorkflowMapper.selectByOperateType(operateType);
-        if (operateTypeWorkflow != null) {
-            return operateTypeWorkflow.getWorkflowKey();
+        ProcessTypeWorkflow processTypeWorkflow = operateTypeWorkflowMapper.selectByOperateType(operateType);
+        if (processTypeWorkflow != null) {
+            return processTypeWorkflow.getWorkflowKey();
         }
         return null;
     }

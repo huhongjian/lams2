@@ -3,6 +3,8 @@
 <mapper namespace="com.bupt.lams.mapper.AssetMapper">
     <resultMap id="BaseResultMap" type="com.bupt.lams.model.Asset">
         <id column="id" property="id"/>
+        <result column="status" property="status"/>
+        <result column="statusName" property="statusName"/>
         <result column="type" property="type"/>
         <result column="brand" property="brand"/>
         <result column="price" property="price"/>
@@ -11,14 +13,20 @@
         <result column="updateTime" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, type, brand, price,  adv, readyDate, updateTime
+    id, status, statusName, `type`, brand, price, adv, readyDate, updateTime
   </sql>
     <update id="updateAsset" parameterType="com.bupt.lams.model.Asset">
         update asset
         set
         <trim suffixOverrides=",">
             <if test="type != null and type != ''">
-                type = #{type},
+                `type` = #{type},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="statusName != null and statusName != ''">
+                statusName = #{statusName},
             </if>
             <if test="brand != null and brand != ''">
                 brand = #{brand},
@@ -44,6 +52,12 @@
             <if test="type != null and type != ''">
                 `type`,
             </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="statusName != null and statusName != ''">
+                statusName,
+            </if>
             <if test="brand != null and brand != ''">
                 brand,
             </if>
@@ -63,6 +77,12 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="type != null and type != ''">
                 #{type},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="statusName != null and statusName != ''">
+                #{statusName},
             </if>
             <if test="brand != null and brand != ''">
                 #{brand},

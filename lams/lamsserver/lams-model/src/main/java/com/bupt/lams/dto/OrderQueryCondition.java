@@ -5,6 +5,7 @@ import com.bupt.lams.model.Order;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -42,6 +43,7 @@ public class OrderQueryCondition {
      */
     private String type;
     private String brand;
+    private List<Integer> assetStatuses;
 
     public void setOrderInfo(Order order) {
         if (order == null) {

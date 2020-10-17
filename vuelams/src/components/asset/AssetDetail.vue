@@ -26,7 +26,7 @@
           </el-row>
           <el-row>
             <el-col :span="6">
-              <el-form-item label="申请人:" prop="applicant">
+              <el-form-item label="用户:" prop="applicant">
                 {{ order.user.name }}
               </el-form-item>
             </el-col>
@@ -122,7 +122,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
       <el-button v-if="order.status=='3'||order.status=='8'||order.status=='7'" type="primary" @click="visible2=true">借 用</el-button>
-    <template v-for="op in candidateBranches.operateList">
+    <template v-for="op in operateList">
       <el-button type="primary" @click="checkAndHandle(op.operateType)">{{ op.operate }}</el-button>
     </template>
         <el-button @click="$emit('close')">取 消</el-button>
@@ -190,7 +190,7 @@
 <script>
 export default {
   name: "AssetDetail",
-  props: ['order', 'title', 'dialogVisible2', 'candidateBranches'],
+  props: ['order', 'title', 'dialogVisible2', 'operateList'],
   data() {
     return {
       visible: false,

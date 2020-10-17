@@ -126,7 +126,7 @@
             align="left"
             width="80">
           <template slot-scope="scope">
-            <el-button size="mini" @click="getCandidateBranchInfo(scope.row)">{{ scope.row.id }}</el-button>
+            <el-button size="mini" @click="getOperateList(scope.row)">{{ scope.row.id }}</el-button>
           </template>
         </el-table-column>
         <el-table-column
@@ -156,7 +156,9 @@
             <span style="color: #00e079; font-weight: bold"
                   v-if="scope.row.status=='2'||scope.row.status=='3'">{{ scope.row.statusName }}</span>
             <span style="color: #ff4777; font-weight: bold"
-                  v-else-if="scope.row.status=='6'||scope.row.status=='8'||scope.row.status=='7'">{{ scope.row.statusName }}</span>
+                  v-else-if="scope.row.status=='6'||scope.row.status=='8'||scope.row.status=='7'">{{
+                scope.row.statusName
+              }}</span>
             <span style="color: #c0c0c0;"
                   v-else-if="scope.row.status=='5'">{{ scope.row.statusName }}</span>
             <span v-else>{{ scope.row.statusName }}</span>
@@ -197,7 +199,7 @@
         </el-table-column>
         <el-table-column
             fixed="right"
-            width="100"
+            width="60"
             label="操作">
           <template slot-scope="scope">
             <el-button @click="showEditEmpView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
@@ -217,7 +219,7 @@
     <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order"
                :title="title"></AssetEdit>
     <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
-                 :candidateBranches='candidateBranches'></AssetDetail>
+                 :operateList='operateList'></AssetDetail>
   </div>
 </template>
 
@@ -282,7 +284,7 @@ export default {
           name: "已关闭"
         }
       ],
-      candidateBranches: {},
+      operateList: [],
       // 选中的工单id，删除时使用
       orderIds: [],
       order: {
@@ -388,10 +390,10 @@ export default {
       this.order = data;
       this.dialogVisible2 = true;
     },
-    getCandidateBranchInfo(data) {
-      this.getRequest('/order/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
+    getOperateList(data) {
+      this.getRequest('/order/task/getOperateList?id=' + data.id).then(resp => {
         if (resp) {
-          this.candidateBranches = resp.obj;
+          this.operateList = resp.obj;
           this.showDetailView(data);
         }
       });

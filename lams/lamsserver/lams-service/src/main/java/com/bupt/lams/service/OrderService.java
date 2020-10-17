@@ -1,5 +1,6 @@
 package com.bupt.lams.service;
 
+import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.constants.OperateTypeEnum;
 import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.constants.ProcessTypeEnum;
@@ -59,9 +60,11 @@ public class OrderService {
         order.setStatus(OrderStatusEnum.CREATE.getIndex());
         order.setCreateTime(new Date());
         orderMapper.insertSelective(order);
-        assetMapper.insertSelective(order.getAsset());
+        Asset asset = order.getAsset();
+        asset.setStatus(AssetStatusEnum.CREATE.getIndex());
+        assetMapper.insertSelective(asset);
         OrderAsset orderAsset = new OrderAsset();
-        orderAsset.setAid(order.getAsset().getId());
+        orderAsset.setAid(asset.getId());
         orderAsset.setOid(order.getId());
         orderAsset.setCreateTime(new Date());
         orderAsset.setUpdateTime(new Date());

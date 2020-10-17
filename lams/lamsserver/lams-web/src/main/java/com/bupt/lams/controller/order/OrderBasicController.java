@@ -1,5 +1,6 @@
-package com.bupt.lams.controller.asset;
+package com.bupt.lams.controller.order;
 
+import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.dto.OrderQueryCondition;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.OrderService;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +29,9 @@ public class OrderBasicController {
 
     @GetMapping("/get")
     public RespPageBean getOrderInByPage(OrderQueryCondition orderQueryCondition) {
+        List<Integer> assetStatus = new ArrayList<>();
+        assetStatus.add(AssetStatusEnum.CREATE.getIndex());
+        assetStatus.add(AssetStatusEnum.NORMAL.getIndex());
         return orderService.getOrderByCondition(orderQueryCondition);
     }
 

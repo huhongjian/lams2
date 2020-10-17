@@ -1,10 +1,9 @@
-package com.bupt.lams.controller.asset;
+package com.bupt.lams.controller.order;
 
 import com.bupt.lams.constants.OperateTypeEnum;
 import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.dto.OrderQueryCondition;
 import com.bupt.lams.dto.TaskHandleDto;
-import com.bupt.lams.dto.WorkflowTaskOperateInfoDto;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.OrderService;
 import com.bupt.lams.service.TaskOperateService;
@@ -14,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 资产状态流转相关
@@ -79,11 +75,11 @@ public class OrderTaskController {
         return response;
     }
 
-    @RequestMapping("getCandidateTaskBranchInfo")
+    @RequestMapping("getOperateList")
     @ResponseBody
-    public RespBean getCandidateTaskBranchInfo(@RequestParam Long id) {
+    public RespBean getOperateList(@RequestParam Long id) {
         RespBean response = new RespBean();
-        WorkflowTaskOperateInfoDto opInfoDto;
+        List<Operate> operateList;
         LamsUser user = UserInfoUtils.getLoginedUser();
         // 1. 获取资产信息
         Order order = orderService.selectByPrimaryKey(id);
@@ -93,18 +89,18 @@ public class OrderTaskController {
             return response;
         }
         try {
-            opInfoDto = taskOperateService.getCandidateOrAssignedOrderWorkflowTaskOperateInfo(user.getUsername(), id);
+            operateList = taskOperateService.getCandidateOrAssignedOrderWorkflowTaskOperateInfo(user.getUsername(), id);
         } catch (Exception e) {
-            opInfoDto = new WorkflowTaskOperateInfoDto();
+            operateList = new ArrayList<>();
         }
         // 如果当前用户是工单创建人并且工单不是终止状态
         if (order.getUserEmail().equals(user.getUsername()) && !order.getStatus().equals(OrderStatusEnum.READY.getIndex())) {
-            WorkflowOperate cancel = new WorkflowOperate();
+            Operate cancel = new Operate();
             cancel.setOperateType(OperateTypeEnum.CANCEL.getIndex());
             cancel.setOperate(OperateTypeEnum.CANCEL.getName());
-            opInfoDto.getOperateList().add(cancel);
+            operateList.add(cancel);
         }
-        response.setObj(opInfoDto);
+        response.setObj(operateList);
         response.setStatus(200);
         return response;
     }

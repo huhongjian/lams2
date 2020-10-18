@@ -53,12 +53,14 @@
     <el-card class="chart-card" style="width: 100%">
       <div slot="header" class="clearfix">
         <span>资产概况</span>
-        <el-select v-model="value1" style="float: right; padding: 3px 0" multiple placeholder="请选择">
+        <el-select v-model="value1"
+                   @change="initRingData()"
+                   style="float: right; padding: 3px 0" multiple placeholder="请选择">
           <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in types"
+              :key="item.id"
+              :label="item.name"
+              :value="item.name">
           </el-option>
         </el-select>
       </div>
@@ -80,7 +82,7 @@
             label="地址">
         </el-table-column>
       </el-table>
-      <ve-ring :data="chartData" style="width: 50%; float:right"></ve-ring>
+      <ve-ring :data="ringData" style="width: 50%; float:right"></ve-ring>
     </el-card>
     <div style="width: 100%">
       <el-card class="chart-card" style="width: 49%; float: left">
@@ -119,6 +121,7 @@ export default {
   name: "AssetDashBoard",
   mounted() {
     this.initHeadTableData();
+    this.initRingData();
   },
   data() {
     return {
@@ -147,29 +150,20 @@ export default {
       },
       value1: [],
       value2: '',
-      options: [
+      types: [
         {
-          value: '选项1',
-          label: '黄金糕'
-        },
-        {
-          value: '选项2',
-          label: '双皮奶'
-        },
-        {
-          value: '选项3',
-          label: '蚵仔煎'
-        },
-        {
-          value: '选项4',
-          label: '龙须面'
-        },
-        {
-          value: '选项5',
-          label: '北京烤鸭'
-        }
-      ],
-      value: '',
+          id: 1,
+          name: '手机'
+        }, {
+          id: 2,
+          name: '主机'
+        }, {
+          id: 3,
+          name: '交换机'
+        }, {
+          id: 4,
+          name: '测距仪'
+        }],
       headTableData: {
         total: '',
         inUse: '',
@@ -196,25 +190,26 @@ export default {
           name: '王小虎',
           address: '上海市普陀区金沙江路 1516 弄'
         }],
-      chartData: {
-        columns: ['日期', '销售额'],
-        rows: [
-          {'日期': '1月1日', '销售额': 123},
-          {'日期': '1月2日', '销售额': 1223},
-          {'日期': '1月3日', '销售额': 2123},
-          {'日期': '1月4日', '销售额': 4123},
-          {'日期': '1月5日', '销售额': 3123},
-          {'日期': '1月6日', '销售额': 7123}
-        ]
+      ringData: {
+        columns: ['statusName', 'count'],
+        rows: []
       }
     }
   },
   methods: {
     initHeadTableData() {
-      let url = '/asset/dashboard/get'
+      let url = '/asset/dashboard/get/headTable'
       this.getRequest(url).then(resp => {
         if (resp) {
           this.headTableData = resp.obj;
+        }
+      });
+    },
+    initRingData() {
+      let url = '/asset/dashboard/get/ringData'
+      this.postRequest(url, this.value1).then(resp => {
+        if (resp) {
+          this.ringData.rows = resp.obj;
         }
       });
     }

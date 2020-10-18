@@ -1,6 +1,7 @@
 package com.bupt.lams.service;
 
 import com.bupt.lams.constants.AssetStatusEnum;
+import com.bupt.lams.constants.AssetTypeEnum;
 import com.bupt.lams.dto.AssetDashBoardHeadTableData;
 import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.dto.AssetStatusCount;
@@ -60,7 +61,7 @@ public class AssetService {
         // 获取总金额
         data.setMoney(assetMapper.getAliveAssetTotalMoney());
         // 获取其他数据
-        List<AssetStatusCount> assetStatusCounts = assetMapper.getAssetStatusCount();
+        List<AssetStatusCount> assetStatusCounts = assetMapper.getAssetStatusCount(null);
         if (CollectionUtils.isNotEmpty(assetStatusCounts)) {
             for (AssetStatusCount ac : assetStatusCounts) {
                 Integer status = ac.getStatus();
@@ -82,5 +83,9 @@ public class AssetService {
             }
         }
         return data;
+    }
+
+    public List<AssetStatusCount> getRingData(List<String> typeList) {
+        return assetMapper.getAssetStatusCount(typeList);
     }
 }

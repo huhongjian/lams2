@@ -8,5 +8,6 @@ import lombok.Data;
 @Data
 public class AssetStatusCount {
     private Integer status;
+    private String statusName;
     private Long count;
 }

@@ -32,7 +32,7 @@ public interface AssetMapper {
 
     Asset getAssetById(Long aid);
 
-    List<AssetStatusCount> getAssetStatusCount();
+    List<AssetStatusCount> getAssetStatusCount(List<String> typeList);
 
     Double getAliveAssetTotalMoney();
 }

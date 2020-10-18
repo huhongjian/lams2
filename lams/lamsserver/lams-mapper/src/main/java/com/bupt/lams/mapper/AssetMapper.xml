@@ -166,11 +166,17 @@
         select * from asset
         where id = #{aid}
     </select>
-    <select id="getAssetStatusCount" resultType="com.bupt.lams.dto.AssetStatusCount">
-        select count(id) as count, status
+    <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
+        select count(id) as count, status, statusName
         from asset
         where status in (2, 3, 4, 6)
-        group by status;
+        <if test="list != null and list.size>0">
+            and type in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        group by status, statusName;
     </select>
     <select id="getAliveAssetTotalMoney" resultType="java.lang.Double">
         select sum(price)

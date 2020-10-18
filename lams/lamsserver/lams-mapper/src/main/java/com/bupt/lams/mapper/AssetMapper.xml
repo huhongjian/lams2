@@ -167,7 +167,7 @@
         where id = #{aid}
     </select>
     <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
-        select count(id) as count, status, statusName
+        select count(id) as count, sum(price) as money, status, statusName
         from asset
         where status in (2, 3, 4, 6)
         <if test="list != null and list.size>0">
@@ -181,6 +181,6 @@
     <select id="getAliveAssetTotalMoney" resultType="java.lang.Double">
         select sum(price)
         from asset
-        where status in (2, 3, 6);
+        where status in (2, 3, 4, 6);
     </select>
 </mapper>

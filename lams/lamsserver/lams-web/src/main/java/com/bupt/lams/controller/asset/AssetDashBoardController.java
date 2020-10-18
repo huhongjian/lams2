@@ -37,6 +37,20 @@ public class AssetDashBoardController {
         return response;
     }
 
+    @PostMapping("/get/tableData")
+    public RespBean getTableData(@RequestBody List<String> typeList) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        try {
+            List<AssetStatusCount> data = assetService.getTableData(typeList);
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取资产仪表盘数据异常！", e);
+            return RespBean.error("获取仪表盘数据失败!");
+        }
+        return response;
+    }
+
     @PostMapping("/get/ringData")
     public RespBean getRingData(@RequestBody List<String> typeList) {
         RespBean response = new RespBean();

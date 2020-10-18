@@ -3,7 +3,7 @@ package com.bupt.lams.dto;
 import lombok.Data;
 
 /**
- * 资产概况数据
+ * 资产仪表盘顶部表格数据
  */
 @Data
 public class AssetDashBoardHeadTableData {

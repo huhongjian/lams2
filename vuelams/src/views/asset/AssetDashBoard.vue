@@ -54,7 +54,7 @@
       <div slot="header" class="clearfix">
         <span>资产概况</span>
         <el-select v-model="value1"
-                   @change="initRingData()"
+                   @change="initData()"
                    style="float: right; padding: 3px 0" multiple placeholder="请选择">
           <el-option
               v-for="item in types"
@@ -66,20 +66,21 @@
       </div>
       <el-table
           :data="tableData"
-          style="width: 50%; float:left">
+          :row-style="{height:'60px'}"
+          style="font-size: 15px; width: 50%; float:left">
         <el-table-column
-            prop="date"
-            label="日期"
+            prop="statusName"
+            label="类型"
             width="180">
         </el-table-column>
         <el-table-column
-            prop="name"
-            label="姓名"
+            prop="count"
+            label="数量"
             width="180">
         </el-table-column>
         <el-table-column
-            prop="address"
-            label="地址">
+            prop="money"
+            label="金额（元）">
         </el-table-column>
       </el-table>
       <ve-ring :data="ringData" style="width: 50%; float:right"></ve-ring>
@@ -122,6 +123,7 @@ export default {
   mounted() {
     this.initHeadTableData();
     this.initRingData();
+    this.initTableData();
   },
   data() {
     return {
@@ -172,24 +174,7 @@ export default {
         money: '',
         cleaned: ''
       },
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }],
+      tableData: [],
       ringData: {
         columns: ['statusName', 'count'],
         rows: []
@@ -197,6 +182,10 @@ export default {
     }
   },
   methods: {
+    initData() {
+      this.initRingData();
+      this.initTableData();
+    },
     initHeadTableData() {
       let url = '/asset/dashboard/get/headTable'
       this.getRequest(url).then(resp => {
@@ -210,6 +199,14 @@ export default {
       this.postRequest(url, this.value1).then(resp => {
         if (resp) {
           this.ringData.rows = resp.obj;
+        }
+      });
+    },
+    initTableData() {
+      let url = '/asset/dashboard/get/tableData'
+      this.postRequest(url, this.value1).then(resp => {
+        if (resp) {
+          this.tableData = resp.obj;
         }
       });
     }

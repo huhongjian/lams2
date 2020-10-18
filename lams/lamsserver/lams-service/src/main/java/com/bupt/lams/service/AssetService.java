@@ -1,7 +1,6 @@
 package com.bupt.lams.service;
 
 import com.bupt.lams.constants.AssetStatusEnum;
-import com.bupt.lams.constants.AssetTypeEnum;
 import com.bupt.lams.dto.AssetDashBoardHeadTableData;
 import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.dto.AssetStatusCount;
@@ -50,14 +49,7 @@ public class AssetService {
     public AssetDashBoardHeadTableData getHeadTableData() {
         AssetDashBoardHeadTableData data = new AssetDashBoardHeadTableData();
         // 获取总数
-        AssetQueryCondition condition = new AssetQueryCondition();
-        List<Integer> statusList = new ArrayList<>();
-        statusList.add(AssetStatusEnum.FREE.getIndex());
-        statusList.add(AssetStatusEnum.BROKEN.getIndex());
-        statusList.add(AssetStatusEnum.INUSE.getIndex());
-        condition.setAssetStatuses(statusList);
-        Long total = assetMapper.getTotalByCondition(condition);
-        data.setTotal(total);
+        data.setTotal(geAliveAssetTotal());
         // 获取总金额
         data.setMoney(assetMapper.getAliveAssetTotalMoney());
         // 获取其他数据
@@ -83,6 +75,35 @@ public class AssetService {
             }
         }
         return data;
+    }
+
+    public List<AssetStatusCount> getTableData(List<String> typeList) {
+        List<AssetStatusCount> data = new ArrayList<>();
+        // 获取总计
+        AssetStatusCount totalRow = new AssetStatusCount(0, "总资产", geAliveAssetTotal(),
+                assetMapper.getAliveAssetTotalMoney());
+        // 获取其他数据
+        List<AssetStatusCount> assetStatusCounts = assetMapper.getAssetStatusCount(typeList);
+        data.add(totalRow);
+        if (CollectionUtils.isNotEmpty(assetStatusCounts)) {
+            data.addAll(assetStatusCounts);
+        }
+        return data;
+    }
+
+    /**
+     * 获取目前有效的资产的总数（包括：闲置，故障，使用中）
+     *
+     * @return Long 总数
+     */
+    private Long geAliveAssetTotal() {
+        AssetQueryCondition condition = new AssetQueryCondition();
+        List<Integer> statusList = new ArrayList<>();
+        statusList.add(AssetStatusEnum.FREE.getIndex());
+        statusList.add(AssetStatusEnum.BROKEN.getIndex());
+        statusList.add(AssetStatusEnum.INUSE.getIndex());
+        condition.setAssetStatuses(statusList);
+        return assetMapper.getTotalByCondition(condition);
     }
 
     public List<AssetStatusCount> getRingData(List<String> typeList) {

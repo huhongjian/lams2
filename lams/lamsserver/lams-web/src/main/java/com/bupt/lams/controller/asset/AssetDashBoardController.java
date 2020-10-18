@@ -64,4 +64,18 @@ public class AssetDashBoardController {
         }
         return response;
     }
+
+    @GetMapping("/get/typeChartData")
+    public RespBean getTypeChartData() {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        try {
+            List<AssetStatusCount> data = assetService.getTypeChartData();
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取资产仪表盘数据异常！", e);
+            return RespBean.error("获取仪表盘数据失败!");
+        }
+        return response;
+    }
 }

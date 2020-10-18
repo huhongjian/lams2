@@ -91,6 +91,14 @@ public class AssetService {
         return data;
     }
 
+    public List<AssetStatusCount> getRingData(List<String> typeList) {
+        return assetMapper.getAssetStatusCount(typeList);
+    }
+
+    public List<AssetStatusCount> getTypeChartData() {
+        return assetMapper.getAssetTypeCount();
+    }
+
     /**
      * 获取目前有效的资产的总数（包括：闲置，故障，使用中）
      *
@@ -104,9 +112,5 @@ public class AssetService {
         statusList.add(AssetStatusEnum.INUSE.getIndex());
         condition.setAssetStatuses(statusList);
         return assetMapper.getTotalByCondition(condition);
-    }
-
-    public List<AssetStatusCount> getRingData(List<String> typeList) {
-        return assetMapper.getAssetStatusCount(typeList);
     }
 }

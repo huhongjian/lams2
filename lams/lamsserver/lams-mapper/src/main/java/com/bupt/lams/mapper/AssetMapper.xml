@@ -178,6 +178,12 @@
         </if>
         group by status, statusName;
     </select>
+    <select id="getAssetTypeCount" resultType="com.bupt.lams.dto.AssetStatusCount">
+        select count(id) as count, `type`
+        from asset
+        where status in (2, 3, 4, 6)
+        group by `type`;
+    </select>
     <select id="getAliveAssetTotalMoney" resultType="java.lang.Double">
         select sum(price)
         from asset

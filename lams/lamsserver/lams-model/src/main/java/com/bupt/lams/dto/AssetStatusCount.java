@@ -9,6 +9,7 @@ import lombok.Data;
 public class AssetStatusCount {
     private Integer status;
     private String statusName;
+    private String type;
     private Long count;
     private Double money;
 

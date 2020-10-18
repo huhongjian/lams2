@@ -107,7 +107,7 @@
         <div slot="header" class="clearfix">
           <span>资产分类统计</span>
         </div>
-        <ve-bar :data="chartData"></ve-bar>
+        <ve-bar :data="typeChartData"></ve-bar>
       </el-card>
     </div>
   </div>
@@ -122,8 +122,8 @@ export default {
   name: "AssetDashBoard",
   mounted() {
     this.initHeadTableData();
-    this.initRingData();
-    this.initTableData();
+    this.initData();
+    this.initTypeChartData();
   },
   data() {
     return {
@@ -178,6 +178,10 @@ export default {
       ringData: {
         columns: ['statusName', 'count'],
         rows: []
+      },
+      typeChartData: {
+        columns: ['type', 'count'],
+        rows: []
       }
     }
   },
@@ -207,6 +211,14 @@ export default {
       this.postRequest(url, this.value1).then(resp => {
         if (resp) {
           this.tableData = resp.obj;
+        }
+      });
+    },
+    initTypeChartData() {
+      let url = '/asset/dashboard/get/typeChartData'
+      this.getRequest(url).then(resp => {
+        if (resp) {
+          this.typeChartData.rows = resp.obj;
         }
       });
     }

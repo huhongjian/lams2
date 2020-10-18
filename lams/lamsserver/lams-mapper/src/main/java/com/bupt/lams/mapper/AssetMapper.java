@@ -34,5 +34,7 @@ public interface AssetMapper {
 
     List<AssetStatusCount> getAssetStatusCount(List<String> typeList);
 
+    List<AssetStatusCount> getAssetTypeCount();
+
     Double getAliveAssetTotalMoney();
 }

@@ -3,8 +3,8 @@ package com.bupt.lams.mapper;
 import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.dto.AssetStatusCount;
 import com.bupt.lams.model.Asset;
-import com.bupt.lams.model.Order;
 
+import java.util.Date;
 import java.util.List;
 
 public interface AssetMapper {
@@ -35,6 +35,10 @@ public interface AssetMapper {
     List<AssetStatusCount> getAssetStatusCount(List<String> typeList);
 
     List<AssetStatusCount> getAssetTypeCount();
+
+    List<AssetStatusCount> getLineData(Date[] monthScope);
+
+    AssetStatusCount getTotalLineData(Date[] monthScope);
 
     Double getAliveAssetTotalMoney();
 }

@@ -1,6 +1,6 @@
 package com.bupt.lams.controller.asset;
 
-import com.bupt.lams.dto.AssetDashBoardHeadTableData;
+import com.bupt.lams.dto.AssetDashBoardData;
 import com.bupt.lams.dto.AssetStatusCount;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.service.AssetService;
@@ -9,13 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
  * 资产仪表盘相关
  */
 @RestController
-@RequestMapping("/asset/dashboard")
+@RequestMapping("/asset/dashboard/get")
 public class AssetDashBoardController {
 
     private Logger logger = LoggerFactory.getLogger(AssetDashBoardController.class);
@@ -23,12 +24,12 @@ public class AssetDashBoardController {
     @Resource
     AssetService assetService;
 
-    @GetMapping("/get/headTable")
+    @GetMapping("/headTable")
     public RespBean getHeadTableData() {
         RespBean response = new RespBean();
         response.setStatus(200);
         try {
-            AssetDashBoardHeadTableData data = assetService.getHeadTableData();
+            AssetDashBoardData data = assetService.getHeadTableData();
             response.setObj(data);
         } catch (Exception e) {
             logger.error("获取资产仪表盘数据异常！", e);
@@ -37,7 +38,7 @@ public class AssetDashBoardController {
         return response;
     }
 
-    @PostMapping("/get/tableData")
+    @PostMapping("/tableData")
     public RespBean getTableData(@RequestBody List<String> typeList) {
         RespBean response = new RespBean();
         response.setStatus(200);
@@ -51,7 +52,7 @@ public class AssetDashBoardController {
         return response;
     }
 
-    @PostMapping("/get/ringData")
+    @PostMapping("/ringData")
     public RespBean getRingData(@RequestBody List<String> typeList) {
         RespBean response = new RespBean();
         response.setStatus(200);
@@ -65,12 +66,26 @@ public class AssetDashBoardController {
         return response;
     }
 
-    @GetMapping("/get/typeChartData")
+    @GetMapping("/typeChartData")
     public RespBean getTypeChartData() {
         RespBean response = new RespBean();
         response.setStatus(200);
         try {
             List<AssetStatusCount> data = assetService.getTypeChartData();
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取资产仪表盘数据异常！", e);
+            return RespBean.error("获取仪表盘数据失败!");
+        }
+        return response;
+    }
+
+    @GetMapping("/lineData")
+    public RespBean getLineData(Date[] monthScope) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        try {
+            List<AssetDashBoardData> data = assetService.getLineData(monthScope);
             response.setObj(data);
         } catch (Exception e) {
             logger.error("获取资产仪表盘数据异常！", e);

@@ -1,7 +1,7 @@
 package com.bupt.lams.service;
 
 import com.bupt.lams.constants.AssetStatusEnum;
-import com.bupt.lams.dto.AssetDashBoardHeadTableData;
+import com.bupt.lams.dto.AssetDashBoardData;
 import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.dto.AssetStatusCount;
 import com.bupt.lams.mapper.AssetMapper;
@@ -11,8 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 资产service
@@ -46,8 +45,8 @@ public class AssetService {
         assetMapper.updateAssetStatus(asset);
     }
 
-    public AssetDashBoardHeadTableData getHeadTableData() {
-        AssetDashBoardHeadTableData data = new AssetDashBoardHeadTableData();
+    public AssetDashBoardData getHeadTableData() {
+        AssetDashBoardData data = new AssetDashBoardData();
         // 获取总数
         data.setTotal(geAliveAssetTotal());
         // 获取总金额
@@ -97,6 +96,52 @@ public class AssetService {
 
     public List<AssetStatusCount> getTypeChartData() {
         return assetMapper.getAssetTypeCount();
+    }
+
+    public List<AssetDashBoardData> getLineData(Date[] monthScope) {
+        List<AssetDashBoardData> data = new ArrayList<>();
+        Map<String, AssetDashBoardData> lineDataMap = new HashMap<>();
+        AssetStatusCount totalStatusCount = assetMapper.getTotalLineData(monthScope);
+        if (totalStatusCount == null) {
+            return new ArrayList<>();
+        }
+        totalStatusCount.setStatus(0);
+        List<AssetStatusCount> assetStatusCountList = assetMapper.getLineData(monthScope);
+        if (CollectionUtils.isEmpty(assetStatusCountList)) {
+            assetStatusCountList = new ArrayList<>();
+        }
+        assetStatusCountList.add(totalStatusCount);
+        for (AssetStatusCount ac : assetStatusCountList) {
+            String date = ac.getDate();
+            if (lineDataMap.get(date) == null) {
+                lineDataMap.put(date, new AssetDashBoardData());
+            }
+        }
+        for (AssetStatusCount ac : assetStatusCountList) {
+            String date = ac.getDate();
+            Integer status = ac.getStatus();
+            Long count = ac.getCount();
+            switch (status) {
+                case 0:
+                    lineDataMap.get(date).setTotal(count);
+                    break;
+                case 2:
+                    lineDataMap.get(date).setFree(count);
+                    break;
+                case 3:
+                    lineDataMap.get(date).setInRepair(count);
+                    break;
+                case 6:
+                    lineDataMap.get(date).setInUse(count);
+                    break;
+            }
+        }
+        for (String date : lineDataMap.keySet()) {
+            AssetDashBoardData ad = lineDataMap.get(date);
+            ad.setDate(date);
+            data.add(ad);
+        }
+        return data;
     }
 
     /**

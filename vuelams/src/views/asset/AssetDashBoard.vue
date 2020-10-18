@@ -53,9 +53,9 @@
     <el-card class="chart-card" style="width: 100%">
       <div slot="header" class="clearfix">
         <span>资产概况</span>
-        <el-select v-model="value1"
+        <el-select v-model="typeList"
                    @change="initData()"
-                   style="float: right; padding: 3px 0" multiple placeholder="请选择">
+                   style="float: right; padding: 3px 0" multiple placeholder="请选择资产类型">
           <el-option
               v-for="item in types"
               :key="item.id"
@@ -90,18 +90,19 @@
         <div slot="header" class="clearfix">
           <span>资产增长趋势</span>
           <el-date-picker
+              @change="initLineData"
               style="float: right; padding: 3px 0"
-              v-model="value2"
-              type="monthrange"
+              v-model="monthScope"
+              type="daterange"
               align="right"
               unlink-panels
+              value-format="yyyy-MM-dd"
               range-separator="至"
               start-placeholder="开始月份"
-              end-placeholder="结束月份"
-              :picker-options="pickerOptions">
+              end-placeholder="结束月份">
           </el-date-picker>
         </div>
-        <ve-line :data="chartData"></ve-line>
+        <ve-line :data="lineData"></ve-line>
       </el-card>
       <el-card class="chart-card" style="width: 49%; float: right">
         <div slot="header" class="clearfix">
@@ -150,8 +151,8 @@ export default {
           }
         }]
       },
-      value1: [],
-      value2: '',
+      typeList: [],
+      monthScope: '',
       types: [
         {
           id: 1,
@@ -182,6 +183,10 @@ export default {
       typeChartData: {
         columns: ['type', 'count'],
         rows: []
+      },
+      lineData: {
+        columns: ['date', 'total', 'inUse', 'free', 'inRepair', 'cleaned'],
+        rows: []
       }
     }
   },
@@ -189,6 +194,7 @@ export default {
     initData() {
       this.initRingData();
       this.initTableData();
+      this.initLineData();
     },
     initHeadTableData() {
       let url = '/asset/dashboard/get/headTable'
@@ -200,7 +206,7 @@ export default {
     },
     initRingData() {
       let url = '/asset/dashboard/get/ringData'
-      this.postRequest(url, this.value1).then(resp => {
+      this.postRequest(url, this.typeList).then(resp => {
         if (resp) {
           this.ringData.rows = resp.obj;
         }
@@ -208,7 +214,7 @@ export default {
     },
     initTableData() {
       let url = '/asset/dashboard/get/tableData'
-      this.postRequest(url, this.value1).then(resp => {
+      this.postRequest(url, this.typeList).then(resp => {
         if (resp) {
           this.tableData = resp.obj;
         }
@@ -221,6 +227,17 @@ export default {
           this.typeChartData.rows = resp.obj;
         }
       });
+    },
+    initLineData() {
+      let url = '/asset/dashboard/get/lineData';
+      if (this.monthScope) {
+        url += '/?monthScope=' + this.monthScope;
+      }
+      this.getRequest(url).then(resp => {
+        if (resp) {
+          this.lineData.rows = resp.obj;
+        }
+      });
     }
   },
   components: {VeLine, VeRing, VeBar}
@@ -228,13 +245,6 @@ export default {
 </script>
 
 <style scoped>
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
 
 .clearfix:before,
 .clearfix:after {

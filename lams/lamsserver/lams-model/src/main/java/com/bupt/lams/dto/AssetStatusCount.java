@@ -7,6 +7,7 @@ import lombok.Data;
  */
 @Data
 public class AssetStatusCount {
+    private String date;
     private Integer status;
     private String statusName;
     private String type;

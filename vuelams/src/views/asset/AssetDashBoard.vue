@@ -6,7 +6,7 @@
           <span class="box-title">总资产数</span>
         </div>
         <div class="box-value">
-          1
+          {{ headTableData.total }}
         </div>
       </el-card>
       <el-card class="box-card" style="background-color: #44cef6">
@@ -14,7 +14,7 @@
           <span class="box-title">使用中数量</span>
         </div>
         <div class="box-value">
-          2
+          {{ headTableData.inUse }}
         </div>
       </el-card>
       <el-card class="box-card" style="background-color: #9ed048">
@@ -22,7 +22,7 @@
           <span class="box-title">闲置数量</span>
         </div>
         <div class="box-value">
-          3
+          {{ headTableData.free }}
         </div>
       </el-card>
       <el-card class="box-card" style="background-color: #cca4e3">
@@ -30,15 +30,15 @@
           <span class="box-title">维修中数量</span>
         </div>
         <div class="box-value">
-          4
+          {{ headTableData.inRepair }}
         </div>
       </el-card>
       <el-card class="box-card" style="background-color: #f9906f">
         <div slot="header" class="clearfix">
-          <span class="box-title">资产总金额</span>
+          <span class="box-title">资产总金额（元）</span>
         </div>
         <div class="box-value">
-          5
+          {{ headTableData.money }}
         </div>
       </el-card>
       <el-card class="box-card" style="background-color: #c2ccd0">
@@ -46,14 +46,14 @@
           <span class="box-title">报废数量</span>
         </div>
         <div class="box-value">
-          6
+          {{ headTableData.cleaned }}
         </div>
       </el-card>
     </div>
     <el-card class="chart-card" style="width: 100%">
       <div slot="header" class="clearfix">
         <span>资产概况</span>
-        <el-select v-model="value" style="float: right; padding: 3px 0" placeholder="请选择">
+        <el-select v-model="value1" style="float: right; padding: 3px 0" multiple placeholder="请选择">
           <el-option
               v-for="item in options"
               :key="item.value"
@@ -117,6 +117,9 @@ import VeBar from 'v-charts/lib/bar';
 
 export default {
   name: "AssetDashBoard",
+  mounted() {
+    this.initHeadTableData();
+  },
   data() {
     return {
       pickerOptions: {
@@ -142,42 +145,57 @@ export default {
           }
         }]
       },
-      value1: '',
+      value1: [],
       value2: '',
-      options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
+      options: [
+        {
+          value: '选项1',
+          label: '黄金糕'
+        },
+        {
+          value: '选项2',
+          label: '双皮奶'
+        },
+        {
+          value: '选项3',
+          label: '蚵仔煎'
+        },
+        {
+          value: '选项4',
+          label: '龙须面'
+        },
+        {
+          value: '选项5',
+          label: '北京烤鸭'
+        }
+      ],
       value: '',
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }],
+      headTableData: {
+        total: '',
+        inUse: '',
+        free: '',
+        inRepair: '',
+        money: '',
+        cleaned: ''
+      },
+      tableData: [
+        {
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄'
+        }],
       chartData: {
         columns: ['日期', '销售额'],
         rows: [
@@ -189,6 +207,16 @@ export default {
           {'日期': '1月6日', '销售额': 7123}
         ]
       }
+    }
+  },
+  methods: {
+    initHeadTableData() {
+      let url = '/asset/dashboard/get'
+      this.getRequest(url).then(resp => {
+        if (resp) {
+          this.headTableData = resp.obj;
+        }
+      });
     }
   },
   components: {VeLine, VeRing, VeBar}

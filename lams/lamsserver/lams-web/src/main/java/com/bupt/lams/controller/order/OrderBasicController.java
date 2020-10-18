@@ -31,7 +31,8 @@ public class OrderBasicController {
     public RespPageBean getOrderInByPage(OrderQueryCondition orderQueryCondition) {
         List<Integer> assetStatus = new ArrayList<>();
         assetStatus.add(AssetStatusEnum.CREATE.getIndex());
-        assetStatus.add(AssetStatusEnum.NORMAL.getIndex());
+        assetStatus.add(AssetStatusEnum.FREE.getIndex());
+        assetStatus.add(AssetStatusEnum.INUSE.getIndex());
         orderQueryCondition.setAssetStatuses(assetStatus);
         return orderService.getOrderByCondition(orderQueryCondition);
     }

@@ -3,6 +3,7 @@ package com.bupt.lams.dto;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 资产信息查询条件
@@ -30,4 +31,5 @@ public class AssetQueryCondition {
     private String type;
     private String brand;
     private Integer status;
+    private List<Integer> assetStatuses;
 }

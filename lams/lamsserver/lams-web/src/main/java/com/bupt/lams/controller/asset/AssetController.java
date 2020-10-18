@@ -2,7 +2,6 @@ package com.bupt.lams.controller.asset;
 
 import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.constants.OrderStatusEnum;
-import com.bupt.lams.controller.order.OrderBasicController;
 import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.Order;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 /**
- * 工单信息相关
+ * 资产信息相关
  */
 @RestController
 @RequestMapping("/asset")

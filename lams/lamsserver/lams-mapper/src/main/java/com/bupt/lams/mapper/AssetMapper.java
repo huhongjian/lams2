@@ -1,6 +1,7 @@
 package com.bupt.lams.mapper;
 
 import com.bupt.lams.dto.AssetQueryCondition;
+import com.bupt.lams.dto.AssetStatusCount;
 import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.Order;
 
@@ -30,4 +31,8 @@ public interface AssetMapper {
     int insertSelective(Asset assetIn);
 
     Asset getAssetById(Long aid);
+
+    List<AssetStatusCount> getAssetStatusCount();
+
+    Double getAliveAssetTotalMoney();
 }

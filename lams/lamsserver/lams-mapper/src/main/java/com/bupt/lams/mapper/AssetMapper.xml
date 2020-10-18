@@ -34,6 +34,19 @@
         <if test="priceLow !=null and priceHigh !=null">
             and a.price between #{priceLow} and #{priceHigh}
         </if>
+        <if test="assetStatuses != null">
+            <choose>
+                <when test="assetStatuses.size>0">
+                    and a.status in
+                    <foreach collection="assetStatuses" item="status" open="(" close=")" separator=",">
+                        #{status}
+                    </foreach>
+                </when>
+                <otherwise>
+                    and a.status=-1
+                </otherwise>
+            </choose>
+        </if>
     </sql>
     <select id="getAssetByCondition" parameterType="com.bupt.lams.dto.AssetQueryCondition" resultMap="BaseResultMap">
         select a.*
@@ -152,5 +165,16 @@
     <select id="getAssetById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select * from asset
         where id = #{aid}
+    </select>
+    <select id="getAssetStatusCount" resultType="com.bupt.lams.dto.AssetStatusCount">
+        select count(id) as count, status
+        from asset
+        where status in (2, 3, 4, 6)
+        group by status;
+    </select>
+    <select id="getAliveAssetTotalMoney" resultType="java.lang.Double">
+        select sum(price)
+        from asset
+        where status in (2, 3, 6);
     </select>
 </mapper>

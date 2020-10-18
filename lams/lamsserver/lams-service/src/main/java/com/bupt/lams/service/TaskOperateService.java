@@ -320,7 +320,7 @@ public class TaskOperateService {
             // 更新资产入库时间
             Asset asset = new Asset();
             asset.setId(aid);
-            asset.setStatus(AssetStatusEnum.NORMAL.getIndex());
+            asset.setStatus(AssetStatusEnum.FREE.getIndex());
             asset.setReadyDate(new Date());
             assetMapper.updateAsset(asset);
             return;
@@ -338,6 +338,9 @@ public class TaskOperateService {
         if (taskHandleDto.getOperateType() == OperateTypeEnum.CONFIRM.getIndex()) {
             order.setStatus(OrderStatusEnum.OCCUPIED.getIndex());
             orderMapper.updateOrderStatusById(order);
+            Asset asset = order.getAsset();
+            asset.setStatus(AssetStatusEnum.INUSE.getIndex());
+            assetMapper.updateAssetStatus(asset);
             return;
         }
         // 如果是归还则更新工单状态

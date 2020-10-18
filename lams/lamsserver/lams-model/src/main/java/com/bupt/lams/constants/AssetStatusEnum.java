@@ -5,10 +5,11 @@ package com.bupt.lams.constants;
  */
 public enum AssetStatusEnum {
     CREATE("申请中", 1),
-    NORMAL("正常", 2),
+    FREE("闲置", 2),
     BROKEN("故障", 3),
     CLEANED("报废", 4),
-    REJECTED("审批未通过", 5);
+    REJECTED("审批未通过", 5),
+    INUSE("使用中", 6);
 
     private String name;
     private int index;

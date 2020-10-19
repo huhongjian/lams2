@@ -189,7 +189,7 @@
 
 <script>
 export default {
-  name: "AssetDetail",
+  name: "OrderDetail",
   props: ['order', 'title', 'dialogVisible2', 'operateList'],
   data() {
     return {

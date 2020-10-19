@@ -23,14 +23,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyApply.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/AssetDashBoardHeadTableData.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/AssetDashBoardData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/AssetStatusCount.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/AssetStatusCount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetDashBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetDashBoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetDashBoard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetDashBoard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/order/OrderBasicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/order/OrderBasicController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/order/Mine.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/order/Mine.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyAppy.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyOut.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyOut.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/mine/MyTask.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/mine/MyTask.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,14 +186,7 @@
       <workItem from="1602747987838" duration="46929000" />
       <workItem from="1602919560738" duration="22127000" />
       <workItem from="1602957664906" duration="30571000" />
-      <workItem from="1603045415775" duration="6015000" />
-    </task>
-    <task id="LOCAL-00021" summary="调整前端格式">
-      <created>1601112393634</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1601112393634</updated>
+      <workItem from="1603045415775" duration="10149000" />
     </task>
     <task id="LOCAL-00022" summary="开发资产借用流程">
       <created>1601144456928</created>
@@ -531,7 +524,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603039564145</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="仪表盘资产增长趋势开发">
+      <created>1603051881022</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1603051881023</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -550,7 +550,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="上线" />
     <MESSAGE value="仪表盘前端开发，搭架子" />
     <MESSAGE value="资产管理前端开发" />
     <MESSAGE value="调整前端，删掉聊天的代码" />
@@ -575,7 +574,8 @@
     <MESSAGE value="仪表盘环形图开发" />
     <MESSAGE value="仪表盘资产概况表格开发" />
     <MESSAGE value="仪表盘资产分类统计开发" />
-    <option name="LAST_COMMIT_MESSAGE" value="仪表盘资产分类统计开发" />
+    <MESSAGE value="仪表盘资产增长趋势开发" />
+    <option name="LAST_COMMIT_MESSAGE" value="仪表盘资产增长趋势开发" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1600784045187">
@@ -610,10 +610,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1603048152727" />
-    <state x="304" y="0" key="CommitChangelistDialog2" timestamp="1603039555325">
+    <state x="304" y="0" key="CommitChangelistDialog2" timestamp="1603051872784">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="304" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1603039555325" />
+    <state x="304" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1603051872784" />
     <state width="798" height="438" key="DebuggerActiveHint" timestamp="1603051265795">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -626,54 +626,54 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1602852859436" />
-    <state width="1493" height="282" key="GridCell.Tab.0.bottom" timestamp="1603051423389">
+    <state width="1493" height="282" key="GridCell.Tab.0.bottom" timestamp="1603097034371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603051423389" />
-    <state width="1493" height="282" key="GridCell.Tab.0.center" timestamp="1603051423389">
+    <state width="1493" height="282" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603097034371" />
+    <state width="1493" height="282" key="GridCell.Tab.0.center" timestamp="1603097034371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603051423389" />
-    <state width="1493" height="282" key="GridCell.Tab.0.left" timestamp="1603051423389">
+    <state width="1493" height="282" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603097034371" />
+    <state width="1493" height="282" key="GridCell.Tab.0.left" timestamp="1603097034371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603051423389" />
-    <state width="1493" height="282" key="GridCell.Tab.0.right" timestamp="1603051423389">
+    <state width="1493" height="282" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603097034371" />
+    <state width="1493" height="282" key="GridCell.Tab.0.right" timestamp="1603097034371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603051423389" />
-    <state width="1493" height="282" key="GridCell.Tab.1.bottom" timestamp="1603051423390">
+    <state width="1493" height="282" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603097034371" />
+    <state width="1493" height="282" key="GridCell.Tab.1.bottom" timestamp="1603097034371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603051423390" />
-    <state width="1493" height="282" key="GridCell.Tab.1.center" timestamp="1603051423389">
+    <state width="1493" height="282" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603097034371" />
+    <state width="1493" height="282" key="GridCell.Tab.1.center" timestamp="1603097034371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1603051423389" />
-    <state width="1493" height="282" key="GridCell.Tab.1.left" timestamp="1603051423389">
+    <state width="1493" height="282" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1603097034371" />
+    <state width="1493" height="282" key="GridCell.Tab.1.left" timestamp="1603097034371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1603051423389" />
-    <state width="1493" height="282" key="GridCell.Tab.1.right" timestamp="1603051423389">
+    <state width="1493" height="282" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1603097034371" />
+    <state width="1493" height="282" key="GridCell.Tab.1.right" timestamp="1603097034371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1603051423389" />
-    <state width="1493" height="282" key="GridCell.Tab.2.bottom" timestamp="1603051423390">
+    <state width="1493" height="282" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1603097034371" />
+    <state width="1493" height="282" key="GridCell.Tab.2.bottom" timestamp="1603097034371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603051423390" />
-    <state width="1493" height="282" key="GridCell.Tab.2.center" timestamp="1603051423390">
+    <state width="1493" height="282" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603097034371" />
+    <state width="1493" height="282" key="GridCell.Tab.2.center" timestamp="1603097034371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1603051423390" />
-    <state width="1493" height="282" key="GridCell.Tab.2.left" timestamp="1603051423390">
+    <state width="1493" height="282" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1603097034371" />
+    <state width="1493" height="282" key="GridCell.Tab.2.left" timestamp="1603097034371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1603051423390" />
-    <state width="1493" height="282" key="GridCell.Tab.2.right" timestamp="1603051423390">
+    <state width="1493" height="282" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1603097034371" />
+    <state width="1493" height="282" key="GridCell.Tab.2.right" timestamp="1603097034371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1603051423390" />
+    <state width="1493" height="282" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1603097034371" />
     <state x="583" y="346" key="ReplaceDuplicatesPrompt" timestamp="1603033005631">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -686,18 +686,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1601976970035" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1603039586085">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1603051885471">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1603039586085" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1603051885471" />
     <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1603048151752">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="775" height="419" key="XDebugger.FullValuePopup/0.0.1536.824@0.0.1536.824" timestamp="1603048151752" />
-    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1603039647286">
+    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1603051909513">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1603039647286" />
+    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1603051909513" />
     <state x="499" y="172" key="extract.method.dialog" timestamp="1603033002343">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -722,32 +722,6 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1601989094646" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetDashBoardController.java</url>
-          <line>84</line>
-          <option name="timeStamp" value="43" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/order/OrderBasicController.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetService.java</url>
-          <line>115</line>
-          <option name="timeStamp" value="46" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetDashBoardController.java</url>
-          <line>88</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/lams$LamsApplication.ic" NAME="LamsApplication Coverage Results" MODIFIED="1602860077435" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

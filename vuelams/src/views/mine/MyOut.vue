@@ -1,5 +1,92 @@
 <template>
   <div>
+    <div>
+      <div style="display: flex;justify-content: space-between">
+        <div>
+          <p style="display: inline-flex;margin-left: 8px"></p>
+        </div>
+        <div>
+          <el-input placeholder="请输入资产名称进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
+                    clearable
+                    @clear="initOrders"
+                    style="width: 350px;margin-right: 10px" v-model="keyword"
+                    @keydown.enter.native="initOrders" :disabled="showAdvanceSearchView"></el-input>
+          <el-button icon="el-icon-search" type="primary" @click="initOrders"
+                     :disabled="showAdvanceSearchView">
+            搜索
+          </el-button>
+          <el-button type="primary" @click="showAdvanceSearchView = !showAdvanceSearchView">
+            <i :class="showAdvanceSearchView?'fa fa-angle-double-up':'fa fa-angle-double-down'"
+               aria-hidden="true"></i>
+            高级搜索
+          </el-button>
+        </div>
+      </div>
+      <transition name="slide-fade">
+        <div v-show="showAdvanceSearchView"
+             style="border: 1px solid #759ad1;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;">
+          <el-row>
+            <el-col :span="6">
+              类型:
+              <el-select v-model="searchValue.type"
+                         clearable
+                         placeholder="类型"
+                         size="mini"
+                         style="width: 130px;">
+                <el-option
+                    v-for="item in types"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.name">
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="5">
+              品牌:
+              <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
+                        clearable
+                        v-model="searchValue.brand"></el-input>
+            </el-col>
+            <el-col :span="5">
+              状态:
+              <el-select v-model="searchValue.status" clearable placeholder="状态" size="mini" style="width: 130px;">
+                <el-option
+                    v-for="item in statuses"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                </el-option>
+              </el-select>
+            </el-col>
+          </el-row>
+          <el-row style="margin-top: 10px">
+            <el-col :span="6">
+              申请人邮箱:
+              <el-input size="mini" style="width: 150px" clearable prefix-icon="el-icon-edit"
+                        v-model="searchValue.userEmail"></el-input>
+            </el-col>
+            <el-col :span="9">
+              申请时间:
+              <el-date-picker
+                  v-model="searchValue.beginDateScope"
+                  type="daterange"
+                  size="mini"
+                  unlink-panels
+                  value-format="yyyy-MM-dd"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期">
+              </el-date-picker>
+            </el-col>
+            <el-col :span="5" :offset="4">
+              <el-button size="mini" @click="clearSearchValue">重置</el-button>
+              <el-button size="mini" @click="showAdvanceSearchView = false">取消</el-button>
+              <el-button size="mini" icon="el-icon-search" type="primary" @click="initOrdersAdv">搜索</el-button>
+            </el-col>
+          </el-row>
+        </div>
+      </transition>
+    </div>
     <Mine v-on:currentSize="sizeChange" v-on:currentPage="currentChange" :orders="orders"
           :showAdvanceSearchView="showAdvanceSearchView" :total="total" :page="page" :size="size"
           :loading="loading"></Mine>

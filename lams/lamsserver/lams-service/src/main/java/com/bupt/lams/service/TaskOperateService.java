@@ -65,8 +65,10 @@ public class TaskOperateService {
 
         // 设置工单状态
         orderMapper.updateOrderStatusById(order);
+        // 清空过期时间和申请理由信息
+        orderMapper.resetOrderById(order.getId());
 
-        // 3. 查询工单工作流关联关系
+        // 查询工单工作流关联关系
         OrderWorkflow orderWorkflow = orderWorkflowService.getOrderWorkflowByOid(oid);
         if (orderWorkflow != null) {
             this.processManagerService.hungUpProcessInstanceByBizKey(oid.toString());

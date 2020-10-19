@@ -64,10 +64,9 @@ public class OrderBasicController {
 
     @PutMapping("/edit")
     public RespBean updateOrder(@RequestBody Order order) {
-        LamsUser user = UserInfoUtils.getLoginedUser();
-        // 工单只允许创建人和管理员修改
-        if (!order.getUserEmail().equals(user.getUsername()) && UserInfoUtils.isAdmin() == false) {
-            return RespBean.error("没有修改权限，请联系管理员!");
+        // 工单只允许管理员修改
+        if (UserInfoUtils.isAdmin() == false) {
+            return RespBean.error("您没有编辑权限，请联系管理员!");
         }
         try {
             orderService.updateOrder(order);
@@ -81,7 +80,7 @@ public class OrderBasicController {
     public RespBean deleteOrders(@RequestBody List<Integer> oids) {
         // 工单只允许管理员删除
         if (UserInfoUtils.isAdmin() == false) {
-            return RespBean.error("没有删除权限，请联系管理员!");
+            return RespBean.error("您没有删除权限，请联系管理员!");
         }
         try {
             orderService.deleteOrders(oids);

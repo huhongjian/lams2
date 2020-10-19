@@ -54,8 +54,8 @@
         <if test="brand !=null and brand!=''">
             and a.brand like concat('%',#{brand},'%')
         </if>
-        <if test="beginDateScope !=null">
-            and o.createTime between #{beginDateScope[0]} and #{beginDateScope[1]}
+        <if test="startDate !=null and endDate !=null">
+            and o.createTime between #{startDate} and #{endDate}
         </if>
         <if test="ids != null">
             <choose>

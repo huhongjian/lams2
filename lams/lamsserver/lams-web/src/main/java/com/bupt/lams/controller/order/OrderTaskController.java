@@ -107,15 +107,19 @@ public class OrderTaskController {
 
     @RequestMapping("getMyApply")
     @ResponseBody
-    public RespPageBean getMyApply(OrderQueryCondition orderQueryCondition) {
+    public RespPageBean getMyApply(OrderQueryCondition orderQueryCondition, Date[] dateScope) {
         LamsUser user = UserInfoUtils.getLoginedUser();
         orderQueryCondition.setUserEmail(user.getUsername());
+        if (dateScope != null && dateScope.length == 2) {
+            orderQueryCondition.setStartDate(dateScope[0]);
+            orderQueryCondition.setEndDate(dateScope[1]);
+        }
         return orderService.getOrderByCondition(orderQueryCondition);
     }
 
     @RequestMapping("getMyTask")
     @ResponseBody
-    public RespPageBean getMyTask(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Order order, Date[] beginDateScope) {
+    public RespPageBean getMyTask(OrderQueryCondition orderQueryCondition, Date[] dateScope) {
         LamsUser user = UserInfoUtils.getLoginedUser();
         List<Long> assignedOrderIds = taskOperateService.getAssignedOrderIds(user.getUsername());
         List<Long> candidateOrderIds = taskOperateService.getCandidateOrderIds(user.getUsername());
@@ -126,12 +130,11 @@ public class OrderTaskController {
         for (Long id : candidateOrderIds) {
             oids.add(id);
         }
-        OrderQueryCondition condition = new OrderQueryCondition();
-        condition.setOrderInfo(order);
-        condition.setPage(page);
-        condition.setSize(size);
-        condition.setIds(oids);
-        condition.setBeginDateScope(beginDateScope);
-        return orderService.getOrderByCondition(condition);
+        orderQueryCondition.setIds(oids);
+        if (dateScope != null && dateScope.length == 2) {
+            orderQueryCondition.setStartDate(dateScope[0]);
+            orderQueryCondition.setEndDate(dateScope[1]);
+        }
+        return orderService.getOrderByCondition(orderQueryCondition);
     }
 }

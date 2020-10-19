@@ -68,7 +68,7 @@
             <el-col :span="9">
               申请时间:
               <el-date-picker
-                  v-model="searchValue.beginDateScope"
+                  v-model="searchValue.dateScope"
                   type="daterange"
                   size="mini"
                   unlink-panels
@@ -110,7 +110,7 @@ export default {
         brand: null,
         status: null,
         userEmail: null,
-        beginDateScope: null
+        dateScope: null
       },
       title: '',
       showAdvanceSearchView: false,
@@ -129,18 +129,26 @@ export default {
         category: "",
         categoryName: "",
         status: "",
-        duration: "",
+        statusName: "",
+        expireTime: "",
         reason: "测试",
-        applicant: "胡宏建",
-        applicantPhone: "18840833079",
-        applicantEmail: "admin",
+        userEmail: "admin",
+        user: {
+          id: "",
+          name: "",
+          phone: "",
+          username: "",
+        },
         createTime: "",
+        updateTime: "",
         asset: {
           id: "",
+          status: "",
+          statusName: "",
           brand: "华为",
           type: "手机",
           price: "4000",
-          adv: {},
+          adv: {}
         }
       },
       types: [
@@ -230,6 +238,11 @@ export default {
         }
       };
     },
+    showEditView(data) {
+      this.title = '编辑申请信息';
+      this.order = data;
+      this.dialogVisible = true;
+    },
     showDetailView(data) {
       this.title = '申请单详情';
       this.order = data;
@@ -279,8 +292,8 @@ export default {
       if (this.searchValue.userEmail) {
         url += '&userEmail=' + this.searchValue.userEmail;
       }
-      if (this.searchValue.beginDateScope) {
-        url += '&beginDateScope=' + this.searchValue.beginDateScope;
+      if (this.searchValue.dateScope) {
+        url += '&dateScope=' + this.searchValue.dateScope;
       }
       this.getRequest(url).then(resp => {
         this.loading = false;

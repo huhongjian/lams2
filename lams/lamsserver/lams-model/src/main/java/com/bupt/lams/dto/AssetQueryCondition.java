@@ -19,7 +19,8 @@ public class AssetQueryCondition {
     /**
      * 时间范围
      */
-    private Date[] beginDateScope;
+    private Date startDate;
+    private Date endDate;
     /**
      * 价格范围
      */

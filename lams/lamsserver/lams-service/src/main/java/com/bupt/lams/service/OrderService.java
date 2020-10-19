@@ -115,10 +115,7 @@ public class OrderService {
     @Transactional(rollbackFor = Exception.class)
     public void updateOrder(Order order) {
         orderMapper.updateOrder(order);
-        // 入库流程才可以更新资产信息，其他时候要更新资产信息需要在“资产信息管理中更新”
-        if (order.getCategory() == ProcessTypeEnum.IN.getIndex()) {
-            assetMapper.updateAsset(order.getAsset());
-        }
+        assetMapper.updateAsset(order.getAsset());
     }
 
     @Transactional(rollbackFor = Exception.class)

@@ -88,6 +88,14 @@
             label="更新时间"
             width="180">
         </el-table-column>
+        <el-table-column
+            fixed="right"
+            width="80"
+            label="操作">
+          <template slot-scope="scope">
+            <el-button @click="showEditView(scope.row)">编辑</el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <div style="display: flex;justify-content: flex-end">
         <el-pagination
@@ -116,7 +124,10 @@ export default {
     },
     getOperateList(data) {
       this.$parent.getOperateList(data);
-    }
+    },
+    showEditView(data) {
+      this.$parent.showEditView(data);
+    },
   }
 }
 </script>

@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,12 +30,16 @@ public class OrderBasicController {
     OrderService orderService;
 
     @GetMapping("/get")
-    public RespPageBean getOrderInByPage(OrderQueryCondition orderQueryCondition) {
+    public RespPageBean getOrderByPage(OrderQueryCondition orderQueryCondition, Date[] dateScope) {
         List<Integer> assetStatus = new ArrayList<>();
         assetStatus.add(AssetStatusEnum.CREATE.getIndex());
         assetStatus.add(AssetStatusEnum.FREE.getIndex());
         assetStatus.add(AssetStatusEnum.INUSE.getIndex());
         orderQueryCondition.setAssetStatuses(assetStatus);
+        if (dateScope != null && dateScope.length == 2) {
+            orderQueryCondition.setStartDate(dateScope[0]);
+            orderQueryCondition.setEndDate(dateScope[1]);
+        }
         return orderService.getOrderByCondition(orderQueryCondition);
     }
 

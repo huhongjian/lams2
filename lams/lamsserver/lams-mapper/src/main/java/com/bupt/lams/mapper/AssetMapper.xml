@@ -28,8 +28,8 @@
         <if test="brand !=null and brand!=''">
             and a.brand like concat('%',#{brand},'%')
         </if>
-        <if test="beginDateScope !=null">
-            and a.readyDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+        <if test="startDate !=null and endDate !=null">
+            and a.readyDate between #{startDate} and #{endDate}
         </if>
         <if test="priceLow !=null and priceHigh !=null">
             and a.price between #{priceLow} and #{priceHigh}

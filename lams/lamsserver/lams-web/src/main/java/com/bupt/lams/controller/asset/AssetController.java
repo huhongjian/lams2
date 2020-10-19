@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * 资产信息相关
@@ -31,7 +32,11 @@ public class AssetController {
     OrderAssetService orderAssetService;
 
     @GetMapping("/get")
-    public RespPageBean getAssetInfoByPage(AssetQueryCondition assetQueryCondition) {
+    public RespPageBean getAssetInfoByPage(AssetQueryCondition assetQueryCondition, Date[] dateScope) {
+        if (dateScope != null && dateScope.length == 2) {
+            assetQueryCondition.setStartDate(dateScope[0]);
+            assetQueryCondition.setEndDate(dateScope[1]);
+        }
         return assetService.getAssetByCondition(assetQueryCondition);
     }
 

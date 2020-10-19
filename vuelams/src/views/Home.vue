@@ -9,7 +9,7 @@
               {{ user.name }}
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
+              <el-dropdown-item command="userInfo">个人中心</el-dropdown-item>
               <el-dropdown-item command="logout" divided>注销登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -86,8 +86,8 @@ export default {
             message: '已取消操作'
           });
         });
-      } else if (cmd == 'userinfo') {
-        this.$router.push('/hrinfo');
+      } else if (cmd == 'userInfo') {
+        this.$router.push('/userInfo');
       }
     }
   }

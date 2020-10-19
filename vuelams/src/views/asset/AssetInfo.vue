@@ -75,7 +75,7 @@
             <el-col :span="9">
               入库时间:
               <el-date-picker
-                  v-model="searchValue.beginDateScope"
+                  v-model="searchValue.dateScope"
                   type="daterange"
                   size="mini"
                   unlink-panels
@@ -313,7 +313,7 @@ export default {
         status: null,
         priceLow: null,
         priceHigh: null,
-        beginDateScope: null
+        dateScope: null
       },
       loading: false,
       total: 0,
@@ -407,8 +407,8 @@ export default {
         if (this.searchValue.priceHigh) {
           url += '&priceHigh=' + this.searchValue.priceHigh;
         }
-        if (this.searchValue.beginDateScope) {
-          url += '&beginDateScope=' + this.searchValue.beginDateScope;
+        if (this.searchValue.dateScope) {
+          url += '&dateScope=' + this.searchValue.dateScope;
         }
       } else {
         url += "&id=" + this.keyword;
@@ -475,8 +475,8 @@ export default {
       if (this.searchValue.priceHigh) {
         url += '&priceHigh=' + this.searchValue.priceHigh;
       }
-      if (this.searchValue.beginDateScope) {
-        url += '&beginDateScope=' + this.searchValue.beginDateScope;
+      if (this.searchValue.dateScope) {
+        url += '&dateScope=' + this.searchValue.dateScope;
       }
       this.getRequest(url).then(resp => {
         this.loading = false;
@@ -505,7 +505,7 @@ export default {
         status: null,
         priceLow: null,
         priceHigh: null,
-        beginDateScope: null
+        dateScope: null
       }
     }
   }

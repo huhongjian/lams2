@@ -126,7 +126,7 @@
 
 <script>
 export default {
-  name: "AssetEdit",
+  name: "OrderEdit",
   props: ['order', 'title', 'dialogVisible'],
   data() {
     return {

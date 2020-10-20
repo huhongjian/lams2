@@ -9,7 +9,7 @@
     <sql id="Base_Column_List">
     id, uid, rid
   </sql>
-    <delete id="deleteByHrid">
+    <delete id="deleteByUid">
     delete from lams_user_role where uid=#{uid}
   </delete>
     <insert id="addRole">

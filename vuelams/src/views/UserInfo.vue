@@ -19,6 +19,9 @@
             {{ r.nameZh }}
           </el-tag>
         </div>
+        <div>备注：
+          <el-tag>{{ user.remark }}</el-tag>
+        </div>
         <div style="display: flex;justify-content: space-around;margin-top: 10px">
           <el-button type="primary" @click="showUpdateUserInfoView">修改信息</el-button>
           <el-button type="danger" @click="showUpdatePasswdView">修改密码</el-button>
@@ -53,6 +56,16 @@
             </td>
             <td>
               <el-input v-model="user2.phone"></el-input>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <el-tag>备注：</el-tag>
+            </td>
+            <td>
+              <el-input type="textarea"
+                        :rows="2"
+                        v-model="user2.remark"></el-input>
             </td>
           </tr>
         </table>

@@ -11,17 +11,13 @@ public interface LamsUserMapper {
 
     int insert(LamsUser record);
 
-    int insertSelective(LamsUser record);
-
     LamsUser selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(LamsUser record);
 
-    int updateByPrimaryKey(LamsUser record);
-
     LamsUser loadUserByUsername(String username);
 
-    List<Role> getHrRolesById(Integer id);
+    List<Role> getRolesById(Integer id);
 
     List<Integer> getUserIdsByPage(@Param("uid") Integer uid, @Param("keywords") String keywords, @Param("page") Integer page, @Param("size") Integer size);
 
@@ -29,7 +25,7 @@ public interface LamsUserMapper {
 
     Long getTotal(@Param("uid") Integer uid);
 
-    List<LamsUser> getAllUsersExceptCurrentHr(Integer id);
+    List<LamsUser> getAllUsersExceptCurrent(Integer id);
 
-    Integer updatePasswd(@Param("uid") Integer hrid, @Param("encodePass") String encodePass);
+    Integer updatePasswd(@Param("uid") Integer uid, @Param("encodePass") String encodePass);
 }

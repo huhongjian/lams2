@@ -16,12 +16,12 @@
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, phone, telephone, address, enabled, username, password, userface, remark
+    id, name, phone, enabled, username, password, remark
   </sql>
-    <select id="getAllUsersExceptCurrentHr" resultMap="BaseResultMap">
+    <select id="getAllUsersExceptCurrent" resultMap="BaseResultMap">
         select * from lams_user where id !=#{id};
     </select>
-    <select id="getHrRolesById" resultType="com.bupt.lams.model.Role">
+    <select id="getRolesById" resultType="com.bupt.lams.model.Role">
     select r.* from role r,lams_user_role lrr where lrr.`rid`=r.`id` and lrr.`uid`=#{id}
   </select>
     <select id="getUserIdsByPage" resultType="java.lang.Integer">
@@ -49,13 +49,13 @@
         <if test="ids != null">
             <choose>
                 <when test="ids.size>0">
-                     u.id in
+                    u.id in
                     <foreach collection="ids" item="id" open="(" close=")" separator=",">
                         #{id}
                     </foreach>
                 </when>
                 <otherwise>
-                     o.id=-1
+                    o.id=-1
                 </otherwise>
             </choose>
         </if>
@@ -109,73 +109,6 @@
             </if>
         </trim>
     </insert>
-    <insert id="insertSelective" parameterType="com.bupt.lams.model.LamsUser">
-        insert into lams_user
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="name != null">
-                name,
-            </if>
-            <if test="phone != null">
-                phone,
-            </if>
-            <if test="telephone != null">
-                telephone,
-            </if>
-            <if test="address != null">
-                address,
-            </if>
-            <if test="enabled != null">
-                enabled,
-            </if>
-            <if test="username != null">
-                username,
-            </if>
-            <if test="password != null">
-                password,
-            </if>
-            <if test="userface != null">
-                userface,
-            </if>
-            <if test="remark != null">
-                remark,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="name != null">
-                #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="phone != null">
-                #{phone,jdbcType=CHAR},
-            </if>
-            <if test="telephone != null">
-                #{telephone,jdbcType=VARCHAR},
-            </if>
-            <if test="address != null">
-                #{address,jdbcType=VARCHAR},
-            </if>
-            <if test="enabled != null">
-                #{enabled,jdbcType=BIT},
-            </if>
-            <if test="username != null">
-                #{username,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null">
-                #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="userface != null">
-                #{userface,jdbcType=VARCHAR},
-            </if>
-            <if test="remark != null">
-                #{remark,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.bupt.lams.model.LamsUser">
         update lams_user
         <set>
@@ -184,12 +117,6 @@
             </if>
             <if test="phone != null">
                 phone = #{phone,jdbcType=CHAR},
-            </if>
-            <if test="telephone != null">
-                telephone = #{telephone,jdbcType=VARCHAR},
-            </if>
-            <if test="address != null">
-                address = #{address,jdbcType=VARCHAR},
             </if>
             <if test="enabled != null">
                 enabled = #{enabled,jdbcType=BIT},
@@ -200,9 +127,6 @@
             <if test="password != null">
                 password = #{password,jdbcType=VARCHAR},
             </if>
-            <if test="userface != null">
-                userface = #{userface,jdbcType=VARCHAR},
-            </if>
             <if test="remark != null">
                 remark = #{remark,jdbcType=VARCHAR},
             </if>
@@ -212,17 +136,4 @@
     <update id="updatePasswd">
         update lams_user set password = #{encodePass} where id=#{uid};
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.bupt.lams.model.LamsUser">
-    update lams_user
-    set name = #{name,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=CHAR},
-      telephone = #{telephone,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      enabled = #{enabled,jdbcType=BIT},
-      username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      userface = #{userface,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

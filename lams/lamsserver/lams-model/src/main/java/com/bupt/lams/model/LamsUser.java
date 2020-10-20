@@ -26,6 +26,8 @@ public class LamsUser implements UserDetails {
 
     private String password;
 
+    private String remark;
+
     private List<Role> roles;
 
     @Override

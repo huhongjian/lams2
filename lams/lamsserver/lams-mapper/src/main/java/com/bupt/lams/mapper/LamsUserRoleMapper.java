@@ -16,7 +16,7 @@ public interface LamsUserRoleMapper {
 
     int updateByPrimaryKey(LamsUserRole record);
 
-    void deleteByHrid(Integer uid);
+    void deleteByUid(Integer uid);
 
     Integer addRole(@Param("uid") Integer uid, @Param("rids") Integer[] rids);
 }

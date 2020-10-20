@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
         if (lamsUser == null) {
             throw new UsernameNotFoundException("用户名不存在!");
         }
-        lamsUser.setRoles(lamsUserMapper.getHrRolesById(lamsUser.getId()));
+        lamsUser.setRoles(lamsUserMapper.getRolesById(lamsUser.getId()));
         return lamsUser;
     }
 
@@ -61,7 +61,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void updateUserRole(Integer uid, Integer[] rids) {
-        lamsUserRoleMapper.deleteByHrid(uid);
+        lamsUserRoleMapper.deleteByUid(uid);
         if (rids != null && rids.length > 0) {
             lamsUserRoleMapper.addRole(uid, rids);
         }
@@ -71,8 +71,8 @@ public class UserService implements UserDetailsService {
         return lamsUserMapper.deleteByPrimaryKey(id);
     }
 
-    public List<LamsUser> getAllHrsExceptCurrentHr() {
-        return lamsUserMapper.getAllUsersExceptCurrentHr(UserInfoUtils.getLoginedUser().getId());
+    public List<LamsUser> getAllUsersExceptCurrent() {
+        return lamsUserMapper.getAllUsersExceptCurrent(UserInfoUtils.getLoginedUser().getId());
     }
 
     public Integer updateUserById(LamsUser lamsUser) {

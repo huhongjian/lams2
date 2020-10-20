@@ -2,7 +2,7 @@ import {
     Message
 } from 'element-ui';
 const showMessage = Symbol('showMessage')
-class JavaboyMessage {
+class MyMessage {
     [showMessage](type, options, single) {
         if (single) {
             if (document.getElementsByClassName('el-message').length === 0) {
@@ -25,4 +25,4 @@ class JavaboyMessage {
         this[showMessage]('success', options, single)
     }
 }
-export const mymessage = new JavaboyMessage();
+export const mymessage = new MyMessage();

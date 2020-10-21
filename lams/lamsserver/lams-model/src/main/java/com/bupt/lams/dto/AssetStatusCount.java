@@ -21,6 +21,6 @@ public class AssetStatusCount {
         this.status = status;
         this.statusName = statusName;
         this.count = count;
-        this.money = money;
+        this.money = money == null ? 0 : money;
     }
 }

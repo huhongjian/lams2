@@ -1,5 +1,6 @@
 package com.bupt.lams.model;
 
+import com.bupt.lams.constants.RecordAopDispatchEnum;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,17 +12,25 @@ import java.util.Date;
 public class Record {
     private Long id;
 
-    private Long oid;
+    private Integer operate;
 
-    private Integer type;
+    private String operateName;
 
     private String operator;
 
     private String operatorMail;
 
-    private Integer operateType;
-
-    private String operate;
+    private String text;
 
     private Date operateTime;
+
+    public void setOperate(Integer operate) {
+        this.operate = operate;
+        this.operateName = RecordAopDispatchEnum.getNameByIndex(operate);
+    }
+
+    public void setOperator(LamsUser user) {
+        this.operator = user.getName();
+        this.operatorMail = user.getUsername();
+    }
 }

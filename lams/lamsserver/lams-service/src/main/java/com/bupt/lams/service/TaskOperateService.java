@@ -77,10 +77,10 @@ public class TaskOperateService {
         return true;
     }
 
-    public void startWorkFlow(Record record, Map<String, String> startParamMap) {
-        Order order = orderMapper.selectByPrimaryKey(record.getOid());
+    public void startWorkFlow(Long oid, Integer category, String operatorMail, Map<String, String> startParamMap) {
+        Order order = orderMapper.selectByPrimaryKey(oid);
         // 1. 查找关联工作流definition
-        String workflowKey = operateTypeWorkflowService.selectWorkflowKeyByOperateType(record.getType());
+        String workflowKey = operateTypeWorkflowService.selectWorkflowKeyByOperateType(category);
         String procInstId = processManagerService.submitStartFormDataByProcessDefinitionKey(workflowKey, order.getId().toString(), startParamMap, order.getUserEmail());
         // 2. 保存工单工作流关联关系
         OrderWorkflow orderWorkflow = new OrderWorkflow();
@@ -88,9 +88,9 @@ public class TaskOperateService {
         orderWorkflow.setWorkflowInstId(Long.parseLong(procInstId));
         orderWorkflow.setWorkflowStartTime(new Date());
         orderWorkflowService.saveOrderWorkflow(orderWorkflow);
-        TaskDto taskDto = getCandidateTskInfoByOrderIdAndUsername(record.getOid(), null);
+        TaskDto taskDto = getCandidateTskInfoByOrderIdAndUsername(oid, null);
         Map<String, String> variablesMap = new HashMap<>();
-        variablesMap.put(WorkflowConstant.NEXT_USER, record.getOperatorMail());
+        variablesMap.put(WorkflowConstant.NEXT_USER, operatorMail);
         taskService.setVariables(taskDto.getTaskId(), variablesMap);
     }
 

@@ -50,7 +50,10 @@ public class AssetService {
         // 获取总数
         data.setTotal(geAliveAssetTotal());
         // 获取总金额
-        data.setMoney(assetMapper.getAliveAssetTotalMoney());
+        Double money = assetMapper.getAliveAssetTotalMoney();
+        if (money != null) {
+            data.setMoney(money);
+        }
         // 获取其他数据
         List<AssetStatusCount> assetStatusCounts = assetMapper.getAssetStatusCount(null);
         if (CollectionUtils.isNotEmpty(assetStatusCounts)) {

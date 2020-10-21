@@ -69,17 +69,8 @@ public class OrderService {
         orderAsset.setCreateTime(new Date());
         orderAsset.setUpdateTime(new Date());
         orderAssetMapper.insertSelective(orderAsset);
-        // 构造record
-        Record record = new Record();
-        record.setOid(order.getId());
-        record.setType(ProcessTypeEnum.IN.getIndex());
-        record.setOperate(OperateTypeEnum.CREATE.getName());
-        record.setOperateType(OperateTypeEnum.CREATE.getIndex());
-        record.setOperator(user.getName());
-        record.setOperatorMail(user.getUsername());
-        record.setOperateTime(order.getCreateTime());
         try {
-            taskOperateService.startWorkFlow(record, null);
+            taskOperateService.startWorkFlow(order.getId(), ProcessTypeEnum.IN.getIndex(), user.getUsername(), null);
         } catch (Exception e) {
             logger.error("启动工作流失败", e);
             throw e;
@@ -94,18 +85,9 @@ public class OrderService {
         order.setCreateTime(new Date());
         orderMapper.updateOrder(order);
         assetMapper.updateAsset(asset);
-        // 构造record
-        Record record = new Record();
-        record.setOid(order.getId());
-        record.setType(ProcessTypeEnum.OUT.getIndex());
-        record.setOperate(OperateTypeEnum.BORROW.getName());
-        record.setOperateType(OperateTypeEnum.BORROW.getIndex());
-        record.setOperator(user.getName());
-        record.setOperatorMail(user.getUsername());
-        record.setOperateTime(order.getCreateTime());
         try {
             // 这个map是开启工作流时间的数据，并不是流转过程中的数据
-            taskOperateService.startWorkFlow(record, null);
+            taskOperateService.startWorkFlow(order.getId(), ProcessTypeEnum.OUT.getIndex(), user.getUsername(), null);
         } catch (Exception e) {
             logger.error("启动工作流失败", e);
             throw e;

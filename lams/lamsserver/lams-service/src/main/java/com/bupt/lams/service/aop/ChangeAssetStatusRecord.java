@@ -10,18 +10,19 @@ import org.aspectj.lang.JoinPoint;
 import java.util.Date;
 
 /**
- * 修改资产信息操作记录策略类
+ * 修改资产状态操作记录策略类
  */
-public class UpdateAssetRecord implements IRecord {
+public class ChangeAssetStatusRecord implements IRecord {
 
     @Override
     public Record getRecord(JoinPoint joinPoint) {
         Record record = new Record();
         LamsUser user = UserInfoUtils.getLoginedUser();
         Asset asset = (Asset) joinPoint.getArgs()[0];
-        record.setOperate(RecordAopDispatchEnum.UPDATE_ASSET.getIndex());
+        record.setOperate(RecordAopDispatchEnum.CHANGE_ASSET_STATUS.getIndex());
         record.setOperator(user);
-        String text = "【" + user.getName() + "】" + "修改了资产信息；" + "资产编号：【" + asset.getId() + "】";
+        String text = "【" + user.getName() + "】" + "修改资产状态为：" +
+                "【" + asset.getStatusName() + "】；" + "资产编号：【" + asset.getId() + "】";
         record.setText(text);
         record.setOperateTime(new Date());
         return record;

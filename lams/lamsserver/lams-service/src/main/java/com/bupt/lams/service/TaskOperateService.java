@@ -11,6 +11,9 @@ import com.bupt.lams.mapper.LamsUserMapper;
 import com.bupt.lams.mapper.OrderAssetMapper;
 import com.bupt.lams.mapper.OrderMapper;
 import com.bupt.lams.model.*;
+import com.bupt.lams.service.annotation.OperateRecord;
+import com.bupt.lams.service.aop.CancelRecord;
+import com.bupt.lams.service.aop.HandleRecord;
 import com.bupt.lams.service.process.ProcessManagerService;
 import com.bupt.lams.service.task.TaskManagerService;
 import com.bupt.lams.utils.UserInfoUtils;
@@ -50,6 +53,7 @@ public class TaskOperateService {
 
 
     @Transactional(rollbackFor = Exception.class)
+    @OperateRecord(description = "取消工单", clazz = CancelRecord.class)
     public boolean cancelOrder(TaskHandleDto taskHandleDto) {
         logger.info("[start]取消工单，工单ID:" + taskHandleDto.getId());
         Long oid = taskHandleDto.getId();
@@ -95,6 +99,7 @@ public class TaskOperateService {
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @OperateRecord(description = "处理工单", clazz = HandleRecord.class)
     public void handleTask(TaskHandleDto taskHandleDto) {
         Long id = taskHandleDto.getId();
         String candidateUser = taskHandleDto.getCandidateUser();

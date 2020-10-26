@@ -1,7 +1,6 @@
 package com.bupt.lams.service;
 
 import com.bupt.lams.constants.AssetStatusEnum;
-import com.bupt.lams.constants.OperateTypeEnum;
 import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.constants.ProcessTypeEnum;
 import com.bupt.lams.dto.OrderQueryCondition;
@@ -9,9 +8,12 @@ import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.mapper.OrderAssetMapper;
 import com.bupt.lams.mapper.OrderMapper;
 import com.bupt.lams.model.*;
+import com.bupt.lams.service.annotation.OperateRecord;
+import com.bupt.lams.service.aop.AddAssetRecord;
+import com.bupt.lams.service.aop.BorrowAssetRecord;
+import com.bupt.lams.service.aop.DeleteOrderRecord;
+import com.bupt.lams.service.aop.UpdateOrderRecord;
 import com.bupt.lams.utils.UserInfoUtils;
-import com.sun.org.apache.xpath.internal.operations.Or;
-import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -53,6 +55,7 @@ public class OrderService {
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @OperateRecord(description = "新增资产申请", clazz = AddAssetRecord.class)
     public void addOrderIn(Order order) {
         LamsUser user = UserInfoUtils.getLoginedUser();
         order.setUserEmail(user.getUsername());
@@ -78,6 +81,7 @@ public class OrderService {
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @OperateRecord(description = "借用资产", clazz = BorrowAssetRecord.class)
     public void borrowAsset(Order order) {
         Asset asset = order.getAsset();
         LamsUser user = UserInfoUtils.getLoginedUser();
@@ -95,12 +99,14 @@ public class OrderService {
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @OperateRecord(description = "更新工单信息", clazz = UpdateOrderRecord.class)
     public void updateOrder(Order order) {
         orderMapper.updateOrder(order);
         assetMapper.updateAsset(order.getAsset());
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @OperateRecord(description = "删除工单", clazz = DeleteOrderRecord.class)
     public void deleteOrders(List<Integer> oids) {
         orderMapper.deleteManyByOids(oids);
         orderAssetMapper.deleteManyByOids(oids);

@@ -10,8 +10,8 @@ public enum RecordAopDispatchEnum {
     BORROW_ASSET("资产借用申请", 4),
     UPDATE_ORDER("编辑工单信息", 5),
     DELETE_ORDERS("删除工单", 6),
-    CANCEL("取消工单", 6),
-    HANDLE("处理工单", 6);
+    CANCEL("取消工单", 7),
+    HANDLE("处理工单", 8);
 
     private String name;
     private int index;

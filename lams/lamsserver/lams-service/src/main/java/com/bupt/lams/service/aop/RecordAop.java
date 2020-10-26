@@ -1,16 +1,18 @@
 package com.bupt.lams.service.aop;
 
-import com.bupt.lams.constants.RecordAopDispatchEnum;
-import com.bupt.lams.model.Asset;
-import com.bupt.lams.model.LamsUser;
+import com.bupt.lams.mapper.RecordMapper;
 import com.bupt.lams.model.Record;
-import com.bupt.lams.utils.UserInfoUtils;
+import com.bupt.lams.service.annotation.OperateRecord;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 /**
  * 操作记录切面
@@ -20,18 +22,19 @@ import org.springframework.stereotype.Component;
 public class RecordAop {
     private Logger logger = LoggerFactory.getLogger(RecordAop.class);
 
-    @After(value = "(execution(* com.bupt.lams.service.AssetService.updateAsset(..)))")
-    public void after(JoinPoint joinPoint) {
-        try {
-            Record record = new Record();
-            LamsUser user = UserInfoUtils.getLoginedUser();
-            Asset asset = (Asset) joinPoint.getArgs()[0];
-            record.setOperate(RecordAopDispatchEnum.UPDATE_ASSET.getIndex());
-            record.setOperator(user);
-            String text = "【" + user.getName() + "】" + "修改了资产信息；" + "资产编号：【" + asset.getId() + "】";
-            record.setText(text);
-        } catch (Exception e) {
+    @Resource
+    RecordMapper recordMapper;
 
+    @After(value = "@annotation(op)")
+    public void after(JoinPoint joinPoint, OperateRecord op) {
+        try {
+            Class clz = op.clazz();
+            Constructor constructor = clz.getConstructor();
+            Method getRecord = clz.getMethod("getRecord", JoinPoint.class);
+            Record record = (Record) getRecord.invoke(constructor.newInstance(), joinPoint);
+            recordMapper.insertSelective(record);
+        } catch (Exception e) {
+            logger.error("处理操作记录错误！", e);
         }
     }
 }

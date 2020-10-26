@@ -7,6 +7,8 @@ import com.bupt.lams.dto.AssetStatusCount;
 import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.service.annotation.OperateRecord;
+import com.bupt.lams.service.aop.UpdateAssetRecord;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,8 @@ public class AssetService {
         return bean;
     }
 
+
+    @OperateRecord(description = "更新资产信息", clazz = UpdateAssetRecord.class)
     public void updateAsset(Asset asset) {
         assetMapper.updateAsset(asset);
     }

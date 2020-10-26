@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bupt.lams.mapper.RecordMapper">
+    <sql id="Base_Column_List">
+    id, operate, operateName, operator, operatorMail, text, operateTime
+  </sql>
+    <select id="getAllRecord" resultType="com.bupt.lams.model.Record">
+        select * from record;
+  </select>
+    <select id="selectByPrimaryKey" resultType="com.bupt.lams.model.Record" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from record
+        where id = #{id}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from record
+    where id = #{id}
+  </delete>
+    <insert id="insertSelective" parameterType="com.bupt.lams.model.Record">
+        insert into record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="operate != null">
+                operate,
+            </if>
+            <if test="operateName != null and operateName != ''">
+                operateName,
+            </if>
+            <if test="operator != null and operator != ''">
+                operator,
+            </if>
+            <if test="operatorMail != null and operatorMail != ''">
+                operatorMail,
+            </if>
+            <if test="text != null and text != ''">
+                text,
+            </if>
+            <if test="operateTime != null and operateTime != ''">
+                operateTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="operate != null">
+                #{operate},
+            </if>
+            <if test="operateName != null and operateName != ''">
+                #{operateName},
+            </if>
+            <if test="operator != null and operator != ''">
+                #{operator},
+            </if>
+            <if test="operatorMail != null and operatorMail != ''">
+                #{operatorMail},
+            </if>
+            <if test="text != null and text != ''">
+                #{text},
+            </if>
+            <if test="operateTime != null and operateTime != ''">
+                #{operateTime},
+            </if>
+        </trim>
+    </insert>
+</mapper>

@@ -1,6 +1,7 @@
 package com.bupt.lams.model;
 
 import com.bupt.lams.constants.RecordAopDispatchEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,12 +17,13 @@ public class Record {
 
     private String operateName;
 
-    private String operator;
+    private String operatorName;
 
     private String operatorMail;
 
     private String text;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date operateTime;
 
     public void setOperate(Integer operate) {
@@ -30,7 +32,7 @@ public class Record {
     }
 
     public void setOperator(LamsUser user) {
-        this.operator = user.getName();
+        this.operatorName = user.getName();
         this.operatorMail = user.getUsername();
     }
 }

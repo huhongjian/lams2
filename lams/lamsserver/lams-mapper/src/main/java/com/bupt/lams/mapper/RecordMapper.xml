@@ -4,9 +4,43 @@
     <sql id="Base_Column_List">
     id, operate, operateName, operator, operatorMail, text, operateTime
   </sql>
-    <select id="getAllRecord" resultType="com.bupt.lams.model.Record">
-        select * from record;
-  </select>
+    <sql id="baseInfoQuery">
+        <if test="id !=null">
+            and r.id = #{id}
+        </if>
+        <if test="operate !=null">
+            and r.operate = #{operate}
+        </if>
+        <if test="operatorMail !=null and operatorMail!=''">
+            and r.operatorMail like concat('%',#{operatorMail},'%')
+        </if>
+        <if test="text !=null and text!=''">
+            and r.text like concat('%',#{text},'%')
+        </if>
+        <if test="startDate !=null and endDate !=null">
+            and r.operateTime between #{startDate} and #{endDate}
+        </if>
+    </sql>
+    <select id="getRecordByCondition" parameterType="com.bupt.lams.dto.RecordQueryCondition"
+            resultType="com.bupt.lams.model.Record">
+        select r.*
+        from
+        record r
+        <where>
+            <include refid="baseInfoQuery"/>
+        </where>
+        <if test="page !=null and size!=null">
+            limit #{page},#{size}
+        </if>
+    </select>
+    <select id="getTotalByCondition" parameterType="com.bupt.lams.dto.RecordQueryCondition" resultType="java.lang.Long">
+        select count(*)
+        from
+        record r
+        <where>
+            <include refid="baseInfoQuery"/>
+        </where>
+    </select>
     <select id="selectByPrimaryKey" resultType="com.bupt.lams.model.Record" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>

@@ -31,6 +31,7 @@ public class OrderBasicController {
 
     @GetMapping("/get")
     public RespPageBean getOrderByPage(OrderQueryCondition orderQueryCondition, Date[] dateScope) {
+        // 维修中和报废的资产不在工单中展示
         List<Integer> assetStatus = new ArrayList<>();
         assetStatus.add(AssetStatusEnum.CREATE.getIndex());
         assetStatus.add(AssetStatusEnum.FREE.getIndex());

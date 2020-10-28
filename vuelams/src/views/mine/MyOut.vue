@@ -3,10 +3,13 @@
     <div>
       <div style="display: flex;justify-content: space-between">
         <div>
-          <p style="display: inline-flex;margin-left: 8px"></p>
+          <el-button style="display: inline-flex;margin-left: 8px" type="primary" icon="el-icon-plus"
+                     @click="showAddView">
+            发起离退流程
+          </el-button>
         </div>
         <div>
-          <el-input placeholder="请输入资产名称进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
+          <el-input placeholder="请输入申请单编号进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
                     clearable
                     @clear="initOrders"
                     style="width: 350px;margin-right: 10px" v-model="keyword"
@@ -26,30 +29,13 @@
         <div v-show="showAdvanceSearchView"
              style="border: 1px solid #759ad1;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;">
           <el-row>
-            <el-col :span="6">
-              类型:
-              <el-select v-model="searchValue.type"
+            <el-col :span="7">
+              状态:
+              <el-select v-model="searchValue.status"
                          clearable
-                         placeholder="类型"
+                         placeholder="状态"
                          size="mini"
                          style="width: 130px;">
-                <el-option
-                    v-for="item in types"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.name">
-                </el-option>
-              </el-select>
-            </el-col>
-            <el-col :span="5">
-              品牌:
-              <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
-                        clearable
-                        v-model="searchValue.brand"></el-input>
-            </el-col>
-            <el-col :span="5">
-              状态:
-              <el-select v-model="searchValue.status" clearable placeholder="状态" size="mini" style="width: 130px;">
                 <el-option
                     v-for="item in statuses"
                     :key="item.id"
@@ -58,14 +44,20 @@
                 </el-option>
               </el-select>
             </el-col>
+            <el-col :span="9">
+              理由:
+              <el-input size="mini" style="width: 350px" prefix-icon="el-icon-edit"
+                        clearable
+                        v-model="searchValue.reason"></el-input>
+            </el-col>
           </el-row>
           <el-row style="margin-top: 10px">
-            <el-col :span="6">
+            <el-col :span="7">
               申请人邮箱:
-              <el-input size="mini" style="width: 150px" clearable prefix-icon="el-icon-edit"
+              <el-input size="mini" style="width: 200px" clearable prefix-icon="el-icon-edit"
                         v-model="searchValue.userEmail"></el-input>
             </el-col>
-            <el-col :span="9">
+            <el-col :span="8">
               申请时间:
               <el-date-picker
                   v-model="searchValue.dateScope"
@@ -87,44 +79,112 @@
         </div>
       </transition>
     </div>
-    <Mine v-on:currentSize="sizeChange" v-on:currentPage="currentChange" :orders="orders"
-          :showAdvanceSearchView="showAdvanceSearchView" :total="total" :page="page" :size="size"
-          :loading="loading"></Mine>
-    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :title="title"
-               :rules='rules'></AssetEdit>
-    <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
-                 :candidateBranches='candidateBranches' :rules='rules'></AssetDetail>
+    <Mine v-on:currentSize="sizeChange" v-on:currentPage="currentChange" :orders="orders" :total="total" :page="page"
+          :size="size" :loading="loading" :isOut="isOut"></Mine>
+    <el-dialog
+        :title="title"
+        :visible.sync="dialogVisible2"
+        width="80%">
+      <div>
+        <el-form :model="order">
+          <el-row>
+            <el-col :span="6">
+              <el-form-item label="申请单号:" prop="id">
+                {{ order.id }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="流程:" prop="categoryName">
+                {{ order.categoryName }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="状态:" prop="status">
+                {{ order.status }}
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">
+              <el-form-item label="电话:" prop="user.phone">
+                {{ order.user.phone }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="邮件:" prop="user.username">
+                {{ order.user.username }}
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="10">
+              <el-form-item v-show="order.reason&&order.reason!=''" label="理由:" prop="reason">
+                {{ order.reason }}
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="10">
+              <el-form-item v-show="order.createTime" label="创建时间:" prop="createTime">
+                {{ order.createTime }}
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </div>
+      <span slot="footer" class="dialog-footer">
+      <el-button v-if="order.status=='3'||order.status=='8'||order.status=='7'" type="primary" @click="visible2=true">借 用</el-button>
+    <template v-for="op in operateList">
+      <el-button type="primary" @click="handle(op.operateType)">{{ op.operate }}</el-button>
+    </template>
+        <el-button @click="$emit('close')">取 消</el-button>
+  </span>
+    </el-dialog>
+    <el-dialog
+        :title="title"
+        :visible.sync="dialogVisible"
+        width="80%">
+      <div>
+        <el-form :model="order" ref="orderForm">
+          <el-row>
+            <el-col :span="20">
+              <el-form-item label="理由:" prop="reason">
+                <el-input size="mini"
+                          type="textarea"
+                          :rows="2"
+                          placeholder="请输入申请理由"
+                          v-model="order.reason"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </div>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible=false">取 消</el-button>
+    <el-button type="primary" @click="doStudentOut">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import AssetDetail from "@/components/order/OrderDetail";
-import AssetEdit from "@/components/order/OrderEdit";
 import Mine from "@/components/order/Mine";
 
 export default {
   name: "MyOut",
   data() {
     return {
+      isOut: true,
       searchValue: {
-        type: null,
-        nationId: null,
-        jobLevelId: null,
-        posId: null,
-        engageForm: null,
-        departmentId: null,
+        category: null,
+        status: null,
+        reason: null,
+        userEmail: null,
         dateScope: null
       },
       title: '',
-      importDataBtnText: '导入数据',
-      importDataBtnIcon: 'el-icon-upload2',
-      importDataDisabled: false,
-      showAdvanceSearchView: false,
-      allDeps: [],
       orders: [],
-      loading: false,
-      popVisible: false,
-      popVisible2: false,
+      showAdvanceSearchView: false,
       dialogVisible: false,
       // 详情页可见性
       dialogVisible2: false,
@@ -132,194 +192,106 @@ export default {
       page: 1,
       keyword: '',
       size: 10,
-      nations: [],
-      joblevels: [],
-      types: [
-        {
-          id: 1,
-          name: '手机'
-        }, {
-          id: 2,
-          name: '主机'
-        }, {
-          id: 3,
-          name: '交换机'
-        }, {
-          id: 4,
-          name: '测距仪'
-        }],
       statuses: [
         {
-          id: 0,
-          name: "申请采购"
+          id: 9,
+          name: "申请离退"
         },
         {
-          id: 0,
+          id: 2,
           name: "审批通过"
         },
         {
-          id: 0,
+          id: 6,
           name: "审批未通过"
+        },
+        {
+          id: 7,
+          name: "已关闭"
         }
       ],
       candidateBranches: {},
-      tiptopDegrees: ['本科', '大专', '硕士', '博士', '高中', '初中', '小学', '其他'],
-      inputDepName: '所属部门',
+      operateList: [],
       order: {
         id: "",
         category: "",
         categoryName: "",
         status: "",
-        duration: "",
+        statusName: "",
+        expireTime: "",
         reason: "测试",
-        applicant: "胡宏建",
-        applicantPhone: "18840833079",
-        applicantEmail: "admin",
+        userEmail: "admin",
+        user: {
+          id: "",
+          name: "",
+          phone: "",
+          username: "",
+        },
         createTime: "",
+        updateTime: "",
         asset: {
           id: "",
+          status: "",
+          statusName: "",
           brand: "华为",
           type: "手机",
           price: "4000",
-          adv: {},
-        },
+          adv: {}
+        }
       },
-      defaultProps: {
-        children: 'children',
-        label: 'name'
-      },
-      rules: {
-        name: [{required: true, message: '请输入用户名', trigger: 'blur'}],
-        gender: [{required: true, message: '请输入性别', trigger: 'blur'}],
-        birthday: [{required: true, message: '请输入出生日期', trigger: 'blur'}],
-        idCard: [{required: true, message: '请输入身份证号码', trigger: 'blur'}, {
-          pattern: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
-          message: '身份证号码格式不正确',
-          trigger: 'blur'
-        }],
-        wedlock: [{required: true, message: '请输入婚姻状况', trigger: 'blur'}],
-        nationId: [{required: true, message: '请输入您组', trigger: 'blur'}],
-        nativePlace: [{required: true, message: '请输入籍贯', trigger: 'blur'}],
-        politicId: [{required: true, message: '请输入政治面貌', trigger: 'blur'}],
-        email: [{required: true, message: '请输入邮箱地址', trigger: 'blur'}, {
-          type: 'email',
-          message: '邮箱格式不正确',
-          trigger: 'blur'
-        }],
-        phone: [{required: true, message: '请输入电话号码', trigger: 'blur'}],
-        address: [{required: true, message: '请输入员工地址', trigger: 'blur'}],
-        departmentId: [{required: true, message: '请输入部门名称', trigger: 'blur'}],
-        jobLevelId: [{required: true, message: '请输入职称', trigger: 'blur'}],
-        posId: [{required: true, message: '请输入职位', trigger: 'blur'}],
-        engageForm: [{required: true, message: '请输入聘用形式', trigger: 'blur'}],
-        tiptopDegree: [{required: true, message: '请输入学历', trigger: 'blur'}],
-        specialty: [{required: true, message: '请输入专业', trigger: 'blur'}],
-        school: [{required: true, message: '请输入毕业院校', trigger: 'blur'}],
-        beginDate: [{required: true, message: '请输入入职日期', trigger: 'blur'}],
-        workState: [{required: true, message: '请输入工作状态', trigger: 'blur'}],
-        workID: [{required: true, message: '请输入工号', trigger: 'blur'}],
-        contractTerm: [{required: true, message: '请输入合同期限', trigger: 'blur'}],
-        conversionTime: [{required: true, message: '请输入转正日期', trigger: 'blur'}],
-        notworkDate: [{required: true, message: '请输入离职日期', trigger: 'blur'}],
-        beginContract: [{required: true, message: '请输入合同起始日期', trigger: 'blur'}],
-        endContract: [{required: true, message: '请输入合同结束日期', trigger: 'blur'}],
-        workAge: [{required: true, message: '请输入工龄', trigger: 'blur'}],
+      taskHandleDto: {
+        id: null,
+        operateType: null,
+        candidateUser: null
       }
     }
   },
   components: {
-    AssetDetail,
-    AssetEdit,
     Mine
   },
   mounted() {
     this.initOrders();
   },
   methods: {
-    searvhViewHandleNodeClick(data) {
-      this.inputDepName = data.name;
-      this.searchValue.departmentId = data.id;
-      this.popVisible2 = !this.popVisible2
-    },
-    onError(err, file, fileList) {
-      this.importDataBtnText = '导入数据';
-      this.importDataBtnIcon = 'el-icon-upload2';
-      this.importDataDisabled = false;
-    },
-    onSuccess(response, file, fileList) {
-      this.importDataBtnText = '导入数据';
-      this.importDataBtnIcon = 'el-icon-upload2';
-      this.importDataDisabled = false;
-      this.initOrders();
-    },
-    beforeUpload() {
-      this.importDataBtnText = '正在导入';
-      this.importDataBtnIcon = 'el-icon-loading';
-      this.importDataDisabled = true;
-    },
-    exportData() {
-      window.open('/employee/basic/export', '_parent');
-    },
-    emptyAsset() {
-      this.asset = {
+    emptyOrder() {
+      this.order = {
         id: "",
-        brand: "华为",
-        type: "手机",
-        price: "4000",
-        applicant: "胡宏建",
-        applicantPhone: "18840833079",
-        applicantEmail: "admin",
+        category: "",
+        categoryName: "",
+        status: "",
+        statusName: "",
+        expireTime: "",
         reason: "测试",
-        adv: {}
-      }
-      this.inputDepName = '';
-    },
-    showEditEmpView(data) {
-      this.title = '编辑资产信息';
-      this.asset = data;
-      this.dialogVisible = true;
+        userEmail: "admin",
+        user: {
+          id: "",
+          name: "",
+          phone: "",
+          username: "",
+        },
+        createTime: "",
+        updateTime: "",
+        asset: {
+          id: "",
+          brand: "华为",
+          type: "手机",
+          price: "4000",
+          adv: {},
+        }
+      };
     },
     showDetailView(data) {
       this.title = '资产详情';
       this.asset = data;
       this.dialogVisible2 = true;
     },
-    getCandidateBranchInfo(data) {
-      this.getRequest('/order/task/getCandidateTaskBranchInfo?id=' + data.id).then(resp => {
+    getOperateList(data) {
+      this.getRequest('/order/task/getOperateList?id=' + data.id).then(resp => {
         if (resp) {
-          this.candidateBranches = resp.obj;
+          this.operateList = resp.obj;
           this.showDetailView(data);
         }
       });
-    },
-    deleteEmp(data) {
-      this.$confirm('此操作将永久删除【' + data.name + '】, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.deleteRequest("/employee/basic/" + data.id).then(resp => {
-          if (resp) {
-            this.initOrders();
-          }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
-    },
-    handleNodeClick(data) {
-      this.inputDepName = data.name;
-      this.emp.departmentId = data.id;
-      this.popVisible = !this.popVisible
-    },
-    showDepView() {
-      this.popVisible = !this.popVisible
-    },
-    showDepView2() {
-      this.popVisible2 = !this.popVisible2
     },
     sizeChange(currentSize) {
       this.size = currentSize;
@@ -329,38 +301,60 @@ export default {
       this.page = currentPage;
       this.initOrders('advanced');
     },
-    showAddEmpView() {
-      this.emptyAsset();
-      this.title = '资产采购申请';
+    showAddView() {
+      this.emptyOrder();
+      this.title = '离退流程申请';
       this.dialogVisible = true;
     },
-    initOrders(type) {
+    handle() {
+      this.taskHandleDto.id = this.order.id;
+      this.postRequest("/order/task/handleTask", this.taskHandleDto).then(resp => {
+        if (resp) {
+          this.visible = false;
+          this.$emit('close');
+          this.$parent.initOrders();
+        }
+      });
+    },
+    doStudentOut() {
+
+    },
+    initOrders() {
+      this.type = '';
       this.loading = true;
-      let url = '/order/basic/get/?category=3&page=' + this.page + '&size=' + this.size;
-      if (type && type == 'advanced') {
-        if (this.searchValue.politicId) {
-          url += '&politicId=' + this.searchValue.politicId;
+      let url = '/order/basic/get/?category=1&page=' + this.page + '&size=' + this.size + "&oid=" + this.keyword;
+      this.getRequest(url).then(resp => {
+        this.loading = false;
+        if (resp) {
+          this.orders = resp.data;
+          this.total = resp.total;
         }
-        if (this.searchValue.nationId) {
-          url += '&nationId=' + this.searchValue.nationId;
-        }
-        if (this.searchValue.jobLevelId) {
-          url += '&jobLevelId=' + this.searchValue.jobLevelId;
-        }
-        if (this.searchValue.posId) {
-          url += '&posId=' + this.searchValue.posId;
-        }
-        if (this.searchValue.engageForm) {
-          url += '&engageForm=' + this.searchValue.engageForm;
-        }
-        if (this.searchValue.departmentId) {
-          url += '&departmentId=' + this.searchValue.departmentId;
-        }
-        if (this.searchValue.dateScope) {
-          url += '&dateScope=' + this.searchValue.dateScope;
-        }
-      } else {
-        url += "&name=" + this.keyword;
+      });
+    },
+    initOrdersAdv() {
+      this.type = 'advanced'
+      this.loading = true;
+      let url = '/order/basic/get/?category=1&page=' + this.page + '&size=' + this.size;
+      if (this.searchValue.type) {
+        url += '&type=' + this.searchValue.type;
+      }
+      if (this.searchValue.brand) {
+        url += '&brand=' + this.searchValue.brand;
+      }
+      if (this.searchValue.status) {
+        url += '&status=' + this.searchValue.status;
+      }
+      if (this.searchValue.userEmail) {
+        url += '&userEmail=' + this.searchValue.userEmail;
+      }
+      if (this.searchValue.priceLow) {
+        url += '&priceLow=' + this.searchValue.priceLow;
+      }
+      if (this.searchValue.priceHigh) {
+        url += '&priceHigh=' + this.searchValue.priceHigh;
+      }
+      if (this.searchValue.dateScope) {
+        url += '&dateScope=' + this.searchValue.dateScope;
       }
       this.getRequest(url).then(resp => {
         this.loading = false;
@@ -369,26 +363,20 @@ export default {
           this.total = resp.total;
         }
       });
+    },
+    clearSearchValue() {
+      this.searchValue = {
+        type: null,
+        brand: null,
+        status: null,
+        userEmail: null,
+        priceLow: null,
+        priceHigh: null,
+        dateScope: null
+      }
     }
   }
 }
 </script>
-
 <style>
-/* 可以设置不同的进入和离开动画 */
-/* 设置持续时间和动画函数 */
-.slide-fade-enter-active {
-  transition: all .8s ease;
-}
-
-.slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-
-.slide-fade-enter, .slide-fade-leave-to
-  /* .slide-fade-leave-active for below version 2.1.8 */
-{
-  transform: translateX(10px);
-  opacity: 0;
-}
 </style>

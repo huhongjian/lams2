@@ -208,6 +208,7 @@ export default {
         expireTime: [{required: true, message: '请输入预计转交时间', trigger: 'blur'}],
         reason: [{required: true, message: '请输入申请理由', trigger: 'blur'}]
       },
+      // 禁用一些时间
       pickerOptions: {
         disabledDate: (time) => {
           return this.dealDisabledDate(time);

@@ -89,6 +89,7 @@
             width="180">
         </el-table-column>
         <el-table-column
+            v-if="isOut&&isOut==false"
             fixed="right"
             width="80"
             label="操作">
@@ -114,7 +115,7 @@
 
 export default {
   name: "Mine",
-  props: ['orders', 'total', 'page', 'size', 'loading'],
+  props: ['orders', 'total', 'page', 'size', 'loading', 'isOut'],
   methods: {
     sizeChange(currentSize) {
       this.$emit('currentSize', currentSize)

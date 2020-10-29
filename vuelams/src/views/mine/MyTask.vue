@@ -138,6 +138,8 @@ export default {
           name: "",
           phone: "",
           username: "",
+          enabled: "",
+          remark: ""
         },
         createTime: "",
         updateTime: "",

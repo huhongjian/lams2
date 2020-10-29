@@ -1,4 +1,4 @@
-package com.bupt.lams.service.aop;
+package com.bupt.lams.service.strategies.record;
 
 import com.bupt.lams.constants.RecordAopDispatchEnum;
 import com.bupt.lams.model.Asset;

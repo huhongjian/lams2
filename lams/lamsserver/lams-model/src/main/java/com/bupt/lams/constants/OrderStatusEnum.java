@@ -11,7 +11,8 @@ public enum OrderStatusEnum {
     OCCUPIED("已借出", 5),
     REJECTED("审批未通过", 6),
     CLOSED("已关闭", 7),
-    REFUSED("审批未通过", 8);
+    REFUSED("审批未通过", 8),
+    STU_OUT("离退申请", 9);
 
     private String name;
     private int index;

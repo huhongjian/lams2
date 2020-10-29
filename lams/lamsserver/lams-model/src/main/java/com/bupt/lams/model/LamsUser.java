@@ -14,7 +14,6 @@ import java.util.Objects;
 /**
  * 资产管理系统用户
  */
-@Data
 public class LamsUser implements UserDetails {
     private Integer id;
 
@@ -25,6 +24,8 @@ public class LamsUser implements UserDetails {
     private String username;
 
     private String password;
+
+    private Boolean enabled;
 
     private String remark;
 
@@ -41,14 +42,6 @@ public class LamsUser implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(username);
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
     }
 
     public String getUsername() {
@@ -72,11 +65,7 @@ public class LamsUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+        return enabled;
     }
 
     @Override
@@ -93,7 +82,55 @@ public class LamsUser implements UserDetails {
         return password;
     }
 
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

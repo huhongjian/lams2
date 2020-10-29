@@ -13,7 +13,9 @@ public enum OperateTypeEnum {
     CANCEL("撤回", 7),
     REFUSE("拒绝", 8),
     RETURN("归还", 9),
-    BORROW("借用", 10);
+    BORROW("借用", 10),
+    STU_OUT_APPROVE("离退审批通过", 11),
+    STU_OUT_REJECT("离退审批拒绝", 12);
 
     private String name;
     private int index;

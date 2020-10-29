@@ -82,7 +82,7 @@ public class OrderTaskController {
         List<Operate> operateList;
         LamsUser user = UserInfoUtils.getLoginedUser();
         // 1. 获取资产信息
-        Order order = orderService.selectByPrimaryKey(id);
+        Order order = orderService.selectBaseOrderInfoById(id);
         if (order == null) {
             response.setStatus(500);
             response.setMsg("指定工单不存在！");

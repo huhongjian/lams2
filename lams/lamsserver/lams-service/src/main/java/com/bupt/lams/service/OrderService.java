@@ -9,11 +9,12 @@ import com.bupt.lams.mapper.OrderAssetMapper;
 import com.bupt.lams.mapper.OrderMapper;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.annotation.OperateRecord;
-import com.bupt.lams.service.aop.AddAssetRecord;
-import com.bupt.lams.service.aop.BorrowAssetRecord;
-import com.bupt.lams.service.aop.DeleteOrderRecord;
-import com.bupt.lams.service.aop.UpdateOrderRecord;
+import com.bupt.lams.service.strategies.record.AddAssetRecord;
+import com.bupt.lams.service.strategies.record.BorrowAssetRecord;
+import com.bupt.lams.service.strategies.record.DeleteOrderRecord;
+import com.bupt.lams.service.strategies.record.UpdateOrderRecord;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,21 @@ public class OrderService {
         return bean;
     }
 
+    public RespPageBean getStuOutByCondition(OrderQueryCondition condition) {
+        Integer page = condition.getPage();
+        Integer size = condition.getSize();
+        if (page != null && size != null) {
+            page = (page - 1) * size;
+        }
+        condition.setPage(page);
+        List<Order> data = orderMapper.getStuOutByCondition(condition);
+        Long total = orderMapper.getStuOutTotalByCondition(condition);
+        RespPageBean bean = new RespPageBean();
+        bean.setData(data);
+        bean.setTotal(total);
+        return bean;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @OperateRecord(description = "新增资产申请", clazz = AddAssetRecord.class)
     public void addOrderIn(Order order) {
@@ -73,7 +89,23 @@ public class OrderService {
         orderAsset.setUpdateTime(new Date());
         orderAssetMapper.insertSelective(orderAsset);
         try {
-            taskOperateService.startWorkFlow(order.getId(), ProcessTypeEnum.IN.getIndex(), user.getUsername(), null);
+            taskOperateService.startWorkFlow(order, ProcessTypeEnum.IN.getIndex(), user.getUsername(), null);
+        } catch (Exception e) {
+            logger.error("启动工作流失败", e);
+            throw e;
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void addStuOut(Order order) {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        order.setUserEmail(user.getUsername());
+        order.setCategory(ProcessTypeEnum.LEAVE.getIndex());
+        order.setStatus(OrderStatusEnum.STU_OUT.getIndex());
+        order.setCreateTime(new Date());
+        orderMapper.insertSelective(order);
+        try {
+            taskOperateService.startWorkFlow(order, ProcessTypeEnum.LEAVE.getIndex(), user.getUsername(), null);
         } catch (Exception e) {
             logger.error("启动工作流失败", e);
             throw e;
@@ -91,7 +123,7 @@ public class OrderService {
         assetMapper.updateAsset(asset);
         try {
             // 这个map是开启工作流时间的数据，并不是流转过程中的数据
-            taskOperateService.startWorkFlow(order.getId(), ProcessTypeEnum.OUT.getIndex(), user.getUsername(), null);
+            taskOperateService.startWorkFlow(order, ProcessTypeEnum.OUT.getIndex(), user.getUsername(), null);
         } catch (Exception e) {
             logger.error("启动工作流失败", e);
             throw e;
@@ -112,7 +144,28 @@ public class OrderService {
         orderAssetMapper.deleteManyByOids(oids);
     }
 
-    public Order selectByPrimaryKey(Long id) {
-        return orderMapper.selectByPrimaryKey(id);
+    public Order selectFullOrderInfoById(Long id) {
+        OrderQueryCondition condition = new OrderQueryCondition();
+        condition.setOid(id);
+        condition.setPage(null);
+        condition.setSize(null);
+        List<Order> orderList = orderMapper.getOrderByCondition(condition);
+        if (CollectionUtils.isEmpty(orderList)) {
+            return null;
+        }
+        return orderList.get(0);
+    }
+
+    public Order selectBaseOrderInfoById(Long id) {
+        return orderMapper.selectBaseOrderInfoById(id);
+    }
+
+    public void updateOrderStatusById(Order order) {
+        orderMapper.updateOrderStatusById(order);
+    }
+
+    public List<Order> queryOrderByCondition(OrderQueryCondition condition) {
+        List<Order> data = orderMapper.getOrderByCondition(condition);
+        return data;
     }
 }

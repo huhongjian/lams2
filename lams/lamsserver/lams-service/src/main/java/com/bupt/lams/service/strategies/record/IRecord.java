@@ -1,4 +1,4 @@
-package com.bupt.lams.service.aop;
+package com.bupt.lams.service.strategies.record;
 
 import com.bupt.lams.model.Record;
 import org.aspectj.lang.JoinPoint;

@@ -20,6 +20,7 @@ public class OrderQueryCondition {
     private Integer category;
     private Integer status;
     private String userEmail;
+    private String reason;
     /**
      * 分页信息
      */

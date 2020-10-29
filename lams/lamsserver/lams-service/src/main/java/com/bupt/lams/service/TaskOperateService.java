@@ -6,16 +6,16 @@ import com.bupt.lams.constants.*;
 import com.bupt.lams.dto.TaskDto;
 import com.bupt.lams.dto.TaskHandleDto;
 import com.bupt.lams.dto.TaskQueryDto;
-import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.mapper.LamsUserMapper;
-import com.bupt.lams.mapper.OrderAssetMapper;
 import com.bupt.lams.mapper.OrderMapper;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.annotation.OperateRecord;
-import com.bupt.lams.service.aop.CancelRecord;
-import com.bupt.lams.service.aop.HandleRecord;
+import com.bupt.lams.service.strategies.record.CancelRecord;
+import com.bupt.lams.service.strategies.record.HandleRecord;
 import com.bupt.lams.service.process.ProcessManagerService;
+import com.bupt.lams.service.strategies.taskhandle.IUpdateStatus;
 import com.bupt.lams.service.task.TaskManagerService;
+import com.bupt.lams.utils.SpringContextUtil;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.FormProperty;
@@ -35,11 +35,9 @@ public class TaskOperateService {
     @Resource
     OrderWorkflowService orderWorkflowService;
     @Resource
-    OrderAssetMapper orderAssetMapper;
-    @Resource
     OrderMapper orderMapper;
     @Resource
-    AssetMapper assetMapper;
+    OrderService orderService;
     @Resource
     TaskManagerService taskManagerService;
     @Resource
@@ -47,7 +45,7 @@ public class TaskOperateService {
     @Resource
     LamsUserMapper lamsUserMapper;
     @Resource
-    OperateTypeWorkflowService operateTypeWorkflowService;
+    ProcessWorkflowService processWorkflowService;
     @Resource
     ProcessManagerService processManagerService;
 
@@ -57,7 +55,7 @@ public class TaskOperateService {
     public boolean cancelOrder(TaskHandleDto taskHandleDto) {
         logger.info("[start]取消工单，工单ID:" + taskHandleDto.getId());
         Long oid = taskHandleDto.getId();
-        Order order = orderMapper.selectByPrimaryKey(oid);
+        Order order = orderService.selectBaseOrderInfoById(oid);
         LamsUser user = UserInfoUtils.getLoginedUser();
         if (!order.getUserEmail().equals(user.getUsername())) {
             throw new RuntimeException("仅创建人可发起撤销操作！");
@@ -81,10 +79,10 @@ public class TaskOperateService {
         return true;
     }
 
-    public void startWorkFlow(Long oid, Integer category, String operatorMail, Map<String, String> startParamMap) {
-        Order order = orderMapper.selectByPrimaryKey(oid);
+    public void startWorkFlow(Order order, Integer category, String operatorMail, Map<String, String> startParamMap) {
+        Long oid = order.getId();
         // 1. 查找关联工作流definition
-        String workflowKey = operateTypeWorkflowService.selectWorkflowKeyByOperateType(category);
+        String workflowKey = processWorkflowService.selectWorkflowKeyByCategory(category);
         String procInstId = processManagerService.submitStartFormDataByProcessDefinitionKey(workflowKey, order.getId().toString(), startParamMap, order.getUserEmail());
         // 2. 保存工单工作流关联关系
         OrderWorkflow orderWorkflow = new OrderWorkflow();
@@ -99,14 +97,14 @@ public class TaskOperateService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @OperateRecord(description = "处理工单", clazz = HandleRecord.class)
-    public void handleTask(TaskHandleDto taskHandleDto) {
+    public void handleTask(TaskHandleDto taskHandleDto) throws ClassNotFoundException {
         Long id = taskHandleDto.getId();
+        Integer op = taskHandleDto.getOperateType();
         String candidateUser = taskHandleDto.getCandidateUser();
         LamsUser user = UserInfoUtils.getLoginedUser();
         // 查询工单工作流关联关系
         OrderWorkflow orderWorkflow = orderWorkflowService.getOrderWorkflowByOid(id);
-        Order order = this.orderMapper.selectByPrimaryKey(id);
+        Order order = orderService.selectBaseOrderInfoById(id);
         if (orderWorkflow == null) {
             throw new RuntimeException("未查询到关联流程信息");
         }
@@ -116,21 +114,30 @@ public class TaskOperateService {
         Map<String, Object> variableMap = taskDto.getVariablesMap();
         String nextUser = (String) variableMap.get(WorkflowConstant.NEXT_USER);
         // 保存操作类型，用来筛选流程中不同的分支
-        paramsMap.put(WorkflowConstant.OPERATE_TYPE, String.valueOf(taskHandleDto.getOperateType()));
+        paramsMap.put(WorkflowConstant.OPERATE_TYPE, String.valueOf(op));
         // 下一处理人默认一直延续，是流程发起人（申请人）
         paramsMap.put(WorkflowConstant.NEXT_USER, nextUser);
-        if (taskHandleDto.getOperateType() == OperateTypeEnum.TRANSFER.getIndex()) {
+        if (op == OperateTypeEnum.TRANSFER.getIndex()) {
             // 如果是转交的话，设置为转交人
             paramsMap.put(WorkflowConstant.NEXT_USER, candidateUser);
         }
         // 完成当前操作
         taskManagerService.completeTask(taskDto.getTaskId(), paramsMap, user.getUsername());
         // 更新相关状态
-        updateStage(taskHandleDto, order);
+        try {
+            updateStage(taskHandleDto, order);
+        } catch (ClassNotFoundException e) {
+            logger.error("没找到对应的handle策略类！", e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("处理工单后，更新相关状态异常！操作类型：" + OperateTypeEnum.getNameByIndex(op), e);
+            throw e;
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void claimAndHandleTask(TaskHandleDto taskHandleDto) {
+    @OperateRecord(description = "处理工单", clazz = HandleRecord.class)
+    public void claimAndHandleTask(TaskHandleDto taskHandleDto) throws ClassNotFoundException {
         // 获取待办任务
         TaskDto taskDto = getCandidateTskInfoByOrderIdAndUsername(taskHandleDto.getId(), null);
         // 接受用户任务
@@ -302,69 +309,13 @@ public class TaskOperateService {
      * @param taskHandleDto
      * @param order
      */
-    private void updateStage(TaskHandleDto taskHandleDto, Order order) {
-        Long id = taskHandleDto.getId();
-        // 如果是批准采购则更新工单状态
-        if (taskHandleDto.getOperateType() == OperateTypeEnum.APPROVE.getIndex()) {
-            order.setStatus(OrderStatusEnum.APPROVE.getIndex());
-            // 更新工单状态
-            orderMapper.updateOrderStatusById(order);
+    private void updateStage(TaskHandleDto taskHandleDto, Order order) throws ClassNotFoundException {
+        Integer op = taskHandleDto.getOperateType();
+        String operate = TaskHandleDispatch.taskHandleMap.get(op);
+        if (operate == null) {
             return;
         }
-        // 如果是入库则新增入库资产
-        if (taskHandleDto.getOperateType() == OperateTypeEnum.IN.getIndex()) {
-            order.setCategory(ProcessTypeEnum.OUT.getIndex());
-            order.setStatus(OrderStatusEnum.READY.getIndex());
-            order.setReason(null);
-            orderMapper.insertSelective(order);
-            OrderAsset orderAsset = new OrderAsset();
-            Long aid = orderAssetMapper.getAidByOid(id);
-            orderAsset.setAid(aid);
-            orderAsset.setOid(order.getId());
-            orderAsset.setCreateTime(new Date());
-            orderAsset.setUpdateTime(new Date());
-            orderAssetMapper.insertSelective(orderAsset);
-            // 更新资产入库时间
-            Asset asset = new Asset();
-            asset.setId(aid);
-            asset.setStatus(AssetStatusEnum.FREE.getIndex());
-            asset.setReadyDate(new Date());
-            assetMapper.updateAsset(asset);
-            return;
-        }
-        // 如果是新资产申请被拒绝，则更新工单状态
-        if (taskHandleDto.getOperateType() == OperateTypeEnum.REJECT.getIndex()) {
-            order.setStatus(OrderStatusEnum.REJECTED.getIndex());
-            orderMapper.updateOrderStatusById(order);
-            Asset asset = order.getAsset();
-            asset.setStatus(AssetStatusEnum.REJECTED.getIndex());
-            assetMapper.updateAssetStatus(asset);
-            return;
-        }
-        // 如果是确认转交则更新工单状态
-        if (taskHandleDto.getOperateType() == OperateTypeEnum.CONFIRM.getIndex()) {
-            order.setStatus(OrderStatusEnum.OCCUPIED.getIndex());
-            orderMapper.updateOrderStatusById(order);
-            Asset asset = order.getAsset();
-            asset.setStatus(AssetStatusEnum.INUSE.getIndex());
-            assetMapper.updateAssetStatus(asset);
-            return;
-        }
-        // 如果是归还则更新工单状态
-        if (taskHandleDto.getOperateType() == OperateTypeEnum.RETURN.getIndex()) {
-            order.setStatus(OrderStatusEnum.READY.getIndex());
-            orderMapper.updateOrderStatusById(order);
-            // 清空过期时间和申请理由信息
-            orderMapper.resetOrderById(order.getId());
-            return;
-        }
-        // 如果是拒绝借用则更新工单状态
-        if (taskHandleDto.getOperateType() == OperateTypeEnum.REFUSE.getIndex()) {
-            order.setStatus(OrderStatusEnum.REFUSED.getIndex());
-            orderMapper.updateOrderStatusById(order);
-            // 清空过期时间和申请理由信息
-            orderMapper.resetOrderById(order.getId());
-            return;
-        }
+        IUpdateStatus updateStatus = (IUpdateStatus) SpringContextUtil.getBean(operate);
+        updateStatus.updateStage(taskHandleDto, order);
     }
 }

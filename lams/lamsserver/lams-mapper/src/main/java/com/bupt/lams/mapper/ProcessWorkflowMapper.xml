@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bupt.lams.mapper.ProcessWorkflowMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.ProcessTypeWorkflow">
+        <id column="id" property="id"/>
+        <result column="category" property="category"/>
+        <result column="categoryName" property="categoryName"/>
+        <result column="workflowKey" property="workflowKey"/>
+        <result column="creator" property="creator"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, category, categoryName, workflowKey, creator, create_time
+  </sql>
+    <select id="selectByCategory" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from process_category
+        where category = #{category}
+    </select>
+</mapper>

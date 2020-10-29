@@ -19,6 +19,8 @@
             <result column="name" property="name"/>
             <result column="phone" property="phone"/>
             <result column="username" property="username"/>
+            <result column="enabled" property="enabled"/>
+            <result column="remark" property="remark"/>
         </association>
         <association property="asset" javaType="com.bupt.lams.model.Asset">
             <id column="aid" property="id"/>
@@ -87,6 +89,23 @@
             and a.price between #{priceLow} and #{priceHigh}
         </if>
     </sql>
+    <sql id="stuOutQuery">
+        <if test="oid !=null">
+            and o.id = #{oid}
+        </if>
+        <if test="status !=null">
+            and o.status = #{status}
+        </if>
+        <if test="userEmail !=null and userEmail!=''">
+            and o.userEmail like concat('%',#{userEmail},'%')
+        </if>
+        <if test="reason !=null and reason!=''">
+            and o.reason like concat('%',#{reason},'%')
+        </if>
+        <if test="startDate !=null and endDate !=null">
+            and o.createTime between #{startDate} and #{endDate}
+        </if>
+    </sql>
     <select id="getTotalByCondition" parameterType="com.bupt.lams.dto.OrderQueryCondition" resultType="java.lang.Long">
         select count(*)
         from
@@ -102,7 +121,32 @@
             <include refid="baseInfoQuery"/>
         </where>
     </select>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="getStuOutByCondition" parameterType="com.bupt.lams.dto.OrderQueryCondition" resultMap="AllOrderInfo">
+        select o.*,
+        u.id as uid, u.name, u.phone, u.username, u.enabled, u.remark
+        from
+        `order` o,
+        lams_user u
+        <where>
+            o.category = 3
+            and o.userEmail = u.username
+            <include refid="stuOutQuery"/>
+        </where>
+        <if test="page !=null and size!=null">
+            limit #{page},#{size}
+        </if>
+    </select>
+    <select id="getStuOutTotalByCondition" parameterType="com.bupt.lams.dto.OrderQueryCondition"
+            resultType="java.lang.Long">
+        select count(*)
+        from
+        `order` o
+        <where>
+            o.category = 3
+            <include refid="stuOutQuery"/>
+        </where>
+    </select>
+    <select id="selectBaseOrderInfoById" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
         from `order`
@@ -112,7 +156,8 @@
         update `order` o
         set
             o.status = #{status},
-            o.statusName = #{statusName}
+            o.statusName = #{statusName},
+            o.updateTime = NOW()
         where o.id = #{id}
     </update>
     <update id="updateOrder" parameterType="com.bupt.lams.model.Order">
@@ -227,7 +272,7 @@
     <select id="getOrderByCondition" parameterType="com.bupt.lams.dto.OrderQueryCondition" resultMap="AllOrderInfo">
         select o.*,
         a.id as aid,a.type,a.brand,a.price,a.adv,a.readyDate,
-        u.id as uid, u.name, u.phone, u.username
+        u.id as uid, u.name, u.phone, u.username, u.enabled, u.remark
         from
         `order` o,
         order_asset oa,

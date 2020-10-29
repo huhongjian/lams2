@@ -7,6 +7,8 @@
         <result column="phone" property="phone" jdbcType="CHAR"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="enabled" property="enabled" jdbcType="BIT"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
     </resultMap>
     <resultMap id="UserWithRoles" type="com.bupt.lams.model.LamsUser" extends="BaseResultMap">
         <collection property="roles" ofType="com.bupt.lams.model.Role">
@@ -16,7 +18,7 @@
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, phone, enabled, username, password, remark
+    id, name, phone, username, password, enabled, remark
   </sql>
     <select id="getAllUsersExceptCurrent" resultMap="BaseResultMap">
         select * from lams_user where id !=#{id};
@@ -135,5 +137,8 @@
     </update>
     <update id="updatePasswd">
         update lams_user set password = #{encodePass} where id=#{uid};
+    </update>
+    <update id="enabledChangeByUsername">
+         update lams_user set enabled = #{enabled} where username=#{username};
     </update>
 </mapper>

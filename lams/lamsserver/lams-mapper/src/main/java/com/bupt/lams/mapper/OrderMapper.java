@@ -23,7 +23,11 @@ public interface OrderMapper {
      */
     Long getTotalByCondition(OrderQueryCondition condition);
 
-    Order selectByPrimaryKey(Long id);
+    List<Order> getStuOutByCondition(OrderQueryCondition condition);
+
+    Long getStuOutTotalByCondition(OrderQueryCondition condition);
+
+    Order selectBaseOrderInfoById(Long id);
 
     void updateOrderStatusById(Order order);
 

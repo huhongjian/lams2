@@ -8,8 +8,8 @@ import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.annotation.OperateRecord;
-import com.bupt.lams.service.aop.ChangeAssetStatusRecord;
-import com.bupt.lams.service.aop.UpdateAssetRecord;
+import com.bupt.lams.service.strategies.record.ChangeAssetStatusRecord;
+import com.bupt.lams.service.strategies.record.UpdateAssetRecord;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 

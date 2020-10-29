@@ -99,8 +99,8 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="状态:" prop="status">
-                {{ order.status }}
+              <el-form-item label="状态:" prop="statusName">
+                {{ order.statusName }}
               </el-form-item>
             </el-col>
           </el-row>
@@ -135,9 +135,9 @@
       <span slot="footer" class="dialog-footer">
       <el-button v-if="order.status=='3'||order.status=='8'||order.status=='7'" type="primary" @click="visible2=true">借 用</el-button>
     <template v-for="op in operateList">
-      <el-button type="primary" @click="handle(op.operateType)">{{ op.operate }}</el-button>
+      <el-button type="primary" @click="checkAndHandle(op.operateType)">{{ op.operate }}</el-button>
     </template>
-        <el-button @click="$emit('close')">取 消</el-button>
+        <el-button @click="dialogVisible2=false">取 消</el-button>
   </span>
     </el-dialog>
     <el-dialog
@@ -175,8 +175,8 @@ export default {
   data() {
     return {
       isOut: true,
+      loading: false,
       searchValue: {
-        category: null,
         status: null,
         reason: null,
         userEmail: null,
@@ -268,6 +268,8 @@ export default {
           name: "",
           phone: "",
           username: "",
+          enabled: "",
+          remark: ""
         },
         createTime: "",
         updateTime: "",
@@ -282,7 +284,7 @@ export default {
     },
     showDetailView(data) {
       this.title = '资产详情';
-      this.asset = data;
+      this.order = data;
       this.dialogVisible2 = true;
     },
     getOperateList(data) {
@@ -295,7 +297,7 @@ export default {
     },
     sizeChange(currentSize) {
       this.size = currentSize;
-      this.initOrders();
+      this.initOrders('advanced');
     },
     currentChange(currentPage) {
       this.page = currentPage;
@@ -306,23 +308,47 @@ export default {
       this.title = '离退流程申请';
       this.dialogVisible = true;
     },
+    checkAndHandle(data) {
+      this.taskHandleDto.operateType = data;
+      if (data == '5') {
+        this.visible = true;
+      } else if (data == '7') {
+        this.cancel();
+      } else {
+        this.handle();
+      }
+    },
     handle() {
       this.taskHandleDto.id = this.order.id;
       this.postRequest("/order/task/handleTask", this.taskHandleDto).then(resp => {
         if (resp) {
-          this.visible = false;
-          this.$emit('close');
-          this.$parent.initOrders();
+          this.dialogVisible2 = false;
+          this.initOrders();
         }
       });
     },
+    cancel() {
+      this.taskHandleDto.id = this.order.id;
+      this.postRequest("/order/task/cancel", this.taskHandleDto).then(resp => {
+        if (resp) {
+          this.visible = false;
+          this.dialogVisible2 = false;
+          this.$parent.initOrders();
+        }
+      })
+    },
     doStudentOut() {
-
+      this.postRequest("/stuOut/add", this.order).then(resp => {
+        if (resp) {
+          this.dialogVisible = false;
+          this.initOrders();
+        }
+      });
     },
     initOrders() {
       this.type = '';
       this.loading = true;
-      let url = '/order/basic/get/?category=1&page=' + this.page + '&size=' + this.size + "&oid=" + this.keyword;
+      let url = '/stuOut/get/?page=' + this.page + '&size=' + this.size + "&oid=" + this.keyword;
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
@@ -334,24 +360,15 @@ export default {
     initOrdersAdv() {
       this.type = 'advanced'
       this.loading = true;
-      let url = '/order/basic/get/?category=1&page=' + this.page + '&size=' + this.size;
-      if (this.searchValue.type) {
-        url += '&type=' + this.searchValue.type;
-      }
-      if (this.searchValue.brand) {
-        url += '&brand=' + this.searchValue.brand;
-      }
+      let url = '/stuOut/get/?page=' + this.page + '&size=' + this.size;
       if (this.searchValue.status) {
         url += '&status=' + this.searchValue.status;
       }
+      if (this.searchValue.reason) {
+        url += '&reason=' + this.searchValue.reason;
+      }
       if (this.searchValue.userEmail) {
         url += '&userEmail=' + this.searchValue.userEmail;
-      }
-      if (this.searchValue.priceLow) {
-        url += '&priceLow=' + this.searchValue.priceLow;
-      }
-      if (this.searchValue.priceHigh) {
-        url += '&priceHigh=' + this.searchValue.priceHigh;
       }
       if (this.searchValue.dateScope) {
         url += '&dateScope=' + this.searchValue.dateScope;
@@ -366,12 +383,9 @@ export default {
     },
     clearSearchValue() {
       this.searchValue = {
-        type: null,
-        brand: null,
         status: null,
+        reason: null,
         userEmail: null,
-        priceLow: null,
-        priceHigh: null,
         dateScope: null
       }
     }

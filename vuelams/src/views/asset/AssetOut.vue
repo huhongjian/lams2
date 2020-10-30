@@ -209,7 +209,7 @@
         </el-pagination>
       </div>
     </div>
-    <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order"
+    <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
                :title="title"></OrderEdit>
     <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order"
                  :title="title" :operateList='operateList'></OrderDetail>
@@ -309,7 +309,8 @@ export default {
         }
       },
       // 搜索类型，空是普通搜索，‘advanced’是高级搜索
-      type: ""
+      type: "",
+      fileList: []
     }
   },
   components: {
@@ -373,6 +374,11 @@ export default {
     showEditEmpView(data) {
       this.title = '编辑申请信息';
       this.order = data;
+      if (this.order.asset.fileList && this.order.asset.fileList.length > 0) {
+        this.fileList = this.order.asset.fileList;
+      } else {
+        this.fileList = null;
+      }
       this.dialogVisible = true;
     },
     showDetailView(data) {

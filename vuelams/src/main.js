@@ -11,6 +11,7 @@ import {
     Card,
     Container,
     Icon,
+    Image,
     Select,
     Form,
     Tag,
@@ -94,6 +95,7 @@ Vue.use(Dialog);
 Vue.use(Card);
 Vue.use(Container);
 Vue.use(Icon);
+Vue.use(Image);
 Vue.use(Select);
 Vue.use(Form);
 Vue.use(Tag);

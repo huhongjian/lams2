@@ -24,14 +24,21 @@
         </association>
         <association property="asset" javaType="com.bupt.lams.model.Asset">
             <id column="aid" property="id"/>
-            <result column="status" property="status"/>
-            <result column="statusName" property="statusName"/>
+            <result column="a_status" property="status"/>
+            <result column="a_statusName" property="statusName"/>
             <result column="type" property="type"/>
             <result column="brand" property="brand"/>
             <result column="price" property="price"/>
             <result column="adv" property="adv" typeHandler="com.bupt.lams.mybatis.JsonToObjectTypeHandler"/>
             <result column="readyDate" property="readyDate"/>
-            <result column="updateTime" property="updateTime"/>
+            <result column="a_updateTime" property="updateTime"/>
+            <collection property="fileList" javaType="arraylist" ofType="com.bupt.lams.model.AssetPic">
+                <id column="pid" property="id"/>
+                <result column="p_aid" property="aid"/>
+                <result column="p_name" property="name"/>
+                <result column="url" property="url"/>
+                <result column="p_createTime" property="createTime"/>
+            </collection>
         </association>
     </resultMap>
     <sql id="Base_Column_List">
@@ -271,12 +278,14 @@
     </delete>
     <select id="getOrderByCondition" parameterType="com.bupt.lams.dto.OrderQueryCondition" resultMap="AllOrderInfo">
         select o.*,
-        a.id as aid,a.type,a.brand,a.price,a.adv,a.readyDate,
-        u.id as uid, u.name, u.phone, u.username, u.enabled, u.remark
+        a.id as aid, a.status as a_status, a.statusName as a_statusName, a.updateTime as a_updateTime, a.*,
+        u.id as uid, u.*,
+        p.id as pid, p.aid as p_aid, p.name as p_name, p.createTime as p_createTime, p.*
         from
         `order` o,
         order_asset oa,
-        asset a,
+        asset a
+        left join asset_pics p on a.id = p.aid,
         lams_user u
         <where>
             o.id = oa.oid

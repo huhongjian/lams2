@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 实验室资产信息pojo
@@ -18,6 +19,7 @@ public class Asset implements Serializable {
     private String statusName;
     private String brand;
     private Double price;
+    private List<AssetPic> fileList;
     /**
      * 详细信息
      */

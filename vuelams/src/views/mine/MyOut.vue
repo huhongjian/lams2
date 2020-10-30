@@ -333,7 +333,7 @@ export default {
         if (resp) {
           this.visible = false;
           this.dialogVisible2 = false;
-          this.$parent.initOrders();
+          this.initOrders();
         }
       })
     },

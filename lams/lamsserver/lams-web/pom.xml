@@ -69,20 +69,14 @@
     <build>
         <resources>
             <resource>
-                <directory>src/main/resources</directory>
-                <!--1 先排除所有的profile文件 -->
-                <excludes>
-                    <exclude>application*.yml</exclude>
-                </excludes>
+                <directory>src/main/resources/env/${package.environment}</directory>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
-                <!--2 按需复制所有需的profile文件-->
                 <filtering>true</filtering>
-                <includes>
-                    <include>application.yml</include>
-                    <include>application-${package.environment}.yml</include>
-                </includes>
+                <excludes>
+                    <exclude>env/**/*.*</exclude>
+                </excludes>
             </resource>
         </resources>
         <plugins>

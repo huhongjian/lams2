@@ -118,6 +118,24 @@
               </el-col>
             </el-row>
           </el-form>
+          <el-form>
+            <el-row>
+              <el-form-item label="资产相关图片:"></el-form-item>
+            </el-row>
+            <el-row>
+              <template v-for="url in urlList">
+                <el-col :span="3">
+                  <el-form-item>
+                    <el-image
+                        style="width: 130px; height: 130px"
+                        :src="url"
+                        :preview-src-list="urlList">
+                    </el-image>
+                  </el-form-item>
+                </el-col>
+              </template>
+            </el-row>
+          </el-form>
         </template>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -190,7 +208,7 @@
 <script>
 export default {
   name: "OrderDetail",
-  props: ['order', 'title', 'dialogVisible2', 'operateList'],
+  props: ['order', 'title', 'dialogVisible2', 'urlList', 'operateList'],
   data() {
     return {
       visible: false,

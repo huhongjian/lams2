@@ -11,6 +11,13 @@
         <result column="adv" property="adv" typeHandler="com.bupt.lams.mybatis.JsonToObjectTypeHandler"/>
         <result column="readyDate" property="readyDate"/>
         <result column="updateTime" property="updateTime"/>
+        <collection property="fileList" javaType="arraylist" ofType="com.bupt.lams.model.AssetPic">
+            <id column="pid" property="id"/>
+            <result column="p_aid" property="aid"/>
+            <result column="p_name" property="name"/>
+            <result column="url" property="url"/>
+            <result column="p_createTime" property="createTime"/>
+        </collection>
     </resultMap>
     <sql id="Base_Column_List">
     id, status, statusName, `type`, brand, price, adv, readyDate, updateTime
@@ -49,9 +56,11 @@
         </if>
     </sql>
     <select id="getAssetByCondition" parameterType="com.bupt.lams.dto.AssetQueryCondition" resultMap="BaseResultMap">
-        select a.*
+        select a.*,
+        p.id as pid, p.aid as p_aid, p.name as p_name, p.createTime as p_createTime, p.*
         from
-        asset a
+        asset a,
+        left join asset_pics p on a.id = p.aid
         <where>
             a.status != 5
             and a.status != 1

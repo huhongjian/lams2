@@ -5,7 +5,9 @@ import com.bupt.lams.dto.AssetDashBoardData;
 import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.dto.AssetStatusCount;
 import com.bupt.lams.mapper.AssetMapper;
+import com.bupt.lams.mapper.AssetPicsMapper;
 import com.bupt.lams.model.Asset;
+import com.bupt.lams.model.AssetPic;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.annotation.OperateRecord;
 import com.bupt.lams.service.strategies.record.ChangeAssetStatusRecord;
@@ -23,6 +25,9 @@ import java.util.*;
 public class AssetService {
     @Resource
     AssetMapper assetMapper;
+
+    @Resource
+    AssetPicsMapper assetPicsMapper;
 
     public RespPageBean getAssetByCondition(AssetQueryCondition condition) {
         Integer page = condition.getPage();
@@ -151,6 +156,14 @@ public class AssetService {
             data.add(ad);
         }
         return data;
+    }
+
+    public void insertAssetPics(AssetPic pic) {
+        assetPicsMapper.insertAssetPics(pic);
+    }
+
+    public void deleteAssetPicById(Long id) {
+        assetPicsMapper.deleteAssetPicById(id);
     }
 
     /**

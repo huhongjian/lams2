@@ -216,10 +216,10 @@
         </el-pagination>
       </div>
     </div>
-    <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order"
+    <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
                :title="title"></OrderEdit>
     <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
-                 :operateList='operateList'></OrderDetail>
+                 :urlList="urlList" :operateList='operateList'></OrderDetail>
   </div>
 </template>
 
@@ -317,7 +317,9 @@ export default {
         }
       },
       // 搜索类型，空是普通搜索，‘advanced’是高级搜索
-      type: ""
+      type: "",
+      fileList: [],
+      urlList: []
     }
   },
   components: {
@@ -384,14 +386,33 @@ export default {
         }
       };
     },
+    showAddEmpView() {
+      this.emptyOrder();
+      this.fileList = null;
+      this.title = '资产采购申请';
+      this.dialogVisible = true;
+    },
     showEditView(data) {
       this.title = '编辑申请信息';
       this.order = data;
+      if (this.order.asset.fileList && this.order.asset.fileList.length > 0) {
+        this.fileList = this.order.asset.fileList;
+      } else {
+        this.fileList = null;
+      }
       this.dialogVisible = true;
     },
     showDetailView(data) {
       this.title = '申请单详情';
       this.order = data;
+      if (this.order.asset && this.order.asset.fileList) {
+        this.urlList = [];
+        for (let i = 0; i < this.order.asset.fileList.length; i++) {
+          this.urlList.push(this.order.asset.fileList[i].url);
+        }
+      } else {
+        this.urlList = null;
+      }
       this.dialogVisible2 = true;
     },
     getOperateList(data) {
@@ -435,11 +456,6 @@ export default {
       } else {
         this.initOrders();
       }
-    },
-    showAddEmpView() {
-      this.emptyOrder();
-      this.title = '资产采购申请';
-      this.dialogVisible = true;
     },
     initOrders() {
       this.type = '';

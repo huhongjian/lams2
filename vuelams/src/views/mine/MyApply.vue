@@ -89,7 +89,7 @@
     </div>
     <Mine v-on:currentSize="sizeChange" v-on:currentPage="currentChange" :orders="orders" :total="total" :page="page"
           :size="size" :loading="loading"></Mine>
-    <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order"
+    <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
                :title="title"></OrderEdit>
     <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
                  :operateList='operateList'></OrderDetail>
@@ -201,7 +201,8 @@ export default {
           name: "审批未通过"
         }
       ],
-      type: ""
+      type: "",
+      fileList: []
     }
   },
   components: {
@@ -243,6 +244,11 @@ export default {
     showEditView(data) {
       this.title = '编辑申请信息';
       this.order = data;
+      if (this.order.asset.fileList && this.order.asset.fileList.length > 0) {
+        this.fileList = this.order.asset.fileList;
+      } else {
+        this.fileList = null;
+      }
       this.dialogVisible = true;
     },
     showDetailView(data) {

@@ -4,12 +4,6 @@ spring:
     username: root
     password: 123456
     url: jdbc:mysql://localhost:3306/lams?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-  rabbitmq:
-    username: guest
-    password: guest
-    host: 127.0.0.1
-    publisher-confirms: true
-    publisher-returns: true
   redis:
     host: 127.0.0.1
     database: 0
@@ -17,3 +11,6 @@ spring:
     password: 123456
   cache:
     cache-names: menus_cache_prod
+fastdfs:
+  nginx:
+    host: http://127.0.0.1/

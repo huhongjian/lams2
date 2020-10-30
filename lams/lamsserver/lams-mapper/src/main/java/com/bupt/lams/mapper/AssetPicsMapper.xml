@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bupt.lams.mapper.AssetPicsMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.AssetPic">
+        <id column="id" property="id"/>
+        <result column="aid" property="aid"/>
+        <result column="name" property="name"/>
+        <result column="url" property="url"/>
+        <result column="createTime" property="createTime"/>
+    </resultMap>
+    <delete id="deleteAssetPicById" parameterType="java.lang.Long">
+        delete from asset_pics
+        where
+        id = #{id}
+    </delete>
+    <insert id="insertAssetPics" parameterType="com.bupt.lams.model.AssetPic">
+        INSERT INTO asset_pics (
+            `aid`,
+            `name`,
+            `url`,
+            `createtime`
+            )
+        VALUES
+            (
+            #{aid},
+            #{name},
+            #{url},
+            now()
+            )
+    </insert>
+</mapper>

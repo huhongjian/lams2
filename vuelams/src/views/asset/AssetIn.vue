@@ -313,6 +313,7 @@ export default {
           brand: "华为",
           type: "手机",
           price: "4000",
+          fileList: [],
           adv: {}
         }
       },
@@ -398,7 +399,7 @@ export default {
       if (this.order.asset.fileList && this.order.asset.fileList.length > 0) {
         this.fileList = this.order.asset.fileList;
       } else {
-        this.fileList = null;
+        this.fileList = [];
       }
       this.dialogVisible = true;
     },

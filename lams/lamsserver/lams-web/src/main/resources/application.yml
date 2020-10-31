@@ -10,3 +10,6 @@ server:
   port: 8081
   compression:
     enabled: true
+fastdfs:
+  nginx:
+    host: http://47.111.82.18/

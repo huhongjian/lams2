@@ -11,6 +11,3 @@ spring:
     password: 123456
   cache:
     cache-names: menus_cache_prod
-fastdfs:
-  nginx:
-    host: http://127.0.0.1/

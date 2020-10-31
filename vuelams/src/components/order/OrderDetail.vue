@@ -119,7 +119,7 @@
             </el-row>
           </el-form>
           <el-form>
-            <el-row>
+            <el-row v-show="urlList&&urlList.length>0">
               <el-form-item label="资产相关图片:"></el-form-item>
             </el-row>
             <el-row>

@@ -180,7 +180,7 @@
         </el-pagination>
       </div>
       <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
-                   :title="title"></AssetDetail>
+                   :urlList="urlList" :title="title"></AssetDetail>
     </div>
   </div>
 </template>
@@ -219,6 +219,7 @@ export default {
         brand: "华为",
         type: "手机",
         price: "4000",
+        fileList: [],
         adv: {}
       },
       options: [
@@ -267,7 +268,9 @@ export default {
           id: 4,
           name: "报废"
         }
-      ]
+      ],
+      // 资产图片url列表，用于详情页面
+      urlList: []
     }
   },
   components: {
@@ -299,6 +302,14 @@ export default {
     showDetailView(data) {
       this.title = '资产信息详情';
       this.asset = data;
+      if (this.asset && this.asset.fileList) {
+        this.urlList = [];
+        for (let i = 0; i < this.asset.fileList.length; i++) {
+          this.urlList.push(this.asset.fileList[i].url);
+        }
+      } else {
+        this.urlList = null;
+      }
       this.dialogVisible2 = true;
     },
     initAssets() {

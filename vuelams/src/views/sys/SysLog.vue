@@ -103,7 +103,7 @@
         <el-table-column
             prop="operatorMail"
             label="操作人邮箱"
-            width="100">
+            width="150">
         </el-table-column>
         <el-table-column
             prop="text"

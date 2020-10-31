@@ -59,7 +59,7 @@
         select a.*,
         p.id as pid, p.aid as p_aid, p.name as p_name, p.createTime as p_createTime, p.*
         from
-        asset a,
+        asset a
         left join asset_pics p on a.id = p.aid
         <where>
             a.status != 5
@@ -75,6 +75,8 @@
         from
         asset a
         <where>
+            a.status != 5
+            and a.status != 1
             <include refid="baseInfoQuery"/>
         </where>
     </select>

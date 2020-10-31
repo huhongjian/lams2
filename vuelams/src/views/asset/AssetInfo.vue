@@ -180,7 +180,7 @@
         </el-pagination>
       </div>
       <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
-                   :title="title"></AssetDetail>
+                   :urlList="urlList" :title="title"></AssetDetail>
       <el-dialog
           :title="title"
           :visible.sync="dialogVisible"
@@ -285,6 +285,26 @@
                 </el-col>
               </el-row>
             </el-form>
+            <el-form>
+              <el-row>
+                <el-form-item label="资产相关图片:"></el-form-item>
+              </el-row>
+              <el-row>
+                <el-form-item prop="pics">
+                  <el-upload
+                      ref="upload"
+                      :data="uploadData"
+                      :file-list="fileList"
+                      action="/order/basic/pic/add"
+                      list-type="picture-card"
+                      :on-preview="handlePictureCardPreview"
+                      :on-remove="handleRemove"
+                      :auto-upload="false">
+                    <i class="el-icon-plus"></i>
+                  </el-upload>
+                </el-form-item>
+              </el-row>
+            </el-form>
           </template>
         </div>
         <span slot="footer" class="dialog-footer">
@@ -306,6 +326,9 @@ export default {
   },
   data() {
     return {
+      uploadData: {
+        aid: ""
+      },
       showAdvanceSearchView: false,
       searchValue: {
         type: null,
@@ -331,8 +354,13 @@ export default {
         brand: "华为",
         type: "手机",
         price: "4000",
+        fileList: [],
         adv: {}
       },
+      // 资产图片列表，用于编辑页面
+      fileList: [],
+      // 资产图片url列表，用于详情页面
+      urlList: [],
       options: [
         {
           value: '手机',
@@ -379,7 +407,9 @@ export default {
           id: 4,
           name: "报废"
         }
-      ]
+      ],
+      dialogImageUrl: '',
+      visible: false
     }
   },
   components: {
@@ -434,11 +464,24 @@ export default {
     showEditView(data) {
       this.title = '编辑资产信息';
       this.asset = data;
+      if (this.asset.fileList && this.asset.fileList.length > 0) {
+        this.fileList = this.asset.fileList;
+      } else {
+        this.fileList = [];
+      }
       this.dialogVisible = true;
     },
     showDetailView(data) {
       this.title = '资产信息详情';
       this.asset = data;
+      if (this.asset && this.asset.fileList) {
+        this.urlList = [];
+        for (let i = 0; i < this.asset.fileList.length; i++) {
+          this.urlList.push(this.asset.fileList[i].url);
+        }
+      } else {
+        this.urlList = null;
+      }
       this.dialogVisible2 = true;
     },
     initAssets() {
@@ -491,6 +534,8 @@ export default {
         if (valid) {
           this.putRequest("/asset/edit", this.asset).then(resp => {
             if (resp) {
+              this.uploadData.aid = this.asset.id;
+              this.$refs.upload.submit();
               this.dialogVisible = false;
               this.initAssets();
             }
@@ -507,6 +552,21 @@ export default {
         priceHigh: null,
         dateScope: null
       }
+    },
+    handleRemove(file, fileList) {
+      if (file.id) {
+        this.deleteRequest("/order/basic/pic/remove/?pid=" + file.id).then(resp => {
+              if (resp) {
+                this.initAssets();
+              }
+            }
+        );
+      }
+      console.log(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.visible = true;
     }
   }
 }

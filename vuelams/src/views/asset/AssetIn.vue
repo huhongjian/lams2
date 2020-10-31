@@ -319,7 +319,9 @@ export default {
       },
       // 搜索类型，空是普通搜索，‘advanced’是高级搜索
       type: "",
+      // 资产图片列表，用于编辑页面
       fileList: [],
+      // 资产图片url列表，用于详情页面
       urlList: []
     }
   },
@@ -383,13 +385,14 @@ export default {
           brand: "华为",
           type: "手机",
           price: "4000",
+          fileList: [],
           adv: {},
         }
       };
     },
     showAddEmpView() {
       this.emptyOrder();
-      this.fileList = null;
+      this.fileList = [];
       this.title = '资产采购申请';
       this.dialogVisible = true;
     },

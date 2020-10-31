@@ -195,7 +195,7 @@
             width="80"
             label="操作">
           <template slot-scope="scope">
-            <el-button @click="showEditEmpView(scope.row)">编辑</el-button>
+            <el-button @click="showEditView(scope.row)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -211,8 +211,8 @@
     </div>
     <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
                :title="title"></OrderEdit>
-    <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order"
-                 :title="title" :operateList='operateList'></OrderDetail>
+    <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
+                 :urlList="urlList" :operateList='operateList'></OrderDetail>
   </div>
 </template>
 
@@ -305,12 +305,16 @@ export default {
           brand: "华为",
           type: "手机",
           price: "4000",
+          fileList: [],
           adv: {}
         }
       },
       // 搜索类型，空是普通搜索，‘advanced’是高级搜索
       type: "",
-      fileList: []
+      // 资产图片列表，用于编辑页面
+      fileList: [],
+      // 资产图片url列表，用于详情页面
+      urlList: []
     }
   },
   components: {
@@ -367,23 +371,32 @@ export default {
           brand: "华为",
           type: "手机",
           price: "4000",
+          fileList: [],
           adv: {},
         }
       };
     },
-    showEditEmpView(data) {
+    showEditView(data) {
       this.title = '编辑申请信息';
       this.order = data;
       if (this.order.asset.fileList && this.order.asset.fileList.length > 0) {
         this.fileList = this.order.asset.fileList;
       } else {
-        this.fileList = null;
+        this.fileList = [];
       }
       this.dialogVisible = true;
     },
     showDetailView(data) {
       this.title = '申请单详情';
       this.order = data;
+      if (this.order.asset && this.order.asset.fileList) {
+        this.urlList = [];
+        for (let i = 0; i < this.order.asset.fileList.length; i++) {
+          this.urlList.push(this.order.asset.fileList[i].url);
+        }
+      } else {
+        this.urlList = null;
+      }
       this.dialogVisible2 = true;
     },
     getOperateList(data) {

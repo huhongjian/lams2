@@ -30,6 +30,10 @@ public class UserInfoController {
 
     @PutMapping("/add")
     public RespBean addUser(@RequestBody LamsUser lamsUser) {
+        LamsUser user = userService.getUserByUsername(lamsUser.getUsername());
+        if (user != null) {
+            return RespBean.error("注册失败，邮箱已被使用！");
+        }
         if (userService.addUser(lamsUser) == 1) {
             return RespBean.ok("注册成功!");
         }

@@ -49,10 +49,13 @@ public class UserService implements UserDetailsService {
         return bean;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Integer addUser(LamsUser lamsUser) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         lamsUser.setPassword(encoder.encode(lamsUser.getPassword()));
-        return lamsUserMapper.insert(lamsUser);
+        Integer res = lamsUserMapper.insert(lamsUser);
+        lamsUserRoleMapper.addRole(lamsUser.getId(), new Integer[]{24});
+        return res;
     }
 
     public Integer updateUser(LamsUser lamsUser) {
@@ -90,5 +93,13 @@ public class UserService implements UserDetailsService {
             }
         }
         return false;
+    }
+
+    public LamsUser selectByPrimaryKey(Integer id) {
+        return lamsUserMapper.selectByPrimaryKey(id);
+    }
+
+    public LamsUser getUserByUsername(String username) {
+        return lamsUserMapper.loadUserByUsername(username);
     }
 }

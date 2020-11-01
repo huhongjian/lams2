@@ -80,7 +80,7 @@
     delete from lams_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.bupt.lams.model.LamsUser">
+    <insert id="insert" parameterType="com.bupt.lams.model.LamsUser" useGeneratedKeys="true" keyProperty="id">
         insert into lams_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name !=null and name!=''">

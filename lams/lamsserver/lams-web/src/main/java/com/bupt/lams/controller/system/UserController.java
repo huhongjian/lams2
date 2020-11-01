@@ -3,6 +3,7 @@ package com.bupt.lams.controller.system;
 import com.bupt.lams.model.*;
 import com.bupt.lams.service.UserService;
 import com.bupt.lams.service.RoleService;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,14 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public RespBean deleteUserById(@PathVariable Integer id) {
+        // 只允许管理员删除用户
+        if (UserInfoUtils.isAdmin() == false) {
+            return RespBean.error("没有修改权限，请联系管理员!");
+        }
+        LamsUser user = userService.selectByPrimaryKey(id);
+        if (user.isEnabled() == true) {
+            return RespBean.error("只能删除已离退的用户！");
+        }
         if (userService.deleteUserById(id) == 1) {
             return RespBean.ok("删除成功!");
         }

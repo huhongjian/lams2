@@ -46,6 +46,7 @@ public class OrderBasicController {
         // 维修中和报废的资产不在工单中展示
         List<Integer> assetStatus = new ArrayList<>();
         assetStatus.add(AssetStatusEnum.CREATE.getIndex());
+        assetStatus.add(AssetStatusEnum.REJECTED.getIndex());
         assetStatus.add(AssetStatusEnum.FREE.getIndex());
         assetStatus.add(AssetStatusEnum.INUSE.getIndex());
         orderQueryCondition.setAssetStatuses(assetStatus);

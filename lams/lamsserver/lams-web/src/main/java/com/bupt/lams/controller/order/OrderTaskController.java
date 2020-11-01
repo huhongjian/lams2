@@ -94,7 +94,11 @@ public class OrderTaskController {
             operateList = new ArrayList<>();
         }
         // 如果当前用户是工单创建人并且工单不是终止状态
-        if (order.getUserEmail().equals(user.getUsername()) && !order.getStatus().equals(OrderStatusEnum.READY.getIndex())) {
+        if (order.getUserEmail().equals(user.getUsername())
+                && !order.getStatus().equals(OrderStatusEnum.READY.getIndex())
+                && !order.getStatus().equals(OrderStatusEnum.REJECTED.getIndex())
+                && !order.getStatus().equals(OrderStatusEnum.REFUSED.getIndex())
+                && !order.getStatus().equals(OrderStatusEnum.CLOSED.getIndex())) {
             Operate cancel = new Operate();
             cancel.setOperateType(OperateTypeEnum.CANCEL.getIndex());
             cancel.setOperate(OperateTypeEnum.CANCEL.getName());

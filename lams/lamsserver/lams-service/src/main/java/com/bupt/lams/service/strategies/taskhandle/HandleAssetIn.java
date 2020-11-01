@@ -10,6 +10,7 @@ import com.bupt.lams.mapper.OrderMapper;
 import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.Order;
 import com.bupt.lams.model.OrderAsset;
+import com.bupt.lams.service.OrderService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -23,15 +24,20 @@ public class HandleAssetIn implements IUpdateStatus {
     @Resource
     OrderAssetMapper orderAssetMapper;
     @Resource
+    OrderService orderService;
+    @Resource
     OrderMapper orderMapper;
     @Resource
     AssetMapper assetMapper;
 
     @Override
     public void updateStage(TaskHandleDto taskHandleDto, Order order) {
+        // 更新入库工单状态
+        order.setStatus(OrderStatusEnum.READY.getIndex());
+        orderService.updateOrderStatusById(order);
+        // 新增出库工单
         Long id = taskHandleDto.getId();
         order.setCategory(ProcessTypeEnum.OUT.getIndex());
-        order.setStatus(OrderStatusEnum.READY.getIndex());
         order.setReason(null);
         orderMapper.insertSelective(order);
         OrderAsset orderAsset = new OrderAsset();

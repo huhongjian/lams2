@@ -417,7 +417,7 @@ export default {
   },
   methods: {
     exportData() {
-      let url = '/order/basic/export/?category=1';
+      let url = '/asset/export/?1=1';
       if (this.type && this.type == 'advanced') {
         if (this.searchValue.type) {
           url += '&type=' + this.searchValue.type;
@@ -499,7 +499,7 @@ export default {
     initAssetsAdv() {
       this.type = 'advanced'
       this.loading = true;
-      let url = '/asset/get/?category=1&page=' + this.page + '&size=' + this.size;
+      let url = '/asset/get/?page=' + this.page + '&size=' + this.size;
       if (this.searchValue.type) {
         url += '&type=' + this.searchValue.type;
       }

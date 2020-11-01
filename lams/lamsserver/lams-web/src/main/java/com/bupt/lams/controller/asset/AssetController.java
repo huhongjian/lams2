@@ -9,13 +9,16 @@ import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.AssetService;
 import com.bupt.lams.service.OrderAssetService;
+import com.bupt.lams.utils.POIUtils;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 资产信息相关
@@ -52,6 +55,16 @@ public class AssetController {
             return RespBean.error("更新失败!");
         }
         return RespBean.ok("更新成功!");
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportData(AssetQueryCondition assetQueryCondition, Date[] dateScope) {
+        if (dateScope != null && dateScope.length == 2) {
+            assetQueryCondition.setStartDate(dateScope[0]);
+            assetQueryCondition.setEndDate(dateScope[1]);
+        }
+        List<Asset> list = (List<Asset>) assetService.getAssetByCondition(assetQueryCondition).getData();
+        return POIUtils.assetInfo2Excel(list);
     }
 
     @PutMapping("/changeStatus")

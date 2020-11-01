@@ -43,17 +43,7 @@ public class OrderBasicController {
 
     @GetMapping("/get")
     public RespPageBean getOrderByPage(OrderQueryCondition orderQueryCondition, Date[] dateScope) {
-        // 维修中和报废的资产不在工单中展示
-        List<Integer> assetStatus = new ArrayList<>();
-        assetStatus.add(AssetStatusEnum.CREATE.getIndex());
-        assetStatus.add(AssetStatusEnum.REJECTED.getIndex());
-        assetStatus.add(AssetStatusEnum.FREE.getIndex());
-        assetStatus.add(AssetStatusEnum.INUSE.getIndex());
-        orderQueryCondition.setAssetStatuses(assetStatus);
-        if (dateScope != null && dateScope.length == 2) {
-            orderQueryCondition.setStartDate(dateScope[0]);
-            orderQueryCondition.setEndDate(dateScope[1]);
-        }
+        fillCondition(orderQueryCondition, dateScope);
         return orderService.getOrderByCondition(orderQueryCondition);
     }
 
@@ -114,10 +104,18 @@ public class OrderBasicController {
         return RespBean.ok("删除成功!");
     }
 
-    @GetMapping("/export")
-    public ResponseEntity<byte[]> exportData(OrderQueryCondition orderQueryCondition) {
+    @GetMapping("/export/in")
+    public ResponseEntity<byte[]> exportDataIn(OrderQueryCondition orderQueryCondition, Date[] dateScope) {
+        fillCondition(orderQueryCondition, dateScope);
         List<Order> list = (List<Order>) orderService.getOrderByCondition(orderQueryCondition).getData();
         return POIUtils.assetIn2Excel(list);
+    }
+
+    @GetMapping("/export/out")
+    public ResponseEntity<byte[]> exportDataOut(OrderQueryCondition orderQueryCondition, Date[] dateScope) {
+        fillCondition(orderQueryCondition, dateScope);
+        List<Order> list = (List<Order>) orderService.getOrderByCondition(orderQueryCondition).getData();
+        return POIUtils.assetOut2Excel(list);
     }
 
     @PostMapping("/pic/add")
@@ -148,6 +146,26 @@ public class OrderBasicController {
         } catch (Exception e) {
             logger.error("删除资产图片失败！", e);
             return RespBean.error("删除资产图片失败!");
+        }
+    }
+
+    /**
+     * 补完查询条件
+     *
+     * @param orderQueryCondition
+     * @param dateScope
+     */
+    private void fillCondition(OrderQueryCondition orderQueryCondition, Date[] dateScope) {
+        // 维修中和报废的资产不在工单中展示
+        List<Integer> assetStatus = new ArrayList<>();
+        assetStatus.add(AssetStatusEnum.CREATE.getIndex());
+        assetStatus.add(AssetStatusEnum.REJECTED.getIndex());
+        assetStatus.add(AssetStatusEnum.FREE.getIndex());
+        assetStatus.add(AssetStatusEnum.INUSE.getIndex());
+        orderQueryCondition.setAssetStatuses(assetStatus);
+        if (dateScope != null && dateScope.length == 2) {
+            orderQueryCondition.setStartDate(dateScope[0]);
+            orderQueryCondition.setEndDate(dateScope[1]);
         }
     }
 }

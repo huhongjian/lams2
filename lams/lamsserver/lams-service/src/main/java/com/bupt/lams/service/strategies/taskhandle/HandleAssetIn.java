@@ -38,6 +38,8 @@ public class HandleAssetIn implements IUpdateStatus {
         // 新增出库工单
         Long id = taskHandleDto.getId();
         order.setCategory(ProcessTypeEnum.OUT.getIndex());
+        order.setUserEmail(null);
+        order.setUser(null);
         order.setReason(null);
         orderMapper.insertSelective(order);
         OrderAsset orderAsset = new OrderAsset();

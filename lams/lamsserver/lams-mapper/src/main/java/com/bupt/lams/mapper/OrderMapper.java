@@ -31,6 +31,8 @@ public interface OrderMapper {
 
     void updateOrderStatusById(Order order);
 
+    void updateUserEmailById(Order order);
+
     void updateOrder(Order order);
 
     void resetOrderById(@Param("oid") Long oid);

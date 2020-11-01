@@ -24,23 +24,25 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="用户:" prop="applicant">
-                {{ order.user.name }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="电话:" prop="applicantPhone">
-                {{ order.user.phone }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="邮件:" prop="applicantEmail">
-                {{ order.user.username }}
-              </el-form-item>
-            </el-col>
-          </el-row>
+          <template v-if="order.user">
+            <el-row>
+              <el-col :span="6">
+                <el-form-item label="用户:" prop="applicant">
+                  {{ order.user.name }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="电话:" prop="applicantPhone">
+                  {{ order.user.phone }}
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="邮件:" prop="applicantEmail">
+                  {{ order.user.username }}
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </template>
           <el-row>
             <el-col :span="10">
               <el-form-item v-show="order.expireTime" label="预计归还时间:" prop="expireTime">

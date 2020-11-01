@@ -117,6 +117,7 @@ public class OrderService {
     public void borrowAsset(Order order) {
         Asset asset = order.getAsset();
         LamsUser user = UserInfoUtils.getLoginedUser();
+        order.setUserEmail(user.getUsername());
         order.setStatus(OrderStatusEnum.ASK.getIndex());
         order.setCreateTime(new Date());
         orderMapper.updateOrder(order);
@@ -162,6 +163,10 @@ public class OrderService {
 
     public void updateOrderStatusById(Order order) {
         orderMapper.updateOrderStatusById(order);
+    }
+
+    public void updateUserEmailById(Order order) {
+        orderMapper.updateUserEmailById(order);
     }
 
     public List<Order> queryOrderByCondition(OrderQueryCondition condition) {

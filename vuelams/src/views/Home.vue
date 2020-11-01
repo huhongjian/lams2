@@ -66,9 +66,6 @@ export default {
     }
   },
   methods: {
-    goChat() {
-      this.$router.push("/chat");
-    },
     commandHandler(cmd) {
       if (cmd == 'logout') {
         this.$confirm('此操作将注销登录, 是否继续?', '提示', {

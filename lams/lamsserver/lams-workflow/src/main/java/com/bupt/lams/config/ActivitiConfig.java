@@ -40,7 +40,7 @@ public class ActivitiConfig {
         org.springframework.core.io.Resource[] procDefResources = resourceLoader.getResources("classpath:processes/*.bpmn");
         // 如果数据库里没有activiti的表，设为true，会自动新建表
         // 如果有了就设为false，可以提高启动速度
-        configuration.setDatabaseSchemaUpdate("false");
+        configuration.setDatabaseSchemaUpdate("true");
         configuration.setDataSource(dataSource);
         configuration.setTransactionManager(transactionManager);
         configuration.setDeploymentResources(procDefResources);

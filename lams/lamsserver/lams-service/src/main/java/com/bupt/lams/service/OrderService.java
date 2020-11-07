@@ -140,7 +140,7 @@ public class OrderService {
 
     @Transactional(rollbackFor = Exception.class)
     @OperateRecord(description = "删除工单", clazz = DeleteOrderRecord.class)
-    public void deleteOrders(List<Integer> oids) {
+    public void deleteOrders(List<Long> oids) {
         orderMapper.deleteManyByOids(oids);
         orderAssetMapper.deleteManyByOids(oids);
     }

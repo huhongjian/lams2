@@ -134,27 +134,27 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form>
-            <el-row>
-              <el-form-item label="资产相关图片:"></el-form-item>
-            </el-row>
-            <el-row>
-              <el-form-item prop="pics">
-                <el-upload
-                    ref="upload"
-                    :data="uploadData"
-                    :file-list="fileList"
-                    action="/order/basic/pic/add"
-                    list-type="picture-card"
-                    :on-preview="handlePictureCardPreview"
-                    :on-remove="handleRemove"
-                    :auto-upload="false">
-                  <i class="el-icon-plus"></i>
-                </el-upload>
-              </el-form-item>
-            </el-row>
-          </el-form>
         </template>
+        <el-form>
+          <el-row>
+            <el-form-item label="资产相关图片:"></el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item prop="pics">
+              <el-upload
+                  ref="upload"
+                  :data="uploadData"
+                  :file-list="fileList"
+                  action="/order/basic/pic/add"
+                  list-type="picture-card"
+                  :on-preview="handlePictureCardPreview"
+                  :on-remove="handleRemove"
+                  :auto-upload="false">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+            </el-form-item>
+          </el-row>
+        </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="$emit('close')">取 消</el-button>

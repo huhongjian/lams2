@@ -91,7 +91,7 @@ public class OrderBasicController {
     }
 
     @DeleteMapping("/delete")
-    public RespBean deleteOrders(@RequestBody List<Integer> oids) {
+    public RespBean deleteOrders(@RequestBody List<Long> oids) {
         // 工单只允许管理员删除
         if (UserInfoUtils.isAdmin() == false) {
             return RespBean.error("您没有删除权限，请联系管理员!");

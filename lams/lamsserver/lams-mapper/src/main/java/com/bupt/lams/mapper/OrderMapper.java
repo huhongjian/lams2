@@ -39,5 +39,5 @@ public interface OrderMapper {
 
     int insertSelective(Order order);
 
-    void deleteManyByOids(List<Integer> oids);
+    void deleteManyByOids(List<Long> oids);
 }

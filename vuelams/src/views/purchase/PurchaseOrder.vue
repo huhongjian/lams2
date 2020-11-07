@@ -3,12 +3,6 @@
     <div>
       <div style="display: flex;justify-content: space-between">
         <div>
-          <el-button type="primary" icon="el-icon-plus" @click="showAddView">
-            新增资产
-          </el-button>
-          <el-button type="warning" icon="el-icon-plus" @click="showPurchaseOrderAddView">
-            添加订单信息
-          </el-button>
           <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
                      icon="el-icon-download">
             导出数据
@@ -18,7 +12,7 @@
           </el-button>
         </div>
         <div>
-          <el-input placeholder="请输入采购单号进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
+          <el-input placeholder="请输入订单号进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
                     clearable
                     @clear="initOrders"
                     style="width: 350px;margin-right: 10px" v-model="keyword"
@@ -110,7 +104,7 @@
     </div>
     <div style="margin-top: 10px">
       <el-table
-          :data="orders"
+          :data="purchases"
           @selection-change="handleSelectionChange"
           stripe
           border
@@ -125,7 +119,7 @@
         </el-table-column>
         <el-table-column
             fixed
-            label="采购单号"
+            label="订单号"
             align="left"
             width="80">
           <template slot-scope="scope">
@@ -134,79 +128,59 @@
         </el-table-column>
         <el-table-column
             fixed
-            prop="asset.id"
+            prop="name"
+            :show-overflow-tooltip="true"
             align="left"
-            label="资产编号"
+            label="订单名称"
             width="80">
         </el-table-column>
         <el-table-column
             fixed
-            prop="asset.assetName"
+            prop="total"
+            align="left"
+            label="订单总价（元）"
+            width="110">
+        </el-table-column>
+        <el-table-column
+            prop="discount"
+            align="left"
+            label="订单优惠（元）"
+            width="110">
+        </el-table-column>
+        <el-table-column
+            prop="pay"
+            label="实际支付（元）"
+            align="left"
+            width="110">
+        </el-table-column>
+        <el-table-column
+            prop="remark"
             :show-overflow-tooltip="true"
-            align="left"
-            label="资产名称"
-            width="80">
+            label="订单备注">
         </el-table-column>
         <el-table-column
-            prop="asset.type"
-            align="left"
-            label="类型"
-            width="60">
-        </el-table-column>
-        <el-table-column
-            prop="asset.brand"
-            label="品牌"
-            align="left"
-            width="60">
-        </el-table-column>
-        <el-table-column
-            prop="statusName"
-            width="90"
-            label="状态">
-          <template slot-scope="scope">
-            <span style="color: #00e079; font-weight: bold"
-                  v-if="scope.row.status=='2'||scope.row.status=='3'">{{ scope.row.statusName }}</span>
-            <span style="color: #ff4777; font-weight: bold"
-                  v-else-if="scope.row.status=='6'||scope.row.status=='8'||scope.row.status=='7'">{{
-                scope.row.statusName
-              }}</span>
-            <span style="color: #c0c0c0;"
-                  v-else-if="scope.row.status=='5'">{{ scope.row.statusName }}</span>
-            <span v-else>{{ scope.row.statusName }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-            prop="asset.price"
-            width="90"
-            label="价格（元）">
-        </el-table-column>
-        <el-table-column
-            prop="reason"
-            :show-overflow-tooltip="true"
-            label="申请理由">
-        </el-table-column>
-        <el-table-column
-            prop="user.name"
+            prop="hasInvoice"
             width="95"
             align="left"
-            label="申请人">
+            label="是否有发票">
         </el-table-column>
         <el-table-column
-            prop="user.username"
-            width="150"
-            align="left"
-            label="申请人邮箱">
-        </el-table-column>
-        <el-table-column
-            prop="user.phone"
+            prop="invoiceTime"
             width="100"
-            label="申请人电话">
+            align="left"
+            label="发票日期">
         </el-table-column>
         <el-table-column
             prop="createTime"
             width="100"
             align="left"
-            label="申请时间">
+            label="创建日期">
+        </el-table-column>
+        <el-table-column
+            prop="updateTime"
+            width="100"
+            align="left"
+            label="更新日期">
         </el-table-column>
         <el-table-column
             fixed="right"
@@ -230,7 +204,7 @@
     <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
                :title="title"></OrderEdit>
     <PurchaseOrderEdit v-on:close="dialogVisible3 = false" :dialogVisible3="dialogVisible3" :purchase="purchase"
-                       :assetIds="assetIds" :title="title"></PurchaseOrderEdit>
+                       :title="title"></PurchaseOrderEdit>
     <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
                  :urlList="urlList" :operateList='operateList'></OrderDetail>
   </div>
@@ -256,7 +230,7 @@ export default {
       },
       title: '',
       showAdvanceSearchView: false,
-      orders: [],
+      purchases: [],
       loading: false,
       // 编辑页面/新增页面可见性
       dialogVisible: false,
@@ -303,8 +277,6 @@ export default {
       operateList: [],
       // 选中的工单id，删除时使用
       orderIds: [],
-      // 选中的资产id
-      assetIds: [],
       order: {
         id: "",
         category: "",
@@ -341,17 +313,7 @@ export default {
       // 资产图片列表，用于编辑页面
       fileList: [],
       // 资产图片url列表，用于详情页面
-      urlList: [],
-      purchase: {
-        name: "",
-        total: "",
-        discount: "",
-        pay: "",
-        purchaseDate: "",
-        hasInvoice: false,
-        invoiceDate: "",
-        remark: ""
-      }
+      urlList: []
     }
   },
   components: {
@@ -420,18 +382,6 @@ export default {
         }
       };
     },
-    emptyPurchase() {
-      this.purchase = {
-        name: "test",
-        total: "12",
-        discount: "2",
-        pay: "10",
-        purchaseDate: "",
-        hasInvoice: false,
-        invoiceDate: "",
-        remark: "test"
-      }
-    },
     showAddView() {
       this.emptyOrder();
       this.fileList = [];
@@ -477,7 +427,6 @@ export default {
       }).then(() => {
         this.deleteRequestWithData("/order/basic/delete", this.orderIds).then(resp => {
           if (resp) {
-            this.orderIds = [];
             this.initOrders();
           }
         })
@@ -488,11 +437,12 @@ export default {
         });
       });
     },
-    showPurchaseOrderAddView() {
-      this.emptyPurchase();
-      this.fileList = [];
-      this.title = '新增订单信息';
-      this.dialogVisible3 = true;
+    showPurchaseOrderView() {
+      // this.postRequest("/order/basic/delete", this.orderIds).then(resp => {
+      //   if (resp) {
+      //     this.initOrders();
+      //   }
+      // });
     },
     sizeChange(currentSize) {
       this.size = currentSize;
@@ -556,11 +506,8 @@ export default {
       });
     },
     handleSelectionChange(val) {
-      this.orderIds = [];
-      this.assetIds = [];
       for (let i = 0; i < val.length; i++) {
         this.orderIds.push(val[i].id);
-        this.assetIds.push(val[i].asset.id);
       }
     },
     clearSearchValue() {

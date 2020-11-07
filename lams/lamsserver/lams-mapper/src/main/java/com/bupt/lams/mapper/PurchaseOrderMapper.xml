@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bupt.lams.mapper.PurchaseOrderMapper">
+    <sql id="Base_Column_List">
+    id, operate, operateName, operatorName, operatorMail, text, operateTime
+  </sql>
+    <sql id="baseInfoQuery">
+        <if test="id !=null">
+            and r.id = #{id}
+        </if>
+        <if test="operate !=null">
+            and r.operate = #{operate}
+        </if>
+        <if test="operatorMail !=null and operatorMail!=''">
+            and r.operatorMail like concat('%',#{operatorMail},'%')
+        </if>
+        <if test="text !=null and text!=''">
+            and r.text like concat('%',#{text},'%')
+        </if>
+        <if test="startDate !=null and endDate !=null">
+            and r.operateTime between #{startDate} and #{endDate}
+        </if>
+    </sql>
+    <select id="getPurchaseOrderByCondition" parameterType="com.bupt.lams.dto.PurchaseQueryCondition"
+            resultType="com.bupt.lams.model.PurchaseOrder">
+        select r.*
+        from
+        record r
+        <where>
+            <include refid="baseInfoQuery"/>
+        </where>
+        <if test="page !=null and size!=null">
+            limit #{page},#{size}
+        </if>
+    </select>
+    <select id="getTotalByCondition" parameterType="com.bupt.lams.dto.PurchaseQueryCondition"
+            resultType="java.lang.Long">
+        select count(*)
+        from
+        record r
+        <where>
+            <include refid="baseInfoQuery"/>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultType="com.bupt.lams.model.PurchaseOrder" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from record
+        where id = #{id}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from record
+    where id = #{id}
+  </delete>
+    <insert id="insertSelective" parameterType="com.bupt.lams.model.PurchaseOrder" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into purchase_orders
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                `name`,
+            </if>
+            <if test="total != null">
+                total,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="pay != null">
+                pay,
+            </if>
+            <if test="purchaseDate != null">
+                purchaseDate,
+            </if>
+            <if test="hasInvoice != null">
+                hasInvoice,
+            </if>
+            <if test="invoiceDate != null">
+                invoiceDate,
+            </if>
+            <if test="remark != null and remark != ''">
+                remark,
+            </if>
+            <if test="creatorEmail != null and creatorEmail != ''">
+                creatorEmail,
+            </if>
+            <if test="updaterEmail != null and updaterEmail != ''">
+                updaterEmail,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            updateTime
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="total != null">
+                #{total},
+            </if>
+            <if test="discount != null">
+                #{discount},
+            </if>
+            <if test="pay != null">
+                #{pay},
+            </if>
+            <if test="purchaseDate != null">
+                #{purchaseDate},
+            </if>
+            <if test="hasInvoice != null">
+                #{hasInvoice},
+            </if>
+            <if test="invoiceDate != null">
+                #{invoiceDate},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark},
+            </if>
+            <if test="creatorEmail != null and creatorEmail != ''">
+                #{creatorEmail},
+            </if>
+            <if test="updaterEmail != null and updaterEmail != ''">
+                #{updaterEmail},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            now()
+        </trim>
+    </insert>
+</mapper>

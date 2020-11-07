@@ -9,6 +9,16 @@
         <el-form :model="order.asset">
           <el-row>
             <el-col :span="6">
+              <el-form-item label="资产编号:" prop="id">
+                {{ order.asset.id }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="名称:" prop="assetName">
+                {{ order.asset.assetName }}
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
               <el-form-item label="品牌:" prop="brand">
                 {{ order.asset.brand }}
               </el-form-item>
@@ -54,6 +64,13 @@
             <el-col :span="10">
               <el-form-item v-show="order.reason&&order.reason!=''" label="理由:" prop="reason">
                 {{ order.reason }}
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="10">
+              <el-form-item v-show="order.asset&&order.asset.remark!=''" label="资产备注:" prop="remark">
+                {{ order.asset.remark }}
               </el-form-item>
             </el-col>
           </el-row>

@@ -28,16 +28,17 @@ public class FastDFSUtils {
         }
     }
 
-    public static String upload(MultipartFile file) {
+    public static String upload(MultipartFile file) throws MyException, IOException {
         String oldName = file.getOriginalFilename();
         try {
-             return client1.upload_file1(file.getBytes(), oldName.substring(oldName.lastIndexOf(".") + 1), null);
+            return client1.upload_file1(file.getBytes(), oldName.substring(oldName.lastIndexOf(".") + 1), null);
         } catch (IOException e) {
             e.printStackTrace();
+            throw e;
         } catch (MyException e) {
             e.printStackTrace();
+            throw e;
         }
-        return null;
     }
 
 }

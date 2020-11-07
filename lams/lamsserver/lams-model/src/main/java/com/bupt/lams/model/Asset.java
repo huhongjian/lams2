@@ -17,13 +17,26 @@ public class Asset implements Serializable {
     private String type;
     private Integer status;
     private String statusName;
+    private String assetName;
     private String brand;
     private Double price;
     private List<AssetPic> fileList;
+
     /**
      * 详细信息
      */
     private Object adv;
+
+    /**
+     * 资产备注
+     */
+    private String remark;
+
+    /**
+     * 购入时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
+    private Date boughtTime;
 
     /**
      * 入库时间

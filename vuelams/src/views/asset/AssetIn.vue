@@ -3,8 +3,11 @@
     <div>
       <div style="display: flex;justify-content: space-between">
         <div>
-          <el-button type="primary" icon="el-icon-plus" @click="showAddEmpView">
+          <el-button type="primary" icon="el-icon-plus" @click="showAddView">
             新增资产
+          </el-button>
+          <el-button type="warning" icon="el-icon-plus" @click="showPurchaseOrderView">
+            添加订单信息
           </el-button>
           <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
                      icon="el-icon-download">
@@ -137,6 +140,14 @@
             width="80">
         </el-table-column>
         <el-table-column
+            fixed
+            prop="asset.assetName"
+            :show-overflow-tooltip="true"
+            align="left"
+            label="资产名称"
+            width="80">
+        </el-table-column>
+        <el-table-column
             prop="asset.type"
             align="left"
             label="类型"
@@ -248,6 +259,8 @@ export default {
       dialogVisible: false,
       // 详情页可见性
       dialogVisible2: false,
+      // 添加订单信息
+      dialogVisible3: false,
       total: 0,
       page: 1,
       keyword: '',
@@ -310,6 +323,7 @@ export default {
           id: "",
           status: "",
           statusName: "",
+          assetName: "",
           brand: "华为",
           type: "手机",
           price: "4000",
@@ -390,7 +404,7 @@ export default {
         }
       };
     },
-    showAddEmpView() {
+    showAddView() {
       this.emptyOrder();
       this.fileList = [];
       this.title = '资产采购申请';
@@ -444,6 +458,13 @@ export default {
           message: '已取消删除'
         });
       });
+    },
+    showPurchaseOrderView() {
+      // this.postRequest("/order/basic/delete", this.orderIds).then(resp => {
+      //   if (resp) {
+      //     this.initOrders();
+      //   }
+      // });
     },
     sizeChange(currentSize) {
       this.size = currentSize;

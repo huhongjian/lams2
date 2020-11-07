@@ -13,6 +13,11 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
+            <el-form-item label="资产名称:" prop="assetName">
+              {{ asset.assetName }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
             <el-form-item label="状态:" prop="statusName">
               {{ asset.statusName }}
             </el-form-item>
@@ -32,6 +37,13 @@
           <el-col :span="6">
             <el-form-item label="价格（元）:" prop="price">
               {{ asset.price }}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="10">
+            <el-form-item v-show="asset.remark&&asset.remark!=''" label="资产备注:" prop="remark">
+              {{ asset.remark }}
             </el-form-item>
           </el-col>
         </el-row>

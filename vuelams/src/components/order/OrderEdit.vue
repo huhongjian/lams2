@@ -8,6 +8,14 @@
       <div>
         <el-form :model="order" :rules="rules" ref="orderForm">
           <el-row>
+            <el-col :span="15">
+              <el-form-item label="资产名称:" prop="asset.assetName">
+                <el-input size="mini" style="width: 800px" prefix-icon="el-icon-edit"
+                          v-model="order.asset.assetName"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
             <el-col :span="6">
               <el-form-item label="品牌:" prop="asset.brand">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
@@ -41,6 +49,16 @@
                           :rows="2"
                           placeholder="请输入申请理由"
                           v-model="order.reason"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="20">
+              <el-form-item label="资产备注:" prop="asset.remark">
+                <el-input size="mini"
+                          type="textarea"
+                          :rows="2"
+                          v-model="order.asset.remark"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -173,6 +191,7 @@ export default {
           label: '测距仪'
         }],
       rules: {
+        [`asset.assetName`]: [{required: true, message: '请输入资产名称', trigger: 'blur'}],
         [`asset.brand`]: [{required: true, message: '请输入品牌', trigger: 'blur'}],
         [`asset.price`]: [{required: true, message: '请输入价格', trigger: 'blur'}],
         reason: [{required: true, message: '请输入申请理由', trigger: 'blur'}]

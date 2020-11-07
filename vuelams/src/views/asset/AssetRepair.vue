@@ -133,6 +133,14 @@
             width="150">
         </el-table-column>
         <el-table-column
+            fixed
+            prop="assetName"
+            :show-overflow-tooltip="true"
+            align="left"
+            label="资产名称"
+            width="80">
+        </el-table-column>
+        <el-table-column
             prop="brand"
             label="品牌"
             align="left"
@@ -143,6 +151,12 @@
             label="价格（元）"
             align="left"
             width="150">
+        </el-table-column>
+        <el-table-column
+            prop="boughtTime"
+            width="100"
+            align="left"
+            label="购入时间">
         </el-table-column>
         <el-table-column
             prop="readyDate"
@@ -216,11 +230,13 @@ export default {
         id: "",
         status: "",
         statusName: "",
+        assetName: "",
         brand: "华为",
         type: "手机",
         price: "4000",
         fileList: [],
-        adv: {}
+        adv: {},
+        boughtTime: ""
       },
       options: [
         {

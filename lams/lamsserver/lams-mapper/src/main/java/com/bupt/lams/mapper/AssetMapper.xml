@@ -5,10 +5,13 @@
         <id column="id" property="id"/>
         <result column="status" property="status"/>
         <result column="statusName" property="statusName"/>
+        <result column="assetName" property="assetName"/>
         <result column="type" property="type"/>
         <result column="brand" property="brand"/>
         <result column="price" property="price"/>
         <result column="adv" property="adv" typeHandler="com.bupt.lams.mybatis.JsonToObjectTypeHandler"/>
+        <result column="remark" property="remark"/>
+        <result column="boughtTime" property="boughtTime"/>
         <result column="readyDate" property="readyDate"/>
         <result column="updateTime" property="updateTime"/>
         <collection property="fileList" javaType="arraylist" ofType="com.bupt.lams.model.AssetPic">
@@ -20,7 +23,7 @@
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
-    id, status, statusName, `type`, brand, price, adv, readyDate, updateTime
+    id, status, statusName, `type`, assetName, brand, price, adv, remark, boughtTime, readyDate, updateTime
   </sql>
     <sql id="baseInfoQuery">
         <if test="aid !=null">
@@ -130,6 +133,9 @@
             <if test="statusName != null and statusName != ''">
                 statusName,
             </if>
+            <if test="assetName != null and assetName != ''">
+                assetName,
+            </if>
             <if test="brand != null and brand != ''">
                 brand,
             </if>
@@ -138,6 +144,12 @@
             </if>
             <if test="adv != null">
                 adv,
+            </if>
+            <if test="remark != null and remark != ''">
+                remark,
+            </if>
+            <if test="boughtTime != null">
+                boughtTime,
             </if>
             <if test="readyDate != null">
                 readyDate,
@@ -156,6 +168,9 @@
             <if test="statusName != null and statusName != ''">
                 #{statusName},
             </if>
+            <if test="assetName != null and assetName != ''">
+                #{assetName},
+            </if>
             <if test="brand != null and brand != ''">
                 #{brand},
             </if>
@@ -164,6 +179,12 @@
             </if>
             <if test="adv != null">
                 #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark},
+            </if>
+            <if test="boughtTime != null">
+                #{boughtTime},
             </if>
             <if test="readyDate != null">
                 #{readyDate},

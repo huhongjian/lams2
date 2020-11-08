@@ -30,7 +30,14 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="实际支付（元）:" prop="purchaseDate">
+            <el-form-item label="实际支付（元）:" prop="pay">
+              {{ purchase.pay }}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="6">
+            <el-form-item label="购买日期:" prop="purchaseDate">
               {{ purchase.purchaseDate }}
             </el-form-item>
           </el-col>
@@ -171,11 +178,6 @@
 export default {
   name: "PurchaseOrderDetail",
   props: ['purchase', 'title', 'urlList', 'dialogVisible2'],
-  data() {
-    return {
-      loading: false
-    }
-  },
   methods: {
     handleClose() {
       this.$emit('close');

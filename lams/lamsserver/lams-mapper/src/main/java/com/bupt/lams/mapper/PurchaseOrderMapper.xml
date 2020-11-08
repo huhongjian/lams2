@@ -52,20 +52,29 @@
     id, `name`, total, discount, pay, purchaseDate, hasInvoice, invoiceDate, remark, creatorEmail, updaterEmail, createTime, updateTime
   </sql>
     <sql id="baseInfoQuery">
-        <if test="id !=null">
-            and r.id = #{id}
+        <if test="poid !=null">
+            and po.id = #{poid}
         </if>
-        <if test="operate !=null">
-            and r.operate = #{operate}
+        <if test="name !=null and name!=''">
+            and po.name like concat('%',#{name},'%')
         </if>
-        <if test="operatorMail !=null and operatorMail!=''">
-            and r.operatorMail like concat('%',#{operatorMail},'%')
+        <if test="hasInvoice !=null">
+            and po.hasInvoice = #{hasInvoice}
         </if>
-        <if test="text !=null and text!=''">
-            and r.text like concat('%',#{text},'%')
+        <if test="creatorEmail !=null and creatorEmail!=''">
+            and po.creatorEmail like concat('%',#{creatorEmail},'%')
         </if>
-        <if test="startDate !=null and endDate !=null">
-            and r.operateTime between #{startDate} and #{endDate}
+        <if test="totalLow !=null and totalHigh !=null">
+            and po.total between #{totalLow} and #{totalHigh}
+        </if>
+        <if test="payLow !=null and payHigh !=null">
+            and po.pay between #{payLow} and #{payHigh}
+        </if>
+        <if test="startDateForPurchase !=null and endDateForPurchase !=null">
+            and po.purchaseDate between #{startDateForPurchase} and #{endDateForPurchase}
+        </if>
+        <if test="startDateForInvoice !=null and endDateForInvoice !=null">
+            and po.invoiceDate between #{startDateForInvoice} and #{endDateForInvoice}
         </if>
     </sql>
     <select id="getPurchaseOrderByCondition" parameterType="com.bupt.lams.dto.PurchaseQueryCondition"
@@ -83,9 +92,9 @@
         left join asset a on a.id = pa.aid
         left join lams_user c on c.username = po.creatorEmail
         left join lams_user u on u.username = po.updaterEmail
-        <!--        <where>-->
-        <!--            <include refid="baseInfoQuery"/>-->
-        <!--        </where>-->
+        <where>
+            <include refid="baseInfoQuery"/>
+        </where>
         <if test="page !=null and size!=null">
             limit #{page},#{size}
         </if>
@@ -95,9 +104,9 @@
         select count(*)
         from
         purchase_orders po
-        <!--        <where>-->
-        <!--            <include refid="baseInfoQuery"/>-->
-        <!--        </where>-->
+        <where>
+            <include refid="baseInfoQuery"/>
+        </where>
     </select>
     <select id="selectByPrimaryKey" resultType="com.bupt.lams.model.PurchaseOrder" parameterType="java.lang.Long">
         select

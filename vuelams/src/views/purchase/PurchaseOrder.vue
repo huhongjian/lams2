@@ -31,59 +31,57 @@
         <div v-show="showAdvanceSearchView"
              style="border: 1px solid #759ad1;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;">
           <el-row>
-            <el-col :span="6">
-              类型:
-              <el-select v-model="searchValue.type"
-                         clearable
-                         placeholder="类型"
-                         size="mini"
+            <el-col :span="9">
+              订单名称:
+              <el-input size="mini" style="width: 300px" prefix-icon="el-icon-edit"
+                        clearable
+                        v-model="searchValue.name"></el-input>
+            </el-col>
+            <el-col :span="7">
+              是否有发票:
+              <el-select v-model="searchValue.hasInvoice" clearable placeholder="是否有发票" size="mini"
                          style="width: 130px;">
                 <el-option
-                    v-for="item in types"
-                    :key="item.id"
+                    v-for="(item,indexj) in options"
+                    :key="indexj"
                     :label="item.name"
-                    :value="item.name">
+                    :value="item.value">
                 </el-option>
               </el-select>
             </el-col>
-            <el-col :span="5">
-              品牌:
-              <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
-                        clearable
-                        v-model="searchValue.brand"></el-input>
-            </el-col>
-            <el-col :span="5">
-              状态:
-              <el-select v-model="searchValue.status" clearable placeholder="状态" size="mini" style="width: 130px;">
-                <el-option
-                    v-for="item in statuses"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id">
-                </el-option>
-              </el-select>
-            </el-col>
-            <el-col :span="5">
-              申请人邮箱:
-              <el-input size="mini" style="width: 150px" clearable prefix-icon="el-icon-edit"
-                        v-model="searchValue.userEmail"></el-input>
+            <el-col :span="8">
+              创建人邮箱:
+              <el-input size="mini" style="width: 250px" clearable prefix-icon="el-icon-edit"
+                        v-model="searchValue.creatorEmail"></el-input>
             </el-col>
           </el-row>
           <el-row style="margin-top: 10px">
-            <el-col :span="6">
-              价格:
+            <el-col :span="9">
+              订单总价（元）:
               <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
                         clearable
-                        v-model="searchValue.priceLow"></el-input>
+                        v-model="searchValue.totalLow"></el-input>
               至:
               <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
                         clearable
-                        v-model="searchValue.priceHigh"></el-input>
+                        v-model="searchValue.totalHigh"></el-input>
             </el-col>
             <el-col :span="9">
-              申请时间:
+              实际支付（元）:
+              <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
+                        clearable
+                        v-model="searchValue.payLow"></el-input>
+              至:
+              <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
+                        clearable
+                        v-model="searchValue.payHigh"></el-input>
+            </el-col>
+          </el-row>
+          <el-row style="margin-top: 10px">
+            <el-col :span="9">
+              购买时间:
               <el-date-picker
-                  v-model="searchValue.dateScope"
+                  v-model="searchValue.purchaseDateScope"
                   type="daterange"
                   size="mini"
                   unlink-panels
@@ -93,7 +91,20 @@
                   end-placeholder="结束日期">
               </el-date-picker>
             </el-col>
-            <el-col :span="5" :offset="4">
+            <el-col :span="8">
+              发票时间:
+              <el-date-picker
+                  v-model="searchValue.invoiceDateScope"
+                  type="daterange"
+                  size="mini"
+                  unlink-panels
+                  value-format="yyyy-MM-dd"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期">
+              </el-date-picker>
+            </el-col>
+            <el-col :span="4" :offset="3">
               <el-button size="mini" @click="clearSearchValue">重置</el-button>
               <el-button size="mini" @click="showAdvanceSearchView = false">取消</el-button>
               <el-button size="mini" icon="el-icon-search" type="primary" @click="initPurchaseOrdersAdv">搜索</el-button>
@@ -164,12 +175,6 @@
           </template>
         </el-table-column>
         <el-table-column
-            prop="invoiceTime"
-            width="100"
-            align="left"
-            label="发票日期">
-        </el-table-column>
-        <el-table-column
             :show-overflow-tooltip="true"
             label="关联资产编号">
           <template slot-scope="scope">
@@ -198,7 +203,8 @@
         <el-table-column
             prop="remark"
             :show-overflow-tooltip="true"
-            label="订单备注">
+            label="订单备注"
+            width="150">
         </el-table-column>
         <el-table-column
             prop="createTime"
@@ -247,94 +253,41 @@ export default {
   data() {
     return {
       searchValue: {
-        type: null,
-        brand: null,
-        status: null,
-        userEmail: null,
-        priceLow: null,
-        priceHigh: null,
-        dateScope: null
+        name: null,
+        hasInvoice: null,
+        creatorEmail: null,
+        totalLow: null,
+        totalHigh: null,
+        payLow: null,
+        payHigh: null,
+        purchaseDateScope: null,
+        invoiceDateScope: null
       },
       title: '',
       showAdvanceSearchView: false,
       purchases: [],
       loading: false,
-      // 编辑页面/新增页面可见性
-      dialogVisible: false,
       // 详情页可见性
       dialogVisible2: false,
-      // 添加订单信息
+      // 编辑页面/新增页面可见性
       dialogVisible3: false,
       total: 0,
       page: 1,
       keyword: '',
       size: 10,
-      types: [
+      options: [
         {
-          id: 1,
-          name: '手机'
-        }, {
-          id: 2,
-          name: '主机'
-        }, {
-          id: 3,
-          name: '交换机'
-        }, {
-          id: 4,
-          name: '测距仪'
-        }],
-      statuses: [
-        {
-          id: 1,
-          name: "申请采购"
+          name: "是",
+          value: true
         },
         {
-          id: 2,
-          name: "审批通过"
-        },
-        {
-          id: 6,
-          name: "审批未通过"
-        },
-        {
-          id: 7,
-          name: "已关闭"
+          name: "否",
+          value: false
         }
       ],
       operateList: [],
       // 选中的工单id，删除时使用
       orderIds: [],
-      order: {
-        id: "",
-        category: "",
-        categoryName: "",
-        status: "",
-        statusName: "",
-        expireTime: "",
-        reason: "测试",
-        userEmail: "admin",
-        user: {
-          id: "",
-          name: "",
-          phone: "",
-          username: "",
-          enabled: "",
-          remark: ""
-        },
-        createTime: "",
-        updateTime: "",
-        asset: {
-          id: "",
-          status: "",
-          statusName: "",
-          assetName: "",
-          brand: "华为",
-          type: "手机",
-          price: "4000",
-          fileList: [],
-          adv: {}
-        }
-      },
       // 搜索类型，空是普通搜索，‘advanced’是高级搜索
       type: "",
       // 资产图片列表，用于编辑页面
@@ -374,26 +327,32 @@ export default {
     exportData() {
       let url = '/order/basic/export/in/?category=1';
       if (this.type && this.type == 'advanced') {
-        if (this.searchValue.type) {
-          url += '&type=' + this.searchValue.type;
+        if (this.searchValue.name) {
+          url += '&name=' + this.searchValue.name;
         }
-        if (this.searchValue.brand) {
-          url += '&brand=' + this.searchValue.brand;
+        if (this.searchValue.hasInvoice) {
+          url += '&hasInvoice=' + this.searchValue.hasInvoice;
         }
-        if (this.searchValue.status) {
-          url += '&status=' + this.searchValue.status;
+        if (this.searchValue.creatorEmail) {
+          url += '&creatorEmail=' + this.searchValue.creatorEmail;
         }
-        if (this.searchValue.userEmail) {
-          url += '&userEmail=' + this.searchValue.userEmail;
+        if (this.searchValue.totalLow) {
+          url += '&totalLow=' + this.searchValue.totalLow;
         }
-        if (this.searchValue.priceLow) {
-          url += '&priceLow=' + this.searchValue.priceLow;
+        if (this.searchValue.totalHigh) {
+          url += '&totalHigh=' + this.searchValue.totalHigh;
         }
-        if (this.searchValue.priceHigh) {
-          url += '&priceHigh=' + this.searchValue.priceHigh;
+        if (this.searchValue.payLow) {
+          url += '&payLow=' + this.searchValue.payLow;
         }
-        if (this.searchValue.dateScope) {
-          url += '&dateScope=' + this.searchValue.dateScope;
+        if (this.searchValue.payHigh) {
+          url += '&payHigh=' + this.searchValue.payHigh;
+        }
+        if (this.searchValue.purchaseDateScope) {
+          url += '&purchaseDateScope=' + this.searchValue.purchaseDateScope;
+        }
+        if (this.searchValue.invoiceDateScope) {
+          url += '&invoiceDateScope=' + this.searchValue.invoiceDateScope;
         }
       } else {
         url += "&id=" + this.keyword;
@@ -401,48 +360,34 @@ export default {
       window.open(url, '_parent');
     },
     emptyOrder() {
-      this.order = {
+      this.purchase = {
         id: "",
-        category: "",
-        categoryName: "",
-        status: "",
-        statusName: "",
-        expireTime: "",
-        reason: "测试",
-        userEmail: "admin",
-        user: {
-          id: "",
-          name: "",
-          phone: "",
-          username: "",
-        },
+        name: "",
+        total: "",
+        discount: "",
+        pay: "",
+        purchaseDate: "",
+        hasInvoice: false,
+        invoiceDate: "",
+        remark: "",
+        creatorEmail: "",
+        updaterEmail: "",
+        creator: {},
+        updater: {},
         createTime: "",
         updateTime: "",
-        asset: {
-          id: "",
-          brand: "华为",
-          type: "手机",
-          price: "4000",
-          fileList: [],
-          adv: {},
-        }
-      };
-    },
-    showAddView() {
-      this.emptyOrder();
-      this.fileList = [];
-      this.title = '资产采购申请';
-      this.dialogVisible = true;
+        assetList: []
+      }
     },
     showEditView(data) {
-      this.title = '编辑申请信息';
-      this.order = data;
-      if (this.order.asset.fileList && this.order.asset.fileList.length > 0) {
-        this.fileList = this.order.asset.fileList;
-      } else {
-        this.fileList = [];
-      }
-      this.dialogVisible = true;
+      this.title = '编辑订单信息';
+      this.purchase = data;
+      // if (this.order.asset.fileList && this.order.asset.fileList.length > 0) {
+      //   this.fileList = this.order.asset.fileList;
+      // } else {
+      //   this.fileList = [];
+      // }
+      this.dialogVisible3 = true;
     },
     showDetailView(data) {
       this.title = '订单详情';
@@ -475,13 +420,6 @@ export default {
         });
       });
     },
-    showPurchaseOrderView() {
-      // this.postRequest("/order/basic/delete", this.orderIds).then(resp => {
-      //   if (resp) {
-      //     this.initPurchaseOrders();
-      //   }
-      // });
-    },
     sizeChange(currentSize) {
       this.size = currentSize;
       if (this.type && this.type == 'advanced') {
@@ -513,32 +451,38 @@ export default {
     initPurchaseOrdersAdv() {
       this.type = 'advanced'
       this.loading = true;
-      let url = '/order/basic/get/?category=1&page=' + this.page + '&size=' + this.size;
-      if (this.searchValue.type) {
-        url += '&type=' + this.searchValue.type;
+      let url = '/purchase/get/?page=' + this.page + '&size=' + this.size;
+      if (this.searchValue.name) {
+        url += '&name=' + this.searchValue.name;
       }
-      if (this.searchValue.brand) {
-        url += '&brand=' + this.searchValue.brand;
+      if (this.searchValue.hasInvoice) {
+        url += '&hasInvoice=' + this.searchValue.hasInvoice;
       }
-      if (this.searchValue.status) {
-        url += '&status=' + this.searchValue.status;
+      if (this.searchValue.creatorEmail) {
+        url += '&creatorEmail=' + this.searchValue.creatorEmail;
       }
-      if (this.searchValue.userEmail) {
-        url += '&userEmail=' + this.searchValue.userEmail;
+      if (this.searchValue.totalLow) {
+        url += '&totalLow=' + this.searchValue.totalLow;
       }
-      if (this.searchValue.priceLow) {
-        url += '&priceLow=' + this.searchValue.priceLow;
+      if (this.searchValue.totalHigh) {
+        url += '&totalHigh=' + this.searchValue.totalHigh;
       }
-      if (this.searchValue.priceHigh) {
-        url += '&priceHigh=' + this.searchValue.priceHigh;
+      if (this.searchValue.payLow) {
+        url += '&payLow=' + this.searchValue.payLow;
       }
-      if (this.searchValue.dateScope) {
-        url += '&dateScope=' + this.searchValue.dateScope;
+      if (this.searchValue.payHigh) {
+        url += '&payHigh=' + this.searchValue.payHigh;
+      }
+      if (this.searchValue.purchaseDateScope) {
+        url += '&purchaseDateScope=' + this.searchValue.purchaseDateScope;
+      }
+      if (this.searchValue.invoiceDateScope) {
+        url += '&invoiceDateScope=' + this.searchValue.invoiceDateScope;
       }
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
-          this.orders = resp.data;
+          this.purchases = resp.data;
           this.total = resp.total;
         }
       });
@@ -550,13 +494,15 @@ export default {
     },
     clearSearchValue() {
       this.searchValue = {
-        type: null,
-        brand: null,
-        status: null,
-        userEmail: null,
-        priceLow: null,
-        priceHigh: null,
-        dateScope: null
+        name: null,
+        hasInvoice: null,
+        creatorEmail: null,
+        totalLow: null,
+        totalHigh: null,
+        payLow: null,
+        payHigh: null,
+        purchaseDateScope: null,
+        invoiceDateScope: null
       }
     },
     hidePop(data) {

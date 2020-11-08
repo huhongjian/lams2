@@ -10,6 +10,8 @@ import java.util.Date;
 @Data
 public class PurchaseQueryCondition {
     private Long poid;
+    private String name;
+    private String creatorEmail;
     /**
      * 分页信息
      */

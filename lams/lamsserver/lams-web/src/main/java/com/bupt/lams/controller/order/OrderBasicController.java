@@ -1,6 +1,6 @@
 package com.bupt.lams.controller.order;
 
-import com.bupt.lams.config.FastDFSUtils;
+import com.bupt.lams.utils.FastDFSUtils;
 import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.dto.OrderQueryCondition;
 import com.bupt.lams.model.AssetPic;
@@ -126,7 +126,7 @@ public class OrderBasicController {
         try {
             String fileId = FastDFSUtils.upload(file);
             String url = nginxHost + fileId;
-            AssetPic pic = new AssetPic(aid, file.getName(), url, new Date());
+            AssetPic pic = new AssetPic(aid, file.getOriginalFilename(), url, new Date());
             assetService.insertAssetPics(pic);
             return response;
         } catch (Exception e) {

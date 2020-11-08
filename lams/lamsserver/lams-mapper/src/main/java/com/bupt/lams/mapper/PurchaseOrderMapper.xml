@@ -47,6 +47,13 @@
             <result column="readyDate" property="readyDate"/>
             <result column="a_updateTime" property="updateTime"/>
         </collection>
+        <collection property="fileList" javaType="arraylist" ofType="com.bupt.lams.model.PurchasePic">
+            <id column="pid" property="id"/>
+            <result column="p_poid" property="poid"/>
+            <result column="p_name" property="name"/>
+            <result column="url" property="url"/>
+            <result column="p_createTime" property="createTime"/>
+        </collection>
     </resultMap>
     <sql id="Base_Column_List">
     id, `name`, total, discount, pay, purchaseDate, hasInvoice, invoiceDate, remark, creatorEmail, updaterEmail, createTime, updateTime
@@ -85,13 +92,15 @@
         c.id as creator_id, c.name as creator_name, c.phone as creator_phone, c.username as creator_username, c.enabled
         as creator_enabled, c.remark as creator_remark,
         u.id as updater_id, u.name as updater_name, u.phone as updater_phone, u.username as updater_username, u.enabled
-        as updater_enabled, u.remark as updater_remark
+        as updater_enabled, u.remark as updater_remark,
+        p.id as pid, p.poid as p_poid, p.name as p_name, p.createTime as p_createTime, p.*
         from
         purchase_orders po
         left join purchase_asset pa on po.id = pa.poid
         left join asset a on a.id = pa.aid
         left join lams_user c on c.username = po.creatorEmail
         left join lams_user u on u.username = po.updaterEmail
+        left join purchase_pics p on po.id = p.poid
         <where>
             <include refid="baseInfoQuery"/>
         </where>
@@ -194,4 +203,45 @@
             now()
         </trim>
     </insert>
+    <update id="updatePurchaseOrder" parameterType="com.bupt.lams.model.PurchaseOrder">
+        update purchase_orders
+        set
+        <if test="name !=null and name!=''">
+            `name` = #{name},
+        </if>
+        <if test="total !=null">
+            total = #{total},
+        </if>
+        <if test="discount != null">
+            discount = #{discount},
+        </if>
+        <if test="pay !=null">
+            pay = #{pay},
+        </if>
+        <if test="purchaseDate != null">
+            purchaseDate = #{purchaseDate},
+        </if>
+        <if test="hasInvoice != null">
+            hasInvoice = #{hasInvoice},
+        </if>
+        <if test="invoiceDate != null">
+            invoiceDate = #{invoiceDate},
+        </if>
+        <if test="remark !=null and remark!=''">
+            remark = #{remark},
+        </if>
+        <if test="creatorEmail !=null and creatorEmail!=''">
+            creatorEmail = #{creatorEmail},
+        </if>
+        <if test="updaterEmail !=null and updaterEmail!=''">
+            updaterEmail = #{updaterEmail},
+        </if>
+        <if test="createTime != null">
+            createTime = #{createTime},
+        </if>
+        updateTime = NOW()
+        <where>
+            id = #{id}
+        </where>
+    </update>
 </mapper>

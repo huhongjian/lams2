@@ -1,19 +1,20 @@
 package com.bupt.lams.controller.purchase;
 
-import com.bupt.lams.constants.AssetStatusEnum;
-import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.dto.AddPurchaseData;
-import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.dto.PurchaseQueryCondition;
-import com.bupt.lams.model.*;
-import com.bupt.lams.service.OrderAssetService;
+import com.bupt.lams.model.PurchaseOrder;
+import com.bupt.lams.model.PurchasePic;
+import com.bupt.lams.model.RespBean;
+import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.PurchaseOrderService;
-import com.bupt.lams.utils.POIUtils;
+import com.bupt.lams.utils.FastDFSUtils;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -30,8 +31,9 @@ public class PurchaseController {
 
     @Resource
     PurchaseOrderService purchaseOrderService;
-    @Resource
-    OrderAssetService orderAssetService;
+
+    @Value("${fastdfs.nginx.host}")
+    String nginxHost;
 
     @GetMapping("/get")
     public RespPageBean getPurchaseOrderByPage(PurchaseQueryCondition condition, Date[] purchaseDateScope, Date[] invoiceDateScope) {
@@ -52,7 +54,13 @@ public class PurchaseController {
         response.setStatus(200);
         response.setMsg("订单信息添加成功!");
         try {
+            List<Long> aids = addData.getAids();
+            List<Long> poids = purchaseOrderService.getPurchaseOrderIdsByAids(aids);
+            if (CollectionUtils.isNotEmpty(poids)) {
+                return RespBean.error("订单信息已存在，不能重复添加！");
+            }
             purchaseOrderService.addPurchaseOrder(addData);
+            response.setObj(addData.getPurchaseOrder().getId());
         } catch (Exception e) {
             logger.error("订单信息添加失败", e);
             return RespBean.error("订单信息添加失败！");
@@ -71,19 +79,50 @@ public class PurchaseController {
         return RespBean.ok("更新成功!");
     }
 
-//    @PutMapping("/edit")
-//    public RespBean updateAsset(@RequestBody Asset asset) {
-//        // 资产信息管理中的资产信息只允许管理员修改
-//        if (UserInfoUtils.isAdmin() == false) {
-//            return RespBean.error("没有修改权限，请联系管理员!");
-//        }
-//        try {
-//            purchaseOrderService.updateAsset(asset);
-//        } catch (Exception e) {
-//            return RespBean.error("更新失败!");
-//        }
-//        return RespBean.ok("更新成功!");
-//    }
+    @PutMapping("/edit")
+    public RespBean updatePurchaseOrder(@RequestBody PurchaseOrder purchaseOrder) {
+        // 订单信息只允许财务修改
+        if (UserInfoUtils.isAccountant() == false) {
+            return RespBean.error("没有修改权限，请联系财务人员修改!");
+        }
+        try {
+            purchaseOrderService.updatePurchaseOrder(purchaseOrder);
+        } catch (Exception e) {
+            return RespBean.error("更新失败!");
+        }
+        return RespBean.ok("更新成功!");
+    }
+
+    @PostMapping("/pic/add")
+    public RespBean addPics(MultipartFile file, Long poid) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        response.setMsg("更新订单图片成功!");
+        try {
+            String fileId = FastDFSUtils.upload(file);
+            String url = nginxHost + fileId;
+            PurchasePic pic = new PurchasePic(poid, file.getOriginalFilename(), url, new Date());
+            purchaseOrderService.insertPurchasePics(pic);
+            return response;
+        } catch (Exception e) {
+            logger.error("更新订单图片失败！", e);
+            return RespBean.error("更新订单图片失败!");
+        }
+    }
+
+    @DeleteMapping("/pic/remove")
+    public RespBean removeAssetPics(Long pid) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        response.setMsg("删除订单图片成功!");
+        try {
+            purchaseOrderService.deletePurchasePicById(pid);
+            return response;
+        } catch (Exception e) {
+            logger.error("删除订单图片失败！", e);
+            return RespBean.error("删除订单图片失败!");
+        }
+    }
 //
 //    @GetMapping("/export")
 //    public ResponseEntity<byte[]> exportData(AssetQueryCondition assetQueryCondition, Date[] dateScope) {
@@ -93,41 +132,5 @@ public class PurchaseController {
 //        }
 //        List<Asset> list = (List<Asset>) purchaseOrderService.getAssetByCondition(assetQueryCondition).getData();
 //        return POIUtils.assetInfo2Excel(list);
-//    }
-//
-//    @PutMapping("/changeStatus")
-//    public RespBean changeAssetStatus(@RequestBody Asset asset) {
-//        // 除了报修之外，其他情况只允许管理员修改
-//        if (asset.getStatus() != AssetStatusEnum.BROKEN.getIndex() && UserInfoUtils.isAdmin() == false) {
-//            return RespBean.error("没有修改权限，请联系管理员!");
-//        }
-//        if (isInProcess(asset.getId()) == true) {
-//            return RespBean.error("当前资产在流程中，请先结束流程再操作！");
-//        }
-//        try {
-//            purchaseOrderService.changeAssetStatus(asset);
-//        } catch (Exception e) {
-//            return RespBean.error("更新失败!");
-//        }
-//        return RespBean.ok("更新成功!");
-//    }
-//
-//    /**
-//     * 判断资产是否正在一个流程中
-//     *
-//     * @param aid
-//     * @return
-//     */
-//    public boolean isInProcess(Long aid) {
-//        try {
-//            Order order = orderAssetService.getLatestOrderByAid(aid);
-//            if (order.getStatus() != OrderStatusEnum.ASK.getIndex() && order.getStatus() != OrderStatusEnum.OCCUPIED.getIndex()) {
-//                return false;
-//            }
-//            return true;
-//        } catch (Exception e) {
-//            logger.error("根据资产编号获取最近工单异常！", e);
-//            return true;
-//        }
 //    }
 }

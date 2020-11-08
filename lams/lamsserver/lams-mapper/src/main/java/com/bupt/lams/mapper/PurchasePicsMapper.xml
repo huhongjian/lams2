@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bupt.lams.mapper.AssetPicsMapper">
-    <resultMap id="BaseResultMap" type="com.bupt.lams.model.AssetPic">
+<mapper namespace="com.bupt.lams.mapper.PurchasePicsMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.PurchasePic">
         <id column="id" property="id"/>
-        <result column="aid" property="aid"/>
+        <result column="poid" property="poid"/>
         <result column="name" property="name"/>
         <result column="url" property="url"/>
         <result column="createTime" property="createTime"/>
     </resultMap>
-    <delete id="deleteAssetPicById" parameterType="java.lang.Long">
-        delete from asset_pics
+    <delete id="deletePurchasePicById" parameterType="java.lang.Long">
+        delete from purchase_pics
         where
         id = #{id}
     </delete>
-    <insert id="insertAssetPics" parameterType="com.bupt.lams.model.AssetPic">
-        INSERT INTO asset_pics (
-            `aid`,
+    <insert id="insertPurchasePics" parameterType="com.bupt.lams.model.PurchasePic">
+        INSERT INTO purchase_pics (
+            `poid`,
             `name`,
             `url`,
             `createtime`
             )
         VALUES
             (
-            #{aid},
+            #{poid},
             #{name},
             #{url},
             now()
             )
     </insert>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select ap.*
-        from asset_pics ap
+        select pp.*
+        from purchase_pics pp
         where
         id = #{id}
     </select>

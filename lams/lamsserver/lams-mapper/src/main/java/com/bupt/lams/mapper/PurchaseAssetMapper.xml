@@ -59,4 +59,14 @@
             ( null, #{poid}, #{aid} )
         </foreach>
     </insert>
+    <select id="getPurchaseOrderIdsByAids" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select poid
+        from
+        purchase_asset
+        where
+        aid in
+        <foreach collection="aids" item="aid" open="(" close=")" separator=",">
+            #{aid}
+        </foreach>
+    </select>
 </mapper>

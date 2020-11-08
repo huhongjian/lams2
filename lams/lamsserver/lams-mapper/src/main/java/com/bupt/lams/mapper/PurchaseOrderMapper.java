@@ -15,4 +15,6 @@ public interface PurchaseOrderMapper {
     void deleteByPrimaryKey(Long id);
 
     void insertSelective(PurchaseOrder record);
+
+    void updatePurchaseOrder(PurchaseOrder purchaseOrder);
 }

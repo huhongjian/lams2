@@ -16,4 +16,6 @@ public interface PurchaseAssetMapper {
     void deleteByPoid(@Param("poid") Long poid);
 
     void insertSelective(@Param("poid") Long poid, @Param("aids") List<Long> aids);
+
+    List<Long> getPurchaseOrderIdsByAids(@Param("aids") List<Long> aids);
 }

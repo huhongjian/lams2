@@ -1,4 +1,4 @@
-package com.bupt.lams.config;
+package com.bupt.lams.utils;
 
 import org.csource.common.MyException;
 import org.csource.fastdfs.ClientGlobal;
@@ -41,4 +41,25 @@ public class FastDFSUtils {
         }
     }
 
+    /**
+     * 从fdfs服务删除图片
+     *
+     * @param storagePath 文件的全部路径 如：group1/M00/00/00/wKgRsVjtwpSAXGwkAAAweEAzRjw471.jpg
+     * @return -1失败,0成功
+     * @throws IOException
+     * @throws Exception
+     */
+    public static Integer delete(String storagePath) throws MyException, IOException {
+        int result = -1;
+        try {
+            result = client1.delete_file1(storagePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        } catch (MyException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return result;
+    }
 }

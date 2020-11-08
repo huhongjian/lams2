@@ -238,7 +238,7 @@
       </div>
     </div>
     <PurchaseOrderEdit v-on:close="dialogVisible3 = false" :dialogVisible3="dialogVisible3" :purchase="purchase"
-                       :title="title"></PurchaseOrderEdit>
+                       :title="title" :fileList="fileList"></PurchaseOrderEdit>
     <PurchaseOrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :purchase="purchase"
                          :title="title" :urlList="urlList"></PurchaseOrderDetail>
   </div>
@@ -310,7 +310,8 @@ export default {
         updater: {},
         createTime: "",
         updateTime: "",
-        assetList: []
+        assetList: [],
+        fileList: []
       },
       aids: [],
       selectedAids: []
@@ -382,24 +383,24 @@ export default {
     showEditView(data) {
       this.title = '编辑订单信息';
       this.purchase = data;
-      // if (this.order.asset.fileList && this.order.asset.fileList.length > 0) {
-      //   this.fileList = this.order.asset.fileList;
-      // } else {
-      //   this.fileList = [];
-      // }
+      if (this.purchase.fileList && this.purchase.fileList.length > 0) {
+        this.fileList = this.purchase.fileList;
+      } else {
+        this.fileList = [];
+      }
       this.dialogVisible3 = true;
     },
     showDetailView(data) {
       this.title = '订单详情';
       this.purchase = data;
-      // if (this.order.asset && this.order.asset.fileList) {
-      //   this.urlList = [];
-      //   for (let i = 0; i < this.order.asset.fileList.length; i++) {
-      //     this.urlList.push(this.order.asset.fileList[i].url);
-      //   }
-      // } else {
-      //   this.urlList = null;
-      // }
+      if (this.purchase && this.purchase.fileList) {
+        this.urlList = [];
+        for (let i = 0; i < this.purchase.fileList.length; i++) {
+          this.urlList.push(this.purchase.fileList[i].url);
+        }
+      } else {
+        this.urlList = null;
+      }
       this.dialogVisible2 = true;
     },
     deleteOrder() {
@@ -509,8 +510,7 @@ export default {
       let url = '/purchase/asset?poid=' + data.id;
       this.putRequest(url, this.selectedAids).then(resp => {
         if (resp) {
-          // this.initPurchaseOrdersAdv();
-          this.initPurchaseOrders();
+          this.initPurchaseOrdersAdv();
         }
       });
     },

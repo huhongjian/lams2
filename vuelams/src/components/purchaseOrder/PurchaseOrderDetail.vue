@@ -88,7 +88,6 @@
             :data="purchase.assetList"
             stripe
             border
-            v-loading="loading"
             element-loading-text="正在加载..."
             element-loading-spinner="el-icon-loading"
             element-loading-background="rgba(0, 0, 0, 0.8)"
@@ -141,7 +140,7 @@
               width="200">
           </el-table-column>
         </el-table>
-        <el-row>
+        <el-row style="margin-top: 10px">
           <el-col :span="10">
             <el-form-item v-show="purchase.remark&&purchase.remark!=''" label="订单备注:" prop="remark">
               {{ purchase.remark }}

@@ -58,4 +58,5 @@ public class PurchaseOrder {
      * 订单包含的资产信息
      */
     List<Asset> assetList;
+    private List<PurchasePic> fileList;
 }

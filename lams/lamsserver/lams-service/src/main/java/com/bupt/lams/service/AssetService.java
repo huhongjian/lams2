@@ -12,10 +12,15 @@ import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.annotation.OperateRecord;
 import com.bupt.lams.service.strategies.record.ChangeAssetStatusRecord;
 import com.bupt.lams.service.strategies.record.UpdateAssetRecord;
+import com.bupt.lams.utils.FastDFSUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.csource.common.MyException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -28,6 +33,9 @@ public class AssetService {
 
     @Resource
     AssetPicsMapper assetPicsMapper;
+
+    @Value("${fastdfs.nginx.host}")
+    String nginxHost;
 
     public RespPageBean getAssetByCondition(AssetQueryCondition condition) {
         Integer page = condition.getPage();
@@ -162,7 +170,14 @@ public class AssetService {
         assetPicsMapper.insertAssetPics(pic);
     }
 
-    public void deleteAssetPicById(Long id) {
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteAssetPicById(Long id) throws IOException, MyException {
+        AssetPic assetPic = assetPicsMapper.selectByPrimaryKey(id);
+        if (assetPic == null) {
+            return;
+        }
+        String fileId = assetPic.getUrl().replace(nginxHost, "");
+        FastDFSUtils.delete(fileId);
         assetPicsMapper.deleteAssetPicById(id);
     }
 

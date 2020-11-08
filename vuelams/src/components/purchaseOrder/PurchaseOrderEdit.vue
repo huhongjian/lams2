@@ -6,7 +6,7 @@
         :before-close="handleClose"
         width="80%">
       <div>
-        <el-form :model="purchase" :rules="rules" ref="orderForm">
+        <el-form :model="purchase" :rules="rules" ref="purchaseForm">
           <el-row>
             <el-col :span="15">
               <el-form-item label="订单名称:" prop="name">
@@ -46,7 +46,7 @@
           </el-row>
           <el-row>
             <el-col :span="8">
-              <el-form-item label="是否有发票:" prop="type">
+              <el-form-item label="是否有发票:" prop="hasInvoice">
                 <el-select v-model="purchase.hasInvoice" clearable placeholder="请选择">
                   <el-option
                       v-for="item in options"
@@ -58,7 +58,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="9">
-              <el-form-item label="发票日期:" prop="purchaseDate">
+              <el-form-item label="发票日期:" prop="invoiceDate">
                 <el-date-picker
                     v-model="purchase.invoiceDate"
                     type="date"
@@ -88,7 +88,7 @@
                   ref="upload"
                   :data="uploadData"
                   :file-list="fileList"
-                  action="/order/basic/pic/add"
+                  action="/purchase/pic/add"
                   list-type="picture-card"
                   :on-preview="handlePictureCardPreview"
                   :on-remove="handleRemove"
@@ -121,7 +121,7 @@ export default {
         aids: []
       },
       uploadData: {
-        aid: ""
+        poid: ""
       },
       options: [
         {
@@ -132,10 +132,11 @@ export default {
           label: '否'
         }],
       rules: {
-        [`asset.assetName`]: [{required: true, message: '请输入资产名称', trigger: 'blur'}],
-        [`asset.brand`]: [{required: true, message: '请输入品牌', trigger: 'blur'}],
-        [`asset.price`]: [{required: true, message: '请输入价格', trigger: 'blur'}],
-        reason: [{required: true, message: '请输入申请理由', trigger: 'blur'}]
+        total: [{required: true, message: '请输入订单总价', trigger: 'blur'}],
+        discount: [{required: true, message: '请输入订单优惠', trigger: 'blur'}],
+        pay: [{required: true, message: '请输入实际支付', trigger: 'blur'}],
+        purchaseDate: [{required: true, message: '请输入购买日期', trigger: 'blur'}],
+        hasInvoice: [{required: true, message: '请选择发票情况', trigger: 'blur'}]
       },
       dialogImageUrl: '',
       visible: false
@@ -144,33 +145,31 @@ export default {
   methods: {
     doAddPurchase() {
       if (this.purchase.id) {
-        this.$refs['orderForm'].validate(valid => {
+        this.$refs['purchaseForm'].validate(valid => {
           if (valid) {
-            this.addData.purchaseOrder = this.purchase;
-            this.addData.aids = this.assetIds;
-            this.postRequest("/purchase/add", this.addData).then(resp => {
+            this.putRequest("/purchase/edit", this.purchase).then(resp => {
               if (resp) {
-                this.uploadData.aid = this.order.asset.id;
-                // this.$refs.upload.submit();
+                this.uploadData.poid = this.purchase.id;
+                this.$refs.upload.submit();
                 this.$emit('empty');
                 this.$emit('close');
-                this.$parent.initOrders();
+                this.$parent.initPurchaseOrders();
               }
             })
           }
         });
       } else {
-        this.$refs['orderForm'].validate(valid => {
+        this.$refs['purchaseForm'].validate(valid => {
           if (valid) {
             this.addData.purchaseOrder = this.purchase;
             this.addData.aids = this.assetIds;
             this.postRequest("/purchase/add", this.addData).then(resp => {
               if (resp) {
-                // this.uploadData.aid = resp.obj;
-                // this.$refs.upload.submit();
+                this.uploadData.poid = resp.obj;
+                this.$refs.upload.submit();
                 this.$emit('empty');
                 this.$emit('close');
-                this.$parent.initOrders();
+                this.$parent.initPurchaseOrders();
               }
             })
           }
@@ -182,9 +181,9 @@ export default {
     },
     handleRemove(file, fileList) {
       if (file.id) {
-        this.deleteRequest("/order/basic/pic/remove/?pid=" + file.id).then(resp => {
+        this.deleteRequest("/purchase/pic/remove/?pid=" + file.id).then(resp => {
               if (resp) {
-                this.$parent.initOrders();
+                this.$parent.initPurchaseOrders();
               }
             }
         );

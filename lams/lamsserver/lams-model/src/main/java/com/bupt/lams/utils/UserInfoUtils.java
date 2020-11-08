@@ -34,4 +34,20 @@ public class UserInfoUtils {
         }
         return false;
     }
+
+    /**
+     * 当前用户是否有财务权限
+     *
+     * @return
+     */
+    public static boolean isAccountant() {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        List<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            if (role.getName().equals("ROLE_accountant")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

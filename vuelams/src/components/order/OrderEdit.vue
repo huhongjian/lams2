@@ -26,10 +26,10 @@
               <el-form-item label="类型:" prop="type">
                 <el-select v-model="order.asset.type" clearable placeholder="请选择">
                   <el-option
-                      v-for="item in options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
+                      v-for="item in types"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.name">
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -170,26 +170,12 @@
 <script>
 export default {
   name: "OrderEdit",
-  props: ['order', 'fileList', 'title', 'dialogVisible'],
+  props: ['order', 'fileList', 'title', 'dialogVisible', 'types'],
   data() {
     return {
       uploadData: {
         aid: ""
       },
-      options: [
-        {
-          value: '手机',
-          label: '手机'
-        }, {
-          value: '主机',
-          label: '主机'
-        }, {
-          value: '交换机',
-          label: '交换机'
-        }, {
-          value: '测距仪',
-          label: '测距仪'
-        }],
       rules: {
         [`asset.assetName`]: [{required: true, message: '请输入资产名称', trigger: 'blur'}],
         [`asset.brand`]: [{required: true, message: '请输入品牌', trigger: 'blur'}],

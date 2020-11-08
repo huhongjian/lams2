@@ -228,7 +228,7 @@
       </div>
     </div>
     <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
-               :title="title"></OrderEdit>
+               :title="title" :types="types"></OrderEdit>
     <PurchaseOrderEdit v-on:close="dialogVisible3 = false" v-on:empty="assetIds=[]" :dialogVisible3="dialogVisible3"
                        :purchase="purchase" :assetIds="assetIds" :title="title"></PurchaseOrderEdit>
     <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
@@ -268,20 +268,7 @@ export default {
       page: 1,
       keyword: '',
       size: 10,
-      types: [
-        {
-          id: 1,
-          name: '手机'
-        }, {
-          id: 2,
-          name: '主机'
-        }, {
-          id: 3,
-          name: '交换机'
-        }, {
-          id: 4,
-          name: '测距仪'
-        }],
+      types: [],
       statuses: [
         {
           id: 1,
@@ -312,8 +299,8 @@ export default {
         status: "",
         statusName: "",
         expireTime: "",
-        reason: "测试",
-        userEmail: "admin",
+        reason: "",
+        userEmail: "",
         user: {
           id: "",
           name: "",
@@ -329,9 +316,9 @@ export default {
           status: "",
           statusName: "",
           assetName: "",
-          brand: "华为",
-          type: "手机",
-          price: "4000",
+          brand: "",
+          type: "",
+          price: "",
           fileList: [],
           adv: {}
         }
@@ -361,6 +348,7 @@ export default {
   },
   mounted() {
     this.initOrders();
+    this.initTypes();
   },
   methods: {
     exportData() {
@@ -400,8 +388,8 @@ export default {
         status: "",
         statusName: "",
         expireTime: "",
-        reason: "测试",
-        userEmail: "admin",
+        reason: "",
+        userEmail: "",
         user: {
           id: "",
           name: "",
@@ -412,9 +400,9 @@ export default {
         updateTime: "",
         asset: {
           id: "",
-          brand: "华为",
-          type: "手机",
-          price: "4000",
+          brand: "",
+          type: "",
+          price: "",
           fileList: [],
           adv: {},
         }
@@ -422,14 +410,14 @@ export default {
     },
     emptyPurchase() {
       this.purchase = {
-        name: "test",
-        total: "12",
-        discount: "2",
-        pay: "10",
+        name: "",
+        total: "",
+        discount: "",
+        pay: "",
         purchaseDate: "",
         hasInvoice: false,
         invoiceDate: "",
-        remark: "test"
+        remark: ""
       }
     },
     showAddView() {
@@ -552,6 +540,14 @@ export default {
         if (resp) {
           this.orders = resp.data;
           this.total = resp.total;
+        }
+      });
+    },
+    initTypes() {
+      let url = '/asset/types/get';
+      this.getRequest(url).then(resp => {
+        if (resp) {
+          this.types = resp.obj;
         }
       });
     },

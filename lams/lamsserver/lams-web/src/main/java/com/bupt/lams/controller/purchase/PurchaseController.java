@@ -8,11 +8,13 @@ import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.PurchaseOrderService;
 import com.bupt.lams.utils.FastDFSUtils;
+import com.bupt.lams.utils.POIUtils;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,14 +39,7 @@ public class PurchaseController {
 
     @GetMapping("/get")
     public RespPageBean getPurchaseOrderByPage(PurchaseQueryCondition condition, Date[] purchaseDateScope, Date[] invoiceDateScope) {
-        if (purchaseDateScope != null && purchaseDateScope.length == 2) {
-            condition.setStartDateForPurchase(purchaseDateScope[0]);
-            condition.setEndDateForPurchase(purchaseDateScope[1]);
-        }
-        if (invoiceDateScope != null && invoiceDateScope.length == 2) {
-            condition.setStartDateForInvoice(invoiceDateScope[0]);
-            condition.setEndDateForInvoice(invoiceDateScope[1]);
-        }
+        fillCondition(condition, purchaseDateScope, invoiceDateScope);
         return purchaseOrderService.getPurchaseOrdersByCondition(condition);
     }
 
@@ -123,14 +118,29 @@ public class PurchaseController {
             return RespBean.error("删除订单图片失败!");
         }
     }
-//
-//    @GetMapping("/export")
-//    public ResponseEntity<byte[]> exportData(AssetQueryCondition assetQueryCondition, Date[] dateScope) {
-//        if (dateScope != null && dateScope.length == 2) {
-//            assetQueryCondition.setStartDate(dateScope[0]);
-//            assetQueryCondition.setEndDate(dateScope[1]);
-//        }
-//        List<Asset> list = (List<Asset>) purchaseOrderService.getAssetByCondition(assetQueryCondition).getData();
-//        return POIUtils.assetInfo2Excel(list);
-//    }
+
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportData(PurchaseQueryCondition condition, Date[] purchaseDateScope, Date[] invoiceDateScope) {
+        fillCondition(condition, purchaseDateScope, invoiceDateScope);
+        List<PurchaseOrder> list = (List<PurchaseOrder>) purchaseOrderService.getPurchaseOrdersByCondition(condition).getData();
+        return POIUtils.purchaseOrders2Excel(list);
+    }
+
+    /**
+     * 补完查询条件
+     *
+     * @param condition
+     * @param purchaseDateScope
+     * @param invoiceDateScope
+     */
+    private void fillCondition(PurchaseQueryCondition condition, Date[] purchaseDateScope, Date[] invoiceDateScope) {
+        if (purchaseDateScope != null && purchaseDateScope.length == 2) {
+            condition.setStartDateForPurchase(purchaseDateScope[0]);
+            condition.setEndDateForPurchase(purchaseDateScope[1]);
+        }
+        if (invoiceDateScope != null && invoiceDateScope.length == 2) {
+            condition.setStartDateForInvoice(invoiceDateScope[0]);
+            condition.setEndDateForInvoice(invoiceDateScope[1]);
+        }
+    }
 }

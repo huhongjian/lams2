@@ -212,10 +212,10 @@
                 <el-form-item label="类型:" prop="type">
                   <el-select v-model="asset.type" clearable placeholder="请选择">
                     <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
+                        v-for="item in types"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.name">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -337,6 +337,7 @@ export default {
   name: "AssetInfo",
   mounted() {
     this.initAssets();
+    this.initTypes();
   },
   data() {
     return {
@@ -366,9 +367,9 @@ export default {
         status: "",
         statusName: "",
         assetName: "",
-        brand: "华为",
-        type: "手机",
-        price: "4000",
+        brand: "",
+        type: "",
+        price: "",
         fileList: [],
         adv: {},
         boughtTime: ""
@@ -377,39 +378,12 @@ export default {
       fileList: [],
       // 资产图片url列表，用于详情页面
       urlList: [],
-      options: [
-        {
-          value: '手机',
-          label: '手机'
-        }, {
-          value: '主机',
-          label: '主机'
-        }, {
-          value: '交换机',
-          label: '交换机'
-        }, {
-          value: '测距仪',
-          label: '测距仪'
-        }],
       rules: {
         brand: [{required: true, message: '请输入品牌', trigger: 'blur'}],
         price: [{required: true, message: '请输入价格', trigger: 'blur'}]
       },
       type: "",
-      types: [
-        {
-          id: 1,
-          name: '手机'
-        }, {
-          id: 2,
-          name: '主机'
-        }, {
-          id: 3,
-          name: '交换机'
-        }, {
-          id: 4,
-          name: '测距仪'
-        }],
+      types: [],
       statuses: [
         {
           id: 2,
@@ -583,6 +557,14 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.visible = true;
+    },
+    initTypes() {
+      let url = '/asset/types/get';
+      this.getRequest(url).then(resp => {
+        if (resp) {
+          this.types = resp.obj;
+        }
+      });
     }
   }
 }

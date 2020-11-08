@@ -54,7 +54,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
+        <el-row v-if="this.purchase.creator">
           <el-col :span="6">
             <el-form-item label="创建者姓名:" prop="creator.name">
               {{ purchase.creator.name }}
@@ -66,7 +66,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
+        <el-row v-if="this.purchase.updater">
           <el-col :span="6">
             <el-form-item label="更新者姓名:" prop="updater.name">
               {{ purchase.updater.name }}

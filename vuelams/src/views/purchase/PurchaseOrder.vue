@@ -326,7 +326,7 @@ export default {
   },
   methods: {
     exportData() {
-      let url = '/order/basic/export/in/?category=1';
+      let url = '/purchase/export/?1=1';
       if (this.type && this.type == 'advanced') {
         if (this.searchValue.name) {
           url += '&name=' + this.searchValue.name;

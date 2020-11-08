@@ -255,20 +255,7 @@ export default {
       page: 1,
       keyword: '',
       size: 10,
-      types: [
-        {
-          id: 1,
-          name: '手机'
-        }, {
-          id: 2,
-          name: '主机'
-        }, {
-          id: 3,
-          name: '交换机'
-        }, {
-          id: 4,
-          name: '测距仪'
-        }],
+      types: [],
       statuses: [
         {
           id: 3,
@@ -299,8 +286,8 @@ export default {
         status: "",
         statusName: "",
         expireTime: "",
-        reason: "测试",
-        userEmail: "admin",
+        reason: "",
+        userEmail: "",
         user: {
           id: "",
           name: "",
@@ -316,9 +303,9 @@ export default {
           status: "",
           statusName: "",
           assetName: "",
-          brand: "华为",
-          type: "手机",
-          price: "4000",
+          brand: "",
+          type: "",
+          price: "",
           fileList: [],
           adv: {},
           remark: "",
@@ -339,6 +326,7 @@ export default {
   },
   mounted() {
     this.initOrders();
+    this.initTypes();
   },
   methods: {
     exportData() {
@@ -372,8 +360,8 @@ export default {
         status: "",
         statusName: "",
         expireTime: "",
-        reason: "测试",
-        userEmail: "admin",
+        reason: "",
+        userEmail: "",
         user: {
           id: "",
           name: "",
@@ -384,9 +372,9 @@ export default {
         updateTime: "",
         asset: {
           id: "",
-          brand: "华为",
-          type: "手机",
-          price: "4000",
+          brand: "",
+          type: "",
+          price: "",
           fileList: [],
           adv: {},
         }
@@ -509,6 +497,14 @@ export default {
         userEmail: null,
         dateScope: null
       }
+    },
+    initTypes() {
+      let url = '/asset/types/get';
+      this.getRequest(url).then(resp => {
+        if (resp) {
+          this.types = resp.obj;
+        }
+      });
     }
   }
 }

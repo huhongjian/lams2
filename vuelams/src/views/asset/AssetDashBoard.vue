@@ -125,48 +125,13 @@ export default {
     this.initHeadTableData();
     this.initData();
     this.initTypeChartData();
+    this.initTypes();
   },
   data() {
     return {
-      pickerOptions: {
-        shortcuts: [{
-          text: '本月',
-          onClick(picker) {
-            picker.$emit('pick', [new Date(), new Date()]);
-          }
-        }, {
-          text: '今年至今',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date(new Date().getFullYear(), 0);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近六个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setMonth(start.getMonth() - 6);
-            picker.$emit('pick', [start, end]);
-          }
-        }]
-      },
       typeList: [],
       monthScope: '',
-      types: [
-        {
-          id: 1,
-          name: '手机'
-        }, {
-          id: 2,
-          name: '主机'
-        }, {
-          id: 3,
-          name: '交换机'
-        }, {
-          id: 4,
-          name: '测距仪'
-        }],
+      types: [],
       headTableData: {
         total: '',
         inUse: '',
@@ -236,6 +201,14 @@ export default {
       this.getRequest(url).then(resp => {
         if (resp) {
           this.lineData.rows = resp.obj;
+        }
+      });
+    },
+    initTypes() {
+      let url = '/asset/types/get';
+      this.getRequest(url).then(resp => {
+        if (resp) {
+          this.types = resp.obj;
         }
       });
     }

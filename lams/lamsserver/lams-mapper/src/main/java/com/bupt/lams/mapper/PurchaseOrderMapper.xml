@@ -1,8 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bupt.lams.mapper.PurchaseOrderMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.PurchaseOrder">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="total" property="total"/>
+        <result column="discount" property="discount"/>
+        <result column="pay" property="pay"/>
+        <result column="purchaseDate" property="purchaseDate"/>
+        <result column="hasInvoice" property="hasInvoice"/>
+        <result column="invoiceDate" property="invoiceDate"/>
+        <result column="remark" property="remark"/>
+        <result column="creatorEmail" property="creatorEmail"/>
+        <result column="updaterEmail" property="updaterEmail"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+    </resultMap>
+    <resultMap id="AllPurchaseOrderInfo" type="com.bupt.lams.model.PurchaseOrder" extends="BaseResultMap">
+        <association property="creator" javaType="com.bupt.lams.model.LamsUser">
+            <id column="creator_id" property="id"/>
+            <result column="creator_name" property="name"/>
+            <result column="creator_phone" property="phone"/>
+            <result column="creator_username" property="username"/>
+            <result column="creator_enabled" property="enabled"/>
+            <result column="creator_remark" property="remark"/>
+        </association>
+        <association property="updater" javaType="com.bupt.lams.model.LamsUser">
+            <id column="updater_id" property="id"/>
+            <result column="updater_name" property="name"/>
+            <result column="updater_phone" property="phone"/>
+            <result column="updater_username" property="username"/>
+            <result column="updater_enabled" property="enabled"/>
+            <result column="updater_remark" property="remark"/>
+        </association>
+        <collection property="assetList" javaType="arraylist" ofType="com.bupt.lams.model.Asset">
+            <id column="aid" property="id"/>
+            <result column="a_status" property="status"/>
+            <result column="a_statusName" property="statusName"/>
+            <result column="assetName" property="assetName"/>
+            <result column="type" property="type"/>
+            <result column="brand" property="brand"/>
+            <result column="price" property="price"/>
+            <result column="remark" property="remark"/>
+            <result column="adv" property="adv" typeHandler="com.bupt.lams.mybatis.JsonToObjectTypeHandler"/>
+            <result column="boughtTime" property="boughtTime"/>
+            <result column="readyDate" property="readyDate"/>
+            <result column="a_updateTime" property="updateTime"/>
+        </collection>
+    </resultMap>
     <sql id="Base_Column_List">
-    id, operate, operateName, operatorName, operatorMail, text, operateTime
+    id, `name`, total, discount, pay, purchaseDate, hasInvoice, invoiceDate, remark, creatorEmail, updaterEmail, createTime, updateTime
   </sql>
     <sql id="baseInfoQuery">
         <if test="id !=null">
@@ -22,13 +69,23 @@
         </if>
     </sql>
     <select id="getPurchaseOrderByCondition" parameterType="com.bupt.lams.dto.PurchaseQueryCondition"
-            resultType="com.bupt.lams.model.PurchaseOrder">
-        select r.*
+            resultMap="AllPurchaseOrderInfo">
+        select
+        po.*,
+        a.id as aid, a.status as a_status, a.statusName as a_statusName, a.updateTime as a_updateTime, a.*,
+        c.id as creator_id, c.name as creator_name, c.phone as creator_phone, c.username as creator_username, c.enabled
+        as creator_enabled, c.remark as creator_remark,
+        u.id as updater_id, u.name as updater_name, u.phone as updater_phone, u.username as updater_username, u.enabled
+        as updater_enabled, u.remark as updater_remark
         from
-        record r
-        <where>
-            <include refid="baseInfoQuery"/>
-        </where>
+        purchase_orders po
+        left join purchase_asset pa on po.id = pa.poid
+        left join asset a on a.id = pa.aid
+        left join lams_user c on c.username = po.creatorEmail
+        left join lams_user u on u.username = po.updaterEmail
+        <!--        <where>-->
+        <!--            <include refid="baseInfoQuery"/>-->
+        <!--        </where>-->
         <if test="page !=null and size!=null">
             limit #{page},#{size}
         </if>
@@ -37,10 +94,10 @@
             resultType="java.lang.Long">
         select count(*)
         from
-        record r
-        <where>
-            <include refid="baseInfoQuery"/>
-        </where>
+        purchase_orders po
+        <!--        <where>-->
+        <!--            <include refid="baseInfoQuery"/>-->
+        <!--        </where>-->
     </select>
     <select id="selectByPrimaryKey" resultType="com.bupt.lams.model.PurchaseOrder" parameterType="java.lang.Long">
         select

@@ -53,4 +53,12 @@ public class PurchaseOrderService {
             purchaseAssetMapper.insertSelective(purchaseOrder.getId(), aids);
         }
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updatePurchaseAsset(Long poid, List<Long> selectedAids) {
+        purchaseAssetMapper.deleteByPoid(poid);
+        if (CollectionUtils.isNotEmpty(selectedAids)) {
+            purchaseAssetMapper.insertSelective(poid, selectedAids);
+        }
+    }
 }

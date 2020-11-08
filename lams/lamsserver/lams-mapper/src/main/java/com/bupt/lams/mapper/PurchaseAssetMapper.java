@@ -13,7 +13,7 @@ public interface PurchaseAssetMapper {
 
     PurchaseOrder selectByPrimaryKey(Long id);
 
-    void deleteByPrimaryKey(Long id);
+    void deleteByPoid(@Param("poid") Long poid);
 
     void insertSelective(@Param("poid") Long poid, @Param("aids") List<Long> aids);
 }

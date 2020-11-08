@@ -84,6 +84,36 @@ public class AssetController {
         return RespBean.ok("更新成功!");
     }
 
+    @GetMapping("/all")
+    public RespBean getAllAssetIds() {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        response.setMsg("获取资产编号成功!");
+        try {
+            List<Long> aids = assetService.getAllAssetIds();
+            response.setObj(aids);
+        } catch (Exception e) {
+            logger.error("获取资产编号失败", e);
+            return RespBean.error("获取资产编号失败！");
+        }
+        return response;
+    }
+
+    @PostMapping("/info")
+    public RespBean getAssetInfoByIds(List<Long> aids) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        response.setMsg("获取资产信息成功!");
+        try {
+            List<Asset> assets = assetService.getAssetInfoByIds(aids);
+            response.setObj(assets);
+        } catch (Exception e) {
+            logger.error("获取资产信息失败", e);
+            return RespBean.error("获取资产信息失败！");
+        }
+        return response;
+    }
+
     /**
      * 判断资产是否正在一个流程中
      *

@@ -166,6 +166,14 @@ public class AssetService {
         assetPicsMapper.deleteAssetPicById(id);
     }
 
+    public List<Long> getAllAssetIds() {
+        return assetMapper.getAllAssetIds();
+    }
+
+    public List<Asset> getAssetInfoByIds(List<Long> aids) {
+        return assetMapper.getAssetInfoByIds(aids);
+    }
+
     /**
      * 获取目前有效的资产的总数（包括：闲置，故障，使用中）
      *

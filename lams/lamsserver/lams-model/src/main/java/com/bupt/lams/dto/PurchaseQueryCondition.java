@@ -3,7 +3,6 @@ package com.bupt.lams.dto;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 订单信息查询条件

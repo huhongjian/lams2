@@ -14,10 +14,10 @@
         <div>
           <el-input placeholder="请输入订单号进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
                     clearable
-                    @clear="initOrders"
+                    @clear="initPurchaseOrders"
                     style="width: 350px;margin-right: 10px" v-model="keyword"
-                    @keydown.enter.native="initOrders" :disabled="showAdvanceSearchView"></el-input>
-          <el-button icon="el-icon-search" type="primary" @click="initOrders" :disabled="showAdvanceSearchView">
+                    @keydown.enter.native="initPurchaseOrders" :disabled="showAdvanceSearchView"></el-input>
+          <el-button icon="el-icon-search" type="primary" @click="initPurchaseOrders" :disabled="showAdvanceSearchView">
             搜索
           </el-button>
           <el-button type="primary" @click="showAdvanceSearchView = !showAdvanceSearchView">
@@ -96,7 +96,7 @@
             <el-col :span="5" :offset="4">
               <el-button size="mini" @click="clearSearchValue">重置</el-button>
               <el-button size="mini" @click="showAdvanceSearchView = false">取消</el-button>
-              <el-button size="mini" icon="el-icon-search" type="primary" @click="initOrdersAdv">搜索</el-button>
+              <el-button size="mini" icon="el-icon-search" type="primary" @click="initPurchaseOrdersAdv">搜索</el-button>
             </el-col>
           </el-row>
         </div>
@@ -123,7 +123,7 @@
             align="left"
             width="80">
           <template slot-scope="scope">
-            <el-button size="mini" @click="getOperateList(scope.row)">{{ scope.row.id }}</el-button>
+            <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
           </template>
         </el-table-column>
         <el-table-column
@@ -154,21 +154,51 @@
             width="110">
         </el-table-column>
         <el-table-column
-            prop="remark"
-            :show-overflow-tooltip="true"
-            label="订单备注">
-        </el-table-column>
-        <el-table-column
             prop="hasInvoice"
             width="95"
             align="left"
             label="是否有发票">
+          <template slot-scope="scope">
+            <span v-if="scope.row.hasInvoice==true">是</span>
+            <span v-else>否</span>
+          </template>
         </el-table-column>
         <el-table-column
             prop="invoiceTime"
             width="100"
             align="left"
             label="发票日期">
+        </el-table-column>
+        <el-table-column
+            :show-overflow-tooltip="true"
+            label="关联资产编号">
+          <template slot-scope="scope">
+            <el-tag type="success" style="margin-right: 4px" v-for="(asset,indexj) in scope.row.assetList"
+                    :key="indexj">{{ asset.id }}
+            </el-tag>
+            <el-popover
+                placement="right"
+                title="资产编号列表"
+                @show="showPop(scope.row)"
+                @hide="hidePop(scope.row)"
+                width="200"
+                trigger="click">
+              <el-select v-model="selectedAids" multiple filterable placeholder="请选择">
+                <el-option
+                    v-for="(id,indexj) in aids"
+                    :key="indexj"
+                    :label="id"
+                    :value="id">
+                </el-option>
+              </el-select>
+              <el-button slot="reference" icon="el-icon-more" type="text"></el-button>
+            </el-popover>
+          </template>
+        </el-table-column>
+        <el-table-column
+            prop="remark"
+            :show-overflow-tooltip="true"
+            label="订单备注">
         </el-table-column>
         <el-table-column
             prop="createTime"
@@ -201,22 +231,19 @@
         </el-pagination>
       </div>
     </div>
-    <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
-               :title="title"></OrderEdit>
     <PurchaseOrderEdit v-on:close="dialogVisible3 = false" :dialogVisible3="dialogVisible3" :purchase="purchase"
                        :title="title"></PurchaseOrderEdit>
-    <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
-                 :urlList="urlList" :operateList='operateList'></OrderDetail>
+    <PurchaseOrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :purchase="purchase"
+                         :title="title" :urlList="urlList"></PurchaseOrderDetail>
   </div>
 </template>
 
 <script>
-import OrderDetail from "@/components/order/OrderDetail";
-import OrderEdit from "@/components/order/OrderEdit";
 import PurchaseOrderEdit from "@/components/purchaseOrder/PurchaseOrderEdit";
+import PurchaseOrderDetail from "@/components/purchaseOrder/PurchaseOrderDetail";
 
 export default {
-  name: "EmpBasic",
+  name: "PurchaseOrder",
   data() {
     return {
       searchValue: {
@@ -313,16 +340,35 @@ export default {
       // 资产图片列表，用于编辑页面
       fileList: [],
       // 资产图片url列表，用于详情页面
-      urlList: []
+      urlList: [],
+      purchase: {
+        id: "",
+        name: "",
+        total: "",
+        discount: "",
+        pay: "",
+        purchaseDate: "",
+        hasInvoice: false,
+        invoiceDate: "",
+        remark: "",
+        creatorEmail: "",
+        updaterEmail: "",
+        creator: {},
+        updater: {},
+        createTime: "",
+        updateTime: "",
+        assetList: []
+      },
+      aids: [],
+      selectedAids: []
     }
   },
   components: {
-    OrderDetail,
-    OrderEdit,
-    PurchaseOrderEdit
+    PurchaseOrderEdit,
+    PurchaseOrderDetail
   },
   mounted() {
-    this.initOrders();
+    this.initPurchaseOrders();
   },
   methods: {
     exportData() {
@@ -399,25 +445,17 @@ export default {
       this.dialogVisible = true;
     },
     showDetailView(data) {
-      this.title = '申请单详情';
-      this.order = data;
-      if (this.order.asset && this.order.asset.fileList) {
-        this.urlList = [];
-        for (let i = 0; i < this.order.asset.fileList.length; i++) {
-          this.urlList.push(this.order.asset.fileList[i].url);
-        }
-      } else {
-        this.urlList = null;
-      }
+      this.title = '订单详情';
+      this.purchase = data;
+      // if (this.order.asset && this.order.asset.fileList) {
+      //   this.urlList = [];
+      //   for (let i = 0; i < this.order.asset.fileList.length; i++) {
+      //     this.urlList.push(this.order.asset.fileList[i].url);
+      //   }
+      // } else {
+      //   this.urlList = null;
+      // }
       this.dialogVisible2 = true;
-    },
-    getOperateList(data) {
-      this.getRequest('/order/task/getOperateList?id=' + data.id).then(resp => {
-        if (resp) {
-          this.operateList = resp.obj;
-          this.showDetailView(data);
-        }
-      });
     },
     deleteOrder() {
       this.$confirm('此操作将永久删除选中的记录, 是否继续?', '提示', {
@@ -427,7 +465,7 @@ export default {
       }).then(() => {
         this.deleteRequestWithData("/order/basic/delete", this.orderIds).then(resp => {
           if (resp) {
-            this.initOrders();
+            this.initPurchaseOrders();
           }
         })
       }).catch(() => {
@@ -440,39 +478,39 @@ export default {
     showPurchaseOrderView() {
       // this.postRequest("/order/basic/delete", this.orderIds).then(resp => {
       //   if (resp) {
-      //     this.initOrders();
+      //     this.initPurchaseOrders();
       //   }
       // });
     },
     sizeChange(currentSize) {
       this.size = currentSize;
       if (this.type && this.type == 'advanced') {
-        this.initOrdersAdv();
+        this.initPurchaseOrdersAdv();
       } else {
-        this.initOrders();
+        this.initPurchaseOrders();
       }
     },
     currentChange(currentPage) {
       this.page = currentPage;
       if (this.type && this.type == 'advanced') {
-        this.initOrdersAdv();
+        this.initPurchaseOrdersAdv();
       } else {
-        this.initOrders();
+        this.initPurchaseOrders();
       }
     },
-    initOrders() {
+    initPurchaseOrders() {
       this.type = '';
       this.loading = true;
-      let url = '/order/basic/get/?category=1&page=' + this.page + '&size=' + this.size + "&oid=" + this.keyword;
+      let url = '/purchase/get/?page=' + this.page + '&size=' + this.size + "&poid=" + this.keyword;
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
-          this.orders = resp.data;
+          this.purchases = resp.data;
           this.total = resp.total;
         }
       });
     },
-    initOrdersAdv() {
+    initPurchaseOrdersAdv() {
       this.type = 'advanced'
       this.loading = true;
       let url = '/order/basic/get/?category=1&page=' + this.page + '&size=' + this.size;
@@ -520,6 +558,30 @@ export default {
         priceHigh: null,
         dateScope: null
       }
+    },
+    hidePop(data) {
+      let url = '/purchase/asset?poid=' + data.id;
+      this.putRequest(url, this.selectedAids).then(resp => {
+        if (resp) {
+          // this.initPurchaseOrdersAdv();
+          this.initPurchaseOrders();
+        }
+      });
+    },
+    showPop(data) {
+      this.initAllAssetIds();
+      let assets = data.assetList;
+      this.selectedAids = [];
+      assets.forEach(a => {
+        this.selectedAids.push(a.id);
+      })
+    },
+    initAllAssetIds() {
+      this.getRequest("/asset/all").then(resp => {
+        if (resp) {
+          this.aids = resp.obj;
+        }
+      })
     }
   }
 }

@@ -152,6 +152,7 @@ export default {
               if (resp) {
                 this.uploadData.aid = this.order.asset.id;
                 // this.$refs.upload.submit();
+                this.$emit('empty');
                 this.$emit('close');
                 this.$parent.initOrders();
               }
@@ -165,9 +166,9 @@ export default {
             this.addData.aids = this.assetIds;
             this.postRequest("/purchase/add", this.addData).then(resp => {
               if (resp) {
-                this.assetIds = [];
                 // this.uploadData.aid = resp.obj;
                 // this.$refs.upload.submit();
+                this.$emit('empty');
                 this.$emit('close');
                 this.$parent.initOrders();
               }

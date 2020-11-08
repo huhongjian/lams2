@@ -48,9 +48,9 @@
         from record
         where id = #{id}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from record
-    where id = #{id}
+    <delete id="deleteByPoid" parameterType="java.lang.Long">
+    delete from purchase_asset
+    where poid = #{poid}
   </delete>
     <insert id="insertSelective" parameterType="java.lang.Long">
         insert into purchase_asset

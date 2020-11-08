@@ -41,4 +41,8 @@ public interface AssetMapper {
     AssetStatusCount getTotalLineData(Date[] monthScope);
 
     Double getAliveAssetTotalMoney();
+
+    List<Long> getAllAssetIds();
+
+    List<Asset> getAssetInfoByIds(List<Long> aids);
 }

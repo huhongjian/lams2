@@ -60,6 +60,17 @@ public class PurchaseController {
         return response;
     }
 
+    @PutMapping("/asset")
+    public RespBean updatePurchaseAsset(Long poid, @RequestBody List<Long> aids) {
+        try {
+            purchaseOrderService.updatePurchaseAsset(poid, aids);
+        } catch (Exception e) {
+            logger.error("更新用户角色信息失败！", e);
+            return RespBean.error("更新失败!");
+        }
+        return RespBean.ok("更新成功!");
+    }
+
 //    @PutMapping("/edit")
 //    public RespBean updateAsset(@RequestBody Asset asset) {
 //        // 资产信息管理中的资产信息只允许管理员修改

@@ -239,4 +239,19 @@
         from asset
         where status in (2, 3, 6);
     </select>
+    <select id="getAllAssetIds" resultType="java.lang.Long">
+        select id
+        from asset
+    </select>
+    <select id="getAssetInfoByIds" parameterType="list" resultType="com.bupt.lams.model.Asset">
+        select a.*
+        from asset a
+        where 1=1
+        <if test="list != null and list.size>0">
+            and a.id in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
 </mapper>

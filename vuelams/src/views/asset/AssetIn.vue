@@ -229,8 +229,8 @@
     </div>
     <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
                :title="title"></OrderEdit>
-    <PurchaseOrderEdit v-on:close="dialogVisible3 = false" :dialogVisible3="dialogVisible3" :purchase="purchase"
-                       :assetIds="assetIds" :title="title"></PurchaseOrderEdit>
+    <PurchaseOrderEdit v-on:close="dialogVisible3 = false" v-on:empty="assetIds=[]" :dialogVisible3="dialogVisible3"
+                       :purchase="purchase" :assetIds="assetIds" :title="title"></PurchaseOrderEdit>
     <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
                  :urlList="urlList" :operateList='operateList'></OrderDetail>
   </div>
@@ -242,7 +242,7 @@ import OrderEdit from "@/components/order/OrderEdit";
 import PurchaseOrderEdit from "@/components/purchaseOrder/PurchaseOrderEdit";
 
 export default {
-  name: "EmpBasic",
+  name: "AssetIn",
   data() {
     return {
       searchValue: {

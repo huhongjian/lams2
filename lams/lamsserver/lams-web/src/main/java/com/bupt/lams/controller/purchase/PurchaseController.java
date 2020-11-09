@@ -56,11 +56,8 @@ public class PurchaseController {
                 return RespBean.error("没有权限，请联系财务人员添加!");
             }
             List<Long> aids = addData.getAids();
-            List<Asset> assetList = assetService.getAssetInfoByIds(aids);
-            for (Asset asset : assetList) {
-                if (asset.getStatus() == AssetStatusEnum.CREATE.getIndex() || asset.getStatus() == AssetStatusEnum.REJECTED.getIndex()) {
-                    return RespBean.error("只能为已经入库的资产添加订单信息！");
-                }
+            if (IsAssetInStore(aids) == true) {
+                return RespBean.error("只能为已经入库的资产添加订单信息！");
             }
             List<Long> poids = purchaseOrderService.getPurchaseOrderIdsByAids(aids);
             if (CollectionUtils.isNotEmpty(poids)) {
@@ -78,12 +75,15 @@ public class PurchaseController {
     @PutMapping("/asset")
     public RespBean updatePurchaseAsset(Long poid, @RequestBody List<Long> aids) {
         try {
+            if (IsAssetInStore(aids) == true) {
+                return RespBean.error("只能为已经入库的资产添加订单信息！");
+            }
             purchaseOrderService.updatePurchaseAsset(poid, aids);
         } catch (Exception e) {
-            logger.error("更新用户角色信息失败！", e);
-            return RespBean.error("更新失败!");
+            logger.error("更新订单资产关联信息失败！", e);
+            return RespBean.error("更新订单资产关联信息失败!");
         }
-        return RespBean.ok("更新成功!");
+        return RespBean.ok("更新订单资产关联信息成功!");
     }
 
     @PutMapping("/edit")
@@ -154,5 +154,21 @@ public class PurchaseController {
             condition.setStartDateForInvoice(invoiceDateScope[0]);
             condition.setEndDateForInvoice(invoiceDateScope[1]);
         }
+    }
+
+    /**
+     * 资产是否已经入库
+     *
+     * @param aids
+     * @return
+     */
+    private boolean IsAssetInStore(@RequestBody List<Long> aids) {
+        List<Asset> assetList = assetService.getAssetInfoByIds(aids);
+        for (Asset asset : assetList) {
+            if (asset.getStatus() == AssetStatusEnum.CREATE.getIndex() || asset.getStatus() == AssetStatusEnum.REJECTED.getIndex()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

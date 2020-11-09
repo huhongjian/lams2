@@ -1,11 +1,10 @@
 package com.bupt.lams.controller.purchase;
 
+import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.dto.AddPurchaseData;
 import com.bupt.lams.dto.PurchaseQueryCondition;
-import com.bupt.lams.model.PurchaseOrder;
-import com.bupt.lams.model.PurchasePic;
-import com.bupt.lams.model.RespBean;
-import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.model.*;
+import com.bupt.lams.service.AssetService;
 import com.bupt.lams.service.PurchaseOrderService;
 import com.bupt.lams.utils.FastDFSUtils;
 import com.bupt.lams.utils.POIUtils;
@@ -34,6 +33,9 @@ public class PurchaseController {
     @Resource
     PurchaseOrderService purchaseOrderService;
 
+    @Resource
+    AssetService assetService;
+
     @Value("${fastdfs.nginx.host}")
     String nginxHost;
 
@@ -49,7 +51,17 @@ public class PurchaseController {
         response.setStatus(200);
         response.setMsg("订单信息添加成功!");
         try {
+            // 订单信息只允许财务添加
+            if (UserInfoUtils.isAccountant() == false) {
+                return RespBean.error("没有权限，请联系财务人员添加!");
+            }
             List<Long> aids = addData.getAids();
+            List<Asset> assetList = assetService.getAssetInfoByIds(aids);
+            for (Asset asset : assetList) {
+                if (asset.getStatus() == AssetStatusEnum.CREATE.getIndex() || asset.getStatus() == AssetStatusEnum.REJECTED.getIndex()) {
+                    return RespBean.error("只能为已经入库的资产添加订单信息！");
+                }
+            }
             List<Long> poids = purchaseOrderService.getPurchaseOrderIdsByAids(aids);
             if (CollectionUtils.isNotEmpty(poids)) {
                 return RespBean.error("订单信息已存在，不能重复添加！");

@@ -99,21 +99,6 @@ public class AssetController {
         return response;
     }
 
-    @PostMapping("/info")
-    public RespBean getAssetInfoByIds(List<Long> aids) {
-        RespBean response = new RespBean();
-        response.setStatus(200);
-        response.setMsg("获取资产信息成功!");
-        try {
-            List<Asset> assets = assetService.getAssetInfoByIds(aids);
-            response.setObj(assets);
-        } catch (Exception e) {
-            logger.error("获取资产信息失败", e);
-            return RespBean.error("获取资产信息失败！");
-        }
-        return response;
-    }
-
     /**
      * 判断资产是否正在一个流程中
      *

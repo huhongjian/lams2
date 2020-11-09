@@ -330,15 +330,24 @@ export default {
       // 资产图片url列表，用于详情页面
       urlList: [],
       purchase: {
+        id: "",
         name: "",
         total: "",
         discount: "",
         pay: "",
         purchaseDate: "",
-        hasInvoice: false,
+        hasInvoice: "",
         invoiceDate: "",
-        remark: ""
-      }
+        remark: "",
+        creatorEmail: "",
+        updaterEmail: "",
+        creator: {},
+        updater: {},
+        createTime: "",
+        updateTime: "",
+        assetList: [],
+        fileList: []
+      },
     }
   },
   components: {
@@ -410,14 +419,23 @@ export default {
     },
     emptyPurchase() {
       this.purchase = {
+        id: "",
         name: "",
         total: "",
         discount: "",
         pay: "",
         purchaseDate: "",
-        hasInvoice: false,
+        hasInvoice: "",
         invoiceDate: "",
-        remark: ""
+        remark: "",
+        creatorEmail: "",
+        updaterEmail: "",
+        creator: {},
+        updater: {},
+        createTime: "",
+        updateTime: "",
+        assetList: [],
+        fileList: []
       }
     },
     showAddView() {

@@ -301,7 +301,7 @@ export default {
         discount: "",
         pay: "",
         purchaseDate: "",
-        hasInvoice: false,
+        hasInvoice: "",
         invoiceDate: "",
         remark: "",
         creatorEmail: "",
@@ -359,26 +359,6 @@ export default {
         url += "&id=" + this.keyword;
       }
       window.open(url, '_parent');
-    },
-    emptyOrder() {
-      this.purchase = {
-        id: "",
-        name: "",
-        total: "",
-        discount: "",
-        pay: "",
-        purchaseDate: "",
-        hasInvoice: false,
-        invoiceDate: "",
-        remark: "",
-        creatorEmail: "",
-        updaterEmail: "",
-        creator: {},
-        updater: {},
-        createTime: "",
-        updateTime: "",
-        assetList: []
-      }
     },
     showEditView(data) {
       this.title = '编辑订单信息';

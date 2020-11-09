@@ -13,11 +13,15 @@
                 {{ order.asset.id }}
               </el-form-item>
             </el-col>
-            <el-col :span="6">
+          </el-row>
+          <el-row>
+            <el-col :span="20">
               <el-form-item label="名称:" prop="assetName">
                 {{ order.asset.assetName }}
               </el-form-item>
             </el-col>
+          </el-row>
+          <el-row>
             <el-col :span="6">
               <el-form-item label="品牌:" prop="brand">
                 {{ order.asset.brand }}

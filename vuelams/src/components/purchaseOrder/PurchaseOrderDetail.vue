@@ -12,7 +12,9 @@
               {{ purchase.id }}
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+        </el-row>
+        <el-row>
+          <el-col :span="20">
             <el-form-item label="订单名称:" prop="name">
               {{ purchase.name }}
             </el-form-item>
@@ -45,7 +47,8 @@
         <el-row>
           <el-col :span="6">
             <el-form-item label="是否有发票:" prop="hasInvoice">
-              {{ purchase.hasInvoice }}
+              <span v-if="purchase.status==true">是</span>
+              <span v-else>否</span>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -56,25 +59,35 @@
         </el-row>
         <el-row v-if="this.purchase.creator">
           <el-col :span="6">
-            <el-form-item label="创建者姓名:" prop="creator.name">
+            <el-form-item label="创建人姓名:" prop="creator.name">
               {{ purchase.creator.name }}
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="创建者邮箱:" prop="creatorEmail">
+            <el-form-item label="创建人邮箱:" prop="creatorEmail">
               {{ purchase.creatorEmail }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="创建人电话:" prop="creator.phone">
+              {{ purchase.creator.phone }}
             </el-form-item>
           </el-col>
         </el-row>
         <el-row v-if="this.purchase.updater">
           <el-col :span="6">
-            <el-form-item label="更新者姓名:" prop="updater.name">
+            <el-form-item label="更新人姓名:" prop="updater.name">
               {{ purchase.updater.name }}
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="更新者邮箱:" prop="updaterEmail">
+            <el-form-item label="更新人邮箱:" prop="updaterEmail">
               {{ purchase.updaterEmail }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="更新人电话:" prop="updater.phone">
+              {{ purchase.updater.phone }}
             </el-form-item>
           </el-col>
         </el-row>

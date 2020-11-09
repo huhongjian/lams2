@@ -33,12 +33,6 @@ public class Asset implements Serializable {
     private String remark;
 
     /**
-     * 购入时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
-    private Date boughtTime;
-
-    /**
      * 入库时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")

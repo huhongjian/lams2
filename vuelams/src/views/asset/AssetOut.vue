@@ -126,7 +126,8 @@
         </el-table-column>
         <el-table-column
             fixed
-            prop="asset.name"
+            prop="asset.assetName"
+            :show-overflow-tooltip="true"
             align="left"
             label="资产名称"
             width="80">
@@ -190,12 +191,6 @@
             width="100"
             align="left"
             label="申请时间">
-        </el-table-column>
-        <el-table-column
-            prop="asset.boughtTime"
-            width="100"
-            align="left"
-            label="购入时间">
         </el-table-column>
         <el-table-column
             prop="asset.readyDate"
@@ -308,8 +303,7 @@ export default {
           price: "",
           fileList: [],
           adv: {},
-          remark: "",
-          boughtTime: ""
+          remark: ""
         }
       },
       // 搜索类型，空是普通搜索，‘advanced’是高级搜索

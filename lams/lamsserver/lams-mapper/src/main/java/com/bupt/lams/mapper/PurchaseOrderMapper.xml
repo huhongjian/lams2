@@ -43,7 +43,6 @@
             <result column="price" property="price"/>
             <result column="remark" property="remark"/>
             <result column="adv" property="adv" typeHandler="com.bupt.lams.mybatis.JsonToObjectTypeHandler"/>
-            <result column="boughtTime" property="boughtTime"/>
             <result column="readyDate" property="readyDate"/>
             <result column="a_updateTime" property="updateTime"/>
         </collection>

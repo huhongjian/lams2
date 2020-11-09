@@ -11,7 +11,6 @@
         <result column="price" property="price"/>
         <result column="adv" property="adv" typeHandler="com.bupt.lams.mybatis.JsonToObjectTypeHandler"/>
         <result column="remark" property="remark"/>
-        <result column="boughtTime" property="boughtTime"/>
         <result column="readyDate" property="readyDate"/>
         <result column="updateTime" property="updateTime"/>
         <collection property="fileList" javaType="arraylist" ofType="com.bupt.lams.model.AssetPic">
@@ -23,7 +22,7 @@
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
-    id, status, statusName, `type`, assetName, brand, price, adv, remark, boughtTime, readyDate, updateTime
+    id, status, statusName, `type`, assetName, brand, price, adv, remark, readyDate, updateTime
   </sql>
     <sql id="baseInfoQuery">
         <if test="aid !=null">

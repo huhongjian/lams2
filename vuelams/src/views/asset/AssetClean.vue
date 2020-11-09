@@ -107,14 +107,15 @@
             fixed
             label="资产编号"
             align="left"
-            width="100">
+            width="80">
           <template slot-scope="scope">
             <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
           </template>
         </el-table-column>
         <el-table-column
             prop="statusName"
-            label="状态">
+            label="状态"
+            width="90">
           <template slot-scope="scope">
             <span style="color: #00e079; font-weight: bold"
                   v-if="scope.row.status=='2'">{{ scope.row.statusName }}</span>
@@ -130,49 +131,42 @@
             prop="type"
             align="left"
             label="类型"
-            width="150">
+            width="80">
         </el-table-column>
         <el-table-column
             fixed
             prop="assetName"
             :show-overflow-tooltip="true"
             align="left"
-            label="资产名称"
-            width="80">
+            label="资产名称">
         </el-table-column>
         <el-table-column
             prop="brand"
             label="品牌"
             align="left"
-            width="150">
+            width="80">
         </el-table-column>
         <el-table-column
             prop="price"
             label="价格（元）"
             align="left"
-            width="150">
-        </el-table-column>
-        <el-table-column
-            prop="boughtTime"
-            width="100"
-            align="left"
-            label="购入时间">
+            width="90">
         </el-table-column>
         <el-table-column
             prop="readyDate"
-            width="200"
+            width="100"
             align="left"
             label="入库时间">
         </el-table-column>
         <el-table-column
             prop="updateTime"
-            width="200"
+            width="100"
             align="left"
             label="更新时间">
         </el-table-column>
         <el-table-column
             fixed="right"
-            width="150"
+            width="80"
             label="操作">
           <template slot-scope="scope">
             <el-button @click="changeStatus(scope.row,'4')" type="danger">清退</el-button>
@@ -232,8 +226,7 @@ export default {
         type: "",
         price: "",
         fileList: [],
-        adv: {},
-        boughtTime: ""
+        adv: {}
       },
       type: "",
       types: [],

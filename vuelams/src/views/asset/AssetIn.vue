@@ -320,7 +320,8 @@ export default {
           type: "",
           price: "",
           fileList: [],
-          adv: {}
+          adv: {},
+          remark: ""
         }
       },
       // 搜索类型，空是普通搜索，‘advanced’是高级搜索

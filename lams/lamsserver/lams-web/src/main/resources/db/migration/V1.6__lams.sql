@@ -16,25 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `asset`
+-- Table structure for table `asset_types`
 --
 
-DROP TABLE IF EXISTS `asset`;
+DROP TABLE IF EXISTS `asset_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `asset` (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '资产编号',
-  `status` int NOT NULL DEFAULT '1' COMMENT '资产状态：1：申请中；2：使用中；3：故障；4：报废；5：审批未通过；6：闲置',
-  `statusName` varchar(255) DEFAULT NULL COMMENT '资产状态名称',
-  `type` varchar(10) DEFAULT NULL COMMENT '资产类型',
-  `brand` varchar(10) DEFAULT NULL COMMENT '品牌',
-  `price` double DEFAULT NULL COMMENT '价格',
-  `adv` json DEFAULT NULL COMMENT '详细信息',
-  `readyDate` timestamp NULL DEFAULT NULL COMMENT '入库时间',
-  `updateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '资产数据更新时间',
+CREATE TABLE `asset_types` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(255) DEFAULT NULL COMMENT '类型名称',
+  `createTime` date DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `asset_types`
+--
+
+LOCK TABLES `asset_types` WRITE;
+/*!40000 ALTER TABLE `asset_types` DISABLE KEYS */;
+INSERT INTO `asset_types` VALUES (1,'手机','2020-11-08'),(2,'主机','2020-11-08'),(3,'交换机','2020-11-08'),(4,'测距仪','2020-11-08'),(5,'书籍资料','2020-11-08'),(6,'摄像机','2020-11-08'),(7,'激光雷达','2020-11-08'),(8,'内存条','2020-11-08'),(9,'转接线','2020-11-08'),(10,'快充插头','2020-11-08'),(11,'移动硬盘','2020-11-08'),(12,'电瓶','2020-11-08'),(13,'其他','2020-11-08');
+/*!40000 ALTER TABLE `asset_types` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `asset_pics`
@@ -49,6 +53,29 @@ CREATE TABLE `asset_pics` (
   `name` varchar(255) DEFAULT NULL COMMENT '图片名称',
   `url` varchar(255) DEFAULT NULL COMMENT '图片地址',
   `createTime` date DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `asset`
+--
+
+DROP TABLE IF EXISTS `asset`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `asset` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '资产编号',
+  `status` int NOT NULL DEFAULT '1' COMMENT '资产状态：1：申请中；2：使用中；3：故障；4：报废；5：审批未通过；6：闲置',
+  `statusName` varchar(255) DEFAULT NULL COMMENT '资产状态名称',
+  `assetName` varchar(255) DEFAULT NULL COMMENT '资产名称',
+  `type` varchar(10) DEFAULT NULL COMMENT '资产类型',
+  `brand` varchar(10) DEFAULT NULL COMMENT '品牌',
+  `price` double DEFAULT NULL COMMENT '价格',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `adv` json DEFAULT NULL COMMENT '详细信息',
+  `readyDate` timestamp NULL DEFAULT NULL COMMENT '入库时间',
+  `updateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '资产数据更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -98,7 +125,7 @@ CREATE TABLE `lams_user_role` (
   KEY `hr_role_ibfk_1` (`uid`),
   CONSTRAINT `lams_user_role_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `lams_user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `lams_user_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,7 +134,7 @@ CREATE TABLE `lams_user_role` (
 
 LOCK TABLES `lams_user_role` WRITE;
 /*!40000 ALTER TABLE `lams_user_role` DISABLE KEYS */;
-INSERT INTO `lams_user_role` VALUES (1,3,6),(83,13,24),(84,3,22),(85,3,23);
+INSERT INTO `lams_user_role` VALUES (1,3,6),(83,13,24),(84,3,22),(85,3,23),(86,14,24);
 /*!40000 ALTER TABLE `lams_user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +167,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'/',NULL,NULL,'所有',NULL,NULL,NULL,NULL,1),(2,'/','/home','Home','资产概况','fa fa-dashboard',NULL,1,1,1),(3,'/','/home','Home','资产管理','fa fa-laptop',NULL,1,1,1),(4,'/','/home','Home','我的','fa fa-address-card-o',NULL,1,1,1),(5,'/','/home','Home','项目管理','fa fa-tasks',NULL,1,1,1),(6,'/','/home','Home','系统管理','fa fa-windows',NULL,1,1,1),(7,'/employee/advanced/**','/asset/dashboard','AssetDashBoard','仪表盘',NULL,NULL,1,2,1),(8,'/employee/basic/**','/order/in','AssetIn','资产入库',NULL,NULL,1,3,1),(9,'/employee/basic/**','/order/out','AssetOut','出库借用',NULL,NULL,1,3,1),(10,'/asset/info/**','/asset/info','AssetInfo','资产信息',NULL,NULL,1,3,1),(11,'/statistics/personnel/**','/asset/repair','AssetRepair','资产报修',NULL,NULL,1,3,1),(12,'/statistics/score/**','/asset/clean','AssetClean','清理报废',NULL,NULL,1,3,1),(13,'/personnel/emp/**','/mine/apply','MyApply','我的申请',NULL,NULL,1,4,1),(14,'/personnel/ec/**','/mine/task','MyTask','我的任务',NULL,NULL,1,4,1),(15,'/personnel/train/**','/mine/out','MyOut','离退流程',NULL,NULL,1,4,1),(16,'/system/basic/**','/sys/basic','SysPermission','权限管理',NULL,NULL,1,6,1),(17,'/system/log/**','/sys/log','SysLog','日志管理',NULL,NULL,1,6,1),(18,'/system/hr/**','/sys/hr','SysUser','用户管理',NULL,NULL,1,6,1);
+INSERT INTO `menu` VALUES (1,'/',NULL,NULL,'所有',NULL,NULL,NULL,NULL,1),(2,'/','/home','Home','资产概况','fa fa-dashboard',NULL,1,1,1),(3,'/','/home','Home','资产管理','fa fa-laptop',NULL,1,1,1),(4,'/','/home','Home','我的','fa fa-address-card-o',NULL,1,1,1),(5,'/','/home','Home','订单管理','fa fa-shopping-cart',NULL,1,1,1),(6,'/','/home','Home','系统管理','fa fa-windows',NULL,1,1,1),(7,'/asset/dashboard/**','/asset/dashboard','AssetDashBoard','仪表盘',NULL,NULL,1,2,1),(8,'/order/in/**','/order/in','AssetIn','资产入库',NULL,NULL,1,3,1),(9,'/order/out/**','/order/out','AssetOut','出库借用',NULL,NULL,1,3,1),(10,'/asset/info/**','/asset/info','AssetInfo','资产信息',NULL,NULL,1,3,1),(11,'/asset/repair/**','/asset/repair','AssetRepair','资产报修',NULL,NULL,1,3,1),(12,'/asset/clean/**','/asset/clean','AssetClean','清理报废',NULL,NULL,1,3,1),(13,'/mine/apply/**','/mine/apply','MyApply','我的申请',NULL,NULL,1,4,1),(14,'/mine/task/**','/mine/task','MyTask','我的任务',NULL,NULL,1,4,1),(15,'/mine/out/**','/mine/out','MyOut','离退流程',NULL,NULL,1,4,1),(16,'/system/permission/**','/sys/permission','SysPermission','权限管理',NULL,NULL,1,6,1),(17,'/system/log/**','/sys/log','SysLog','日志管理',NULL,NULL,1,6,1),(18,'/system/user/**','/sys/user','SysUser','用户管理',NULL,NULL,1,6,1),(19,'/purchase/info/**','/purchase/info','PurchaseOrder','订单信息',NULL,NULL,1,5,1);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +187,7 @@ CREATE TABLE `menu_role` (
   KEY `rid` (`rid`),
   CONSTRAINT `menu_role_ibfk_1` FOREIGN KEY (`mid`) REFERENCES `menu` (`id`),
   CONSTRAINT `menu_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=320 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=329 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,7 +196,7 @@ CREATE TABLE `menu_role` (
 
 LOCK TABLES `menu_role` WRITE;
 /*!40000 ALTER TABLE `menu_role` DISABLE KEYS */;
-INSERT INTO `menu_role` VALUES (301,7,6),(302,8,6),(303,9,6),(304,10,6),(305,11,6),(306,12,6),(307,13,6),(308,14,6),(309,15,6),(310,16,6),(311,17,6),(312,18,6),(313,7,24),(314,8,24),(315,9,24),(316,11,24),(317,13,24),(318,14,24),(319,15,24);
+INSERT INTO `menu_role` VALUES (301,7,6),(302,8,6),(303,9,6),(304,10,6),(305,11,6),(306,12,6),(307,13,6),(308,14,6),(309,15,6),(310,16,6),(311,17,6),(312,18,6),(313,7,24),(314,8,24),(315,9,24),(316,11,24),(317,13,24),(318,14,24),(319,15,24),(320,19,6),(321,7,23),(322,8,23),(323,9,23),(324,11,23),(325,13,23),(326,14,23),(327,15,23),(328,19,23);
 /*!40000 ALTER TABLE `menu_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +254,6 @@ CREATE TABLE `order_workflow` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 --
 -- Table structure for table `process_category`
 --
@@ -255,6 +281,63 @@ LOCK TABLES `process_category` WRITE;
 INSERT INTO `process_category` VALUES (1,1,'资产入库','assetIn','胡宏建','2020-09-24'),(2,2,'资产出库','assetOut','胡宏建','2020-09-26'),(3,3,'学生离退','studentOut','胡宏建','2020-10-28');
 /*!40000 ALTER TABLE `process_category` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `purchase_asset`
+--
+
+DROP TABLE IF EXISTS `purchase_asset`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `purchase_asset` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `poid` bigint DEFAULT NULL COMMENT '订单id',
+  `aid` bigint DEFAULT NULL COMMENT '资产id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `purchase_orders`
+--
+
+DROP TABLE IF EXISTS `purchase_orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `purchase_orders` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(255) DEFAULT NULL COMMENT '订单名称',
+  `total` double DEFAULT NULL COMMENT '订单总价',
+  `discount` double DEFAULT NULL COMMENT '订单优惠',
+  `pay` double DEFAULT NULL COMMENT '实际支付',
+  `purchaseDate` date DEFAULT NULL COMMENT '购买时间',
+  `hasInvoice` tinyint(1) DEFAULT NULL COMMENT '是否有发票',
+  `invoiceDate` date DEFAULT NULL COMMENT '发票时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '订单备注',
+  `creatorEmail` varchar(255) DEFAULT NULL COMMENT '创建人邮箱',
+  `updaterEmail` varchar(255) DEFAULT NULL COMMENT '更新人邮箱',
+  `createTime` date DEFAULT NULL COMMENT '创建时间',
+  `updateTime` date DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `purchase_pics`
+--
+
+DROP TABLE IF EXISTS `purchase_pics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `purchase_pics` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `poid` bigint DEFAULT NULL COMMENT '订单id',
+  `name` varchar(255) DEFAULT NULL COMMENT '图片名称',
+  `url` varchar(255) DEFAULT NULL COMMENT '图片地址',
+  `createTime` date DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `record`
@@ -309,4 +392,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-01 13:57:58
+-- Dump completed on 2020-11-09 14:39:53

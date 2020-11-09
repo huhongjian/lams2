@@ -17,4 +17,6 @@ public interface PurchaseOrderMapper {
     void insertSelective(PurchaseOrder record);
 
     void updatePurchaseOrder(PurchaseOrder purchaseOrder);
+
+    void deleteManyByIds(List<Long> poids);
 }

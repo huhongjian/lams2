@@ -138,6 +138,20 @@ public class PurchaseController {
         return POIUtils.purchaseOrders2Excel(list);
     }
 
+    @DeleteMapping("/delete")
+    public RespBean deleteOrders(@RequestBody List<Long> poids) {
+        // 订单只允许财务同学删除
+        if (UserInfoUtils.isAccountant() == false) {
+            return RespBean.error("您没有删除订单权限，请联系财务同学!");
+        }
+        try {
+            purchaseOrderService.deletePurchaseOrders(poids);
+        } catch (Exception e) {
+            return RespBean.error("删除失败!");
+        }
+        return RespBean.ok("删除成功!");
+    }
+
     /**
      * 补完查询条件
      *

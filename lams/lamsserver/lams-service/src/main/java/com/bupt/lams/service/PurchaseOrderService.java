@@ -6,6 +6,8 @@ import com.bupt.lams.mapper.PurchaseAssetMapper;
 import com.bupt.lams.mapper.PurchaseOrderMapper;
 import com.bupt.lams.mapper.PurchasePicsMapper;
 import com.bupt.lams.model.*;
+import com.bupt.lams.service.annotation.OperateRecord;
+import com.bupt.lams.service.strategies.record.DeleteOrderRecord;
 import com.bupt.lams.utils.FastDFSUtils;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.apache.commons.collections4.CollectionUtils;
@@ -90,5 +92,11 @@ public class PurchaseOrderService {
 
     public List<Long> getPurchaseOrderIdsByAids(List<Long> aids) {
         return purchaseAssetMapper.getPurchaseOrderIdsByAids(aids);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deletePurchaseOrders(List<Long> poids) {
+        purchaseOrderMapper.deleteManyByIds(poids);
+        purchaseAssetMapper.deleteManyByIds(poids);
     }
 }

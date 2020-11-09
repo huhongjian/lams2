@@ -69,4 +69,14 @@
             #{aid}
         </foreach>
     </select>
+    <delete id="deleteManyByIds" parameterType="list">
+        delete
+        from
+        purchase_asset
+        where
+        poid in
+        <foreach collection="list" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

@@ -243,4 +243,13 @@
             id = #{id}
         </where>
     </update>
+    <delete id="deleteManyByIds" parameterType="list">
+        delete
+        from purchase_orders
+        where
+        id in
+        <foreach collection="list" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

@@ -196,6 +196,14 @@
         <div>
           <el-form :model="asset" :rules="rules" ref="assetForm">
             <el-row>
+              <el-col :span="15">
+                <el-form-item label="资产名称:" prop="asset.assetName">
+                  <el-input size="mini" style="width: 800px" prefix-icon="el-icon-edit"
+                            v-model="asset.assetName"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
               <el-col :span="6">
                 <el-form-item label="品牌:" prop="brand">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
@@ -218,6 +226,16 @@
                 <el-form-item label="价格（元）:" prop="price">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="asset.price"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="20">
+                <el-form-item label="资产备注:" prop="asset.remark">
+                  <el-input size="mini"
+                            type="textarea"
+                            :rows="2"
+                            v-model="asset.remark"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -365,7 +383,8 @@ export default {
         type: "",
         price: "",
         fileList: [],
-        adv: {}
+        adv: {},
+        remark: ""
       },
       // 资产图片列表，用于编辑页面
       fileList: [],

@@ -415,6 +415,7 @@ export default {
           price: "",
           fileList: [],
           adv: {},
+          remark: ""
         }
       };
     },

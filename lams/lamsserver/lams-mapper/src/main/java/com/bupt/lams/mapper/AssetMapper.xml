@@ -102,6 +102,9 @@
             <if test="statusName != null and statusName != ''">
                 statusName = #{statusName},
             </if>
+            <if test="assetName != null and assetName != ''">
+                assetName = #{assetName},
+            </if>
             <if test="brand != null and brand != ''">
                 brand = #{brand},
             </if>
@@ -110,6 +113,9 @@
             </if>
             <if test="adv != null">
                 adv = #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
             </if>
             <if test="readyDate != null">
                 readyDate = #{readyDate},

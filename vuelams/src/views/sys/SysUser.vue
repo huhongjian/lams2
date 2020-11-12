@@ -195,7 +195,7 @@ export default {
     },
     enabledChange(user) {
       delete user.roles;
-      this.putRequest("/system/user/info", user).then(resp => {
+      this.putRequest("/system/user/", user).then(resp => {
         if (resp) {
           this.initUsers();
         }

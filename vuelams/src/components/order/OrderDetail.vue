@@ -162,7 +162,7 @@
         </template>
       </div>
       <span slot="footer" class="dialog-footer">
-      <el-button v-if="out&&out==false&&(order.status=='3'||order.status=='8'||order.status=='7')"
+      <el-button v-if="out&&out==true&&(order.status=='3'||order.status=='8'||order.status=='7')"
                  type="primary"
                  @click="visible2=true">借 用</el-button>
     <template v-for="op in operateList">

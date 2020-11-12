@@ -173,4 +173,8 @@ public class OrderService {
         List<Order> data = orderMapper.getOrderByCondition(condition);
         return data;
     }
+
+    public void resetOrderById(Long oid) {
+        orderMapper.resetOrderById(oid);
+    }
 }

@@ -7,12 +7,14 @@
     <div>
       <el-form :model="asset">
         <el-row>
-          <el-col :span="6">
+          <el-col :span="20">
             <el-form-item label="资产编号:" prop="id">
               {{ asset.id }}
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+        </el-row>
+        <el-row>
+          <el-col :span="20">
             <el-form-item label="资产名称:" prop="assetName">
               {{ asset.assetName }}
             </el-form-item>

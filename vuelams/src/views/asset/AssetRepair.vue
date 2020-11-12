@@ -169,7 +169,7 @@
             width="80"
             label="操作">
           <template slot-scope="scope">
-            <el-button v-show="scope.row.status=='2'" @click="changeStatus(scope.row,'3')">
+            <el-button v-show="scope.row.status!='3'&&scope.row.status!='4'" @click="changeStatus(scope.row,'3')">
               报修
             </el-button>
             <el-button v-show="scope.row.status=='3'" type="success" @click="changeStatus(scope.row,'2')">

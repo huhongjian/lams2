@@ -169,7 +169,9 @@
             width="80"
             label="操作">
           <template slot-scope="scope">
-            <el-button @click="changeStatus(scope.row,'4')" type="danger">清退</el-button>
+            <el-button v-show="scope.row.status!='4'"
+                       @click="changeStatus(scope.row,'4')" type="danger">清退
+            </el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -60,6 +60,7 @@ public class AssetService {
 
     @OperateRecord(description = "修改资产状态", clazz = ChangeAssetStatusRecord.class)
     public void changeAssetStatus(Asset asset) {
+        // 获取中文名
         asset.setStatus(asset.getStatus());
         assetMapper.updateAssetStatus(asset);
     }

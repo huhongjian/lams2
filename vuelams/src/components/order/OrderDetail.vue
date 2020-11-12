@@ -8,7 +8,7 @@
       <div>
         <el-form :model="order.asset">
           <el-row>
-            <el-col :span="6">
+            <el-col :span="20">
               <el-form-item label="资产编号:" prop="id">
                 {{ order.asset.id }}
               </el-form-item>

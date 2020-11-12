@@ -220,7 +220,7 @@
     <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
                :title="title"></OrderEdit>
     <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
-                 :urlList="urlList" :operateList='operateList'></OrderDetail>
+                 :urlList="urlList" :operateList='operateList' :out="out"></OrderDetail>
   </div>
 </template>
 

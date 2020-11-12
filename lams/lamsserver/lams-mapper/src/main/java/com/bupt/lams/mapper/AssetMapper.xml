@@ -147,9 +147,6 @@
             <if test="remark != null and remark != ''">
                 remark,
             </if>
-            <if test="boughtTime != null">
-                boughtTime,
-            </if>
             <if test="readyDate != null">
                 readyDate,
             </if>
@@ -181,9 +178,6 @@
             </if>
             <if test="remark != null and remark != ''">
                 #{remark},
-            </if>
-            <if test="boughtTime != null">
-                #{boughtTime},
             </if>
             <if test="readyDate != null">
                 #{readyDate},

@@ -22,7 +22,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="" />
+    <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html.gz" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,6 +54,11 @@
       </MavenGeneralSettings>
     </option>
     <option name="enabledProfiles">
+      <list>
+        <option value="product" />
+      </list>
+    </option>
+    <option name="disabledProfiles">
       <list>
         <option value="dev" />
       </list>
@@ -180,14 +191,7 @@
       <workItem from="1604683403475" duration="31676000" />
       <workItem from="1604822921204" duration="37288000" />
       <workItem from="1605165790842" duration="34000" />
-      <workItem from="1605183377806" duration="9479000" />
-    </task>
-    <task id="LOCAL-00064" summary="删除多余代码">
-      <created>1602961106502</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1602961106502</updated>
+      <workItem from="1605183377806" duration="11033000" />
     </task>
     <task id="LOCAL-00065" summary="删除多余代码">
       <created>1602996123357</created>
@@ -525,7 +529,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605199178975</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="2020.11.13上线">
+      <created>1605200796695</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1605200796695</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -544,7 +555,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="图片上传功能初步开发" />
     <MESSAGE value="图片上传功能初步开发，修bug" />
     <MESSAGE value="图片上传功能开发，修bug" />
     <MESSAGE value="图片上传功能开发，优化资产出库" />
@@ -569,7 +579,8 @@
     <MESSAGE value="删除boughtTime&amp;入库不允许借用" />
     <MESSAGE value="bugfix,入库不允许借用" />
     <MESSAGE value="bugfix，归还没有修改资产状态" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugfix，归还没有修改资产状态" />
+    <MESSAGE value="2020.11.13上线" />
+    <option name="LAST_COMMIT_MESSAGE" value="2020.11.13上线" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1600784045187">
@@ -604,10 +615,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1604854841246" />
-    <state x="378" y="0" key="CommitChangelistDialog2" timestamp="1605199176375">
+    <state x="378" y="0" key="CommitChangelistDialog2" timestamp="1605200790441">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="378" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605199176375" />
+    <state x="378" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605200790441" />
     <state width="798" height="438" key="DebuggerActiveHint" timestamp="1604856227458">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -620,22 +631,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605165824589" />
-    <state width="1493" height="473" key="GridCell.Tab.0.bottom" timestamp="1605199140939">
+    <state width="1493" height="373" key="GridCell.Tab.0.bottom" timestamp="1605201045022">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="473" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605199140939" />
-    <state width="1493" height="473" key="GridCell.Tab.0.center" timestamp="1605199140939">
+    <state width="1493" height="373" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605201045022" />
+    <state width="1493" height="373" key="GridCell.Tab.0.center" timestamp="1605201045022">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="473" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605199140939" />
-    <state width="1493" height="473" key="GridCell.Tab.0.left" timestamp="1605199140939">
+    <state width="1493" height="373" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605201045022" />
+    <state width="1493" height="373" key="GridCell.Tab.0.left" timestamp="1605201045021">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="473" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605199140939" />
-    <state width="1493" height="473" key="GridCell.Tab.0.right" timestamp="1605199140939">
+    <state width="1493" height="373" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605201045021" />
+    <state width="1493" height="373" key="GridCell.Tab.0.right" timestamp="1605201045022">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="473" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605199140939" />
+    <state width="1493" height="373" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605201045022" />
     <state width="1493" height="473" key="GridCell.Tab.1.bottom" timestamp="1605199140939">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -684,10 +695,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1601976970035" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1605199183927">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1605200800271">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1605199183927" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1605200800271" />
     <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1604854840295">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

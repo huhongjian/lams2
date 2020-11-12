@@ -133,7 +133,6 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-      <el-button v-if="order.status=='3'||order.status=='8'||order.status=='7'" type="primary" @click="visible2=true">借 用</el-button>
     <template v-for="op in operateList">
       <el-button type="primary" @click="checkAndHandle(op.operateType)">{{ op.operate }}</el-button>
     </template>

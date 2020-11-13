@@ -20,7 +20,7 @@
             <result column="phone" property="phone"/>
             <result column="username" property="username"/>
             <result column="enabled" property="enabled"/>
-            <result column="remark" property="remark"/>
+            <result column="u_remark" property="remark"/>
         </association>
         <association property="asset" javaType="com.bupt.lams.model.Asset">
             <id column="aid" property="id"/>
@@ -288,7 +288,7 @@
     <select id="getOrderByCondition" parameterType="com.bupt.lams.dto.OrderQueryCondition" resultMap="AllOrderInfo">
         select o.*,
         a.id as aid, a.status as a_status, a.statusName as a_statusName, a.updateTime as a_updateTime, a.*,
-        u.id as uid, u.*,
+        u.id as uid, u.remark as u_remark, u.*,
         p.id as pid, p.aid as p_aid, p.name as p_name, p.createTime as p_createTime, p.*
         from
         `order` o

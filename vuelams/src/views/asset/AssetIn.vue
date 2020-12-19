@@ -4,7 +4,7 @@
       <div style="display: flex;justify-content: space-between">
         <div>
           <el-button type="primary" icon="el-icon-plus" @click="showAddView">
-            新增资产
+            新增采购单
           </el-button>
           <el-button type="warning" icon="el-icon-plus" @click="showPurchaseOrderAddView">
             添加订单信息
@@ -227,8 +227,8 @@
         </el-pagination>
       </div>
     </div>
-    <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
-               :title="title" :types="types"></OrderEdit>
+    <NewOrder v-on:close="dialogVisible4 = false" :dialogVisible4="dialogVisible4" :order="order" :title="title"
+              :types="types"></NewOrder>
     <PurchaseOrderEdit v-on:close="dialogVisible3 = false" v-on:empty="assetIds=[]" :dialogVisible3="dialogVisible3"
                        :purchase="purchase" :assetIds="assetIds" :title="title"></PurchaseOrderEdit>
     <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
@@ -240,6 +240,7 @@
 import OrderDetail from "@/components/order/OrderDetail";
 import OrderEdit from "@/components/order/OrderEdit";
 import PurchaseOrderEdit from "@/components/purchaseOrder/PurchaseOrderEdit";
+import NewOrder from "@/components/order/NewOrder";
 
 export default {
   name: "AssetIn",
@@ -264,6 +265,8 @@ export default {
       dialogVisible2: false,
       // 添加订单信息
       dialogVisible3: false,
+      // 采购页面可见性
+      dialogVisible4: false,
       total: 0,
       page: 1,
       keyword: '',
@@ -352,6 +355,7 @@ export default {
     }
   },
   components: {
+    NewOrder,
     OrderDetail,
     OrderEdit,
     PurchaseOrderEdit
@@ -442,9 +446,9 @@ export default {
     },
     showAddView() {
       this.emptyOrder();
-      this.fileList = [];
+      // this.fileList = [];
       this.title = '资产采购申请';
-      this.dialogVisible = true;
+      this.dialogVisible4 = true;
     },
     showEditView(data) {
       this.title = '编辑申请信息';

@@ -253,4 +253,21 @@
             </foreach>
         </if>
     </select>
+    <select id="getCurrentAssetInfo" resultType="com.bupt.lams.model.Asset">
+        select a.*
+        from asset a
+        left join order_asset oa
+        on oa.aid = a.id
+        where oa.oid is null
+        <if test="page !=null and size!=null">
+            limit #{page},#{size}
+        </if>
+    </select>
+    <select id="getCurrentAssetTotal" resultType="java.lang.Long">
+        select count(*)
+        from asset a
+        left join order_asset oa
+        on oa.aid = a.id
+        where oa.oid is null
+    </select>
 </mapper>

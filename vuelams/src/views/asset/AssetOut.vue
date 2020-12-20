@@ -226,7 +226,7 @@
 
 <script>
 import OrderDetail from "@/components/order/OrderDetail";
-import OrderEdit from "@/components/order/OrderEdit";
+import OrderEdit from "@/components/asset/AssetEdit";
 
 export default {
   name: "EmpBasic",

@@ -52,6 +52,18 @@ public class AssetService {
         return bean;
     }
 
+    public RespPageBean getCurrentAssetInfoByPage(Integer page, Integer size) {
+        if (page != null && size != null) {
+            page = (page - 1) * size;
+        }
+        List<Asset> data = assetMapper.getCurrentAssetInfo(page,size);
+        Long total = assetMapper.getCurrentAssetTotal();
+        RespPageBean bean = new RespPageBean();
+        bean.setData(data);
+        bean.setTotal(total);
+        return bean;
+    }
+
 
     @OperateRecord(description = "更新资产信息", clazz = UpdateAssetRecord.class)
     public void updateAsset(Asset asset) {
@@ -203,5 +215,9 @@ public class AssetService {
         statusList.add(AssetStatusEnum.INUSE.getIndex());
         condition.setAssetStatuses(statusList);
         return assetMapper.getTotalByCondition(condition);
+    }
+
+    public void addAsset(Asset asset){
+        assetMapper.insertSelective(asset);
     }
 }

@@ -3,6 +3,7 @@ package com.bupt.lams.mapper;
 import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.dto.AssetStatusCount;
 import com.bupt.lams.model.Asset;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -45,4 +46,8 @@ public interface AssetMapper {
     List<Long> getAllAssetIds();
 
     List<Asset> getAssetInfoByIds(List<Long> aids);
+
+    List<Asset> getCurrentAssetInfo(@Param("page") Integer page, @Param("size") Integer size);
+
+    Long getCurrentAssetTotal();
 }

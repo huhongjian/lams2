@@ -43,6 +43,26 @@ public class AssetController {
         return assetService.getAssetByCondition(assetQueryCondition);
     }
 
+    @GetMapping("/getCur")
+    public RespPageBean getCurrentAssetInfoByPage(Integer page, Integer size) {
+        return assetService.getCurrentAssetInfoByPage(page, size);
+    }
+
+    @PostMapping("/add")
+    public RespBean addAsset(@RequestBody Asset asset) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        response.setMsg("资产新增成功!");
+        try {
+            assetService.addAsset(asset);
+            response.setObj(asset.getId());
+        } catch (Exception e) {
+            logger.error("新增资产失败", e);
+            return RespBean.error("新增资产失败！");
+        }
+        return response;
+    }
+
     @PutMapping("/edit")
     public RespBean updateAsset(@RequestBody Asset asset) {
         // 资产信息管理中的资产信息只允许管理员修改

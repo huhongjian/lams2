@@ -48,7 +48,7 @@ public class OrderBasicController {
     }
 
     @PostMapping("/add")
-    public RespBean addAsset(@RequestBody Order order) {
+    public RespBean addOderIn(@RequestBody Order order) {
         RespBean response = new RespBean();
         response.setStatus(200);
         response.setMsg("资产申请采购成功!");

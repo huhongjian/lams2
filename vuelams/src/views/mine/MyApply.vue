@@ -98,7 +98,7 @@
 
 <script>
 import OrderDetail from "@/components/order/OrderDetail";
-import OrderEdit from "@/components/order/OrderEdit";
+import OrderEdit from "@/components/asset/AssetEdit";
 import Mine from "@/components/order/Mine";
 
 export default {

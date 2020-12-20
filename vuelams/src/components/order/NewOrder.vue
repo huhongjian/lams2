@@ -22,7 +22,7 @@
             <el-button type="primary" icon="el-icon-plus" @click="showAddView">
               新增资产
             </el-button>
-            <el-button @click="deleteOrder" style="display: inline-flex;margin-left: 8px" type="danger">
+            <el-button @click="deleteAsset" style="display: inline-flex;margin-left: 8px" type="danger">
               删除
             </el-button>
           </el-row>
@@ -36,6 +36,10 @@
                 element-loading-spinner="el-icon-loading"
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
+              <el-table-column
+                  type="selection"
+                  width="55">
+              </el-table-column>
               <el-table-column
                   fixed
                   prop="id"
@@ -92,34 +96,62 @@
                 </template>
               </el-table-column>
             </el-table>
+            <div style="display: flex;justify-content: flex-end">
+              <el-pagination
+                  background
+                  @current-change="currentChange"
+                  @size-change="sizeChange"
+                  layout="sizes, prev, pager, next, jumper, ->, total, slot"
+                  :total="total">
+              </el-pagination>
+            </div>
           </div>
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="$emit('close')">取 消</el-button>
-    <el-button type="primary" @click="">确 定</el-button>
+    <el-button type="primary" @click="doAddAsset">确 定</el-button>
   </span>
     </el-dialog>
     <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
                  :urlList="urlList" :title="title"></AssetDetail>
-    <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
-               :title="title2" :types="types"></OrderEdit>
+    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :asset="asset" :fileList="fileList"
+               :title="title2" :types="types"></AssetEdit>
   </div>
 </template>
 
 <script>
-import OrderEdit from "@/components/order/OrderEdit";
+import AssetEdit from "@/components/asset/AssetEdit";
 import AssetDetail from "@/components/asset/AssetDetail";
 
 export default {
   name: "NewOrder",
-  props: ['order', 'fileList', 'title', 'dialogVisible4', 'types'],
+  props: ['order', 'title', 'dialogVisible4', 'types'],
   data() {
     return {
+      // 资产图片列表，用于编辑页面
+      fileList: [],
+      // 资产图片url列表，用于详情页面
+      urlList: [],
       dialogVisible: false,
+      dialogVisible2: false,
       title2: '',
       loading: false,
-      assets:[],
+      asset: {
+        id: "",
+        status: "",
+        statusName: "",
+        assetName: "",
+        brand: "",
+        type: "",
+        price: "",
+        fileList: [],
+        adv: {},
+        remark: ""
+      },
+      total: 0,
+      page: 1,
+      size: 10,
       rules: {
         [`asset.assetName`]: [{required: true, message: '请输入资产名称', trigger: 'blur'}],
         [`asset.brand`]: [{required: true, message: '请输入品牌', trigger: 'blur'}],
@@ -129,18 +161,107 @@ export default {
     }
   },
   components: {
-    OrderEdit,
+    AssetEdit,
     AssetDetail
   },
   methods: {
+    emptyAsset() {
+      this.asset = {
+        id: "",
+        assetName: "",
+        brand: "",
+        type: "",
+        price: "",
+        fileList: [],
+        adv: {},
+        remark: ""
+      }
+    },
+    doAddAsset() {
+      if (this.order.asset.id) {
+        this.$refs['orderForm'].validate(valid => {
+          if (valid) {
+            this.putRequest("/order/basic/edit", this.order).then(resp => {
+              if (resp) {
+                this.uploadData.aid = this.order.asset.id;
+                this.$refs.upload.submit();
+                this.$emit('close');
+                this.$parent.initOrders();
+              }
+            })
+          }
+        });
+      } else {
+        this.$refs['orderForm'].validate(valid => {
+          if (valid) {
+            this.postRequest("/order/basic/add", this.order).then(resp => {
+              if (resp) {
+                this.uploadData.aid = resp.obj;
+                this.$refs.upload.submit();
+                this.$emit('close');
+                this.$parent.initOrders();
+              }
+            })
+          }
+        });
+      }
+    },
     showAddView() {
-      // this.emptyOrder();
-      // this.fileList = [];
+      this.emptyAsset();
+      this.fileList = [];
       this.title2 = '新增资产';
       this.dialogVisible = true;
     },
+    showEditView(data) {
+      this.title2 = '编辑资产';
+      this.asset = data;
+      if (this.asset.fileList && this.asset.fileList.length > 0) {
+        this.fileList = this.asset.fileList;
+      } else {
+        this.fileList = [];
+      }
+      this.dialogVisible = true;
+    },
+    deleteAsset() {
+      this.$confirm('此操作将永久删除选中的记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteRequestWithData("/order/basic/delete", this.orderIds).then(resp => {
+          if (resp) {
+            this.orderIds = [];
+            this.initOrders();
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
     handleClose() {
       this.$emit('close');
+    },
+    initAssets() {
+      this.loading = true;
+      let url = '/asset/getCur/?page=' + this.page + '&size=' + this.size;
+      this.getRequest(url).then(resp => {
+        this.loading = false;
+        if (resp) {
+          this.order.assetList = resp.data;
+          this.total = resp.total;
+        }
+      });
+    },
+    sizeChange(currentSize) {
+      this.size = currentSize;
+      this.initAssets();
+    },
+    currentChange(currentPage) {
+      this.page = currentPage;
+      this.initAssets();
     },
   }
 }

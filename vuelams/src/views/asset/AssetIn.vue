@@ -238,7 +238,7 @@
 
 <script>
 import OrderDetail from "@/components/order/OrderDetail";
-import OrderEdit from "@/components/order/OrderEdit";
+import OrderEdit from "@/components/asset/AssetEdit";
 import PurchaseOrderEdit from "@/components/purchaseOrder/PurchaseOrderEdit";
 import NewOrder from "@/components/order/NewOrder";
 
@@ -314,18 +314,7 @@ export default {
         },
         createTime: "",
         updateTime: "",
-        asset: {
-          id: "",
-          status: "",
-          statusName: "",
-          assetName: "",
-          brand: "",
-          type: "",
-          price: "",
-          fileList: [],
-          adv: {},
-          remark: ""
-        }
+        assetList: []
       },
       // 搜索类型，空是普通搜索，‘advanced’是高级搜索
       type: "",

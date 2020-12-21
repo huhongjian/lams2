@@ -133,33 +133,6 @@
           </template>
         </el-table-column>
         <el-table-column
-            fixed
-            prop="asset.id"
-            align="left"
-            label="资产编号"
-            width="80">
-        </el-table-column>
-        <el-table-column
-            fixed
-            prop="asset.assetName"
-            :show-overflow-tooltip="true"
-            align="left"
-            label="资产名称"
-            width="80">
-        </el-table-column>
-        <el-table-column
-            prop="asset.type"
-            align="left"
-            label="类型"
-            width="60">
-        </el-table-column>
-        <el-table-column
-            prop="asset.brand"
-            label="品牌"
-            align="left"
-            width="60">
-        </el-table-column>
-        <el-table-column
             prop="statusName"
             width="90"
             label="状态">
@@ -176,9 +149,13 @@
           </template>
         </el-table-column>
         <el-table-column
-            prop="asset.price"
-            width="90"
-            label="价格（元）">
+            :show-overflow-tooltip="true"
+            label="关联资产编号">
+          <template slot-scope="scope">
+            <el-tag type="success" style="margin-right: 4px" v-for="(asset,indexj) in scope.row.assetList"
+                    :key="indexj">{{ asset.id }}
+            </el-tag>
+          </template>
         </el-table-column>
         <el-table-column
             prop="reason"
@@ -452,14 +429,6 @@ export default {
     showDetailView(data) {
       this.title = '申请单详情';
       this.order = data;
-      if (this.order.asset && this.order.asset.fileList) {
-        this.urlList = [];
-        for (let i = 0; i < this.order.asset.fileList.length; i++) {
-          this.urlList.push(this.order.asset.fileList[i].url);
-        }
-      } else {
-        this.urlList = null;
-      }
       this.dialogVisible2 = true;
     },
     getOperateList(data) {

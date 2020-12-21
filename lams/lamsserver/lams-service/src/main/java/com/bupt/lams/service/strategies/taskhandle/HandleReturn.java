@@ -10,6 +10,7 @@ import com.bupt.lams.service.OrderService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 归还
@@ -30,8 +31,10 @@ public class HandleReturn implements IUpdateStatus {
         // 参数中的order不包含资产信息，获取全部资产信息
         order = orderService.selectFullOrderInfoById(order.getId());
         // 更新资产状态
-        Asset asset = order.getAsset();
-        asset.setStatus(AssetStatusEnum.FREE.getIndex());
-        assetService.changeAssetStatus(asset);
+        List<Asset> assetList = order.getAssetList();
+        for (Asset asset : assetList) {
+            asset.setStatus(AssetStatusEnum.FREE.getIndex());
+            assetService.changeAssetStatus(asset);
+        }
     }
 }

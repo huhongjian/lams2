@@ -104,22 +104,27 @@ public class POIUtils {
         HSSFCell c10 = r0.createCell(10);
         c10.setCellStyle(headerStyle);
         c10.setCellValue("申请时间");
+        int cnt = 0;
         for (int i = 0; i < list.size(); i++) {
             Order order = list.get(i);
-            HSSFRow row = sheet.createRow(i + 1);
-            row.createCell(0).setCellValue(order.getId());
-            row.createCell(1).setCellValue(order.getAsset().getId());
-            row.createCell(2).setCellValue(order.getAsset().getType());
-            row.createCell(3).setCellValue(order.getAsset().getBrand());
-            row.createCell(4).setCellValue(order.getStatusName());
-            row.createCell(5).setCellValue(order.getAsset().getPrice());
-            row.createCell(6).setCellValue(order.getUser().getName());
-            row.createCell(7).setCellValue(order.getUserEmail());
-            row.createCell(8).setCellValue(order.getUser().getPhone());
-            row.createCell(9).setCellValue(order.getReason());
-            HSSFCell cell4 = row.createCell(10);
-            cell4.setCellStyle(dateCellStyle);
-            cell4.setCellValue(order.getCreateTime());
+            List<Asset> assetList = order.getAssetList();
+            for (int j = 0; j < assetList.size(); j++) {
+                Asset asset = assetList.get(j);
+                HSSFRow row = sheet.createRow(++cnt);
+                row.createCell(0).setCellValue(order.getId());
+                row.createCell(1).setCellValue(asset.getId());
+                row.createCell(2).setCellValue(asset.getType());
+                row.createCell(3).setCellValue(asset.getBrand());
+                row.createCell(4).setCellValue(order.getStatusName());
+                row.createCell(5).setCellValue(asset.getPrice());
+                row.createCell(6).setCellValue(order.getUser().getName());
+                row.createCell(7).setCellValue(order.getUserEmail());
+                row.createCell(8).setCellValue(order.getUser().getPhone());
+                row.createCell(9).setCellValue(order.getReason());
+                HSSFCell cell4 = row.createCell(10);
+                cell4.setCellStyle(dateCellStyle);
+                cell4.setCellValue(order.getCreateTime());
+            }
         }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -220,27 +225,32 @@ public class POIUtils {
         HSSFCell c11 = r0.createCell(11);
         c11.setCellStyle(headerStyle);
         c11.setCellValue("入库时间");
+        int cnt = 0;
         for (int i = 0; i < list.size(); i++) {
             Order order = list.get(i);
-            HSSFRow row = sheet.createRow(i + 1);
-            row.createCell(0).setCellValue(order.getId());
-            row.createCell(1).setCellValue(order.getAsset().getId());
-            row.createCell(2).setCellValue(order.getAsset().getType());
-            row.createCell(3).setCellValue(order.getAsset().getBrand());
-            row.createCell(4).setCellValue(order.getStatusName());
-            HSSFCell cell5 = row.createCell(5);
-            cell5.setCellStyle(dateCellStyle);
-            cell5.setCellValue(order.getExpireTime());
-            row.createCell(6).setCellValue(order.getUser().getName());
-            row.createCell(7).setCellValue(order.getUserEmail());
-            row.createCell(8).setCellValue(order.getUser().getPhone());
-            row.createCell(9).setCellValue(order.getReason());
-            HSSFCell cell10 = row.createCell(10);
-            cell10.setCellStyle(dateCellStyle);
-            cell10.setCellValue(order.getCreateTime());
-            HSSFCell cell11 = row.createCell(11);
-            cell11.setCellStyle(dateCellStyle);
-            cell11.setCellValue(order.getAsset().getReadyDate());
+            List<Asset> assetList = order.getAssetList();
+            for (int j = 0; j < assetList.size(); j++) {
+                Asset asset = assetList.get(j);
+                HSSFRow row = sheet.createRow(++cnt);
+                row.createCell(0).setCellValue(order.getId());
+                row.createCell(1).setCellValue(asset.getId());
+                row.createCell(2).setCellValue(asset.getType());
+                row.createCell(3).setCellValue(asset.getBrand());
+                row.createCell(4).setCellValue(order.getStatusName());
+                HSSFCell cell5 = row.createCell(5);
+                cell5.setCellStyle(dateCellStyle);
+                cell5.setCellValue(order.getExpireTime());
+                row.createCell(6).setCellValue(order.getUser().getName());
+                row.createCell(7).setCellValue(order.getUserEmail());
+                row.createCell(8).setCellValue(order.getUser().getPhone());
+                row.createCell(9).setCellValue(order.getReason());
+                HSSFCell cell10 = row.createCell(10);
+                cell10.setCellStyle(dateCellStyle);
+                cell10.setCellValue(order.getCreateTime());
+                HSSFCell cell11 = row.createCell(11);
+                cell11.setCellStyle(dateCellStyle);
+                cell11.setCellValue(asset.getReadyDate());
+            }
         }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

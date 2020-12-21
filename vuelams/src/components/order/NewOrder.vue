@@ -43,10 +43,12 @@
               </el-table-column>
               <el-table-column
                   fixed
-                  prop="id"
                   label="资产编号"
                   align="left"
                   width="100">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
+                </template>
               </el-table-column>
               <el-table-column
                   fixed
@@ -110,8 +112,8 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="handleCancle()">取 消</el-button>
-    <el-button type="primary" @click="doAddAsset">确 定</el-button>
+    <el-button @click="handleCancle">取 消</el-button>
+    <el-button type="primary" @click="doAddOrderIn">确 定</el-button>
   </span>
     </el-dialog>
     <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
@@ -187,8 +189,8 @@ export default {
         remark: ""
       }
     },
-    doAddAsset() {
-      if (this.order.asset.id) {
+    doAddOrderIn() {
+      if (this.order.id) {
         this.$refs['orderForm'].validate(valid => {
           if (valid) {
             this.putRequest("/order/basic/edit", this.order).then(resp => {
@@ -206,8 +208,6 @@ export default {
           if (valid) {
             this.postRequest("/order/basic/add", this.order).then(resp => {
               if (resp) {
-                this.uploadData.aid = resp.obj;
-                this.$refs.upload.submit();
                 this.$emit('close');
                 this.$parent.initOrders();
               }
@@ -221,6 +221,19 @@ export default {
       this.fileList = [];
       this.title2 = '新增资产';
       this.dialogVisible = true;
+    },
+    showDetailView(data) {
+      this.title = '申请单详情';
+      this.asset = data;
+      if (this.asset && this.asset.fileList) {
+        this.urlList = [];
+        for (let i = 0; i < this.asset.fileList.length; i++) {
+          this.urlList.push(this.asset.fileList[i].url);
+        }
+      } else {
+        this.urlList = null;
+      }
+      this.dialogVisible2 = true;
     },
     showEditView(data) {
       this.title2 = '编辑资产';

@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 工单信息pojo
@@ -60,7 +61,7 @@ public class Order implements Serializable {
     /**
      * 关联的资产信息
      */
-    private Asset asset;
+    private List<Asset> assetList;
 
     public void setCategory(int category) {
         this.category = category;

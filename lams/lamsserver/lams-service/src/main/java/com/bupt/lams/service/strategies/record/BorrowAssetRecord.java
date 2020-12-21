@@ -21,7 +21,7 @@ public class BorrowAssetRecord implements IRecord {
         Order order = (Order) joinPoint.getArgs()[0];
         record.setOperate(RecordAopDispatchEnum.BORROW_ASSET.getIndex());
         record.setOperator(user);
-        String text = "【" + user.getName() + "】" + "借用资产；" + "资产编号：【" + order.getAsset().getId() + "】";
+        String text = "【" + user.getName() + "】" + "借用资产；" + "借用单号：【" + order.getId() + "】";
         record.setText(text);
         record.setOperateTime(new Date());
         return record;

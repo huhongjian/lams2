@@ -79,15 +79,17 @@ public class OrderService {
         order.setStatus(OrderStatusEnum.CREATE.getIndex());
         order.setCreateTime(new Date());
         orderMapper.insertSelective(order);
-        Asset asset = order.getAsset();
-        asset.setStatus(AssetStatusEnum.CREATE.getIndex());
-        assetMapper.insertSelective(asset);
-        OrderAsset orderAsset = new OrderAsset();
-        orderAsset.setAid(asset.getId());
-        orderAsset.setOid(order.getId());
-        orderAsset.setCreateTime(new Date());
-        orderAsset.setUpdateTime(new Date());
-        orderAssetMapper.insertSelective(orderAsset);
+        List<Asset> assetList = order.getAssetList();
+        for (Asset asset : assetList) {
+            asset.setStatus(AssetStatusEnum.CREATE.getIndex());
+            assetMapper.insertSelective(asset);
+            OrderAsset orderAsset = new OrderAsset();
+            orderAsset.setAid(asset.getId());
+            orderAsset.setOid(order.getId());
+            orderAsset.setCreateTime(new Date());
+            orderAsset.setUpdateTime(new Date());
+            orderAssetMapper.insertSelective(orderAsset);
+        }
         try {
             taskOperateService.startWorkFlow(order, ProcessTypeEnum.IN.getIndex(), user.getUsername(), null);
         } catch (Exception e) {
@@ -115,13 +117,15 @@ public class OrderService {
     @Transactional(rollbackFor = Exception.class)
     @OperateRecord(description = "借用资产", clazz = BorrowAssetRecord.class)
     public void borrowAsset(Order order) {
-        Asset asset = order.getAsset();
+        List<Asset> assetList = order.getAssetList();
         LamsUser user = UserInfoUtils.getLoginedUser();
         order.setUserEmail(user.getUsername());
         order.setStatus(OrderStatusEnum.ASK.getIndex());
         order.setCreateTime(new Date());
         orderMapper.updateOrder(order);
-        assetMapper.updateAsset(asset);
+        for (Asset asset : assetList) {
+            assetMapper.updateAsset(asset);
+        }
         try {
             // 这个map是开启工作流时间的数据，并不是流转过程中的数据
             taskOperateService.startWorkFlow(order, ProcessTypeEnum.OUT.getIndex(), user.getUsername(), null);
@@ -135,7 +139,10 @@ public class OrderService {
     @OperateRecord(description = "更新工单信息", clazz = UpdateOrderRecord.class)
     public void updateOrder(Order order) {
         orderMapper.updateOrder(order);
-        assetMapper.updateAsset(order.getAsset());
+        List<Asset> assetList = order.getAssetList();
+        for (Asset asset : assetList) {
+            assetMapper.updateAsset(asset);
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)

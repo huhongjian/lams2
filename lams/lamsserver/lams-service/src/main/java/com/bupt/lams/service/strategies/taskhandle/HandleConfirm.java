@@ -10,6 +10,7 @@ import com.bupt.lams.service.OrderService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 确认转交
@@ -26,8 +27,10 @@ public class HandleConfirm implements IUpdateStatus {
         order.setStatus(OrderStatusEnum.OCCUPIED.getIndex());
         orderService.updateOrderStatusById(order);
         order = orderService.selectFullOrderInfoById(order.getId());
-        Asset asset = order.getAsset();
-        asset.setStatus(AssetStatusEnum.INUSE.getIndex());
-        assetMapper.updateAssetStatus(asset);
+        List<Asset> assetList = order.getAssetList();
+        for (Asset asset : assetList) {
+            asset.setStatus(AssetStatusEnum.INUSE.getIndex());
+            assetMapper.updateAssetStatus(asset);
+        }
     }
 }

@@ -54,7 +54,6 @@ public class OrderBasicController {
         response.setMsg("资产申请采购成功!");
         try {
             orderService.addOrderIn(order);
-            response.setObj(order.getAsset().getId());
         } catch (Exception e) {
             logger.error("新增资产失败", e);
             return RespBean.error("资产申请采购失败！");

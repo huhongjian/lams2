@@ -6,52 +6,21 @@
         :before-close="handleClose"
         width="80%">
       <div>
-        <el-form :model="order.asset">
-          <el-row>
-            <el-col :span="20">
-              <el-form-item label="资产编号:" prop="id">
-                {{ order.asset.id }}
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="20">
-              <el-form-item label="名称:" prop="assetName">
-                {{ order.asset.assetName }}
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              <el-form-item label="品牌:" prop="brand">
-                {{ order.asset.brand }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="类型:" prop="type">
-                {{ order.asset.type }}
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="价格（元）:" prop="price">
-                {{ order.asset.price }}
-              </el-form-item>
-            </el-col>
-          </el-row>
+        <el-form :model="order">
           <template v-if="order.user">
             <el-row>
               <el-col :span="6">
-                <el-form-item label="用户:" prop="applicant">
+                <el-form-item label="申请人:" prop="applicant">
                   {{ order.user.name }}
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="电话:" prop="applicantPhone">
+                <el-form-item label="申请人电话:" prop="applicantPhone">
                   {{ order.user.phone }}
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="邮件:" prop="applicantEmail">
+                <el-form-item label="申请人邮箱:" prop="applicantEmail">
                   {{ order.user.username }}
                 </el-form-item>
               </el-col>
@@ -71,106 +40,84 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row>
-            <el-col :span="10">
-              <el-form-item v-show="order.asset&&order.asset.remark!=''" label="资产备注:" prop="remark">
-                {{ order.asset.remark }}
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-        <template v-if="order.asset.adv">
-          <el-form v-show="order.asset.type=='手机'" :model="order.asset.adv">
-            <el-row>
-              <el-col :span="6">
-                <el-form-item label="内存（G）:" prop="memory">
-                  {{ order.asset.adv.memory }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="屏幕尺寸（寸）:" prop="screenSize">
-                  {{ order.asset.adv.screenSize }}
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </el-form>
-          <el-form v-show="order.asset.type=='交换机'" :model="order.asset.adv">
-            <el-row>
-              <el-col :span="6">
-                <el-form-item label="接口数:" prop="nums">
-                  {{ order.asset.adv.nums }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="类型:" prop="type">
-                  {{ order.asset.adv.type }}
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </el-form>
-          <el-form v-show="order.asset.type=='主机'" :model="order.asset.adv">
-            <el-row>
-              <el-col :span="6">
-                <el-form-item label="cpu:" prop="cpu">
-                  {{ order.asset.adv.cpu }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="内存（G）:" prop="memory">
-                  {{ order.asset.adv.memory }}
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </el-form>
-          <el-form v-show="order.asset.type=='测距仪'" :model="order.asset.adv">
-            <el-row>
-              <el-col :span="6">
-                <el-form-item label="精度:" prop="precision">
-                  {{ order.asset.adv.precision }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="距离:" prop="distance">
-                  {{ order.asset.adv.distance }}
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="方式:" prop="methods">
-                  {{ order.asset.adv.methods }}
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </el-form>
-          <el-form>
-            <el-row v-show="urlList&&urlList.length>0">
-              <el-form-item label="资产相关图片:"></el-form-item>
-            </el-row>
-            <el-row>
-              <template v-for="url in urlList">
-                <el-col :span="3">
-                  <el-form-item>
-                    <el-image
-                        style="width: 130px; height: 130px"
-                        :src="url"
-                        :preview-src-list="urlList">
-                    </el-image>
-                  </el-form-item>
-                </el-col>
+          <el-table
+              :data="order.assetList"
+              stripe
+              border
+              element-loading-text="正在加载..."
+              element-loading-spinner="el-icon-loading"
+              element-loading-background="rgba(0, 0, 0, 0.8)"
+              style="width: 100%">
+            <el-table-column
+                fixed
+                label="资产编号"
+                align="left"
+                width="100">
+              <template slot-scope="scope">
+                <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
               </template>
-            </el-row>
-          </el-form>
-        </template>
+            </el-table-column>
+            <el-table-column
+                fixed
+                prop="assetName"
+                :show-overflow-tooltip="true"
+                align="left"
+                label="资产名称">
+            </el-table-column>
+            <el-table-column
+                prop="statusName"
+                label="状态"
+                width="200">
+              <template slot-scope="scope">
+            <span style="color: #00e079; font-weight: bold"
+                  v-if="scope.row.status=='2'">{{ scope.row.statusName }}</span>
+                <span style="color: #ff4777; font-weight: bold" v-else-if="scope.row.status=='3'">{{
+                    scope.row.statusName
+                  }}</span>
+                <span style="color: #c0c0c0;"
+                      v-else-if="scope.row.status=='4'">{{ scope.row.statusName }}</span>
+                <span v-else>{{ scope.row.statusName }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+                prop="type"
+                align="left"
+                label="类型"
+                width="200">
+            </el-table-column>
+            <el-table-column
+                prop="brand"
+                label="品牌"
+                align="left"
+                width="200">
+            </el-table-column>
+            <el-table-column
+                prop="price"
+                label="价格（元）"
+                align="left"
+                width="200">
+            </el-table-column>
+          </el-table>
+          <div style="display: flex;justify-content: flex-end">
+            <el-pagination
+                background
+                @current-change="currentChange"
+                @size-change="sizeChange"
+                layout="sizes, prev, pager, next, jumper, ->, total, slot"
+                :total="total">
+            </el-pagination>
+          </div>
+        </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-      <el-button v-if="out&&out==true&&(order.status=='3'||order.status=='8'||order.status=='7')"
-                 type="primary"
-                 @click="visible2=true">借 用</el-button>
     <template v-for="op in operateList">
       <el-button type="primary" @click="checkAndHandle(op.operateType)">{{ op.operate }}</el-button>
     </template>
         <el-button @click="$emit('close')">取 消</el-button>
   </span>
     </el-dialog>
+    <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
+                 :urlList="urlList" :title="title"></AssetDetail>
     <el-dialog
         :visible.sync="visible"
         width="30%">
@@ -236,6 +183,18 @@ export default {
   props: ['order', 'title', 'dialogVisible2', 'urlList', 'operateList', 'out'],
   data() {
     return {
+      asset: {
+        id: "",
+        brand: "",
+        type: "",
+        price: "",
+        fileList: [],
+        adv: {},
+        remark: ""
+      },
+      total: 0,
+      page: 1,
+      size: 10,
       visible: false,
       visible2: false,
       name: '',
@@ -321,6 +280,27 @@ export default {
       this.order.expireTime = '';
       this.order.reason = '';
       this.visible2 = false;
+    },
+    showDetailView(data) {
+      this.title = '申请单详情';
+      this.asset = data;
+      if (this.asset && this.asset.fileList) {
+        this.urlList = [];
+        for (let i = 0; i < this.asset.fileList.length; i++) {
+          this.urlList.push(this.asset.fileList[i].url);
+        }
+      } else {
+        this.urlList = null;
+      }
+      this.dialogVisible2 = true;
+    },
+    sizeChange(currentSize) {
+      this.size = currentSize;
+      this.initAssets();
+    },
+    currentChange(currentPage) {
+      this.page = currentPage;
+      this.initAssets();
     }
   }
 }

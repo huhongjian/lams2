@@ -270,4 +270,20 @@
         on oa.aid = a.id
         where oa.oid is null
     </select>
+    <delete id="deleteManyByAids" parameterType="list">
+        delete
+        from asset
+        where
+        id in
+        <foreach collection="list" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+    <delete id="clearAssets">
+        delete a.*
+        from asset a
+         left join order_asset oa on oa.aid = a.id
+         left join `order` o on oa.oid = o.id
+        where oid is null;
+    </delete>
 </mapper>

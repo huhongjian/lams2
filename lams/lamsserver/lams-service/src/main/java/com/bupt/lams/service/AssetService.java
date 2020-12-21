@@ -6,6 +6,7 @@ import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.dto.AssetStatusCount;
 import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.mapper.AssetPicsMapper;
+import com.bupt.lams.mapper.OrderAssetMapper;
 import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.AssetPic;
 import com.bupt.lams.model.RespPageBean;
@@ -37,6 +38,9 @@ public class AssetService {
     @Value("${fastdfs.nginx.host}")
     String nginxHost;
 
+    @Resource
+    OrderAssetMapper orderAssetMapper;
+
     public RespPageBean getAssetByCondition(AssetQueryCondition condition) {
         Integer page = condition.getPage();
         Integer size = condition.getSize();
@@ -56,7 +60,7 @@ public class AssetService {
         if (page != null && size != null) {
             page = (page - 1) * size;
         }
-        List<Asset> data = assetMapper.getCurrentAssetInfo(page,size);
+        List<Asset> data = assetMapper.getCurrentAssetInfo(page, size);
         Long total = assetMapper.getCurrentAssetTotal();
         RespPageBean bean = new RespPageBean();
         bean.setData(data);
@@ -217,7 +221,20 @@ public class AssetService {
         return assetMapper.getTotalByCondition(condition);
     }
 
-    public void addAsset(Asset asset){
+    public void addAsset(Asset asset) {
         assetMapper.insertSelective(asset);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteAssets(List<Long> aids) {
+        assetMapper.deleteManyByAids(aids);
+        orderAssetMapper.deleteManyByAids(aids);
+    }
+
+    /**
+     * 清空多余的资产信息，即，没有和采购单关联的资产信息
+     */
+    public void clearAssets() {
+        assetMapper.clearAssets();
     }
 }

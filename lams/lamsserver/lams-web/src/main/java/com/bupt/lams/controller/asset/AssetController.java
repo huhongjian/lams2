@@ -137,4 +137,24 @@ public class AssetController {
             return true;
         }
     }
+
+    @DeleteMapping("/delete")
+    public RespBean deleteAssets(@RequestBody List<Long> aids) {
+        try {
+            assetService.deleteAssets(aids);
+        } catch (Exception e) {
+            return RespBean.error("删除失败!");
+        }
+        return RespBean.ok("删除成功!");
+    }
+
+    @DeleteMapping("/clear")
+    public RespBean clearAssets() {
+        try {
+            assetService.clearAssets();
+        } catch (Exception e) {
+            return RespBean.error("清空无效资产信息失败!");
+        }
+        return RespBean.ok("清空无效资产信息成功!");
+    }
 }

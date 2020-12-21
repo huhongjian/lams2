@@ -29,6 +29,7 @@
           <div style="margin-top: 20px">
             <el-table
                 :data="order.assetList"
+                @selection-change="handleSelectionChange"
                 stripe
                 border
                 v-loading="loading"
@@ -109,7 +110,7 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="$emit('close')">取 消</el-button>
+    <el-button @click="handleCancle()">取 消</el-button>
     <el-button type="primary" @click="doAddAsset">确 定</el-button>
   </span>
     </el-dialog>
@@ -129,6 +130,8 @@ export default {
   props: ['order', 'title', 'dialogVisible4', 'types'],
   data() {
     return {
+      // 选中的资产id
+      assetIds: [],
       // 资产图片列表，用于编辑页面
       fileList: [],
       // 资产图片url列表，用于详情页面
@@ -165,6 +168,13 @@ export default {
     AssetDetail
   },
   methods: {
+    handleCancle() {
+      this.deleteRequest("/asset/clear").then(resp => {
+        if (resp) {
+          this.$emit('close');
+        }
+      })
+    },
     emptyAsset() {
       this.asset = {
         id: "",
@@ -228,10 +238,10 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.deleteRequestWithData("/order/basic/delete", this.orderIds).then(resp => {
+        this.deleteRequestWithData("/asset/delete", this.assetIds).then(resp => {
           if (resp) {
-            this.orderIds = [];
-            this.initOrders();
+            this.assetIds = [];
+            this.initAssets();
           }
         })
       }).catch(() => {
@@ -263,6 +273,12 @@ export default {
       this.page = currentPage;
       this.initAssets();
     },
+    handleSelectionChange(val) {
+      this.assetIds = [];
+      for (let i = 0; i < val.length; i++) {
+        this.assetIds.push(val[i].id);
+      }
+    }
   }
 }
 </script>

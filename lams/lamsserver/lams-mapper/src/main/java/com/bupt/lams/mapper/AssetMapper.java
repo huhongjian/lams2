@@ -50,4 +50,8 @@ public interface AssetMapper {
     List<Asset> getCurrentAssetInfo(@Param("page") Integer page, @Param("size") Integer size);
 
     Long getCurrentAssetTotal();
+
+    void deleteManyByAids(List<Long> aids);
+
+    void clearAssets();
 }

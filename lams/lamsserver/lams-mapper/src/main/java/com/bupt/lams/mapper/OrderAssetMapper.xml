@@ -67,4 +67,13 @@
             #{item}
         </foreach>
     </delete>
+    <delete id="deleteManyByAids" parameterType="list">
+        delete
+        from `order_asset`
+        where
+        aid in
+        <foreach collection="list" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

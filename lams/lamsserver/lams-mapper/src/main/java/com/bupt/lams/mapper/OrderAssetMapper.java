@@ -18,4 +18,6 @@ public interface OrderAssetMapper {
     Long getLatestOidByAid(Long aid);
 
     void deleteManyByOids(List<Long> oids);
+
+    void deleteManyByAids(List<Long> aids);
 }

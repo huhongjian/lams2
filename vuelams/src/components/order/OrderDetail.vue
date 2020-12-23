@@ -98,15 +98,6 @@
                 width="200">
             </el-table-column>
           </el-table>
-          <div style="display: flex;justify-content: flex-end">
-            <el-pagination
-                background
-                @current-change="currentChange"
-                @size-change="sizeChange"
-                layout="sizes, prev, pager, next, jumper, ->, total, slot"
-                :total="total">
-            </el-pagination>
-          </div>
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -192,9 +183,6 @@ export default {
         adv: {},
         remark: ""
       },
-      total: 0,
-      page: 1,
-      size: 10,
       visible: false,
       visible2: false,
       name: '',
@@ -293,14 +281,6 @@ export default {
         this.urlList = null;
       }
       this.dialogVisible2 = true;
-    },
-    sizeChange(currentSize) {
-      this.size = currentSize;
-      this.initAssets();
-    },
-    currentChange(currentPage) {
-      this.page = currentPage;
-      this.initAssets();
     }
   }
 }

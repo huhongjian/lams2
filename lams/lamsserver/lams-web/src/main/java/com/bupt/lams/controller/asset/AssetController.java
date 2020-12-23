@@ -2,6 +2,7 @@ package com.bupt.lams.controller.asset;
 
 import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.constants.OrderStatusEnum;
+import com.bupt.lams.dto.AddAssetData;
 import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.Order;
@@ -48,13 +49,20 @@ public class AssetController {
         return assetService.getCurrentAssetInfoByPage(page, size);
     }
 
+    @GetMapping("/getOrderAssetList")
+    public RespPageBean getOrderAssetListByPage(Long oid, Integer page, Integer size) {
+        return assetService.getOrderAssetListByPage(oid, page, size);
+    }
+
     @PostMapping("/add")
-    public RespBean addAsset(@RequestBody Asset asset) {
+    public RespBean addAsset(@RequestBody AddAssetData addAssetData) {
         RespBean response = new RespBean();
         response.setStatus(200);
         response.setMsg("资产新增成功!");
+        Asset asset = addAssetData.getAsset();
+        Long oid = addAssetData.getOid();
         try {
-            assetService.addAsset(asset);
+            assetService.addAsset(asset, oid);
             response.setObj(asset.getId());
         } catch (Exception e) {
             logger.error("新增资产失败", e);

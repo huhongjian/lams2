@@ -118,31 +118,13 @@
           </template>
         </el-table-column>
         <el-table-column
-            prop="asset.id"
-            fixed
-            align="left"
-            label="资产编号"
-            width="90">
-        </el-table-column>
-        <el-table-column
-            fixed
-            prop="asset.assetName"
             :show-overflow-tooltip="true"
-            align="left"
-            label="资产名称"
-            width="80">
-        </el-table-column>
-        <el-table-column
-            prop="asset.type"
-            align="left"
-            label="类型"
-            width="60">
-        </el-table-column>
-        <el-table-column
-            prop="asset.brand"
-            label="品牌"
-            align="left"
-            width="80">
+            label="关联资产编号">
+          <template slot-scope="scope">
+            <el-tag type="success" style="margin-right: 4px" v-for="(asset,indexj) in scope.row.assetList"
+                    :key="indexj">{{ asset.id }}
+            </el-tag>
+          </template>
         </el-table-column>
         <el-table-column
             prop="statusName"

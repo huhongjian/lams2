@@ -206,6 +206,8 @@
     </div>
     <NewOrder v-on:close="dialogVisible4 = false" :dialogVisible4="dialogVisible4" :order="order" :title="title"
               :types="types"></NewOrder>
+    <OrderEdit v-on:close="dialogVisible5 = false" :dialogVisible5="dialogVisible5" :order="order" :title="title"
+               :types="types"></OrderEdit>
     <PurchaseOrderEdit v-on:close="dialogVisible3 = false" v-on:empty="assetIds=[]" :dialogVisible3="dialogVisible3"
                        :purchase="purchase" :assetIds="assetIds" :title="title"></PurchaseOrderEdit>
     <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
@@ -215,7 +217,7 @@
 
 <script>
 import OrderDetail from "@/components/order/OrderDetail";
-import OrderEdit from "@/components/asset/AssetEdit";
+import OrderEdit from "@/components/order/OrderEdit";
 import PurchaseOrderEdit from "@/components/purchaseOrder/PurchaseOrderEdit";
 import NewOrder from "@/components/order/NewOrder";
 
@@ -236,14 +238,14 @@ export default {
       showAdvanceSearchView: false,
       orders: [],
       loading: false,
-      // 编辑页面/新增页面可见性
-      dialogVisible: false,
-      // 详情页可见性
+      // 工单详情页可见性
       dialogVisible2: false,
       // 添加订单信息
       dialogVisible3: false,
-      // 采购页面可见性
+      // 新增采购工单页面可见性
       dialogVisible4: false,
+      // 工单编辑页面可见性
+      dialogVisible5: false,
       total: 0,
       page: 1,
       keyword: '',
@@ -419,12 +421,7 @@ export default {
     showEditView(data) {
       this.title = '编辑申请信息';
       this.order = data;
-      if (this.order.asset.fileList && this.order.asset.fileList.length > 0) {
-        this.fileList = this.order.asset.fileList;
-      } else {
-        this.fileList = [];
-      }
-      this.dialogVisible = true;
+      this.dialogVisible5 = true;
     },
     showDetailView(data) {
       this.title = '申请单详情';

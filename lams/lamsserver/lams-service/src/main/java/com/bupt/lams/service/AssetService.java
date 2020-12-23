@@ -7,9 +7,8 @@ import com.bupt.lams.dto.AssetStatusCount;
 import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.mapper.AssetPicsMapper;
 import com.bupt.lams.mapper.OrderAssetMapper;
-import com.bupt.lams.model.Asset;
-import com.bupt.lams.model.AssetPic;
-import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.mapper.OrderMapper;
+import com.bupt.lams.model.*;
 import com.bupt.lams.service.annotation.OperateRecord;
 import com.bupt.lams.service.strategies.record.ChangeAssetStatusRecord;
 import com.bupt.lams.service.strategies.record.UpdateAssetRecord;
@@ -41,6 +40,9 @@ public class AssetService {
     @Resource
     OrderAssetMapper orderAssetMapper;
 
+    @Resource
+    OrderMapper orderMapper;
+
     public RespPageBean getAssetByCondition(AssetQueryCondition condition) {
         Integer page = condition.getPage();
         Integer size = condition.getSize();
@@ -62,6 +64,18 @@ public class AssetService {
         }
         List<Asset> data = assetMapper.getCurrentAssetInfo(page, size);
         Long total = assetMapper.getCurrentAssetTotal();
+        RespPageBean bean = new RespPageBean();
+        bean.setData(data);
+        bean.setTotal(total);
+        return bean;
+    }
+
+    public RespPageBean getOrderAssetListByPage(Long oid, Integer page, Integer size) {
+        if (page != null && size != null) {
+            page = (page - 1) * size;
+        }
+        List<Asset> data = assetMapper.getOrderAssetList(oid, page, size);
+        Long total = assetMapper.getOrderAssetListTotal(oid);
         RespPageBean bean = new RespPageBean();
         bean.setData(data);
         bean.setTotal(total);
@@ -221,8 +235,16 @@ public class AssetService {
         return assetMapper.getTotalByCondition(condition);
     }
 
-    public void addAsset(Asset asset) {
+    @Transactional(rollbackFor = Exception.class)
+    public void addAsset(Asset asset, Long oid) {
         assetMapper.insertSelective(asset);
+        Order order = orderMapper.selectBaseOrderInfoById(oid);
+        if (oid != null && order != null) {
+            OrderAsset orderAsset = new OrderAsset();
+            orderAsset.setAid(asset.getId());
+            orderAsset.setOid(oid);
+            orderAssetMapper.insertSelective(orderAsset);
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)

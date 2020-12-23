@@ -159,9 +159,13 @@
 <script>
 export default {
   name: "AssetEdit",
-  props: ['asset', 'fileList', 'title', 'dialogVisible', 'types'],
+  props: ['asset', 'fileList', 'title', 'dialogVisible', 'types','oid'],
   data() {
     return {
+      addData: {
+        asset: {},
+        oid: null
+      },
       uploadData: {
         aid: ""
       },
@@ -193,7 +197,9 @@ export default {
       } else {
         this.$refs['assetForm'].validate(valid => {
           if (valid) {
-            this.postRequest("/asset/add", this.asset).then(resp => {
+            this.addData.asset = this.asset;
+            this.addData.oid = this.oid;
+            this.postRequest("/asset/add", this.addData).then(resp => {
               if (resp) {
                 this.uploadData.aid = resp.obj;
                 this.$refs.upload.submit();

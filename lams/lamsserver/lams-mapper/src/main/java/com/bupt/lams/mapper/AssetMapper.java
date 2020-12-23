@@ -49,6 +49,10 @@ public interface AssetMapper {
 
     List<Asset> getCurrentAssetInfo(@Param("page") Integer page, @Param("size") Integer size);
 
+    List<Asset> getOrderAssetList(@Param("oid") Long oid, @Param("page") Integer page, @Param("size") Integer size);
+
+    Long getOrderAssetListTotal(@Param("oid") Long oid);
+
     Long getCurrentAssetTotal();
 
     void deleteManyByAids(List<Long> aids);

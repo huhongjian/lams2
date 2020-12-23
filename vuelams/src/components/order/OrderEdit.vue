@@ -2,7 +2,7 @@
   <div>
     <el-dialog
         :title="title"
-        :visible.sync="dialogVisible4"
+        :visible.sync="dialogVisible5"
         :before-close="handleClose"
         width="80%">
       <div>
@@ -99,15 +99,6 @@
                 </template>
               </el-table-column>
             </el-table>
-            <div style="display: flex;justify-content: flex-end">
-              <el-pagination
-                  background
-                  @current-change="currentChange"
-                  @size-change="sizeChange"
-                  layout="sizes, prev, pager, next, jumper, ->, total, slot"
-                  :total="total">
-              </el-pagination>
-            </div>
           </div>
         </el-form>
       </div>
@@ -119,7 +110,7 @@
     <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
                  :urlList="urlList" :title="title"></AssetDetail>
     <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :asset="asset" :fileList="fileList"
-               :title="title2" :types="types" :oid="null"></AssetEdit>
+               :title="title2" :types="types" :oid="this.order.id"></AssetEdit>
   </div>
 </template>
 
@@ -129,7 +120,7 @@ import AssetDetail from "@/components/asset/AssetDetail";
 
 export default {
   name: "NewOrder",
-  props: ['order', 'title', 'dialogVisible4', 'types'],
+  props: ['order', 'title', 'dialogVisible5', 'types'],
   data() {
     return {
       // 选中的资产id
@@ -171,11 +162,8 @@ export default {
   },
   methods: {
     handleCancle() {
-      this.deleteRequest("/asset/clear").then(resp => {
-        if (resp) {
-          this.$emit('close');
-        }
-      })
+      this.$parent.initOrders();
+      this.$emit('close');
     },
     emptyAsset() {
       this.asset = {
@@ -269,7 +257,7 @@ export default {
     },
     initAssets() {
       this.loading = true;
-      let url = '/asset/getCur/?page=' + this.page + '&size=' + this.size;
+      let url = '/asset/getOrderAssetList/?page=' + this.page + '&size=' + this.size;
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
@@ -277,14 +265,6 @@ export default {
           this.total = resp.total;
         }
       });
-    },
-    sizeChange(currentSize) {
-      this.size = currentSize;
-      this.initAssets();
-    },
-    currentChange(currentPage) {
-      this.page = currentPage;
-      this.initAssets();
     },
     handleSelectionChange(val) {
       this.assetIds = [];

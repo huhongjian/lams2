@@ -132,6 +132,10 @@ export default {
   props: ['order', 'title', 'dialogVisible4', 'types'],
   data() {
     return {
+      deleteData: {
+        assetIds: [],
+        oid: null
+      },
       // 选中的资产id
       assetIds: [],
       // 资产图片列表，用于编辑页面
@@ -251,7 +255,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.deleteRequestWithData("/asset/delete", this.assetIds).then(resp => {
+        this.deleteData.assetIds = this.assetIds;
+        this.deleteData.oid = null;
+        this.deleteRequestWithData("/asset/delete", this.deleteData).then(resp => {
           if (resp) {
             this.assetIds = [];
             this.initAssets();

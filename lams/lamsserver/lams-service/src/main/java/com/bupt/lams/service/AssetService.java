@@ -248,9 +248,17 @@ public class AssetService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void deleteAssets(List<Long> aids) {
+    public void deleteAssets(List<Long> aids, Long oid) {
+        Order order = orderMapper.selectBaseOrderInfoById(oid);
+        if (order == null) {
+            return;
+        }
+        if (oid != null) {
+            orderAssetMapper.deleteManyByAids(aids, oid);
+            return;
+        }
         assetMapper.deleteManyByAids(aids);
-        orderAssetMapper.deleteManyByAids(aids);
+        orderAssetMapper.deleteManyByAids(aids, null);
     }
 
     /**

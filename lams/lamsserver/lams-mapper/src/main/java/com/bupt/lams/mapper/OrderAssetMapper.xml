@@ -67,13 +67,17 @@
             #{item}
         </foreach>
     </delete>
-    <delete id="deleteManyByAids" parameterType="list">
+    <delete id="deleteManyByAids">
         delete
         from `order_asset`
-        where
-        aid in
-        <foreach collection="list" close=")" open="(" separator="," item="item">
-            #{item}
-        </foreach>
+        <where>
+            aid in
+            <foreach collection="aids" close=")" open="(" separator="," item="item">
+                #{item}
+            </foreach>
+            <if test="oid !=null">
+                and oid = #{oid}
+            </if>
+        </where>
     </delete>
 </mapper>

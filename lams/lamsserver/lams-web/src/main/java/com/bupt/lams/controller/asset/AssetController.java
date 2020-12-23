@@ -4,6 +4,7 @@ import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.dto.AddAssetData;
 import com.bupt.lams.dto.AssetQueryCondition;
+import com.bupt.lams.dto.DeleteAssetData;
 import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.Order;
 import com.bupt.lams.model.RespBean;
@@ -147,9 +148,11 @@ public class AssetController {
     }
 
     @DeleteMapping("/delete")
-    public RespBean deleteAssets(@RequestBody List<Long> aids) {
+    public RespBean deleteAssets(@RequestBody DeleteAssetData deleteData) {
         try {
-            assetService.deleteAssets(aids);
+            List<Long> aids = deleteData.getAssetIds();
+            Long oid = deleteData.getOid();
+            assetService.deleteAssets(aids, oid);
         } catch (Exception e) {
             return RespBean.error("删除失败!");
         }

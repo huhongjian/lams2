@@ -123,6 +123,10 @@ export default {
   props: ['order', 'title', 'dialogVisible5', 'types'],
   data() {
     return {
+      deleteData: {
+        assetIds: [],
+        oid: null
+      },
       // 选中的资产id
       assetIds: [],
       // 资产图片列表，用于编辑页面
@@ -183,8 +187,6 @@ export default {
           if (valid) {
             this.putRequest("/order/basic/edit", this.order).then(resp => {
               if (resp) {
-                this.uploadData.aid = this.order.asset.id;
-                this.$refs.upload.submit();
                 this.$emit('close');
                 this.$parent.initOrders();
               }
@@ -239,7 +241,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.deleteRequestWithData("/asset/delete", this.assetIds).then(resp => {
+        this.deleteData.assetIds = this.assetIds;
+        this.deleteData.oid = this.order.id;
+        this.deleteRequestWithData("/asset/delete", this.deleteData).then(resp => {
           if (resp) {
             this.assetIds = [];
             this.initAssets();
@@ -257,7 +261,7 @@ export default {
     },
     initAssets() {
       this.loading = true;
-      let url = '/asset/getOrderAssetList/?page=' + this.page + '&size=' + this.size;
+      let url = '/asset/getOrderAssetList/?oid=' + this.order.id + '&page=' + this.page + '&size=' + this.size;
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {

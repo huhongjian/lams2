@@ -135,14 +135,9 @@ public class OrderService {
         }
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @OperateRecord(description = "更新工单信息", clazz = UpdateOrderRecord.class)
     public void updateOrder(Order order) {
         orderMapper.updateOrder(order);
-        List<Asset> assetList = order.getAssetList();
-        for (Asset asset : assetList) {
-            assetMapper.updateAsset(asset);
-        }
     }
 
     @Transactional(rollbackFor = Exception.class)

@@ -1,6 +1,7 @@
 package com.bupt.lams.mapper;
 
 import com.bupt.lams.model.OrderAsset;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,5 +20,5 @@ public interface OrderAssetMapper {
 
     void deleteManyByOids(List<Long> oids);
 
-    void deleteManyByAids(List<Long> aids);
+    void deleteManyByAids(@Param("aids") List<Long> aids, @Param("oid") Long oid);
 }

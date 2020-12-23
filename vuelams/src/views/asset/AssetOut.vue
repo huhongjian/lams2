@@ -3,6 +3,9 @@
     <div>
       <div style="display: flex;justify-content: space-between">
         <div>
+          <el-button type="primary" icon="el-icon-plus" @click="showAddView">
+            新增借用单
+          </el-button>
           <el-button type="success" @click="exportData"
                      icon="el-icon-download">
             导出数据
@@ -199,6 +202,8 @@
         </el-pagination>
       </div>
     </div>
+    <NewOrderOut v-on:close="dialogVisible4 = false" :dialogVisible4="dialogVisible4" :order="order" :title="title"
+                 :types="types"></NewOrderOut>
     <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
                :title="title"></OrderEdit>
     <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
@@ -208,10 +213,11 @@
 
 <script>
 import OrderDetail from "@/components/order/OrderDetail";
-import OrderEdit from "@/components/asset/AssetEdit";
+import OrderEdit from "@/components/order/OrderEdit";
+import NewOrderOut from "@/components/order/NewOrderOut";
 
 export default {
-  name: "EmpBasic",
+  name: "AssetOut",
   data() {
     return {
       out: true,
@@ -228,6 +234,7 @@ export default {
       loading: false,
       dialogVisible: false,
       dialogVisible2: false,
+      dialogVisible4: false,
       total: 0,
       page: 1,
       keyword: '',
@@ -275,18 +282,7 @@ export default {
         },
         createTime: "",
         updateTime: "",
-        asset: {
-          id: "",
-          status: "",
-          statusName: "",
-          assetName: "",
-          brand: "",
-          type: "",
-          price: "",
-          fileList: [],
-          adv: {},
-          remark: ""
-        }
+        assetList: []
       },
       // 搜索类型，空是普通搜索，‘advanced’是高级搜索
       type: "",
@@ -297,6 +293,7 @@ export default {
     }
   },
   components: {
+    NewOrderOut,
     OrderDetail,
     OrderEdit
   },
@@ -346,15 +343,13 @@ export default {
         },
         createTime: "",
         updateTime: "",
-        asset: {
-          id: "",
-          brand: "",
-          type: "",
-          price: "",
-          fileList: [],
-          adv: {},
-        }
+        assetList: []
       };
+    },
+    showAddView() {
+      this.emptyOrder();
+      this.title = '资产借用申请';
+      this.dialogVisible4 = true;
     },
     showEditView(data) {
       this.title = '编辑申请信息';

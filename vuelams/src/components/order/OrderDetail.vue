@@ -169,6 +169,8 @@
 </template>
 
 <script>
+import AssetDetail from "@/components/asset/AssetDetail";
+
 export default {
   name: "OrderDetail",
   props: ['order', 'title', 'dialogVisible2', 'urlList', 'operateList', 'out'],
@@ -205,6 +207,9 @@ export default {
         }
       }
     }
+  },
+  components: {
+    AssetDetail
   },
   methods: {
     transfer() {

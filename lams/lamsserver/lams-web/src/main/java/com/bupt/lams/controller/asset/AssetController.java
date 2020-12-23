@@ -4,7 +4,7 @@ import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.dto.AddAssetData;
 import com.bupt.lams.dto.AssetQueryCondition;
-import com.bupt.lams.dto.DeleteAssetData;
+import com.bupt.lams.dto.OrderAssetData;
 import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.Order;
 import com.bupt.lams.model.RespBean;
@@ -13,6 +13,7 @@ import com.bupt.lams.service.AssetService;
 import com.bupt.lams.service.OrderAssetService;
 import com.bupt.lams.utils.POIUtils;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -148,7 +149,7 @@ public class AssetController {
     }
 
     @DeleteMapping("/delete")
-    public RespBean deleteAssets(@RequestBody DeleteAssetData deleteData) {
+    public RespBean deleteAssets(@RequestBody OrderAssetData deleteData) {
         try {
             List<Long> aids = deleteData.getAssetIds();
             Long oid = deleteData.getOid();
@@ -167,5 +168,24 @@ public class AssetController {
             return RespBean.error("清空无效资产信息失败!");
         }
         return RespBean.ok("清空无效资产信息成功!");
+    }
+
+    @PostMapping("/addRelation")
+    public RespBean addRelation(@RequestBody OrderAssetData relationData) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        response.setMsg("添加资产成功!");
+        List<Long> assetIds = relationData.getAssetIds();
+        Long oid = relationData.getOid();
+        if (CollectionUtils.isEmpty(assetIds) || oid == null) {
+            return RespBean.error("参数异常，添加资产失败！");
+        }
+        try {
+            assetService.addAssetOrderRelation(assetIds, oid);
+        } catch (Exception e) {
+            logger.error("添加资产失败", e);
+            return RespBean.error("添加资产失败！");
+        }
+        return response;
     }
 }

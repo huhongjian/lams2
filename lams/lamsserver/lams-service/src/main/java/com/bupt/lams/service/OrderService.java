@@ -140,11 +140,11 @@ public class OrderService {
         orderMapper.updateOrder(order);
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @OperateRecord(description = "删除工单", clazz = DeleteOrderRecord.class)
     public void deleteOrders(List<Long> oids) {
+        // 这里只删除工单信息，没有删除和资产的关联关系
+        // 为了防止资产信息被getCur查出来，含义发生改变
         orderMapper.deleteManyByOids(oids);
-        orderAssetMapper.deleteManyByOids(oids);
     }
 
     public Order selectFullOrderInfoById(Long id) {

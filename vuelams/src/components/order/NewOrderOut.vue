@@ -20,7 +20,7 @@
           </el-row>
           <el-row>
             <el-button type="primary" icon="el-icon-plus" @click="showAddView">
-              新增资产
+              添加资产
             </el-button>
             <el-button @click="deleteAsset" style="display: inline-flex;margin-left: 8px" type="danger">
               删除
@@ -90,14 +90,6 @@
                   align="left"
                   width="200">
               </el-table-column>
-              <el-table-column
-                  fixed="right"
-                  width="80"
-                  label="操作">
-                <template slot-scope="scope">
-                  <el-button @click="showEditView(scope.row)">编辑</el-button>
-                </template>
-              </el-table-column>
             </el-table>
             <div style="display: flex;justify-content: flex-end">
               <el-pagination
@@ -113,22 +105,22 @@
       </div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="handleCancle">取 消</el-button>
-    <el-button type="primary" @click="doAddOrderIn">确 定</el-button>
+    <el-button type="primary" @click="doAddOrderOut">确 定</el-button>
   </span>
     </el-dialog>
     <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
                  :urlList="urlList" :title="title"></AssetDetail>
-    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :asset="asset" :fileList="fileList"
-               :title="title2" :types="types" :oid="null"></AssetEdit>
+    <AssetSelect v-on:close="dialogVisible6 = false" :dialogVisible6="dialogVisible6" :title2="title2"
+                 :oid="null"></AssetSelect>
   </div>
 </template>
 
 <script>
-import AssetEdit from "@/components/asset/AssetEdit";
+import AssetSelect from "@/components/asset/AssetSelect";
 import AssetDetail from "@/components/asset/AssetDetail";
 
 export default {
-  name: "NewOrder",
+  name: "NewOrderIn",
   props: ['order', 'title', 'dialogVisible4', 'types'],
   data() {
     return {
@@ -144,6 +136,8 @@ export default {
       urlList: [],
       dialogVisible: false,
       dialogVisible2: false,
+      // 资产选择界面可见性
+      dialogVisible6: false,
       title2: '',
       loading: false,
       asset: {
@@ -170,7 +164,7 @@ export default {
     }
   },
   components: {
-    AssetEdit,
+    AssetSelect,
     AssetDetail
   },
   methods: {
@@ -193,7 +187,7 @@ export default {
         remark: ""
       }
     },
-    doAddOrderIn() {
+    doAddOrderOut() {
       if (this.order.id) {
         this.$refs['orderForm'].validate(valid => {
           if (valid) {
@@ -221,10 +215,10 @@ export default {
       }
     },
     showAddView() {
-      this.emptyAsset();
-      this.fileList = [];
-      this.title2 = '新增资产';
-      this.dialogVisible = true;
+      // this.emptyAsset();
+      // this.fileList = [];
+      this.title2 = '选择资产';
+      this.dialogVisible6 = true;
     },
     showDetailView(data) {
       this.title = '申请单详情';
@@ -238,16 +232,6 @@ export default {
         this.urlList = null;
       }
       this.dialogVisible2 = true;
-    },
-    showEditView(data) {
-      this.title2 = '编辑资产';
-      this.asset = data;
-      if (this.asset.fileList && this.asset.fileList.length > 0) {
-        this.fileList = this.asset.fileList;
-      } else {
-        this.fileList = [];
-      }
-      this.dialogVisible = true;
     },
     deleteAsset() {
       this.$confirm('此操作将永久删除选中的记录, 是否继续?', '提示', {
@@ -275,7 +259,7 @@ export default {
     },
     initAssets() {
       this.loading = true;
-      let url = '/asset/getCur/?page=' + this.page + '&size=' + this.size;
+      let url = '/asset/getOrderAssetList/?oid=' + this.order.id + '&page=' + this.page + '&size=' + this.size;
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {

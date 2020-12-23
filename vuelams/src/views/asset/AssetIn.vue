@@ -204,8 +204,8 @@
         </el-pagination>
       </div>
     </div>
-    <NewOrder v-on:close="dialogVisible4 = false" :dialogVisible4="dialogVisible4" :order="order" :title="title"
-              :types="types"></NewOrder>
+    <NewOrderIn v-on:close="dialogVisible4 = false" :dialogVisible4="dialogVisible4" :order="order" :title="title"
+              :types="types"></NewOrderIn>
     <OrderEdit v-on:close="dialogVisible5 = false" :dialogVisible5="dialogVisible5" :order="order" :title="title"
                :types="types"></OrderEdit>
     <PurchaseOrderEdit v-on:close="dialogVisible3 = false" v-on:empty="assetIds=[]" :dialogVisible3="dialogVisible3"
@@ -219,7 +219,7 @@
 import OrderDetail from "@/components/order/OrderDetail";
 import OrderEdit from "@/components/order/OrderEdit";
 import PurchaseOrderEdit from "@/components/purchaseOrder/PurchaseOrderEdit";
-import NewOrder from "@/components/order/NewOrder";
+import NewOrderIn from "@/components/order/NewOrderIn";
 
 export default {
   name: "AssetIn",
@@ -323,7 +323,7 @@ export default {
     }
   },
   components: {
-    NewOrder,
+    NewOrderIn,
     OrderDetail,
     OrderEdit,
     PurchaseOrderEdit
@@ -414,7 +414,6 @@ export default {
     },
     showAddView() {
       this.emptyOrder();
-      // this.fileList = [];
       this.title = '资产采购申请';
       this.dialogVisible4 = true;
     },

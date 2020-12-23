@@ -23,15 +23,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../vuelams/src/components/asset/AssetSelect.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../vuelams/src/components/order/NewOrderOut.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderAssetMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderAssetMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderAssetMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OrderAssetMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/DeleteAssetData.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/DeleteAssetData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/DeleteAssetData.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/OrderAssetData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/order/NewOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/order/NewOrder.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/order/OrderEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/order/OrderEdit.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/order/NewOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/order/NewOrderIn.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/order/OrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/order/OrderDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetOut.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetOut.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,14 +203,7 @@
       <workItem from="1605246498127" duration="3962000" />
       <workItem from="1605599431943" duration="302000" />
       <workItem from="1606470287779" duration="23619000" />
-      <workItem from="1608573977147" duration="13555000" />
-    </task>
-    <task id="LOCAL-00073" summary="优化我的功能模块">
-      <created>1603134500587</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1603134500587</updated>
+      <workItem from="1608573977147" duration="17672000" />
     </task>
     <task id="LOCAL-00074" summary="优化我的功能模块">
       <created>1603134546532</created>
@@ -546,7 +541,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608690603449</updated>
     </task>
-    <option name="localTasksCounter" value="122" />
+    <task id="LOCAL-00122" summary="修改编辑入库单逻辑">
+      <created>1608695577340</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1608695577340</updated>
+    </task>
+    <option name="localTasksCounter" value="123" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -625,70 +627,70 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1608567146101" />
-    <state x="378" y="0" key="CommitChangelistDialog2" timestamp="1608690598871">
+    <state x="378" y="0" key="CommitChangelistDialog2" timestamp="1608695570553">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="378" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608690598871" />
+    <state x="378" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608695570553" />
     <state width="798" height="438" key="DebuggerActiveHint" timestamp="1608694277326">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="798" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1608694277326" />
-    <state x="28" y="15" width="1461" height="794" key="DiffContextDialog" timestamp="1608691989902">
+    <state x="28" y="15" width="1461" height="794" key="DiffContextDialog" timestamp="1608701077289">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="28" y="15" width="1461" height="794" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1608691989902" />
+    <state x="28" y="15" width="1461" height="794" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1608701077289" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1605165824589">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605165824589" />
-    <state width="1493" height="172" key="GridCell.Tab.0.bottom" timestamp="1608695536054">
+    <state width="1493" height="282" key="GridCell.Tab.0.bottom" timestamp="1608705149511">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608695536054" />
-    <state width="1493" height="172" key="GridCell.Tab.0.center" timestamp="1608695536053">
+    <state width="1493" height="282" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608705149511" />
+    <state width="1493" height="282" key="GridCell.Tab.0.center" timestamp="1608705149511">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1608695536053" />
-    <state width="1493" height="172" key="GridCell.Tab.0.left" timestamp="1608695536053">
+    <state width="1493" height="282" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1608705149511" />
+    <state width="1493" height="282" key="GridCell.Tab.0.left" timestamp="1608705149510">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1608695536053" />
-    <state width="1493" height="172" key="GridCell.Tab.0.right" timestamp="1608695536054">
+    <state width="1493" height="282" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1608705149510" />
+    <state width="1493" height="282" key="GridCell.Tab.0.right" timestamp="1608705149511">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1608695536054" />
-    <state width="1493" height="172" key="GridCell.Tab.1.bottom" timestamp="1608695536054">
+    <state width="1493" height="282" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1608705149511" />
+    <state width="1493" height="282" key="GridCell.Tab.1.bottom" timestamp="1608705149511">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608695536054" />
-    <state width="1493" height="172" key="GridCell.Tab.1.center" timestamp="1608695536054">
+    <state width="1493" height="282" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608705149511" />
+    <state width="1493" height="282" key="GridCell.Tab.1.center" timestamp="1608705149511">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1608695536054" />
-    <state width="1493" height="172" key="GridCell.Tab.1.left" timestamp="1608695536054">
+    <state width="1493" height="282" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1608705149511" />
+    <state width="1493" height="282" key="GridCell.Tab.1.left" timestamp="1608705149511">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1608695536054" />
-    <state width="1493" height="172" key="GridCell.Tab.1.right" timestamp="1608695536054">
+    <state width="1493" height="282" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1608705149511" />
+    <state width="1493" height="282" key="GridCell.Tab.1.right" timestamp="1608705149511">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1608695536054" />
-    <state width="1493" height="172" key="GridCell.Tab.2.bottom" timestamp="1608695536054">
+    <state width="1493" height="282" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1608705149511" />
+    <state width="1493" height="282" key="GridCell.Tab.2.bottom" timestamp="1608705149511">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608695536054" />
-    <state width="1493" height="172" key="GridCell.Tab.2.center" timestamp="1608695536054">
+    <state width="1493" height="282" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608705149511" />
+    <state width="1493" height="282" key="GridCell.Tab.2.center" timestamp="1608705149511">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1608695536054" />
-    <state width="1493" height="172" key="GridCell.Tab.2.left" timestamp="1608695536054">
+    <state width="1493" height="282" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1608705149511" />
+    <state width="1493" height="282" key="GridCell.Tab.2.left" timestamp="1608705149511">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1608695536054" />
-    <state width="1493" height="172" key="GridCell.Tab.2.right" timestamp="1608695536054">
+    <state width="1493" height="282" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1608705149511" />
+    <state width="1493" height="282" key="GridCell.Tab.2.right" timestamp="1608705149511">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1608695536054" />
+    <state width="1493" height="282" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1608705149511" />
     <state x="299" y="67" key="Maven.ArtifactSearchDialog" timestamp="1603186101727">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -705,10 +707,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1601976970035" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608690605778">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608695579051">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608690605778" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608695579051" />
     <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1608567146024">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

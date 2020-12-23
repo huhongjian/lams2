@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class DeleteAssetData {
+public class OrderAssetData {
     List<Long> assetIds;
     Long oid;
 }

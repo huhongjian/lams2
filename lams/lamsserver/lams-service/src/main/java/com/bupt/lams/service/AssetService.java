@@ -243,6 +243,8 @@ public class AssetService {
             OrderAsset orderAsset = new OrderAsset();
             orderAsset.setAid(asset.getId());
             orderAsset.setOid(oid);
+            orderAsset.setCreateTime(new Date());
+            orderAsset.setUpdateTime(new Date());
             orderAssetMapper.insertSelective(orderAsset);
         }
     }
@@ -266,5 +268,16 @@ public class AssetService {
      */
     public void clearAssets() {
         assetMapper.clearAssets();
+    }
+
+    public void addAssetOrderRelation(List<Long> assetIds, Long oid) {
+        for (Long assetId : assetIds) {
+            OrderAsset orderAsset = new OrderAsset();
+            orderAsset.setAid(assetId);
+            orderAsset.setOid(oid);
+            orderAsset.setCreateTime(new Date());
+            orderAsset.setUpdateTime(new Date());
+            orderAssetMapper.insertSelective(orderAsset);
+        }
     }
 }

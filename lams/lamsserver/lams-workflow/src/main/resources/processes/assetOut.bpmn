@@ -4,7 +4,7 @@
     <startEvent id="startEvent1" name="start"></startEvent>
     <userTask id="sid-D8107108-196E-4B3B-8E78-301C237CBB11" name="管理员审批" activiti:candidateGroups="6">
       <extensionElements>
-        <activiti:formProperty id="operateType" name="确认转交/拒绝" type="string" expression="{&quot;ops&quot;:[{&quot;operateType&quot;:6,&quot;operate&quot;:&quot;确认转交&quot;},{&quot;operateType&quot;:8,&quot;operate&quot;:&quot;拒绝&quot;}]}" required="true"></activiti:formProperty>
+        <activiti:formProperty id="operateType" name="批准借用/拒绝" type="string" expression="{&quot;ops&quot;:[{&quot;operateType&quot;:6,&quot;operate&quot;:&quot;批准借用&quot;},{&quot;operateType&quot;:8,&quot;operate&quot;:&quot;拒绝&quot;}]}" required="true"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <endEvent id="sid-4238BE96-6BD7-4491-A5CE-4FF151DD7538" name="end"></endEvent>

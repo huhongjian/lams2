@@ -19,6 +19,18 @@
             </el-col>
           </el-row>
           <el-row>
+            <el-form-item label="预计归还时间:" prop="expireTime">
+              <el-date-picker
+                  v-model="order.expireTime"
+                  type="date"
+                  :picker-options="pickerOptions"
+                  placeholder="选择日期"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd">
+              </el-date-picker>
+            </el-form-item>
+          </el-row>
+          <el-row>
             <el-button type="primary" icon="el-icon-plus" @click="showAddView">
               添加资产
             </el-button>
@@ -104,7 +116,7 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="handleCancle">取 消</el-button>
+    <el-button @click="$emit('close')">取 消</el-button>
     <el-button type="primary" @click="doAddOrderOut">确 定</el-button>
   </span>
     </el-dialog>
@@ -127,6 +139,12 @@ export default {
   props: ['order', 'title', 'dialogVisible4', 'types'],
   data() {
     return {
+      // 禁用一些时间
+      pickerOptions: {
+        disabledDate: (time) => {
+          return this.dealDisabledDate(time);
+        }
+      },
       deleteData: {
         assetIds: [],
         oid: null
@@ -163,10 +181,8 @@ export default {
       },
       total: 0,
       rules: {
-        [`asset.assetName`]: [{required: true, message: '请输入资产名称', trigger: 'blur'}],
-        [`asset.brand`]: [{required: true, message: '请输入品牌', trigger: 'blur'}],
-        [`asset.price`]: [{required: true, message: '请输入价格', trigger: 'blur'}],
-        reason: [{required: true, message: '请输入申请理由', trigger: 'blur'}]
+        reason: [{required: true, message: '请输入申请理由', trigger: 'blur'}],
+        expireTime: [{required: true, message: '请输入预计转交时间', trigger: 'blur'}],
       },
     }
   },
@@ -175,13 +191,6 @@ export default {
     AssetDetail
   },
   methods: {
-    handleCancle() {
-      this.deleteRequest("/asset/clear").then(resp => {
-        if (resp) {
-          this.$emit('close');
-        }
-      })
-    },
     emptyAsset() {
       this.asset = {
         id: "",
@@ -290,6 +299,10 @@ export default {
       this.initData.aids = assetIds;
       this.dialogVisible6 = false;
       this.initAssets();
+    },
+    dealDisabledDate(time) {
+      var times = Date.now() - 8.64e7;
+      return time.getTime() < times;
     }
   }
 }

@@ -88,7 +88,7 @@ public class OrderService {
         }
         orderAssetMapper.insertMany(orderAssetList);
         try {
-            taskOperateService.startWorkFlow(order, ProcessTypeEnum.IN.getIndex(), user.getUsername(), null);
+            taskOperateService.startWorkFlow(order, ProcessTypeEnum.IN.getIndex(), null);
         } catch (Exception e) {
             logger.error("启动工作流失败", e);
             throw e;
@@ -104,7 +104,7 @@ public class OrderService {
         order.setCreateTime(new Date());
         orderMapper.insertSelective(order);
         try {
-            taskOperateService.startWorkFlow(order, ProcessTypeEnum.LEAVE.getIndex(), user.getUsername(), null);
+            taskOperateService.startWorkFlow(order, ProcessTypeEnum.LEAVE.getIndex(), null);
         } catch (Exception e) {
             logger.error("启动工作流失败", e);
             throw e;
@@ -129,7 +129,7 @@ public class OrderService {
         orderAssetMapper.insertMany(orderAssetList);
         try {
             // 这个map是开启工作流时间的数据，并不是流转过程中的数据
-            taskOperateService.startWorkFlow(order, ProcessTypeEnum.OUT.getIndex(), user.getUsername(), null);
+            taskOperateService.startWorkFlow(order, ProcessTypeEnum.OUT.getIndex(), null);
         } catch (Exception e) {
             logger.error("启动工作流失败", e);
             throw e;

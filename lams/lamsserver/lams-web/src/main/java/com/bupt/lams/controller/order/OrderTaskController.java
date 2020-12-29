@@ -97,6 +97,7 @@ public class OrderTaskController {
         if (order.getUserEmail() != null && order.getUserEmail().equals(user.getUsername())
                 && !order.getStatus().equals(OrderStatusEnum.READY.getIndex())
                 && !order.getStatus().equals(OrderStatusEnum.REJECTED.getIndex())
+                && !order.getStatus().equals(OrderStatusEnum.OCCUPIED.getIndex())
                 && !order.getStatus().equals(OrderStatusEnum.REFUSED.getIndex())
                 && !order.getStatus().equals(OrderStatusEnum.CLOSED.getIndex())) {
             Operate cancel = new Operate();

@@ -215,7 +215,7 @@ import OrderEdit from "@/components/order/OrderEdit";
 import NewOrderOut from "@/components/order/NewOrderOut";
 
 export default {
-  name: "AssetOut",
+  name: "AssetReturn",
   data() {
     return {
       out: true,

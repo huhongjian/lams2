@@ -266,10 +266,6 @@ export default {
     handleClose() {
       this.$emit('close');
     },
-    dealDisabledDate(time) {
-      var times = Date.now() - 8.64e7;
-      return time.getTime() < times;
-    },
     clearBorrowForm() {
       this.order.expireTime = '';
       this.order.reason = '';

@@ -8,6 +8,7 @@ import com.bupt.lams.service.AssetService;
 import com.bupt.lams.service.OrderService;
 import com.bupt.lams.utils.POIUtils;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,6 +50,10 @@ public class OrderBasicController {
         RespBean response = new RespBean();
         response.setStatus(200);
         response.setMsg("资产申请采购成功!");
+        List<Asset> assetList = order.getAssetList();
+        if (CollectionUtils.isEmpty(assetList)) {
+            return RespBean.error("资产申请采购失败！资产信息不能为空！");
+        }
         try {
             orderService.addOrderIn(order);
         } catch (Exception e) {
@@ -62,6 +67,10 @@ public class OrderBasicController {
     public RespBean borrowAsset(@RequestBody Order order) {
         RespBean response = new RespBean();
         response.setStatus(200);
+        List<Asset> assetList = order.getAssetList();
+        if (CollectionUtils.isEmpty(assetList)) {
+            return RespBean.error("资产借出失败！资产信息不能为空！");
+        }
         try {
             orderService.borrowAsset(order);
         } catch (Exception e) {

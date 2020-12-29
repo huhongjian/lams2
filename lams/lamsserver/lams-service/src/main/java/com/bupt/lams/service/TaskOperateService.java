@@ -79,7 +79,7 @@ public class TaskOperateService {
         return true;
     }
 
-    public void startWorkFlow(Order order, Integer category, String operatorMail, Map<String, String> startParamMap) {
+    public void startWorkFlow(Order order, Integer category, Map<String, String> startParamMap) {
         Long oid = order.getId();
         // 1. 查找关联工作流definition
         String workflowKey = processWorkflowService.selectWorkflowKeyByCategory(category);
@@ -90,10 +90,6 @@ public class TaskOperateService {
         orderWorkflow.setWorkflowInstId(Long.parseLong(procInstId));
         orderWorkflow.setWorkflowStartTime(new Date());
         orderWorkflowService.saveOrderWorkflow(orderWorkflow);
-        TaskDto taskDto = getCandidateTskInfoByOrderIdAndUsername(oid, null);
-        Map<String, String> variablesMap = new HashMap<>();
-        variablesMap.put(WorkflowConstant.NEXT_USER, operatorMail);
-        taskService.setVariables(taskDto.getTaskId(), variablesMap);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -111,16 +107,8 @@ public class TaskOperateService {
         // 获取当前任务信息
         TaskDto taskDto = getAssignedTaskInfoByOrderIdAndUserName(id, user.getUsername());
         Map<String, Object> paramsMap = new HashMap<>();
-        Map<String, Object> variableMap = taskDto.getVariablesMap();
-        String nextUser = (String) variableMap.get(WorkflowConstant.NEXT_USER);
         // 保存操作类型，用来筛选流程中不同的分支
         paramsMap.put(WorkflowConstant.OPERATE_TYPE, String.valueOf(op));
-        // 下一处理人默认一直延续，是流程发起人（申请人）
-        paramsMap.put(WorkflowConstant.NEXT_USER, nextUser);
-        if (op == OperateTypeEnum.TRANSFER.getIndex()) {
-            // 如果是转交的话，设置为转交人
-            paramsMap.put(WorkflowConstant.NEXT_USER, candidateUser);
-        }
         // 完成当前操作
         taskManagerService.completeTask(taskDto.getTaskId(), paramsMap, user.getUsername());
         // 更新相关状态

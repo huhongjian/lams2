@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -80,16 +81,14 @@ public class OrderService {
         order.setCreateTime(new Date());
         orderMapper.insertSelective(order);
         List<Asset> assetList = order.getAssetList();
+        List<OrderAsset> orderAssetList = new ArrayList<>();
         for (Asset asset : assetList) {
             asset.setStatus(AssetStatusEnum.CREATE.getIndex());
             assetMapper.insertSelective(asset);
-            OrderAsset orderAsset = new OrderAsset();
-            orderAsset.setAid(asset.getId());
-            orderAsset.setOid(order.getId());
-            orderAsset.setCreateTime(new Date());
-            orderAsset.setUpdateTime(new Date());
-            orderAssetMapper.insertSelective(orderAsset);
+            OrderAsset orderAsset = new OrderAsset(asset.getId(), order.getId(), new Date(), new Date());
+            orderAssetList.add(orderAsset);
         }
+        orderAssetMapper.insertMany(orderAssetList);
         try {
             taskOperateService.startWorkFlow(order, ProcessTypeEnum.IN.getIndex(), user.getUsername(), null);
         } catch (Exception e) {
@@ -124,9 +123,12 @@ public class OrderService {
         order.setStatus(OrderStatusEnum.ASK.getIndex());
         order.setCreateTime(new Date());
         orderMapper.insertSelective(order);
+        List<OrderAsset> orderAssetList = new ArrayList<>();
         for (Asset asset : assetList) {
-            assetMapper.updateAsset(asset);
+            OrderAsset orderAsset = new OrderAsset(asset.getId(), order.getId(), new Date(), new Date());
+            orderAssetList.add(orderAsset);
         }
+        orderAssetMapper.insertMany(orderAssetList);
         try {
             // 这个map是开启工作流时间的数据，并不是流转过程中的数据
             taskOperateService.startWorkFlow(order, ProcessTypeEnum.OUT.getIndex(), user.getUsername(), null);

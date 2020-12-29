@@ -211,7 +211,7 @@ export default {
       } else {
         this.$refs['orderForm'].validate(valid => {
           if (valid) {
-            this.postRequest("/order/basic/add", this.order).then(resp => {
+            this.postRequest("/order/basic/borrow", this.order).then(resp => {
               if (resp) {
                 this.$emit('close');
                 this.$parent.initOrders();

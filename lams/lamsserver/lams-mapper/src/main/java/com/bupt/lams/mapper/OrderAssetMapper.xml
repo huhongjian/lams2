@@ -46,7 +46,20 @@
             </if>
         </trim>
     </insert>
-    <select id="getAidByOid" parameterType="java.lang.Long" resultType="java.lang.Long">
+    <insert id="insertMany" parameterType="list" useGeneratedKeys="true" keyProperty="id">
+        insert into order_asset
+        (oid,
+        aid,
+        createTime,
+        updateTime)
+        values
+        <if test="list != null and list.size>0">
+            <foreach collection="list" item="item" separator=",">
+                (#{item.oid},#{item.aid},#{item.createTime},#{item.updateTime})
+            </foreach>
+        </if>
+    </insert>
+    <select id="getAidListByOid" parameterType="java.lang.Long" resultType="java.lang.Long">
         select aid
         from order_asset
         where oid = #{oid}

@@ -8,7 +8,9 @@ import java.util.List;
 public interface OrderAssetMapper {
     int insertSelective(OrderAsset orderAsset);
 
-    Long getAidByOid(Long oid);
+    int insertMany(List<OrderAsset> orderAssetList);
+
+    List<Long> getAidListByOid(Long oid);
 
     /**
      * 根据资产编号获取最近的一个工单id

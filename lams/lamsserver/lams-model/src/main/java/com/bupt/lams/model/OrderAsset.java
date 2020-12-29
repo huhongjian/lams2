@@ -23,4 +23,15 @@ public class OrderAsset {
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date updateTime;
+
+    public OrderAsset() {
+        super();
+    }
+
+    public OrderAsset(Long oid, Long aid, Date createTime, Date updateTime) {
+        this.oid = oid;
+        this.aid = aid;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
 }

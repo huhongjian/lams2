@@ -196,17 +196,13 @@ import AssetDetail from "@/components/asset/AssetDetail";
 
 export default {
   name: "AssetSelect",
-  props: ['title2', 'dialogVisible6', 'oid'],
+  props: ['title2', 'dialogVisible6', 'out'],
   mounted() {
     this.initAssets();
     this.initTypes();
   },
   data() {
     return {
-      relationData: {
-        assetIds: [],
-        oid: null
-      },
       uploadData: {
         aid: ""
       },
@@ -245,10 +241,6 @@ export default {
       fileList: [],
       // 资产图片url列表，用于详情页面
       urlList: [],
-      rules: {
-        brand: [{required: true, message: '请输入品牌', trigger: 'blur'}],
-        price: [{required: true, message: '请输入价格', trigger: 'blur'}]
-      },
       type: "",
       types: [],
       statuses: [
@@ -352,7 +344,11 @@ export default {
     initAssets() {
       this.type = '';
       this.loading = true;
-      let url = '/asset/get/?page=' + this.page + '&size=' + this.size + "&aid=" + this.keyword;
+      let url = '/asset/getReturn/?page=';
+      if (this.out && this.out == true) {
+        url = '/asset/getAvailable/?page=';
+      }
+      url += this.page + '&size=' + this.size + "&aid=" + this.keyword;
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
@@ -365,7 +361,11 @@ export default {
     initAssetsAdv() {
       this.type = 'advanced'
       this.loading = true;
-      let url = '/asset/get/?page=' + this.page + '&size=' + this.size;
+      let url = '/asset/getReturn/?page=';
+      if (this.out && this.out == true) {
+        url = '/asset/getAvailable/?page=';
+      }
+      url += this.page + '&size=' + this.size;
       if (this.searchValue.type) {
         url += '&type=' + this.searchValue.type;
       }

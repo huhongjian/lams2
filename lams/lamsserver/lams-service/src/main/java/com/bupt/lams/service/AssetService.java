@@ -1,6 +1,7 @@
 package com.bupt.lams.service;
 
 import com.bupt.lams.constants.AssetStatusEnum;
+import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.dto.AssetDashBoardData;
 import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.dto.AssetStatusCount;
@@ -13,6 +14,7 @@ import com.bupt.lams.service.annotation.OperateRecord;
 import com.bupt.lams.service.strategies.record.ChangeAssetStatusRecord;
 import com.bupt.lams.service.strategies.record.UpdateAssetRecord;
 import com.bupt.lams.utils.FastDFSUtils;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.csource.common.MyException;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,6 +56,66 @@ public class AssetService {
         Long total = assetMapper.getTotalByCondition(condition);
         RespPageBean bean = new RespPageBean();
         bean.setData(data);
+        bean.setTotal(total);
+        return bean;
+    }
+
+    public RespPageBean getAvailable(AssetQueryCondition condition) {
+        Integer page = condition.getPage();
+        Integer size = condition.getSize();
+        if (page != null && size != null) {
+            page = (page - 1) * size;
+        }
+        condition.setPage(null);
+        condition.setSize(null);
+        // 所有满足查找条件的资产信息
+        List<Asset> data = assetMapper.getAssetByCondition(condition);
+        // 可以借用的资产信息
+        List<Asset> availableList = new ArrayList<>();
+        for (Asset asset : data) {
+            if (isAvailable(asset.getId()) == true) {
+                availableList.add(asset);
+            }
+        }
+        Long total = Long.valueOf(availableList.size());
+        Integer end = Math.min(page + size, availableList.size());
+        // 展示的数据
+        List<Asset> res = new ArrayList<>();
+        for (Integer i = page; i < end; i++) {
+            res.add(availableList.get(i));
+        }
+        RespPageBean bean = new RespPageBean();
+        bean.setData(res);
+        bean.setTotal(total);
+        return bean;
+    }
+
+    public RespPageBean getReturn(AssetQueryCondition condition) {
+        Integer page = condition.getPage();
+        Integer size = condition.getSize();
+        if (page != null && size != null) {
+            page = (page - 1) * size;
+        }
+        condition.setPage(null);
+        condition.setSize(null);
+        // 所有满足查找条件的资产信息
+        List<Asset> data = assetMapper.getAssetByCondition(condition);
+        // 可以借用的资产信息
+        List<Asset> returnList = new ArrayList<>();
+        for (Asset asset : data) {
+            if (isReturn(asset.getId()) == true) {
+                returnList.add(asset);
+            }
+        }
+        Long total = Long.valueOf(returnList.size());
+        Integer end = Math.min(page + size, returnList.size());
+        // 展示的数据
+        List<Asset> res = new ArrayList<>();
+        for (Integer i = page; i < end; i++) {
+            res.add(returnList.get(i));
+        }
+        RespPageBean bean = new RespPageBean();
+        bean.setData(res);
         bean.setTotal(total);
         return bean;
     }
@@ -283,5 +345,38 @@ public class AssetService {
             orderAsset.setUpdateTime(new Date());
             orderAssetMapper.insertSelective(orderAsset);
         }
+    }
+
+    /**
+     * 是否可以借用
+     * 如果资产是闲置，并且没有被出库工单占用，就可以借用
+     *
+     * @param aid
+     * @return
+     */
+    private Boolean isAvailable(Long aid) {
+        Long oid = orderAssetMapper.getLatestOidByAid(aid);
+        Order order = orderMapper.selectBaseOrderInfoById(oid);
+        if (order.getStatus() == OrderStatusEnum.ASK.getIndex()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 是我借用的
+     * 如果资产是使用中，并且最近一个工单是借用工单，申请人是我
+     *
+     * @param aid
+     * @return
+     */
+    private Boolean isReturn(Long aid) {
+        Long oid = orderAssetMapper.getLatestOidByAid(aid);
+        Order order = orderMapper.selectBaseOrderInfoById(oid);
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        if (order.getStatus() == OrderStatusEnum.OCCUPIED.getIndex() && order.getUserEmail().equals(user.getUsername())) {
+            return true;
+        }
+        return false;
     }
 }

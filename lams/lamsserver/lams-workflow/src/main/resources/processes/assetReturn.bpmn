@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="assetReturn" name="assetReturn" isExecutable="true">
+    <startEvent id="startEvent1" name="start"></startEvent>
+    <userTask id="sid-D8107108-196E-4B3B-8E78-301C237CBB11" name="管理员审批" activiti:candidateGroups="6">
+      <extensionElements>
+        <activiti:formProperty id="operateType" name="确认归还/驳回" type="string" expression="{&quot;ops&quot;:[{&quot;operateType&quot;:9,&quot;operate&quot;:&quot;确认归还&quot;},{&quot;operateType&quot;:10,&quot;operate&quot;:&quot;驳回&quot;}]}" required="true"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <endEvent id="sid-4238BE96-6BD7-4491-A5CE-4FF151DD7538" name="end"></endEvent>
+    <sequenceFlow id="sid-CE21E49B-5610-4710-B4C9-91318423A479" sourceRef="startEvent1" targetRef="sid-D8107108-196E-4B3B-8E78-301C237CBB11"></sequenceFlow>
+    <exclusiveGateway id="sid-1970E711-9200-4165-8B30-5469BF3547BD"></exclusiveGateway>
+    <sequenceFlow id="sid-0FF70034-B6B6-4FD8-813A-4A3122869AEB" sourceRef="sid-D8107108-196E-4B3B-8E78-301C237CBB11" targetRef="sid-1970E711-9200-4165-8B30-5469BF3547BD"></sequenceFlow>
+    <sequenceFlow id="sid-B647F124-AA74-4D10-9380-187576F827B7" name="确认归还" sourceRef="sid-1970E711-9200-4165-8B30-5469BF3547BD" targetRef="sid-4238BE96-6BD7-4491-A5CE-4FF151DD7538">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${operateType=='9'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-2FE9E70E-3DA4-42DE-90F2-5EA8F769E2CE" name="驳回" sourceRef="sid-1970E711-9200-4165-8B30-5469BF3547BD" targetRef="sid-4238BE96-6BD7-4491-A5CE-4FF151DD7538"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_assetReturn">
+    <bpmndi:BPMNPlane bpmnElement="assetReturn" id="BPMNPlane_assetReturn">
+      <bpmndi:BPMNShape bpmnElement="startEvent1" id="BPMNShape_startEvent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="90.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-D8107108-196E-4B3B-8E78-301C237CBB11" id="BPMNShape_sid-D8107108-196E-4B3B-8E78-301C237CBB11">
+        <omgdc:Bounds height="80.0" width="100.0" x="225.0" y="135.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-4238BE96-6BD7-4491-A5CE-4FF151DD7538" id="BPMNShape_sid-4238BE96-6BD7-4491-A5CE-4FF151DD7538">
+        <omgdc:Bounds height="28.0" width="28.0" x="600.0" y="161.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-1970E711-9200-4165-8B30-5469BF3547BD" id="BPMNShape_sid-1970E711-9200-4165-8B30-5469BF3547BD">
+        <omgdc:Bounds height="40.0" width="40.0" x="375.0" y="155.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-CE21E49B-5610-4710-B4C9-91318423A479" id="BPMNEdge_sid-CE21E49B-5610-4710-B4C9-91318423A479">
+        <omgdi:waypoint x="120.0" y="175.0"></omgdi:waypoint>
+        <omgdi:waypoint x="225.0" y="175.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-2FE9E70E-3DA4-42DE-90F2-5EA8F769E2CE" id="BPMNEdge_sid-2FE9E70E-3DA4-42DE-90F2-5EA8F769E2CE">
+        <omgdi:waypoint x="395.0" y="155.0"></omgdi:waypoint>
+        <omgdi:waypoint x="395.0" y="98.0"></omgdi:waypoint>
+        <omgdi:waypoint x="614.0" y="98.0"></omgdi:waypoint>
+        <omgdi:waypoint x="614.0" y="161.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-B647F124-AA74-4D10-9380-187576F827B7" id="BPMNEdge_sid-B647F124-AA74-4D10-9380-187576F827B7">
+        <omgdi:waypoint x="415.0" y="175.0"></omgdi:waypoint>
+        <omgdi:waypoint x="600.0" y="175.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-0FF70034-B6B6-4FD8-813A-4A3122869AEB" id="BPMNEdge_sid-0FF70034-B6B6-4FD8-813A-4A3122869AEB">
+        <omgdi:waypoint x="325.0" y="175.0"></omgdi:waypoint>
+        <omgdi:waypoint x="375.0" y="175.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

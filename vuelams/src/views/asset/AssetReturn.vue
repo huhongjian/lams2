@@ -4,7 +4,7 @@
       <div style="display: flex;justify-content: space-between">
         <div>
           <el-button type="primary" icon="el-icon-plus" @click="showAddView">
-            新增借用单
+            归还资产
           </el-button>
           <el-button type="success" @click="exportData"
                      icon="el-icon-download">
@@ -15,7 +15,7 @@
           </el-button>
         </div>
         <div>
-          <el-input placeholder="请输入借用单号进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
+          <el-input placeholder="请输入归还单号进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
                     clearable
                     @clear="initOrders"
                     style="width: 350px;margin-right: 10px" v-model="keyword"
@@ -113,7 +113,7 @@
         <el-table-column
             prop="id"
             fixed
-            label="借用单号"
+            label="归还单号"
             align="left"
             width="90">
           <template slot-scope="scope">
@@ -200,25 +200,24 @@
         </el-pagination>
       </div>
     </div>
-    <NewOrderOut v-on:close="dialogVisible4 = false" :dialogVisible4="dialogVisible4" :order="order" :title="title"
-                 :types="types"></NewOrderOut>
+    <NewOrderReturn v-on:close="dialogVisible4 = false" :dialogVisible4="dialogVisible4" :order="order" :title="title"
+                 :types="types"></NewOrderReturn>
     <OrderEdit v-on:close="dialogVisible5 = false" :dialogVisible5="dialogVisible5" :order="order" :fileList="fileList"
                :title="title"></OrderEdit>
     <OrderDetail v-on:close="dialogVisible7 = false" :dialogVisible7="dialogVisible7" :order="order" :title="title"
-                 :urlList="urlList" :operateList='operateList' :out="out"></OrderDetail>
+                 :urlList="urlList" :operateList='operateList'></OrderDetail>
   </div>
 </template>
 
 <script>
 import OrderDetail from "@/components/order/OrderDetail";
 import OrderEdit from "@/components/order/OrderEdit";
-import NewOrderOut from "@/components/order/NewOrderOut";
+import NewOrderReturn from "@/components/order/NewOrderReturn";
 
 export default {
   name: "AssetReturn",
   data() {
     return {
-      out: true,
       user: JSON.parse(window.sessionStorage.getItem("user")),
       searchValue: {
         type: null,
@@ -292,7 +291,7 @@ export default {
     }
   },
   components: {
-    NewOrderOut,
+    NewOrderReturn,
     OrderDetail,
     OrderEdit
   },
@@ -302,7 +301,7 @@ export default {
   },
   methods: {
     exportData() {
-      let url = '/order/basic/export/out/?category=2';
+      let url = '/order/basic/export/out/?category=4';
       if (this.type && this.type == 'advanced') {
         if (this.searchValue.type) {
           url += '&type=' + this.searchValue.type;
@@ -347,7 +346,7 @@ export default {
     },
     showAddView() {
       this.emptyOrder();
-      this.title = '资产借用申请';
+      this.title = '归还资产';
       this.dialogVisible4 = true;
     },
     showEditView(data) {
@@ -413,7 +412,7 @@ export default {
     initOrders() {
       this.type = '';
       this.loading = true;
-      let url = '/order/basic/get/?category=2&page=' + this.page + '&size=' + this.size + "&oid=" + this.keyword;
+      let url = '/order/basic/get/?category=4&page=' + this.page + '&size=' + this.size + "&oid=" + this.keyword;
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
@@ -425,7 +424,7 @@ export default {
     initOrdersAdv() {
       this.type = 'advanced'
       this.loading = true;
-      let url = '/order/basic/get/?category=2&page=' + this.page + '&size=' + this.size;
+      let url = '/order/basic/get/?category=4&page=' + this.page + '&size=' + this.size;
       if (this.searchValue.type) {
         url += '&type=' + this.searchValue.type;
       }

@@ -8,31 +8,8 @@
       <div>
         <el-form :model="order" :rules="rules" ref="orderForm">
           <el-row>
-            <el-col :span="20">
-              <el-form-item label="理由:" prop="reason">
-                <el-input size="mini"
-                          type="textarea"
-                          :rows="2"
-                          placeholder="请输入申请理由"
-                          v-model="order.reason"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-form-item label="预计归还时间:" prop="expireTime">
-              <el-date-picker
-                  v-model="order.expireTime"
-                  type="date"
-                  :picker-options="pickerOptions"
-                  placeholder="选择日期"
-                  format="yyyy 年 MM 月 dd 日"
-                  value-format="yyyy-MM-dd">
-              </el-date-picker>
-            </el-form-item>
-          </el-row>
-          <el-row>
             <el-button type="primary" icon="el-icon-plus" @click="showAddView">
-              借用资产
+              归还资产
             </el-button>
             <el-button @click="deleteAsset" style="display: inline-flex;margin-left: 8px" type="danger">
               删除
@@ -117,7 +94,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="$emit('close')">取 消</el-button>
-    <el-button type="primary" @click="doAddOrderOut">确 定</el-button>
+    <el-button type="primary" @click="doAddReturn">确 定</el-button>
   </span>
     </el-dialog>
     <AssetDetail v-on:close="dialogVisible2 = false"
@@ -125,8 +102,7 @@
                  :urlList="urlList" :title="title"></AssetDetail>
     <AssetSelect v-on:close="dialogVisible6 = false"
                  v-on:handleAssetIds="handleAssetIds"
-                 :dialogVisible6="dialogVisible6" :title2="title2"
-                 :out="true"></AssetSelect>
+                 :dialogVisible6="dialogVisible6" :title2="title2"></AssetSelect>
   </div>
 </template>
 
@@ -135,7 +111,7 @@ import AssetSelect from "@/components/asset/AssetSelect";
 import AssetDetail from "@/components/asset/AssetDetail";
 
 export default {
-  name: "NewOrderOut",
+  name: "NewOrderReturn",
   props: ['order', 'title', 'dialogVisible4', 'types'],
   data() {
     return {
@@ -203,7 +179,7 @@ export default {
         remark: ""
       }
     },
-    doAddOrderOut() {
+    doAddReturn() {
       if (this.order.id) {
         this.$refs['orderForm'].validate(valid => {
           if (valid) {
@@ -220,7 +196,7 @@ export default {
       } else {
         this.$refs['orderForm'].validate(valid => {
           if (valid) {
-            this.postRequest("/order/basic/borrow", this.order).then(resp => {
+            this.postRequest("/order/basic/return", this.order).then(resp => {
               if (resp) {
                 this.$emit('close');
                 this.$parent.initOrders();

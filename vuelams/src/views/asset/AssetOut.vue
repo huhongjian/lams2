@@ -4,7 +4,7 @@
       <div style="display: flex;justify-content: space-between">
         <div>
           <el-button type="primary" icon="el-icon-plus" @click="showAddView">
-            新增借用单
+            借用资产
           </el-button>
           <el-button type="success" @click="exportData"
                      icon="el-icon-download">
@@ -161,17 +161,17 @@
             prop="user.name"
             width="95"
             align="left"
-            label="负责人">
+            label="申请人">
         </el-table-column>
         <el-table-column
             prop="user.username"
             width="150"
-            label="负责人邮箱">
+            label="申请人邮箱">
         </el-table-column>
         <el-table-column
             prop="user.phone"
             width="100"
-            label="负责人电话">
+            label="申请人电话">
         </el-table-column>
         <el-table-column
             prop="createTime"
@@ -205,7 +205,7 @@
     <OrderEdit v-on:close="dialogVisible5 = false" :dialogVisible5="dialogVisible5" :order="order" :fileList="fileList"
                :title="title"></OrderEdit>
     <OrderDetail v-on:close="dialogVisible7 = false" :dialogVisible7="dialogVisible7" :order="order" :title="title"
-                 :urlList="urlList" :operateList='operateList' :out="out"></OrderDetail>
+                 :urlList="urlList" :operateList='operateList'></OrderDetail>
   </div>
 </template>
 
@@ -218,7 +218,6 @@ export default {
   name: "AssetOut",
   data() {
     return {
-      out: true,
       user: JSON.parse(window.sessionStorage.getItem("user")),
       searchValue: {
         type: null,

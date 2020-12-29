@@ -26,7 +26,6 @@ public class AssetTypeController {
     public RespBean getAssetTypes() {
         RespBean response = new RespBean();
         response.setStatus(200);
-        response.setMsg("获取资产类型成功!");
         try {
             List<AssetType> types = assetTypesService.getAllAssetTypes();
             response.setObj(types);

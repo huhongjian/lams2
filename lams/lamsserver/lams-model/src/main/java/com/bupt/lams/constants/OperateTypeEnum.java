@@ -11,6 +11,8 @@ public enum OperateTypeEnum {
     CONFIRM("批准借用", 6),
     CANCEL("撤回", 7),
     REFUSE("拒绝", 8),
+    RETURN("确认归还", 9),
+    TURN_DOWN("驳回", 10),
     STU_OUT_APPROVE("离退审批通过", 11),
     STU_OUT_REJECT("离退审批拒绝", 12);
 

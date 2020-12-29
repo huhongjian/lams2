@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +45,48 @@ public class AssetController {
             assetQueryCondition.setEndDate(dateScope[1]);
         }
         return assetService.getAssetByCondition(assetQueryCondition);
+    }
+
+    /**
+     * 获取可以借用的资产集合
+     *
+     * @param assetQueryCondition
+     * @param dateScope
+     * @return
+     */
+    @GetMapping("/getAvailable")
+    public RespPageBean getAvailable(AssetQueryCondition assetQueryCondition, Date[] dateScope) {
+        if (dateScope != null && dateScope.length == 2) {
+            assetQueryCondition.setStartDate(dateScope[0]);
+            assetQueryCondition.setEndDate(dateScope[1]);
+        }
+        // 需要是闲置状态
+        List<Integer> assetStatuses = new ArrayList<>();
+        assetStatuses.add(AssetStatusEnum.FREE.getIndex());
+        assetQueryCondition.setAssetStatuses(assetStatuses);
+        // 并且没有被其他工单占用
+        return assetService.getAvailable(assetQueryCondition);
+    }
+
+    /**
+     * 获取我借的资产集合
+     *
+     * @param assetQueryCondition
+     * @param dateScope
+     * @return
+     */
+    @GetMapping("/getReturn")
+    public RespPageBean getReturn(AssetQueryCondition assetQueryCondition, Date[] dateScope) {
+        if (dateScope != null && dateScope.length == 2) {
+            assetQueryCondition.setStartDate(dateScope[0]);
+            assetQueryCondition.setEndDate(dateScope[1]);
+        }
+        // 需要是使用中状态
+        List<Integer> assetStatuses = new ArrayList<>();
+        assetStatuses.add(AssetStatusEnum.INUSE.getIndex());
+        assetQueryCondition.setAssetStatuses(assetStatuses);
+        // 是我借用的
+        return assetService.getReturn(assetQueryCondition);
     }
 
     @GetMapping("/getCur")

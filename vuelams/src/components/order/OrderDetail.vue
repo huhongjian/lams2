@@ -173,7 +173,7 @@ import AssetDetail from "@/components/asset/AssetDetail";
 
 export default {
   name: "OrderDetail",
-  props: ['order', 'title', 'dialogVisible7', 'urlList', 'operateList', 'out'],
+  props: ['order', 'title', 'dialogVisible7', 'urlList', 'operateList'],
   data() {
     return {
       dialogVisible2: false,

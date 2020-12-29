@@ -26,8 +26,6 @@ public class HandleAssetIn implements IUpdateStatus {
     @Resource
     OrderService orderService;
     @Resource
-    OrderMapper orderMapper;
-    @Resource
     AssetMapper assetMapper;
 
     @Override
@@ -35,22 +33,9 @@ public class HandleAssetIn implements IUpdateStatus {
         // 更新入库工单状态
         order.setStatus(OrderStatusEnum.READY.getIndex());
         orderService.updateOrderStatusById(order);
-        // 新增出库工单
-        Long id = taskHandleDto.getId();
-        order.setCategory(ProcessTypeEnum.OUT.getIndex());
-        order.setUserEmail(null);
-        order.setUser(null);
-        order.setReason(null);
-        orderMapper.insertSelective(order);
-        OrderAsset orderAsset = new OrderAsset();
-        Long aid = orderAssetMapper.getAidByOid(id);
-        orderAsset.setAid(aid);
-        orderAsset.setOid(order.getId());
-        orderAsset.setCreateTime(new Date());
-        orderAsset.setUpdateTime(new Date());
-        orderAssetMapper.insertSelective(orderAsset);
         // 更新资产入库时间
         Asset asset = new Asset();
+        Long aid = orderAssetMapper.getAidByOid(taskHandleDto.getId());
         asset.setId(aid);
         asset.setStatus(AssetStatusEnum.FREE.getIndex());
         asset.setReadyDate(new Date());

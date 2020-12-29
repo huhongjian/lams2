@@ -120,9 +120,10 @@ public class OrderService {
         List<Asset> assetList = order.getAssetList();
         LamsUser user = UserInfoUtils.getLoginedUser();
         order.setUserEmail(user.getUsername());
+        order.setCategory(ProcessTypeEnum.OUT.getIndex());
         order.setStatus(OrderStatusEnum.ASK.getIndex());
         order.setCreateTime(new Date());
-        orderMapper.updateOrder(order);
+        orderMapper.insertSelective(order);
         for (Asset asset : assetList) {
             assetMapper.updateAsset(asset);
         }

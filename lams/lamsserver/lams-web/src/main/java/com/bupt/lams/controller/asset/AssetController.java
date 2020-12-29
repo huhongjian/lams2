@@ -188,4 +188,15 @@ public class AssetController {
         }
         return response;
     }
+
+    /**
+     * 根据资产id列表，获取资产信息
+     *
+     * @param initData：初始信息，包括资产id列表，page，size
+     * @return RespPageBean
+     */
+    @PostMapping("/getAssetByAids")
+    public RespPageBean getAssetByAids(@RequestBody AssetQueryCondition initData) {
+        return assetService.getAssetByCondition(initData);
+    }
 }

@@ -108,9 +108,12 @@
     <el-button type="primary" @click="doAddOrderOut">确 定</el-button>
   </span>
     </el-dialog>
-    <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
+    <AssetDetail v-on:close="dialogVisible2 = false"
+                 :dialogVisible2="dialogVisible2" :asset="asset"
                  :urlList="urlList" :title="title"></AssetDetail>
-    <AssetSelect v-on:close="dialogVisible6 = false" :dialogVisible6="dialogVisible6" :title2="title2"
+    <AssetSelect v-on:close="dialogVisible6 = false"
+                 v-on:handleAssetIds="handleAssetIds"
+                 :dialogVisible6="dialogVisible6" :title2="title2"
                  :oid="null"></AssetSelect>
   </div>
 </template>
@@ -127,6 +130,12 @@ export default {
       deleteData: {
         assetIds: [],
         oid: null
+      },
+      initData: {
+        // 添加的全部资产id
+        aids: [],
+        page: 1,
+        size: 10
       },
       // 选中的资产id
       assetIds: [],
@@ -153,8 +162,6 @@ export default {
         remark: ""
       },
       total: 0,
-      page: 1,
-      size: 10,
       rules: {
         [`asset.assetName`]: [{required: true, message: '请输入资产名称', trigger: 'blur'}],
         [`asset.brand`]: [{required: true, message: '请输入品牌', trigger: 'blur'}],
@@ -234,33 +241,29 @@ export default {
       this.dialogVisible2 = true;
     },
     deleteAsset() {
-      this.$confirm('此操作将永久删除选中的记录, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.deleteData.assetIds = this.assetIds;
-        this.deleteData.oid = null;
-        this.deleteRequestWithData("/asset/delete", this.deleteData).then(resp => {
-          if (resp) {
-            this.assetIds = [];
-            this.initAssets();
+      var newArr = [];
+      for (var i = 0; i < this.initData.aids.length; i++) {
+        var flag = true;
+        for (var j = 0; j < this.assetIds.length; j++) {
+          if (this.initData.aids[i] == this.assetIds[j]) {
+            flag = false;
+            break;
           }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
+        }
+        if (flag == true) {
+          newArr.push(this.initData.aids[i]);
+        }
+      }
+      this.initData.aids = newArr;
+      this.initAssets();
     },
     handleClose() {
       this.$emit('close');
     },
     initAssets() {
       this.loading = true;
-      let url = '/asset/getOrderAssetList/?oid=' + this.order.id + '&page=' + this.page + '&size=' + this.size;
-      this.getRequest(url).then(resp => {
+      let url = '/asset/getAssetByAids';
+      this.postRequest(url, this.initData).then(resp => {
         this.loading = false;
         if (resp) {
           this.order.assetList = resp.data;
@@ -269,11 +272,11 @@ export default {
       });
     },
     sizeChange(currentSize) {
-      this.size = currentSize;
+      this.initData.size = currentSize;
       this.initAssets();
     },
     currentChange(currentPage) {
-      this.page = currentPage;
+      this.initData.page = currentPage;
       this.initAssets();
     },
     handleSelectionChange(val) {
@@ -281,6 +284,12 @@ export default {
       for (let i = 0; i < val.length; i++) {
         this.assetIds.push(val[i].id);
       }
+    },
+    handleAssetIds: function (assetIds) {
+      // assetIds就是子组件AssetSelect传过来的值
+      this.initData.aids = assetIds;
+      this.dialogVisible6 = false;
+      this.initAssets();
     }
   }
 }

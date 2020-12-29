@@ -10,6 +10,7 @@ import java.util.List;
  */
 @Data
 public class AssetQueryCondition {
+    private List<Long> aids;
     private Long aid;
     /**
      * 分页信息

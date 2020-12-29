@@ -56,6 +56,12 @@
                 </otherwise>
             </choose>
         </if>
+        <if test="aids != null and aids.size>0">
+            and a.id in
+            <foreach collection="aids" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
     </sql>
     <select id="getAssetByCondition" parameterType="com.bupt.lams.dto.AssetQueryCondition" resultMap="BaseResultMap">
         select a.*,
@@ -72,7 +78,7 @@
             limit #{page},#{size}
         </if>
     </select>
-    <select id="getTotalByCondition" parameterType="com.bupt.lams.dto.OrderQueryCondition" resultType="java.lang.Long">
+    <select id="getTotalByCondition" parameterType="com.bupt.lams.dto.AssetQueryCondition" resultType="java.lang.Long">
         select count(*)
         from
         asset a

@@ -274,14 +274,7 @@ export default {
   },
   methods: {
     doAddAsset() {
-      this.relationData.assetIds = this.assetIds;
-      this.relationData.oid = this.oid;
-      this.postRequest("/asset/addRelation", this.relationData).then(resp => {
-        if (resp) {
-          this.$emit('close');
-          this.$parent.initAssets();
-        }
-      });
+      this.$emit('handleAssetIds', this.assetIds);
     },
     exportData() {
       let url = '/asset/export/?1=1';

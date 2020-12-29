@@ -23,21 +23,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetReturn.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/OperateTypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/OperateTypeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/TaskHandleDispatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/TaskHandleDispatch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/WorkflowConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/WorkflowConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TaskOperateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/strategies/taskhandle/HandleReturn.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/strategies/taskhandle/HandleTransfer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/order/OrderBasicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/order/OrderBasicController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/order/OrderTaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/order/OrderTaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/assetOut.bpmn" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes/assetOut.bpmn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/order/NewOrderOut.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/order/NewOrderOut.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/order/OrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/order/OrderDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetOut.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetOut.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/purchase/PurchaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/purchase/PurchaseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetInfo.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,14 +208,7 @@
       <workItem from="1605599431943" duration="302000" />
       <workItem from="1606470287779" duration="23619000" />
       <workItem from="1608573977147" duration="18557000" />
-      <workItem from="1609076631966" duration="18677000" />
-    </task>
-    <task id="LOCAL-00078" summary="优化个人中心">
-      <created>1603183894523</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1603183894523</updated>
+      <workItem from="1609076631966" duration="19972000" />
     </task>
     <task id="LOCAL-00079" summary="删除前端多余代码">
       <created>1603184555766</created>
@@ -564,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609245136670</updated>
     </task>
-    <option name="localTasksCounter" value="127" />
+    <task id="LOCAL-00127" summary="出库流程bug修复">
+      <created>1609249061527</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1609249061527</updated>
+    </task>
+    <option name="localTasksCounter" value="128" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -583,7 +572,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="新增订单信息功能" />
     <MESSAGE value="订单信息管理初步开发" />
     <MESSAGE value="订单管理高级查找" />
     <MESSAGE value="订单图片开发" />
@@ -608,7 +596,8 @@
     <MESSAGE value="添加选择资产逻辑开发" />
     <MESSAGE value="修改借用工作流，完善借用功能" />
     <MESSAGE value="入库流程bug修复" />
-    <option name="LAST_COMMIT_MESSAGE" value="入库流程bug修复" />
+    <MESSAGE value="出库流程bug修复" />
+    <option name="LAST_COMMIT_MESSAGE" value="出库流程bug修复" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1600784045187">
@@ -639,14 +628,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1609225377163" />
-    <state x="607" y="180" key="#xdebugger.evaluate" timestamp="1608567146101">
+    <state x="607" y="180" key="#xdebugger.evaluate" timestamp="1609249713612">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1608567146101" />
-    <state x="378" y="0" key="CommitChangelistDialog2" timestamp="1609245133598">
+    <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1609249713612" />
+    <state x="378" y="0" key="CommitChangelistDialog2" timestamp="1609249057699">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="378" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1609245133598" />
+    <state x="378" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1609249057699" />
     <state width="798" height="438" key="DebuggerActiveHint" timestamp="1609239960082">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -659,54 +648,54 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605165824589" />
-    <state width="1493" height="282" key="GridCell.Tab.0.bottom" timestamp="1609247377137">
+    <state width="1493" height="282" key="GridCell.Tab.0.bottom" timestamp="1609250274691">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609247377137" />
-    <state width="1493" height="282" key="GridCell.Tab.0.center" timestamp="1609247377137">
+    <state width="1493" height="282" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609250274691" />
+    <state width="1493" height="282" key="GridCell.Tab.0.center" timestamp="1609250274691">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1609247377137" />
-    <state width="1493" height="282" key="GridCell.Tab.0.left" timestamp="1609247377137">
+    <state width="1493" height="282" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1609250274691" />
+    <state width="1493" height="282" key="GridCell.Tab.0.left" timestamp="1609250274690">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1609247377137" />
-    <state width="1493" height="282" key="GridCell.Tab.0.right" timestamp="1609247377137">
+    <state width="1493" height="282" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1609250274690" />
+    <state width="1493" height="282" key="GridCell.Tab.0.right" timestamp="1609250274691">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1609247377137" />
-    <state width="1493" height="282" key="GridCell.Tab.1.bottom" timestamp="1609247377137">
+    <state width="1493" height="282" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1609250274691" />
+    <state width="1493" height="282" key="GridCell.Tab.1.bottom" timestamp="1609250274692">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609247377137" />
-    <state width="1493" height="282" key="GridCell.Tab.1.center" timestamp="1609247377137">
+    <state width="1493" height="282" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609250274692" />
+    <state width="1493" height="282" key="GridCell.Tab.1.center" timestamp="1609250274692">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1609247377137" />
-    <state width="1493" height="282" key="GridCell.Tab.1.left" timestamp="1609247377137">
+    <state width="1493" height="282" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1609250274692" />
+    <state width="1493" height="282" key="GridCell.Tab.1.left" timestamp="1609250274691">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1609247377137" />
-    <state width="1493" height="282" key="GridCell.Tab.1.right" timestamp="1609247377137">
+    <state width="1493" height="282" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1609250274691" />
+    <state width="1493" height="282" key="GridCell.Tab.1.right" timestamp="1609250274692">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1609247377137" />
-    <state width="1493" height="282" key="GridCell.Tab.2.bottom" timestamp="1609247377137">
+    <state width="1493" height="282" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1609250274692" />
+    <state width="1493" height="282" key="GridCell.Tab.2.bottom" timestamp="1609250274692">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609247377137" />
-    <state width="1493" height="282" key="GridCell.Tab.2.center" timestamp="1609247377137">
+    <state width="1493" height="282" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609250274692" />
+    <state width="1493" height="282" key="GridCell.Tab.2.center" timestamp="1609250274692">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1609247377137" />
-    <state width="1493" height="282" key="GridCell.Tab.2.left" timestamp="1609247377137">
+    <state width="1493" height="282" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1609250274692" />
+    <state width="1493" height="282" key="GridCell.Tab.2.left" timestamp="1609250274692">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1609247377137" />
-    <state width="1493" height="282" key="GridCell.Tab.2.right" timestamp="1609247377137">
+    <state width="1493" height="282" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1609250274692" />
+    <state width="1493" height="282" key="GridCell.Tab.2.right" timestamp="1609250274692">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="282" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1609247377137" />
+    <state width="1493" height="282" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1609250274692" />
     <state x="299" y="67" key="Maven.ArtifactSearchDialog" timestamp="1603186101727">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -723,22 +712,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1601976970035" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1609245138977">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1609249063170">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1609245138977" />
-    <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1608567146024">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1609249063170" />
+    <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1609249712638">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="775" height="419" key="XDebugger.FullValuePopup/0.0.1536.824@0.0.1536.824" timestamp="1608567146024" />
+    <state width="775" height="419" key="XDebugger.FullValuePopup/0.0.1536.824@0.0.1536.824" timestamp="1609249712638" />
     <state x="573" y="325" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604906833514">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="573" y="325" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1604906833514" />
-    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1608693907751">
+    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1609249681341">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1608693907751" />
+    <state x="306" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1609249681341" />
     <state x="499" y="172" key="extract.method.dialog" timestamp="1604907471560">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

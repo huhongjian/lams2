@@ -3,6 +3,9 @@
     <div>
       <div style="display: flex;justify-content: space-between">
         <div>
+          <el-button type="primary" icon="el-icon-plus" @click="showPurchaseOrderAddView">
+            添加订单信息
+          </el-button>
           <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
                      icon="el-icon-download">
             导出数据
@@ -97,6 +100,7 @@
     <div style="margin-top: 10px">
       <el-table
           :data="assets"
+          @selection-change="handleSelectionChange"
           stripe
           border
           v-loading="loading"
@@ -189,6 +193,8 @@
       </div>
       <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
                    :urlList="urlList" :title="title"></AssetDetail>
+      <PurchaseOrderEdit v-on:close="dialogVisible3 = false" v-on:empty="assetIds=[]" :dialogVisible3="dialogVisible3"
+                         :purchase="purchase" :assetIds="assetIds" :title="title"></PurchaseOrderEdit>
       <el-dialog
           :title="title"
           :visible.sync="dialogVisible"
@@ -344,6 +350,7 @@
 
 <script>
 import AssetDetail from "@/components/asset/AssetDetail";
+import PurchaseOrderEdit from "@/components/purchaseOrder/PurchaseOrderEdit";
 
 export default {
   name: "AssetInfo",
@@ -353,6 +360,8 @@ export default {
   },
   data() {
     return {
+      // 选中的资产id
+      assetIds: [],
       uploadData: {
         aid: ""
       },
@@ -372,6 +381,8 @@ export default {
       size: 10,
       dialogVisible: false,
       dialogVisible2: false,
+      // 添加订单信息
+      dialogVisible3: false,
       title: "",
       assets: [],
       asset: {
@@ -411,13 +422,54 @@ export default {
         }
       ],
       dialogImageUrl: '',
-      visible: false
+      visible: false,
+      purchase: {
+        id: "",
+        name: "",
+        total: "",
+        discount: "",
+        pay: "",
+        purchaseDate: "",
+        hasInvoice: "",
+        invoiceDate: "",
+        remark: "",
+        creatorEmail: "",
+        updaterEmail: "",
+        creator: {},
+        updater: {},
+        createTime: "",
+        updateTime: "",
+        assetList: [],
+        fileList: []
+      }
     }
   },
   components: {
-    AssetDetail
+    AssetDetail,
+    PurchaseOrderEdit
   },
   methods: {
+    emptyPurchase() {
+      this.purchase = {
+        id: "",
+        name: "",
+        total: "",
+        discount: "",
+        pay: "",
+        purchaseDate: "",
+        hasInvoice: "",
+        invoiceDate: "",
+        remark: "",
+        creatorEmail: "",
+        updaterEmail: "",
+        creator: {},
+        updater: {},
+        createTime: "",
+        updateTime: "",
+        assetList: [],
+        fileList: []
+      }
+    },
     exportData() {
       let url = '/asset/export/?1=1';
       if (this.type && this.type == 'advanced') {
@@ -577,6 +629,18 @@ export default {
           this.types = resp.obj;
         }
       });
+    },
+    showPurchaseOrderAddView() {
+      this.emptyPurchase();
+      this.fileList = [];
+      this.title = '新增订单信息';
+      this.dialogVisible3 = true;
+    },
+    handleSelectionChange(val) {
+      this.assetIds = [];
+      for (let i = 0; i < val.length; i++) {
+        this.assetIds.push(val[i].id);
+      }
     }
   }
 }

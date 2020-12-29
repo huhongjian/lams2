@@ -56,7 +56,7 @@ public class PurchaseController {
                 return RespBean.error("没有权限，请联系财务人员添加!");
             }
             List<Long> aids = addData.getAids();
-            if (IsAssetInStore(aids) == true) {
+            if (CollectionUtils.isEmpty(aids) == true || IsAssetInStore(aids) == false) {
                 return RespBean.error("只能为已经入库的资产添加订单信息！");
             }
             List<Long> poids = purchaseOrderService.getPurchaseOrderIdsByAids(aids);

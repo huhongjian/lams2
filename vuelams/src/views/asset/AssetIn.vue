@@ -6,9 +6,6 @@
           <el-button type="primary" icon="el-icon-plus" @click="showAddView">
             新增采购单
           </el-button>
-          <el-button type="warning" icon="el-icon-plus" @click="showPurchaseOrderAddView">
-            添加订单信息
-          </el-button>
           <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
                      icon="el-icon-download">
             导出数据
@@ -210,8 +207,6 @@
                 :types="types"></NewOrderIn>
     <OrderEdit v-on:close="dialogVisible5 = false" :dialogVisible5="dialogVisible5" :order="order" :title="title"
                :types="types"></OrderEdit>
-    <PurchaseOrderEdit v-on:close="dialogVisible3 = false" v-on:empty="assetIds=[]" :dialogVisible3="dialogVisible3"
-                       :purchase="purchase" :assetIds="assetIds" :title="title"></PurchaseOrderEdit>
     <OrderDetail v-on:close="dialogVisible7 = false" :dialogVisible7="dialogVisible7" :order="order" :title="title"
                  :urlList="urlList" :operateList='operateList'></OrderDetail>
   </div>
@@ -220,7 +215,6 @@
 <script>
 import OrderDetail from "@/components/order/OrderDetail";
 import OrderEdit from "@/components/order/OrderEdit";
-import PurchaseOrderEdit from "@/components/purchaseOrder/PurchaseOrderEdit";
 import NewOrderIn from "@/components/order/NewOrderIn";
 
 export default {
@@ -275,8 +269,6 @@ export default {
       operateList: [],
       // 选中的工单id，删除时使用
       orderIds: [],
-      // 选中的资产id
-      assetIds: [],
       order: {
         id: "",
         category: "",
@@ -303,33 +295,13 @@ export default {
       // 资产图片列表，用于编辑页面
       fileList: [],
       // 资产图片url列表，用于详情页面
-      urlList: [],
-      purchase: {
-        id: "",
-        name: "",
-        total: "",
-        discount: "",
-        pay: "",
-        purchaseDate: "",
-        hasInvoice: "",
-        invoiceDate: "",
-        remark: "",
-        creatorEmail: "",
-        updaterEmail: "",
-        creator: {},
-        updater: {},
-        createTime: "",
-        updateTime: "",
-        assetList: [],
-        fileList: []
-      },
+      urlList: []
     }
   },
   components: {
     NewOrderIn,
     OrderDetail,
-    OrderEdit,
-    PurchaseOrderEdit
+    OrderEdit
   },
   mounted() {
     this.initOrders();
@@ -394,27 +366,6 @@ export default {
         }
       };
     },
-    emptyPurchase() {
-      this.purchase = {
-        id: "",
-        name: "",
-        total: "",
-        discount: "",
-        pay: "",
-        purchaseDate: "",
-        hasInvoice: "",
-        invoiceDate: "",
-        remark: "",
-        creatorEmail: "",
-        updaterEmail: "",
-        creator: {},
-        updater: {},
-        createTime: "",
-        updateTime: "",
-        assetList: [],
-        fileList: []
-      }
-    },
     showAddView() {
       this.emptyOrder();
       this.title = '资产采购申请';
@@ -456,12 +407,6 @@ export default {
           message: '已取消删除'
         });
       });
-    },
-    showPurchaseOrderAddView() {
-      this.emptyPurchase();
-      this.fileList = [];
-      this.title = '新增订单信息';
-      this.dialogVisible3 = true;
     },
     sizeChange(currentSize) {
       this.size = currentSize;
@@ -534,10 +479,8 @@ export default {
     },
     handleSelectionChange(val) {
       this.orderIds = [];
-      this.assetIds = [];
       for (let i = 0; i < val.length; i++) {
         this.orderIds.push(val[i].id);
-        this.assetIds.push(val[i].asset.id);
       }
     },
     clearSearchValue() {

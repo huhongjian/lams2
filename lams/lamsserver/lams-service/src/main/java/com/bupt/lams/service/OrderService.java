@@ -83,9 +83,7 @@ public class OrderService {
         List<Asset> assetList = order.getAssetList();
         List<OrderAsset> orderAssetList = new ArrayList<>();
         for (Asset asset : assetList) {
-            asset.setStatus(AssetStatusEnum.CREATE.getIndex());
-            assetMapper.insertSelective(asset);
-            OrderAsset orderAsset = new OrderAsset(asset.getId(), order.getId(), new Date(), new Date());
+            OrderAsset orderAsset = new OrderAsset(order.getId(), asset.getId(), new Date(), new Date());
             orderAssetList.add(orderAsset);
         }
         orderAssetMapper.insertMany(orderAssetList);
@@ -125,7 +123,7 @@ public class OrderService {
         orderMapper.insertSelective(order);
         List<OrderAsset> orderAssetList = new ArrayList<>();
         for (Asset asset : assetList) {
-            OrderAsset orderAsset = new OrderAsset(asset.getId(), order.getId(), new Date(), new Date());
+            OrderAsset orderAsset = new OrderAsset(order.getId(), asset.getId(), new Date(), new Date());
             orderAssetList.add(orderAsset);
         }
         orderAssetMapper.insertMany(orderAssetList);

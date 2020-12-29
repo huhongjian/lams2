@@ -2,7 +2,7 @@
   <div>
     <el-dialog
         :title="title"
-        :visible.sync="dialogVisible2"
+        :visible.sync="dialogVisible7"
         :before-close="handleClose"
         width="80%">
       <div>
@@ -173,9 +173,10 @@ import AssetDetail from "@/components/asset/AssetDetail";
 
 export default {
   name: "OrderDetail",
-  props: ['order', 'title', 'dialogVisible2', 'urlList', 'operateList', 'out'],
+  props: ['order', 'title', 'dialogVisible7', 'urlList', 'operateList', 'out'],
   data() {
     return {
+      dialogVisible2: false,
       asset: {
         id: "",
         brand: "",

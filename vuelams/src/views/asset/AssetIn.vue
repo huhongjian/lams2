@@ -190,7 +190,9 @@
             width="80"
             label="操作">
           <template slot-scope="scope">
-            <el-button @click="showEditView(scope.row)">编辑</el-button>
+            <el-button v-show="scope.row.status=='1'&&scope.row.user.username==user.username"
+                       @click="showEditView(scope.row)">编辑
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -205,12 +207,12 @@
       </div>
     </div>
     <NewOrderIn v-on:close="dialogVisible4 = false" :dialogVisible4="dialogVisible4" :order="order" :title="title"
-              :types="types"></NewOrderIn>
+                :types="types"></NewOrderIn>
     <OrderEdit v-on:close="dialogVisible5 = false" :dialogVisible5="dialogVisible5" :order="order" :title="title"
                :types="types"></OrderEdit>
     <PurchaseOrderEdit v-on:close="dialogVisible3 = false" v-on:empty="assetIds=[]" :dialogVisible3="dialogVisible3"
                        :purchase="purchase" :assetIds="assetIds" :title="title"></PurchaseOrderEdit>
-    <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
+    <OrderDetail v-on:close="dialogVisible7 = false" :dialogVisible7="dialogVisible7" :order="order" :title="title"
                  :urlList="urlList" :operateList='operateList'></OrderDetail>
   </div>
 </template>
@@ -225,6 +227,7 @@ export default {
   name: "AssetIn",
   data() {
     return {
+      user: JSON.parse(window.sessionStorage.getItem("user")),
       searchValue: {
         type: null,
         brand: null,
@@ -239,7 +242,7 @@ export default {
       orders: [],
       loading: false,
       // 工单详情页可见性
-      dialogVisible2: false,
+      dialogVisible7: false,
       // 添加订单信息
       dialogVisible3: false,
       // 新增采购工单页面可见性
@@ -425,7 +428,7 @@ export default {
     showDetailView(data) {
       this.title = '申请单详情';
       this.order = data;
-      this.dialogVisible2 = true;
+      this.dialogVisible7 = true;
     },
     getOperateList(data) {
       this.getRequest('/order/task/getOperateList?id=' + data.id).then(resp => {

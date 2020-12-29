@@ -183,7 +183,7 @@ export default {
     },
     emptyAsset() {
       this.asset = {
-        id: "",
+        id: null,
         assetName: "",
         brand: "",
         type: "",

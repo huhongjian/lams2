@@ -236,16 +236,20 @@ public class AssetService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void addAsset(Asset asset, Long oid) {
-        assetMapper.insertSelective(asset);
-        Order order = orderMapper.selectBaseOrderInfoById(oid);
-        if (oid != null && order != null) {
-            OrderAsset orderAsset = new OrderAsset();
-            orderAsset.setAid(asset.getId());
-            orderAsset.setOid(oid);
-            orderAsset.setCreateTime(new Date());
-            orderAsset.setUpdateTime(new Date());
-            orderAssetMapper.insertSelective(orderAsset);
+    public void addAsset(Asset asset, Long oid, Integer amount) {
+        for (Integer i = 0; i < amount; i++) {
+            asset.setStatus(AssetStatusEnum.CREATE.getIndex());
+            assetMapper.insertSelective(asset);
+            Order order = orderMapper.selectBaseOrderInfoById(oid);
+            // 如果工单id存在，那么是编辑工单，所以在添加的时候还要添加工单和资产的关系
+            if (oid != null && order != null) {
+                OrderAsset orderAsset = new OrderAsset();
+                orderAsset.setAid(asset.getId());
+                orderAsset.setOid(oid);
+                orderAsset.setCreateTime(new Date());
+                orderAsset.setUpdateTime(new Date());
+                orderAssetMapper.insertSelective(orderAsset);
+            }
         }
     }
 

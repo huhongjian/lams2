@@ -51,6 +51,12 @@
               </el-form-item>
             </el-col>
           </el-row>
+          <el-row v-show="asset.id==null">
+            <el-form-item label="数量（个）:" prop="amount">
+              <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                        v-model="addData.amount"></el-input>
+            </el-form-item>
+          </el-row>
         </el-form>
         <template v-if="asset.adv">
           <el-form v-show="asset.type=='手机'" :model="asset.adv">
@@ -159,11 +165,12 @@
 <script>
 export default {
   name: "AssetEdit",
-  props: ['asset', 'fileList', 'title', 'dialogVisible', 'types','oid'],
+  props: ['asset', 'fileList', 'title', 'dialogVisible', 'types', 'oid'],
   data() {
     return {
       addData: {
         asset: {},
+        amount: 1,
         oid: null
       },
       uploadData: {

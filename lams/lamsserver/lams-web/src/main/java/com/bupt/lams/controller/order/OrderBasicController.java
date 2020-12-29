@@ -1,12 +1,9 @@
 package com.bupt.lams.controller.order;
 
+import com.bupt.lams.model.*;
 import com.bupt.lams.utils.FastDFSUtils;
 import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.dto.OrderQueryCondition;
-import com.bupt.lams.model.AssetPic;
-import com.bupt.lams.model.Order;
-import com.bupt.lams.model.RespBean;
-import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.AssetService;
 import com.bupt.lams.service.OrderService;
 import com.bupt.lams.utils.POIUtils;
@@ -77,8 +74,9 @@ public class OrderBasicController {
 
     @PutMapping("/edit")
     public RespBean updateOrder(@RequestBody Order order) {
-        // 工单只允许管理员修改
-        if (UserInfoUtils.isAdmin() == false) {
+        LamsUser loginedUser = UserInfoUtils.getLoginedUser();
+        // 工单只允许管理员和申请人修改
+        if (loginedUser.getUsername().equals(order.getUser().getUsername()) || UserInfoUtils.isAdmin() == false) {
             return RespBean.error("您没有编辑权限，请联系管理员!");
         }
         try {

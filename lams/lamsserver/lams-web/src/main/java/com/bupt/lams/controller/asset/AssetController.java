@@ -63,8 +63,13 @@ public class AssetController {
         response.setMsg("资产新增成功!");
         Asset asset = addAssetData.getAsset();
         Long oid = addAssetData.getOid();
+        Integer amount = addAssetData.getAmount() == null ? 1 : addAssetData.getAmount();
+        if (amount <= 0 || amount >= 100) {
+            logger.error("资产数量不在限定范围！");
+            return RespBean.error("资产数量不在限定范围！");
+        }
         try {
-            assetService.addAsset(asset, oid);
+            assetService.addAsset(asset, oid, amount);
             response.setObj(asset.getId());
         } catch (Exception e) {
             logger.error("新增资产失败", e);

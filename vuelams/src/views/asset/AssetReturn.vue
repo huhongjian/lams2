@@ -126,13 +126,9 @@
             label="状态">
           <template slot-scope="scope">
             <span style="color: #00e079; font-weight: bold"
-                  v-if="scope.row.status=='2'||scope.row.status=='3'||scope.row.status=='5'">{{
-                scope.row.statusName
-              }}</span>
+                  v-if="scope.row.status=='11'">{{ scope.row.statusName }}</span>
             <span style="color: #ff4777; font-weight: bold"
-                  v-else-if="scope.row.status=='6'||scope.row.status=='8'">{{
-                scope.row.statusName
-              }}</span>
+                  v-else-if="scope.row.status=='12'">{{ scope.row.statusName }}</span>
             <span style="color: #c0c0c0;"
                   v-else-if="scope.row.status=='7'">{{ scope.row.statusName }}</span>
             <span v-else>{{ scope.row.statusName }}</span>
@@ -191,7 +187,7 @@
       </div>
     </div>
     <NewOrderReturn v-on:close="dialogVisible4 = false" :dialogVisible4="dialogVisible4" :order="order" :title="title"
-                 :types="types"></NewOrderReturn>
+                    :types="types"></NewOrderReturn>
     <OrderDetail v-on:close="dialogVisible7 = false" :dialogVisible7="dialogVisible7" :order="order" :title="title"
                  :urlList="urlList" :operateList='operateList'></OrderDetail>
   </div>

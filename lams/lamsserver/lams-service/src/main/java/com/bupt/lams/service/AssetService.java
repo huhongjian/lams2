@@ -61,6 +61,11 @@ public class AssetService {
     }
 
     public RespPageBean getAvailable(AssetQueryCondition condition) {
+        // 需要是闲置状态
+        List<Integer> assetStatuses = new ArrayList<>();
+        assetStatuses.add(AssetStatusEnum.FREE.getIndex());
+        condition.setAssetStatuses(assetStatuses);
+        // 并且没有被其他工单占用
         Integer page = condition.getPage();
         Integer size = condition.getSize();
         if (page != null && size != null) {
@@ -81,6 +86,11 @@ public class AssetService {
     }
 
     public RespPageBean getReturn(AssetQueryCondition condition) {
+        // 需要是使用中状态
+        List<Integer> assetStatuses = new ArrayList<>();
+        assetStatuses.add(AssetStatusEnum.INUSE.getIndex());
+        condition.setAssetStatuses(assetStatuses);
+        // 是我借用的
         Integer page = condition.getPage();
         Integer size = condition.getSize();
         if (page != null && size != null) {

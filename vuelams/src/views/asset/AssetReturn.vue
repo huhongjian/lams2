@@ -34,28 +34,7 @@
         <div v-show="showAdvanceSearchView"
              style="border: 1px solid #759ad1;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;">
           <el-row>
-            <el-col :span="6">
-              类型:
-              <el-select v-model="searchValue.type"
-                         clearable
-                         placeholder="类型"
-                         size="mini"
-                         style="width: 130px;">
-                <el-option
-                    v-for="item in types"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.name">
-                </el-option>
-              </el-select>
-            </el-col>
-            <el-col :span="5">
-              品牌:
-              <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
-                        clearable
-                        v-model="searchValue.brand"></el-input>
-            </el-col>
-            <el-col :span="5">
+            <el-col :span="4">
               状态:
               <el-select v-model="searchValue.status" clearable placeholder="状态" size="mini" style="width: 130px;">
                 <el-option
@@ -66,14 +45,12 @@
                 </el-option>
               </el-select>
             </el-col>
-          </el-row>
-          <el-row style="margin-top: 10px">
             <el-col :span="6">
-              负责人邮箱:
-              <el-input size="mini" style="width: 150px" clearable prefix-icon="el-icon-edit"
+              申请人邮箱:
+              <el-input size="mini" style="width: 200px" clearable prefix-icon="el-icon-edit"
                         v-model="searchValue.userEmail"></el-input>
             </el-col>
-            <el-col :span="9">
+            <el-col :span="10">
               申请时间:
               <el-date-picker
                   v-model="searchValue.dateScope"
@@ -86,7 +63,7 @@
                   end-placeholder="结束日期">
               </el-date-picker>
             </el-col>
-            <el-col :span="5" :offset="4">
+            <el-col :span="4">
               <el-button size="mini" @click="clearSearchValue">重置</el-button>
               <el-button size="mini" @click="showAdvanceSearchView = false">取消</el-button>
               <el-button size="mini" icon="el-icon-search" type="primary" @click="initOrdersAdv">搜索</el-button>
@@ -203,8 +180,6 @@ export default {
     return {
       user: JSON.parse(window.sessionStorage.getItem("user")),
       searchValue: {
-        type: null,
-        brand: null,
         status: null,
         userEmail: null,
         dateScope: null
@@ -223,19 +198,15 @@ export default {
       types: [],
       statuses: [
         {
-          id: 3,
-          name: "已入库"
+          id: 10,
+          name: "归还中"
         },
         {
-          id: 4,
-          name: "申请借用"
+          id: 11,
+          name: "已归还"
         },
         {
-          id: 5,
-          name: "已借出"
-        },
-        {
-          id: 6,
+          id: 12,
           name: "审批未通过"
         },
         {
@@ -285,12 +256,6 @@ export default {
     exportData() {
       let url = '/order/basic/export/out/?category=4';
       if (this.type && this.type == 'advanced') {
-        if (this.searchValue.type) {
-          url += '&type=' + this.searchValue.type;
-        }
-        if (this.searchValue.brand) {
-          url += '&brand=' + this.searchValue.brand;
-        }
         if (this.searchValue.status) {
           url += '&status=' + this.searchValue.status;
         }
@@ -407,12 +372,6 @@ export default {
       this.type = 'advanced'
       this.loading = true;
       let url = '/order/basic/get/?category=4&page=' + this.page + '&size=' + this.size;
-      if (this.searchValue.type) {
-        url += '&type=' + this.searchValue.type;
-      }
-      if (this.searchValue.brand) {
-        url += '&brand=' + this.searchValue.brand;
-      }
       if (this.searchValue.status) {
         url += '&status=' + this.searchValue.status;
       }
@@ -437,8 +396,6 @@ export default {
     },
     clearSearchValue() {
       this.searchValue = {
-        type: null,
-        brand: null,
         status: null,
         userEmail: null,
         dateScope: null

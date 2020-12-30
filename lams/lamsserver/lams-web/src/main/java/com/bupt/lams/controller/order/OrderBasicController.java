@@ -180,13 +180,6 @@ public class OrderBasicController {
      * @param dateScope
      */
     private void fillCondition(OrderQueryCondition orderQueryCondition, Date[] dateScope) {
-        // 维修中和报废的资产不在工单中展示
-        List<Integer> assetStatus = new ArrayList<>();
-        assetStatus.add(AssetStatusEnum.CREATE.getIndex());
-        assetStatus.add(AssetStatusEnum.REJECTED.getIndex());
-        assetStatus.add(AssetStatusEnum.FREE.getIndex());
-        assetStatus.add(AssetStatusEnum.INUSE.getIndex());
-        orderQueryCondition.setAssetStatuses(assetStatus);
         if (dateScope != null && dateScope.length == 2) {
             orderQueryCondition.setStartDate(dateScope[0]);
             orderQueryCondition.setEndDate(dateScope[1]);

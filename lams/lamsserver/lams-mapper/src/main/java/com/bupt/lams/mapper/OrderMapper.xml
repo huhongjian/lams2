@@ -59,12 +59,6 @@
         <if test="userEmail !=null and userEmail!=''">
             and o.userEmail like concat('%',#{userEmail},'%')
         </if>
-        <if test="type !=null and type!=''">
-            and a.type like concat('%',#{type},'%')
-        </if>
-        <if test="brand !=null and brand!=''">
-            and a.brand like concat('%',#{brand},'%')
-        </if>
         <if test="startDate !=null and endDate !=null">
             and o.createTime between #{startDate} and #{endDate}
         </if>
@@ -80,22 +74,6 @@
                     and o.id=-1
                 </otherwise>
             </choose>
-        </if>
-        <if test="assetStatuses != null">
-            <choose>
-                <when test="assetStatuses.size>0">
-                    and a.status in
-                    <foreach collection="assetStatuses" item="status" open="(" close=")" separator=",">
-                        #{status}
-                    </foreach>
-                </when>
-                <otherwise>
-                    and a.status=-1
-                </otherwise>
-            </choose>
-        </if>
-        <if test="priceLow !=null and priceHigh !=null">
-            and a.price between #{priceLow} and #{priceHigh}
         </if>
     </sql>
     <sql id="stuOutQuery">
@@ -119,13 +97,9 @@
         select count(*)
         from
         `order` o,
-        order_asset oa,
-        asset a,
         lams_user u
         <where>
-            o.id = oa.oid
-            and a.id = oa.aid
-            and o.userEmail = u.username
+            o.userEmail = u.username
             and u.enabled = 1
             <include refid="baseInfoQuery"/>
         </where>

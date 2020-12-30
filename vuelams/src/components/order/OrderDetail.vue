@@ -109,71 +109,14 @@
     </el-dialog>
     <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
                  :urlList="urlList" :title="title"></AssetDetail>
-    <el-dialog
-        :visible.sync="visible"
-        width="30%">
-      <el-form :model="taskHandleDto" :rules="rules" ref="transForm">
-        <el-row style="margin:0 auto;width: 300px">
-          <el-form-item label="转交至:">
-          </el-form-item>
-        </el-row>
-        <el-row style="margin:0 auto;width: 300px">
-          <el-form-item label="姓名:" prop="name">
-            <el-input size="mini" style="width: 200px" prefix-icon="el-icon-edit"
-                      v-model="name"></el-input>
-          </el-form-item>
-        </el-row>
-        <el-row style="margin:0 auto;width: 300px">
-          <el-form-item label="邮箱:" prop="candidateUser">
-            <el-input size="mini" style="width: 200px" prefix-icon="el-icon-edit"
-                      v-model="taskHandleDto.candidateUser"></el-input>
-          </el-form-item>
-        </el-row>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="transfer">转交</el-button>
-        <el-button @click="visible=false">取 消</el-button>
-  </span>
-    </el-dialog>
-    <el-dialog
-        :visible.sync="visible2"
-        width="30%">
-      <el-form :model="order" :rules="borrowFormRules" ref="borrowForm">
-        <el-row style="margin:0 auto;width: 300px">
-          <el-form-item label="预计归还时间:" prop="expireTime">
-            <el-date-picker
-                v-model="order.expireTime"
-                type="date"
-                :picker-options="pickerOptions"
-                placeholder="选择日期"
-                format="yyyy 年 MM 月 dd 日"
-                value-format="yyyy-MM-dd">
-            </el-date-picker>
-          </el-form-item>
-        </el-row>
-        <el-row style="margin:0 auto;width: 300px">
-          <el-form-item label="申请理由:" prop="reason">
-            <el-input size="mini"
-                      type="textarea"
-                      :rows="2"
-                      v-model="order.reason"></el-input>
-          </el-form-item>
-        </el-row>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="borrow">确 认</el-button>
-        <el-button @click="clearBorrowForm">取 消</el-button>
-  </span>
-    </el-dialog>
   </div>
 </template>
-
 <script>
 import AssetDetail from "@/components/asset/AssetDetail";
 
 export default {
   name: "OrderDetail",
-  props: ['order', 'title', 'dialogVisible7', 'urlList', 'operateList'],
+  props: ['order', 'title', 'dialogVisible7', 'operateList'],
   data() {
     return {
       dialogVisible2: false,
@@ -186,40 +129,19 @@ export default {
         adv: {},
         remark: ""
       },
-      visible: false,
-      visible2: false,
       name: '',
       taskHandleDto: {
         id: null,
         operateType: null,
         candidateUser: null
       },
-      rules: {
-        candidateUser: [{required: true, message: '请输入转交人邮箱', trigger: 'blur'}]
-      },
-      borrowFormRules: {
-        expireTime: [{required: true, message: '请输入预计转交时间', trigger: 'blur'}],
-        reason: [{required: true, message: '请输入申请理由', trigger: 'blur'}]
-      },
-      // 禁用一些时间
-      pickerOptions: {
-        disabledDate: (time) => {
-          return this.dealDisabledDate(time);
-        }
-      }
+      urlList: []
     }
   },
   components: {
     AssetDetail
   },
   methods: {
-    transfer() {
-      this.$refs['transForm'].validate(valid => {
-        if (valid) {
-          this.handle();
-        }
-      });
-    },
     handle() {
       this.taskHandleDto.id = this.order.id;
       this.postRequest("/order/task/handleTask", this.taskHandleDto).then(resp => {
@@ -242,37 +164,17 @@ export default {
     },
     checkAndHandle(data) {
       this.taskHandleDto.operateType = data;
-      if (data == '5') {
-        this.visible = true;
-      } else if (data == '7') {
+      if (data == '7') {
         this.cancel();
       } else {
         this.handle();
       }
     },
-    borrow() {
-      this.$refs['borrowForm'].validate(valid => {
-        if (valid) {
-          this.postRequest("/order/basic/borrow", this.order).then(resp => {
-            if (resp) {
-              this.visible2 = false;
-              this.$emit('close');
-              this.$parent.initOrders();
-            }
-          });
-        }
-      });
-    },
     handleClose() {
       this.$emit('close');
     },
-    clearBorrowForm() {
-      this.order.expireTime = '';
-      this.order.reason = '';
-      this.visible2 = false;
-    },
     showDetailView(data) {
-      this.title = '申请单详情';
+      this.title = '资产详情';
       this.asset = data;
       if (this.asset && this.asset.fileList) {
         this.urlList = [];

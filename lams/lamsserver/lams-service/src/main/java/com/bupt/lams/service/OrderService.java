@@ -106,7 +106,6 @@ public class OrderService {
     @Transactional(rollbackFor = Exception.class)
     @OperateRecord(description = "借用资产", clazz = BorrowAssetRecord.class)
     public void borrowAsset(Order order) {
-        List<Asset> assetList = order.getAssetList();
         LamsUser user = UserInfoUtils.getLoginedUser();
         order.setUserEmail(user.getUsername());
         order.setCategory(ProcessTypeEnum.OUT.getIndex());

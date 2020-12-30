@@ -24,12 +24,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AssetMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AssetService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/asset/AssetController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/order/NewOrderIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/order/NewOrderIn.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetIn.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/asset/AssetSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/asset/AssetSelect.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/order/OrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/order/OrderDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/asset/AssetInfo.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,14 +212,7 @@
       <workItem from="1606470287779" duration="23619000" />
       <workItem from="1608573977147" duration="18557000" />
       <workItem from="1609076631966" duration="26564000" />
-      <workItem from="1609259592439" duration="19253000" />
-    </task>
-    <task id="LOCAL-00085" summary="图片上传功能初步开发">
-      <created>1604100300220</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1604100300220</updated>
+      <workItem from="1609259592439" duration="21630000" />
     </task>
     <task id="LOCAL-00086" summary="图片上传功能开发，修bug">
       <created>1604128791065</created>
@@ -559,7 +550,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609312373964</updated>
     </task>
-    <option name="localTasksCounter" value="134" />
+    <task id="LOCAL-00134" summary="删除多余代码">
+      <created>1609315005739</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1609315005739</updated>
+    </task>
+    <option name="localTasksCounter" value="135" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -578,7 +576,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="新增订单信息删除功能" />
     <MESSAGE value="2020.11.9 第四版上线：新增订单管理功能" />
     <MESSAGE value="删除boughtTime&amp;入库不允许借用" />
     <MESSAGE value="bugfix,入库不允许借用" />
@@ -603,7 +600,8 @@
     <MESSAGE value="统一维护工单和资产之间的关系" />
     <MESSAGE value="优化入库工单编辑功能" />
     <MESSAGE value="修复工单搜索功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复工单搜索功能" />
+    <MESSAGE value="删除多余代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="删除多余代码" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1600784045187">
@@ -638,18 +636,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1609249713612" />
-    <state x="378" y="0" key="CommitChangelistDialog2" timestamp="1609312369555">
+    <state x="378" y="0" key="CommitChangelistDialog2" timestamp="1609314998561">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="378" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1609312369555" />
+    <state x="378" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1609314998561" />
     <state width="798" height="438" key="DebuggerActiveHint" timestamp="1609312667139">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="798" height="438" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1609312667139" />
-    <state x="28" y="15" width="1461" height="794" key="DiffContextDialog" timestamp="1609261836124">
+    <state x="28" y="15" width="1461" height="794" key="DiffContextDialog" timestamp="1609315731371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="28" y="15" width="1461" height="794" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1609261836124" />
+    <state x="28" y="15" width="1461" height="794" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1609315731371" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1605165824589">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -718,10 +716,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1601976970035" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1609312377817">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1609315008414">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1609312377817" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1609315008414" />
     <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1609249712638">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

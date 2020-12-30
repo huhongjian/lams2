@@ -410,7 +410,7 @@ export default {
       statuses: [
         {
           id: 2,
-          name: "正常"
+          name: "闲置"
         },
         {
           id: 3,
@@ -419,6 +419,10 @@ export default {
         {
           id: 4,
           name: "报废"
+        },
+        {
+          id: 6,
+          name: "使用中"
         }
       ],
       dialogImageUrl: '',

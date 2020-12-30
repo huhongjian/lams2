@@ -1,10 +1,8 @@
 package com.bupt.lams.service;
 
-import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.constants.ProcessTypeEnum;
 import com.bupt.lams.dto.OrderQueryCondition;
-import com.bupt.lams.mapper.AssetMapper;
 import com.bupt.lams.mapper.OrderAssetMapper;
 import com.bupt.lams.mapper.OrderMapper;
 import com.bupt.lams.model.*;
@@ -36,6 +34,8 @@ public class OrderService {
     OrderMapper orderMapper;
     @Resource
     OrderAssetMapper orderAssetMapper;
+    @Resource
+    OrderAssetService orderAssetService;
     @Resource
     TaskOperateService taskOperateService;
 
@@ -78,13 +78,7 @@ public class OrderService {
         order.setStatus(OrderStatusEnum.CREATE.getIndex());
         order.setCreateTime(new Date());
         orderMapper.insertSelective(order);
-        List<Asset> assetList = order.getAssetList();
-        List<OrderAsset> orderAssetList = new ArrayList<>();
-        for (Asset asset : assetList) {
-            OrderAsset orderAsset = new OrderAsset(order.getId(), asset.getId(), new Date(), new Date());
-            orderAssetList.add(orderAsset);
-        }
-        orderAssetMapper.insertMany(orderAssetList);
+        orderAssetService.updateOrderAssetRelation(order);
         try {
             taskOperateService.startWorkFlow(order, ProcessTypeEnum.IN.getIndex(), null);
         } catch (Exception e) {
@@ -119,12 +113,7 @@ public class OrderService {
         order.setStatus(OrderStatusEnum.ASK.getIndex());
         order.setCreateTime(new Date());
         orderMapper.insertSelective(order);
-        List<OrderAsset> orderAssetList = new ArrayList<>();
-        for (Asset asset : assetList) {
-            OrderAsset orderAsset = new OrderAsset(order.getId(), asset.getId(), new Date(), new Date());
-            orderAssetList.add(orderAsset);
-        }
-        orderAssetMapper.insertMany(orderAssetList);
+        orderAssetService.updateOrderAssetRelation(order);
         try {
             // 这个map是开启工作流时间的数据，并不是流转过程中的数据
             taskOperateService.startWorkFlow(order, ProcessTypeEnum.OUT.getIndex(), null);
@@ -143,12 +132,7 @@ public class OrderService {
         order.setStatus(OrderStatusEnum.RETURNING.getIndex());
         order.setCreateTime(new Date());
         orderMapper.insertSelective(order);
-        List<OrderAsset> orderAssetList = new ArrayList<>();
-        for (Asset asset : assetList) {
-            OrderAsset orderAsset = new OrderAsset(order.getId(), asset.getId(), new Date(), new Date());
-            orderAssetList.add(orderAsset);
-        }
-        orderAssetMapper.insertMany(orderAssetList);
+        orderAssetService.updateOrderAssetRelation(order);
         try {
             // 这个map是开启工作流时间的数据，并不是流转过程中的数据
             taskOperateService.startWorkFlow(order, ProcessTypeEnum.RETURN.getIndex(), null);
@@ -162,16 +146,7 @@ public class OrderService {
     @OperateRecord(description = "更新工单信息", clazz = UpdateOrderRecord.class)
     public void updateOrder(Order order) {
         orderMapper.updateOrder(order);
-        List<Long> oids = new ArrayList<>();
-        oids.add(order.getId());
-        orderAssetMapper.deleteManyByOids(oids);
-        List<Asset> assetList = order.getAssetList();
-        List<OrderAsset> orderAssetList = new ArrayList<>();
-        for (Asset asset : assetList) {
-            OrderAsset orderAsset = new OrderAsset(order.getId(), asset.getId(), new Date(), new Date());
-            orderAssetList.add(orderAsset);
-        }
-        orderAssetMapper.insertMany(orderAssetList);
+        orderAssetService.updateOrderAssetRelation(order);
     }
 
     @OperateRecord(description = "删除工单", clazz = DeleteOrderRecord.class)

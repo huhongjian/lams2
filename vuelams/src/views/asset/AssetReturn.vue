@@ -251,7 +251,7 @@ export default {
   },
   methods: {
     exportData() {
-      let url = '/order/basic/export/out/?category=4';
+      let url = '/order/basic/export/return/?category=4';
       if (this.type && this.type == 'advanced') {
         if (this.searchValue.status) {
           url += '&status=' + this.searchValue.status;

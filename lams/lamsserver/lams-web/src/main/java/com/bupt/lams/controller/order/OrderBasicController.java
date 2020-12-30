@@ -141,6 +141,13 @@ public class OrderBasicController {
         return POIUtils.assetOut2Excel(list);
     }
 
+    @GetMapping("/export/return")
+    public ResponseEntity<byte[]> exportDataReturn(OrderQueryCondition orderQueryCondition, Date[] dateScope) {
+        fillCondition(orderQueryCondition, dateScope);
+        List<Order> list = (List<Order>) orderService.getOrderByCondition(orderQueryCondition).getData();
+        return POIUtils.assetReturn2Excel(list);
+    }
+
     @PostMapping("/pic/add")
     public RespBean addAssetPics(MultipartFile file, String aids) {
         List<Long> assetIdList = new ArrayList<>();

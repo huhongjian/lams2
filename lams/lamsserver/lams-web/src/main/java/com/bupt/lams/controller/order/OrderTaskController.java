@@ -99,6 +99,8 @@ public class OrderTaskController {
                 && !order.getStatus().equals(OrderStatusEnum.REJECTED.getIndex())
                 && !order.getStatus().equals(OrderStatusEnum.OCCUPIED.getIndex())
                 && !order.getStatus().equals(OrderStatusEnum.REFUSED.getIndex())
+                && !order.getStatus().equals(OrderStatusEnum.RETURN.getIndex())
+                && !order.getStatus().equals(OrderStatusEnum.TURN_DOWN.getIndex())
                 && !order.getStatus().equals(OrderStatusEnum.CLOSED.getIndex())) {
             Operate cancel = new Operate();
             cancel.setOperateType(OperateTypeEnum.CANCEL.getIndex());

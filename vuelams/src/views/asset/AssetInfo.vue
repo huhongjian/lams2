@@ -195,155 +195,9 @@
                    :urlList="urlList" :title="title"></AssetDetail>
       <PurchaseOrderEdit v-on:close="dialogVisible3 = false" v-on:empty="assetIds=[]" :dialogVisible3="dialogVisible3"
                          :purchase="purchase" :assetIds="assetIds" :title="title"></PurchaseOrderEdit>
-      <el-dialog
-          :title="title"
-          :visible.sync="dialogVisible"
-          width="80%">
-        <div>
-          <el-form :model="asset" :rules="rules" ref="assetForm">
-            <el-row>
-              <el-col :span="15">
-                <el-form-item label="资产名称:" prop="asset.assetName">
-                  <el-input size="mini" style="width: 800px" prefix-icon="el-icon-edit"
-                            v-model="asset.assetName"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="6">
-                <el-form-item label="品牌:" prop="brand">
-                  <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="asset.brand"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="类型:" prop="type">
-                  <el-select v-model="asset.type" clearable placeholder="请选择">
-                    <el-option
-                        v-for="item in types"
-                        :key="item.id"
-                        :label="item.name"
-                        :value="item.name">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="价格（元）:" prop="price">
-                  <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="asset.price"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="20">
-                <el-form-item label="资产备注:" prop="asset.remark">
-                  <el-input size="mini"
-                            type="textarea"
-                            :rows="2"
-                            v-model="asset.remark"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </el-form>
-          <template v-if="asset.adv">
-            <el-form v-show="asset.type=='手机'" :model="asset.adv">
-              <el-row>
-                <el-col :span="6">
-                  <el-form-item label="内存（G）:" prop="memory">
-                    <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                              v-model="asset.adv.memory"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="屏幕尺寸（寸）:" prop="screenSize">
-                    <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                              v-model="asset.adv.screenSize"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </el-form>
-            <el-form v-show="asset.type=='交换机'" :model="asset.adv">
-              <el-row>
-                <el-col :span="6">
-                  <el-form-item label="接口数:" prop="nums">
-                    <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                              v-model="asset.adv.nums"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="类型:" prop="type">
-                    <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                              v-model="asset.adv.type"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </el-form>
-            <el-form v-show="asset.type=='主机'" :model="asset.adv">
-              <el-row>
-                <el-col :span="6">
-                  <el-form-item label="cpu:" prop="cpu">
-                    <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                              v-model="asset.adv.cpu"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="内存（G）:" prop="memory">
-                    <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                              v-model="asset.adv.memory"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </el-form>
-            <el-form v-show="asset.type=='测距仪'" :model="asset.adv">
-              <el-row>
-                <el-col :span="6">
-                  <el-form-item label="精度:" prop="precision">
-                    <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                              v-model="asset.adv.precision"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="距离:" prop="distance">
-                    <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                              v-model="asset.adv.distance"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="方式:" prop="methods">
-                    <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                              v-model="asset.adv.methods"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </el-form>
-            <el-form>
-              <el-row>
-                <el-form-item label="资产相关图片:"></el-form-item>
-              </el-row>
-              <el-row>
-                <el-form-item prop="pics">
-                  <el-upload
-                      ref="upload"
-                      :data="uploadData"
-                      :file-list="fileList"
-                      action="/order/basic/pic/add"
-                      list-type="picture-card"
-                      :on-preview="handlePictureCardPreview"
-                      :on-remove="handleRemove"
-                      :auto-upload="false">
-                    <i class="el-icon-plus"></i>
-                  </el-upload>
-                </el-form-item>
-              </el-row>
-            </el-form>
-          </template>
-        </div>
-        <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible=false">取 消</el-button>
-    <el-button type="primary" @click="editAsset">确 定</el-button>
-  </span>
-      </el-dialog>
+      <AssetEdit v-on:close="dialogVisible = false"
+                 :dialogVisible="dialogVisible" :asset="asset" :fileList="fileList"
+                 :title="title" :types="types"></AssetEdit>
     </div>
   </div>
 </template>
@@ -351,6 +205,7 @@
 <script>
 import AssetDetail from "@/components/asset/AssetDetail";
 import PurchaseOrderEdit from "@/components/purchaseOrder/PurchaseOrderEdit";
+import AssetEdit from "@/components/asset/AssetEdit";
 
 export default {
   name: "AssetInfo",
@@ -362,9 +217,6 @@ export default {
     return {
       // 选中的资产id
       assetIds: [],
-      uploadData: {
-        aid: ""
-      },
       showAdvanceSearchView: false,
       searchValue: {
         type: null,
@@ -401,10 +253,6 @@ export default {
       fileList: [],
       // 资产图片url列表，用于详情页面
       urlList: [],
-      rules: {
-        brand: [{required: true, message: '请输入品牌', trigger: 'blur'}],
-        price: [{required: true, message: '请输入价格', trigger: 'blur'}]
-      },
       type: "",
       types: [],
       statuses: [
@@ -426,7 +274,6 @@ export default {
         }
       ],
       dialogImageUrl: '',
-      visible: false,
       purchase: {
         id: "",
         name: "",
@@ -450,7 +297,8 @@ export default {
   },
   components: {
     AssetDetail,
-    PurchaseOrderEdit
+    PurchaseOrderEdit,
+    AssetEdit
   },
   methods: {
     emptyPurchase() {
@@ -587,20 +435,6 @@ export default {
         }
       });
     },
-    editAsset() {
-      this.$refs['assetForm'].validate(valid => {
-        if (valid) {
-          this.putRequest("/asset/edit", this.asset).then(resp => {
-            if (resp) {
-              this.uploadData.aid = this.asset.id;
-              this.$refs.upload.submit();
-              this.dialogVisible = false;
-              this.initAssets();
-            }
-          })
-        }
-      });
-    },
     clearSearchValue() {
       this.searchValue = {
         type: null,
@@ -610,21 +444,6 @@ export default {
         priceHigh: null,
         dateScope: null
       }
-    },
-    handleRemove(file, fileList) {
-      if (file.id) {
-        this.deleteRequest("/order/basic/pic/remove/?pid=" + file.id).then(resp => {
-              if (resp) {
-                this.initAssets();
-              }
-            }
-        );
-      }
-      console.log(file, fileList);
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.visible = true;
     },
     initTypes() {
       let url = '/asset/types/get';

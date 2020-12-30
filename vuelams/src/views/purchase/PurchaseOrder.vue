@@ -7,7 +7,7 @@
                      icon="el-icon-download">
             导出数据
           </el-button>
-          <el-button @click="deleteOrder" style="display: inline-flex;margin-left: 8px" type="danger">
+          <el-button @click="deletePurchase" style="display: inline-flex;margin-left: 8px" type="danger">
             删除
           </el-button>
         </div>
@@ -383,7 +383,7 @@ export default {
       }
       this.dialogVisible2 = true;
     },
-    delete() {
+    deletePurchase() {
       this.$confirm('此操作将永久删除选中的记录, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

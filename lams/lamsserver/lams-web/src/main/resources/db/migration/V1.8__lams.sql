@@ -267,7 +267,7 @@ CREATE TABLE `process_category` (
   `creator` varchar(10) DEFAULT NULL COMMENT '创建人',
   `create_time` date DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -276,7 +276,7 @@ CREATE TABLE `process_category` (
 
 LOCK TABLES `process_category` WRITE;
 /*!40000 ALTER TABLE `process_category` DISABLE KEYS */;
-INSERT INTO `process_category` VALUES (1,1,'资产入库','assetIn','胡宏建','2020-09-24'),(2,2,'资产出库','assetOut','胡宏建','2020-09-26'),(3,3,'学生离退','studentOut','胡宏建','2020-10-28');
+INSERT INTO `process_category` VALUES (1,1,'资产入库','assetIn','胡宏建','2020-09-24'),(2,2,'资产出库','assetOut','胡宏建','2020-09-26'),(3,3,'学生离退','studentOut','胡宏建','2020-10-28'),(4,4,'资产归还','assetReturn','胡宏建','2020-12-29');
 /*!40000 ALTER TABLE `process_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -390,4 +390,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-29 17:28:32
+-- Dump completed on 2020-12-31  2:36:28

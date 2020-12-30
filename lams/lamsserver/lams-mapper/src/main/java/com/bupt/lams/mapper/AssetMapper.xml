@@ -74,6 +74,7 @@
             and a.status != 1
             <include refid="baseInfoQuery"/>
         </where>
+        order by a.id
         <if test="page !=null and size!=null">
             limit #{page},#{size}
         </if>
@@ -261,6 +262,7 @@
                 #{item}
             </foreach>
         </if>
+        order by a.id
     </select>
     <delete id="deleteManyByAids" parameterType="list">
         delete

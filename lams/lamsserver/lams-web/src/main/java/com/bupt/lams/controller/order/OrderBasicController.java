@@ -1,11 +1,10 @@
 package com.bupt.lams.controller.order;
 
-import com.bupt.lams.model.*;
-import com.bupt.lams.utils.FastDFSUtils;
-import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.dto.OrderQueryCondition;
+import com.bupt.lams.model.*;
 import com.bupt.lams.service.AssetService;
 import com.bupt.lams.service.OrderService;
+import com.bupt.lams.utils.FastDFSUtils;
 import com.bupt.lams.utils.POIUtils;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.apache.commons.collections4.CollectionUtils;
@@ -143,15 +142,25 @@ public class OrderBasicController {
     }
 
     @PostMapping("/pic/add")
-    public RespBean addAssetPics(MultipartFile file, Long aid) {
+    public RespBean addAssetPics(MultipartFile file, String aids) {
+        List<Long> assetIdList = new ArrayList<>();
+        String[] split = aids.split(",");
+        for (String s : split) {
+            assetIdList.add(new Long(s));
+        }
         RespBean response = new RespBean();
         response.setStatus(200);
         response.setMsg("更新资产图片成功!");
+        if (CollectionUtils.isEmpty(assetIdList)) {
+            return RespBean.error("更新资产图片失败!资产id为空！");
+        }
         try {
-            String fileId = FastDFSUtils.upload(file);
-            String url = nginxHost + fileId;
-            AssetPic pic = new AssetPic(aid, file.getOriginalFilename(), url, new Date());
-            assetService.insertAssetPics(pic);
+            for (Long aid : assetIdList) {
+                String fileId = FastDFSUtils.upload(file);
+                String url = nginxHost + fileId;
+                AssetPic pic = new AssetPic(aid, file.getOriginalFilename(), url, new Date());
+                assetService.insertAssetPics(pic);
+            }
             return response;
         } catch (Exception e) {
             logger.error("更新资产图片失败！", e);
@@ -161,6 +170,10 @@ public class OrderBasicController {
 
     @DeleteMapping("/pic/remove")
     public RespBean removeAssetPics(Long pid) {
+        // 资产图片只允许管理员删除
+        if (UserInfoUtils.isAdmin() == false) {
+            return RespBean.error("您没有删除权限，请联系管理员!");
+        }
         RespBean response = new RespBean();
         response.setStatus(200);
         response.setMsg("删除资产图片成功!");

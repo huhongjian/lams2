@@ -152,9 +152,7 @@
             width="80"
             label="操作">
           <template slot-scope="scope">
-            <el-button v-show="scope.row.status=='1'&&scope.row.user.username==user.username"
-                       @click="showEditView(scope.row)">编辑
-            </el-button>
+            <el-button v-show="scope.row.status=='1'" @click="showEditView(scope.row)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -183,7 +181,6 @@ export default {
   name: "AssetIn",
   data() {
     return {
-      user: JSON.parse(window.sessionStorage.getItem("user")),
       searchValue: {
         status: null,
         userEmail: null,

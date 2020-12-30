@@ -171,7 +171,7 @@
     <NewOrderIn v-on:close="dialogVisible4 = false" :dialogVisible4="dialogVisible4" :order="order" :title="title"
                 :types="types"></NewOrderIn>
     <OrderDetail v-on:close="dialogVisible7 = false" :dialogVisible7="dialogVisible7" :order="order" :title="title"
-                 :urlList="urlList" :operateList='operateList'></OrderDetail>
+                 :operateList='operateList'></OrderDetail>
   </div>
 </template>
 
@@ -195,12 +195,8 @@ export default {
       loading: false,
       // 工单详情页可见性
       dialogVisible7: false,
-      // 添加订单信息
-      dialogVisible3: false,
-      // 新增采购工单页面可见性
+      // 新增/编辑采购工单页面可见性
       dialogVisible4: false,
-      // 工单编辑页面可见性
-      dialogVisible5: false,
       total: 0,
       page: 1,
       keyword: '',
@@ -253,11 +249,7 @@ export default {
         assetList: []
       },
       // 搜索类型，空是普通搜索，‘advanced’是高级搜索
-      type: "",
-      // 资产图片列表，用于编辑页面
-      fileList: [],
-      // 资产图片url列表，用于详情页面
-      urlList: []
+      type: ""
     }
   },
   components: {

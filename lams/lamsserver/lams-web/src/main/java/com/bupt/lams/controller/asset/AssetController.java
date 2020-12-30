@@ -79,16 +79,6 @@ public class AssetController {
         return assetService.getReturn(assetQueryCondition);
     }
 
-    @GetMapping("/getCur")
-    public RespPageBean getCurrentAssetInfoByPage(Integer page, Integer size) {
-        return assetService.getCurrentAssetInfoByPage(page, size);
-    }
-
-    @GetMapping("/getOrderAssetList")
-    public RespPageBean getOrderAssetListByPage(Long oid, Integer page, Integer size) {
-        return assetService.getOrderAssetListByPage(oid, page, size);
-    }
-
     @PostMapping("/add")
     public RespBean addAsset(@RequestBody AddAssetData addAssetData) {
         RespBean response = new RespBean();
@@ -183,18 +173,6 @@ public class AssetController {
             logger.error("根据资产编号获取最近工单异常！", e);
             return true;
         }
-    }
-
-    @DeleteMapping("/delete")
-    public RespBean deleteAssets(@RequestBody OrderAssetData deleteData) {
-        try {
-            List<Long> aids = deleteData.getAssetIds();
-            Long oid = deleteData.getOid();
-            assetService.deleteAssets(aids, oid);
-        } catch (Exception e) {
-            return RespBean.error("删除失败!");
-        }
-        return RespBean.ok("删除成功!");
     }
 
     @DeleteMapping("/clear")

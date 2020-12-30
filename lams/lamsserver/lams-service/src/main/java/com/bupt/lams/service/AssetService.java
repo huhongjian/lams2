@@ -110,31 +110,6 @@ public class AssetService {
         return transToRespPageBean(page, size, returnList);
     }
 
-    public RespPageBean getCurrentAssetInfoByPage(Integer page, Integer size) {
-        if (page != null && size != null) {
-            page = (page - 1) * size;
-        }
-        List<Asset> data = assetMapper.getCurrentAssetInfo(page, size);
-        Long total = assetMapper.getCurrentAssetTotal();
-        RespPageBean bean = new RespPageBean();
-        bean.setData(data);
-        bean.setTotal(total);
-        return bean;
-    }
-
-    public RespPageBean getOrderAssetListByPage(Long oid, Integer page, Integer size) {
-        if (page != null && size != null) {
-            page = (page - 1) * size;
-        }
-        List<Asset> data = assetMapper.getOrderAssetList(oid, page, size);
-        Long total = assetMapper.getOrderAssetListTotal(oid);
-        RespPageBean bean = new RespPageBean();
-        bean.setData(data);
-        bean.setTotal(total);
-        return bean;
-    }
-
-
     @OperateRecord(description = "更新资产信息", clazz = UpdateAssetRecord.class)
     public void updateAsset(Asset asset) {
         assetMapper.updateAsset(asset);
@@ -330,20 +305,6 @@ public class AssetService {
             aids.add(asset.getId());
         }
         return aids;
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    public void deleteAssets(List<Long> aids, Long oid) {
-        Order order = orderMapper.selectBaseOrderInfoById(oid);
-        if (order == null) {
-            return;
-        }
-        if (oid != null) {
-            orderAssetMapper.deleteManyByAids(aids, oid);
-            return;
-        }
-        assetMapper.deleteManyByAids(aids);
-        orderAssetMapper.deleteManyByAids(aids, null);
     }
 
     /**

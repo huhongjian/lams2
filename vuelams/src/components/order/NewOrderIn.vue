@@ -117,7 +117,7 @@
   </span>
     </el-dialog>
     <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
-                 :urlList="urlList" :title="title"></AssetDetail>
+                 :urlList="urlList" :title="title2"></AssetDetail>
     <AssetEdit v-on:close="dialogVisible = false"
                v-on:handleAssetIds="handleAssetIds"
                :dialogVisible="dialogVisible" :asset="asset" :fileList="fileList"
@@ -134,15 +134,12 @@ export default {
   props: ['order', 'title', 'dialogVisible4', 'types'],
   data() {
     return {
+      // 初始化资产信息
       initData: {
         // 添加的全部资产id
         aids: [],
         page: 1,
         size: 10
-      },
-      deleteData: {
-        assetIds: [],
-        oid: null
       },
       // 选中的资产id
       assetIds: [],
@@ -170,9 +167,6 @@ export default {
       page: 1,
       size: 10,
       rules: {
-        [`asset.assetName`]: [{required: true, message: '请输入资产名称', trigger: 'blur'}],
-        [`asset.brand`]: [{required: true, message: '请输入品牌', trigger: 'blur'}],
-        [`asset.price`]: [{required: true, message: '请输入价格', trigger: 'blur'}],
         reason: [{required: true, message: '请输入申请理由', trigger: 'blur'}]
       },
     }
@@ -234,7 +228,7 @@ export default {
       this.dialogVisible = true;
     },
     showDetailView(data) {
-      this.title = '申请单详情';
+      this.title2 = '资产详情';
       this.asset = data;
       if (this.asset && this.asset.fileList) {
         this.urlList = [];
@@ -258,6 +252,7 @@ export default {
     },
     deleteAsset() {
       var newArr = [];
+      // 遍历当前的资产id
       for (var i = 0; i < this.order.assetList.length; i++) {
         var flag = true;
         for (var j = 0; j < this.assetIds.length; j++) {
@@ -266,6 +261,7 @@ export default {
             break;
           }
         }
+        // 保留未选中的资产id
         if (flag == true) {
           newArr.push(this.order.assetList[i].id);
         }

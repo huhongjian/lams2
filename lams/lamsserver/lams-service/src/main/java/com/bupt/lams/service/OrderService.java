@@ -33,8 +33,6 @@ public class OrderService {
     private Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     @Resource
-    AssetMapper assetMapper;
-    @Resource
     OrderMapper orderMapper;
     @Resource
     OrderAssetMapper orderAssetMapper;
@@ -136,9 +134,44 @@ public class OrderService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void returnAsset(Order order) {
+        List<Asset> assetList = order.getAssetList();
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        order.setUserEmail(user.getUsername());
+        order.setCategory(ProcessTypeEnum.RETURN.getIndex());
+        order.setStatus(OrderStatusEnum.RETURNING.getIndex());
+        order.setCreateTime(new Date());
+        orderMapper.insertSelective(order);
+        List<OrderAsset> orderAssetList = new ArrayList<>();
+        for (Asset asset : assetList) {
+            OrderAsset orderAsset = new OrderAsset(order.getId(), asset.getId(), new Date(), new Date());
+            orderAssetList.add(orderAsset);
+        }
+        orderAssetMapper.insertMany(orderAssetList);
+        try {
+            // 这个map是开启工作流时间的数据，并不是流转过程中的数据
+            taskOperateService.startWorkFlow(order, ProcessTypeEnum.RETURN.getIndex(), null);
+        } catch (Exception e) {
+            logger.error("启动工作流失败", e);
+            throw e;
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
     @OperateRecord(description = "更新工单信息", clazz = UpdateOrderRecord.class)
     public void updateOrder(Order order) {
         orderMapper.updateOrder(order);
+        List<Long> oids = new ArrayList<>();
+        oids.add(order.getId());
+        orderAssetMapper.deleteManyByOids(oids);
+        List<Asset> assetList = order.getAssetList();
+        List<OrderAsset> orderAssetList = new ArrayList<>();
+        for (Asset asset : assetList) {
+            OrderAsset orderAsset = new OrderAsset(order.getId(), asset.getId(), new Date(), new Date());
+            orderAssetList.add(orderAsset);
+        }
+        orderAssetMapper.insertMany(orderAssetList);
     }
 
     @OperateRecord(description = "删除工单", clazz = DeleteOrderRecord.class)
@@ -175,9 +208,5 @@ public class OrderService {
     public List<Order> queryOrderByCondition(OrderQueryCondition condition) {
         List<Order> data = orderMapper.getOrderByCondition(condition);
         return data;
-    }
-
-    public void resetOrderById(Long oid) {
-        orderMapper.resetOrderById(oid);
     }
 }

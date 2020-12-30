@@ -208,13 +208,6 @@
             id = #{id}
         </where>
     </update>
-    <update id="resetOrderById" parameterType="java.lang.Long">
-        update `order` o
-        set
-            o.expireTime = null,
-            o.reason = null
-        where o.id = #{oid}
-    </update>
     <insert id="insertSelective" parameterType="com.bupt.lams.model.Order" useGeneratedKeys="true" keyProperty="id">
         insert into `order`
         <trim prefix="(" suffix=")" suffixOverrides=",">

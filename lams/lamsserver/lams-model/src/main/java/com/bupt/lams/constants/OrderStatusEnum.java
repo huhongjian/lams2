@@ -12,7 +12,10 @@ public enum OrderStatusEnum {
     REJECTED("审批未通过", 6),
     CLOSED("已关闭", 7),
     REFUSED("审批未通过", 8),
-    STU_OUT("离退申请", 9);
+    STU_OUT("离退申请", 9),
+    RETURNING("归还中", 10),
+    RETURN("已归还", 11),
+    TURN_DOWN("审批未通过", 12);
 
     private String name;
     private int index;

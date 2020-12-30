@@ -215,7 +215,7 @@ public class AssetController {
         } catch (Exception e) {
             return RespBean.error("清空无效资产信息失败!");
         }
-        return RespBean.ok("清空无效资产信息成功!");
+        return RespBean.ok(null);
     }
 
     @PostMapping("/addRelation")
@@ -245,6 +245,10 @@ public class AssetController {
      */
     @PostMapping("/getAssetByAids")
     public RespPageBean getAssetByAids(@RequestBody AssetQueryCondition initData) {
+        List<Long> aids = initData.getAids();
+        if (CollectionUtils.isEmpty(aids)) {
+            return new RespPageBean();
+        }
         return assetService.getAssetByCondition(initData);
     }
 }

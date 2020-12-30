@@ -81,11 +81,29 @@ public class OrderBasicController {
         return response;
     }
 
+    @PostMapping("/return")
+    public RespBean returnAsset(@RequestBody Order order) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        List<Asset> assetList = order.getAssetList();
+        if (CollectionUtils.isEmpty(assetList)) {
+            return RespBean.error("资产归还失败！资产信息不能为空！");
+        }
+        try {
+            orderService.returnAsset(order);
+        } catch (Exception e) {
+            logger.error("资产归还异常！", e);
+            response.setStatus(500);
+            response.setMsg("资产归还异常，请稍后重试");
+        }
+        return response;
+    }
+
     @PutMapping("/edit")
     public RespBean updateOrder(@RequestBody Order order) {
         LamsUser loginedUser = UserInfoUtils.getLoginedUser();
         // 工单只允许管理员和申请人修改
-        if (loginedUser.getUsername().equals(order.getUser().getUsername()) || UserInfoUtils.isAdmin() == false) {
+        if (!loginedUser.getUsername().equals(order.getUser().getUsername()) && UserInfoUtils.isAdmin() == false) {
             return RespBean.error("您没有编辑权限，请联系管理员!");
         }
         try {

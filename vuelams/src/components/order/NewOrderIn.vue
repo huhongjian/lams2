@@ -119,7 +119,7 @@
     <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
                  :urlList="urlList" :title="title"></AssetDetail>
     <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :asset="asset" :fileList="fileList"
-               :title="title2" :types="types" :oid="null"></AssetEdit>
+               :title="title2" :types="types" :oid="this.order.id"></AssetEdit>
   </div>
 </template>
 
@@ -175,15 +175,20 @@ export default {
   },
   methods: {
     handleCancle() {
-      this.deleteRequest("/asset/clear").then(resp => {
-        if (resp) {
-          this.$emit('close');
-        }
-      })
+      if (this.order.id) {
+        this.$parent.initOrders();
+        this.$emit('close');
+      } else {
+        this.deleteRequest("/asset/clear").then(resp => {
+          if (resp) {
+            this.$emit('close');
+          }
+        })
+      }
     },
     emptyAsset() {
       this.asset = {
-        id: null,
+        id: "",
         assetName: "",
         brand: "",
         type: "",
@@ -199,8 +204,6 @@ export default {
           if (valid) {
             this.putRequest("/order/basic/edit", this.order).then(resp => {
               if (resp) {
-                this.uploadData.aid = this.order.asset.id;
-                this.$refs.upload.submit();
                 this.$emit('close');
                 this.$parent.initOrders();
               }
@@ -256,7 +259,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.deleteData.assetIds = this.assetIds;
-        this.deleteData.oid = null;
+        this.deleteData.oid = this.order.id;
         this.deleteRequestWithData("/asset/delete", this.deleteData).then(resp => {
           if (resp) {
             this.assetIds = [];
@@ -276,6 +279,9 @@ export default {
     initAssets() {
       this.loading = true;
       let url = '/asset/getCur/?page=' + this.page + '&size=' + this.size;
+      if (this.order.id) {
+        url = '/asset/getOrderAssetList/?oid=' + this.order.id + '&page=' + this.page + '&size=' + this.size;
+      }
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {

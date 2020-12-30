@@ -121,15 +121,6 @@
           </template>
         </el-table-column>
         <el-table-column
-            :show-overflow-tooltip="true"
-            label="关联资产编号">
-          <template slot-scope="scope">
-            <el-tag type="success" style="margin-right: 4px" v-for="(asset,indexj) in scope.row.assetList"
-                    :key="indexj">{{ asset.id }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
             prop="statusName"
             width="90"
             label="状态">
@@ -148,30 +139,29 @@
           </template>
         </el-table-column>
         <el-table-column
-            prop="expireTime"
-            width="100"
-            align="left"
-            label="预计归还时间">
-        </el-table-column>
-        <el-table-column
-            prop="reason"
-            label="申请理由">
+            :show-overflow-tooltip="true"
+            label="关联资产编号">
+          <template slot-scope="scope">
+            <el-tag type="success" style="margin-right: 4px" v-for="(asset,indexj) in scope.row.assetList"
+                    :key="indexj">{{ asset.id }}
+            </el-tag>
+          </template>
         </el-table-column>
         <el-table-column
             prop="user.name"
             width="95"
             align="left"
-            label="负责人">
+            label="申请人">
         </el-table-column>
         <el-table-column
             prop="user.username"
             width="150"
-            label="负责人邮箱">
+            label="申请人邮箱">
         </el-table-column>
         <el-table-column
             prop="user.phone"
             width="100"
-            label="负责人电话">
+            label="申请人电话">
         </el-table-column>
         <el-table-column
             prop="createTime"
@@ -184,7 +174,7 @@
             width="80"
             label="操作">
           <template slot-scope="scope">
-            <el-button v-show="scope.row.status=='4'&&scope.row.user.username==user.username"
+            <el-button v-show="scope.row.status=='10'&&scope.row.user.username==user.username"
                        @click="showEditView(scope.row)">编辑
             </el-button>
           </template>
@@ -202,8 +192,6 @@
     </div>
     <NewOrderReturn v-on:close="dialogVisible4 = false" :dialogVisible4="dialogVisible4" :order="order" :title="title"
                  :types="types"></NewOrderReturn>
-    <OrderEdit v-on:close="dialogVisible5 = false" :dialogVisible5="dialogVisible5" :order="order" :fileList="fileList"
-               :title="title"></OrderEdit>
     <OrderDetail v-on:close="dialogVisible7 = false" :dialogVisible7="dialogVisible7" :order="order" :title="title"
                  :urlList="urlList" :operateList='operateList'></OrderDetail>
   </div>
@@ -211,7 +199,6 @@
 
 <script>
 import OrderDetail from "@/components/order/OrderDetail";
-import OrderEdit from "@/components/order/OrderEdit";
 import NewOrderReturn from "@/components/order/NewOrderReturn";
 
 export default {
@@ -292,8 +279,7 @@ export default {
   },
   components: {
     NewOrderReturn,
-    OrderDetail,
-    OrderEdit
+    OrderDetail
   },
   mounted() {
     this.initOrders();
@@ -352,7 +338,7 @@ export default {
     showEditView(data) {
       this.title = '编辑申请信息';
       this.order = data;
-      this.dialogVisible5 = true;
+      this.dialogVisible4 = true;
     },
     showDetailView(data) {
       this.title = '申请单详情';

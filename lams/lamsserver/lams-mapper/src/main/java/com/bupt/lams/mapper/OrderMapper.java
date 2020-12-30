@@ -35,8 +35,6 @@ public interface OrderMapper {
 
     void updateOrder(Order order);
 
-    void resetOrderById(@Param("oid") Long oid);
-
     int insertSelective(Order order);
 
     void deleteManyByOids(List<Long> oids);

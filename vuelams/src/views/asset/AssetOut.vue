@@ -121,15 +121,6 @@
           </template>
         </el-table-column>
         <el-table-column
-            :show-overflow-tooltip="true"
-            label="关联资产编号">
-          <template slot-scope="scope">
-            <el-tag type="success" style="margin-right: 4px" v-for="(asset,indexj) in scope.row.assetList"
-                    :key="indexj">{{ asset.id }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
             prop="statusName"
             width="90"
             label="状态">
@@ -145,6 +136,15 @@
             <span style="color: #c0c0c0;"
                   v-else-if="scope.row.status=='7'">{{ scope.row.statusName }}</span>
             <span v-else>{{ scope.row.statusName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+            :show-overflow-tooltip="true"
+            label="关联资产编号">
+          <template slot-scope="scope">
+            <el-tag type="success" style="margin-right: 4px" v-for="(asset,indexj) in scope.row.assetList"
+                    :key="indexj">{{ asset.id }}
+            </el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -202,8 +202,6 @@
     </div>
     <NewOrderOut v-on:close="dialogVisible4 = false" :dialogVisible4="dialogVisible4" :order="order" :title="title"
                  :types="types"></NewOrderOut>
-    <OrderEdit v-on:close="dialogVisible5 = false" :dialogVisible5="dialogVisible5" :order="order" :fileList="fileList"
-               :title="title"></OrderEdit>
     <OrderDetail v-on:close="dialogVisible7 = false" :dialogVisible7="dialogVisible7" :order="order" :title="title"
                  :urlList="urlList" :operateList='operateList'></OrderDetail>
   </div>
@@ -211,7 +209,6 @@
 
 <script>
 import OrderDetail from "@/components/order/OrderDetail";
-import OrderEdit from "@/components/order/OrderEdit";
 import NewOrderOut from "@/components/order/NewOrderOut";
 
 export default {
@@ -292,8 +289,7 @@ export default {
   },
   components: {
     NewOrderOut,
-    OrderDetail,
-    OrderEdit
+    OrderDetail
   },
   mounted() {
     this.initOrders();
@@ -352,7 +348,7 @@ export default {
     showEditView(data) {
       this.title = '编辑申请信息';
       this.order = data;
-      this.dialogVisible5 = true;
+      this.dialogVisible4 = true;
     },
     showDetailView(data) {
       this.title = '申请单详情';

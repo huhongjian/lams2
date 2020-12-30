@@ -191,26 +191,12 @@ export default {
     AssetDetail
   },
   methods: {
-    emptyAsset() {
-      this.asset = {
-        id: "",
-        assetName: "",
-        brand: "",
-        type: "",
-        price: "",
-        fileList: [],
-        adv: {},
-        remark: ""
-      }
-    },
     doAddOrderOut() {
       if (this.order.id) {
         this.$refs['orderForm'].validate(valid => {
           if (valid) {
             this.putRequest("/order/basic/edit", this.order).then(resp => {
               if (resp) {
-                this.uploadData.aid = this.order.asset.id;
-                this.$refs.upload.submit();
                 this.$emit('close');
                 this.$parent.initOrders();
               }
@@ -231,8 +217,6 @@ export default {
       }
     },
     showAddView() {
-      // this.emptyAsset();
-      // this.fileList = [];
       this.title2 = '选择资产';
       this.dialogVisible6 = true;
     },
@@ -251,16 +235,16 @@ export default {
     },
     deleteAsset() {
       var newArr = [];
-      for (var i = 0; i < this.initData.aids.length; i++) {
+      for (var i = 0; i < this.order.assetList.length; i++) {
         var flag = true;
         for (var j = 0; j < this.assetIds.length; j++) {
-          if (this.initData.aids[i] == this.assetIds[j]) {
+          if (this.order.assetList[i].id == this.assetIds[j]) {
             flag = false;
             break;
           }
         }
         if (flag == true) {
-          newArr.push(this.initData.aids[i]);
+          newArr.push(this.order.assetList[i].id);
         }
       }
       this.initData.aids = newArr;
@@ -295,8 +279,15 @@ export default {
       }
     },
     handleAssetIds: function (assetIds) {
+      // 编辑的时候，this.initData.aids是空的，展示的是this.order.assetList的资产信息，先同步一下
+      // 因为后续会根据this.initData.aids获取资产信息
+      for (var i = 0; i < this.order.assetList.length; i++) {
+        this.initData.aids.push(this.order.assetList[i].id);
+      }
       // assetIds就是子组件AssetSelect传过来的值
-      this.initData.aids = assetIds;
+      for (let i = 0; i < assetIds.length; i++) {
+        this.initData.aids.push(assetIds[i]);
+      }
       this.dialogVisible6 = false;
       this.initAssets();
     },

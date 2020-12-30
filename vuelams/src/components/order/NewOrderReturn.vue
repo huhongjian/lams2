@@ -185,8 +185,6 @@ export default {
           if (valid) {
             this.putRequest("/order/basic/edit", this.order).then(resp => {
               if (resp) {
-                this.uploadData.aid = this.order.asset.id;
-                this.$refs.upload.submit();
                 this.$emit('close');
                 this.$parent.initOrders();
               }
@@ -271,8 +269,15 @@ export default {
       }
     },
     handleAssetIds: function (assetIds) {
+      // 编辑的时候，this.initData.aids是空的，展示的是this.order.assetList的资产信息，先同步一下
+      // 因为后续会根据this.initData.aids获取资产信息
+      for (var i = 0; i < this.order.assetList.length; i++) {
+        this.initData.aids.push(this.order.assetList[i].id);
+      }
       // assetIds就是子组件AssetSelect传过来的值
-      this.initData.aids = assetIds;
+      for (let i = 0; i < assetIds.length; i++) {
+        this.initData.aids.push(assetIds[i]);
+      }
       this.dialogVisible6 = false;
       this.initAssets();
     },

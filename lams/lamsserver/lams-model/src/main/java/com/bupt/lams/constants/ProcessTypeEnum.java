@@ -6,7 +6,8 @@ package com.bupt.lams.constants;
 public enum ProcessTypeEnum {
     IN("入库", 1),
     OUT("出库", 2),
-    LEAVE("离退", 3);
+    LEAVE("离退", 3),
+    RETURN("归还", 4);
 
     private String name;
     private int index;

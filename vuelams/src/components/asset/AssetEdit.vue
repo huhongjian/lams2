@@ -152,7 +152,7 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="$emit('close')">取 消</el-button>
+    <el-button @click="handleClose">取 消</el-button>
     <el-button type="primary" @click="doAddAsset">确 定</el-button>
   </span>
     </el-dialog>
@@ -165,16 +165,15 @@
 <script>
 export default {
   name: "AssetEdit",
-  props: ['asset', 'fileList', 'title', 'dialogVisible', 'types', 'oid'],
+  props: ['asset', 'fileList', 'title', 'dialogVisible', 'types'],
   data() {
     return {
       addData: {
         asset: {},
-        amount: 1,
-        oid: null
+        amount: 1
       },
       uploadData: {
-        aid: ""
+        aids: []
       },
       rules: {
         assetName: [{required: true, message: '请输入资产名称', trigger: 'blur'}],
@@ -193,7 +192,8 @@ export default {
           if (valid) {
             this.putRequest("/asset/edit", this.asset).then(resp => {
               if (resp) {
-                this.uploadData.aid = this.asset.id;
+                this.uploadData.aids = [];
+                this.uploadData.aids.push(this.asset.id);
                 this.$refs.upload.submit();
                 this.$emit('close');
                 this.$parent.initAssets();
@@ -205,13 +205,12 @@ export default {
         this.$refs['assetForm'].validate(valid => {
           if (valid) {
             this.addData.asset = this.asset;
-            this.addData.oid = this.oid;
             this.postRequest("/asset/add", this.addData).then(resp => {
               if (resp) {
-                this.uploadData.aid = resp.obj;
+                this.addData.amount = 1;
+                this.uploadData.aids = resp.obj;
                 this.$refs.upload.submit();
-                this.$emit('close');
-                this.$parent.initAssets();
+                this.$emit('handleAssetIds', resp.obj);
               }
             })
           }
@@ -219,6 +218,7 @@ export default {
       }
     },
     handleClose() {
+      this.addData.amount = 1;
       this.$emit('close');
     },
     handleRemove(file, fileList) {

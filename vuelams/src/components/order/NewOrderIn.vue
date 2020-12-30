@@ -118,8 +118,10 @@
     </el-dialog>
     <AssetDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :asset="asset"
                  :urlList="urlList" :title="title"></AssetDetail>
-    <AssetEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :asset="asset" :fileList="fileList"
-               :title="title2" :types="types" :oid="this.order.id"></AssetEdit>
+    <AssetEdit v-on:close="dialogVisible = false"
+               v-on:handleAssetIds="handleAssetIds"
+               :dialogVisible="dialogVisible" :asset="asset" :fileList="fileList"
+               :title="title2" :types="types"></AssetEdit>
   </div>
 </template>
 
@@ -132,6 +134,12 @@ export default {
   props: ['order', 'title', 'dialogVisible4', 'types'],
   data() {
     return {
+      initData: {
+        // 添加的全部资产id
+        aids: [],
+        page: 1,
+        size: 10
+      },
       deleteData: {
         assetIds: [],
         oid: null
@@ -175,20 +183,16 @@ export default {
   },
   methods: {
     handleCancle() {
-      if (this.order.id) {
-        this.$parent.initOrders();
-        this.$emit('close');
-      } else {
-        this.deleteRequest("/asset/clear").then(resp => {
-          if (resp) {
-            this.$emit('close');
-          }
-        })
-      }
+      this.deleteRequest("/asset/clear").then(resp => {
+        if (resp) {
+          this.$emit('close');
+        }
+      })
     },
     emptyAsset() {
       this.asset = {
-        id: "",
+        // 为null时候，才会有数量选项
+        id: null,
         assetName: "",
         brand: "",
         type: "",
@@ -253,36 +257,29 @@ export default {
       this.dialogVisible = true;
     },
     deleteAsset() {
-      this.$confirm('此操作将永久删除选中的记录, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.deleteData.assetIds = this.assetIds;
-        this.deleteData.oid = this.order.id;
-        this.deleteRequestWithData("/asset/delete", this.deleteData).then(resp => {
-          if (resp) {
-            this.assetIds = [];
-            this.initAssets();
+      var newArr = [];
+      for (var i = 0; i < this.order.assetList.length; i++) {
+        var flag = true;
+        for (var j = 0; j < this.assetIds.length; j++) {
+          if (this.order.assetList[i].id == this.assetIds[j]) {
+            flag = false;
+            break;
           }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
+        }
+        if (flag == true) {
+          newArr.push(this.order.assetList[i].id);
+        }
+      }
+      this.initData.aids = newArr;
+      this.initAssets();
     },
     handleClose() {
       this.$emit('close');
     },
     initAssets() {
       this.loading = true;
-      let url = '/asset/getCur/?page=' + this.page + '&size=' + this.size;
-      if (this.order.id) {
-        url = '/asset/getOrderAssetList/?oid=' + this.order.id + '&page=' + this.page + '&size=' + this.size;
-      }
-      this.getRequest(url).then(resp => {
+      let url = '/asset/getAssetByAids';
+      this.postRequest(url, this.initData).then(resp => {
         this.loading = false;
         if (resp) {
           this.order.assetList = resp.data;
@@ -303,6 +300,19 @@ export default {
       for (let i = 0; i < val.length; i++) {
         this.assetIds.push(val[i].id);
       }
+    },
+    handleAssetIds: function (assetIds) {
+      // 编辑的时候，this.initData.aids是空的，展示的是this.order.assetList的资产信息，先同步一下
+      // 因为后续会根据this.initData.aids获取资产信息
+      for (var i = 0; i < this.order.assetList.length; i++) {
+        this.initData.aids.push(this.order.assetList[i].id);
+      }
+      // assetIds就是子组件AssetSelect传过来的值
+      for (let i = 0; i < assetIds.length; i++) {
+        this.initData.aids.push(assetIds[i]);
+      }
+      this.dialogVisible = false;
+      this.initAssets();
     }
   }
 }

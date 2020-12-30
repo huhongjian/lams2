@@ -105,15 +105,14 @@ public class AssetController {
         response.setStatus(200);
         response.setMsg("资产新增成功!");
         Asset asset = addAssetData.getAsset();
-        Long oid = addAssetData.getOid();
         Integer amount = addAssetData.getAmount() == null ? 1 : addAssetData.getAmount();
         if (amount <= 0 || amount >= 100) {
             logger.error("资产数量不在限定范围！");
             return RespBean.error("资产数量不在限定范围！");
         }
         try {
-            assetService.addAsset(asset, oid, amount);
-            response.setObj(asset.getId());
+            List<Long> aids = assetService.addAsset(asset, amount);
+            response.setObj(aids);
         } catch (Exception e) {
             logger.error("新增资产失败", e);
             return RespBean.error("新增资产失败！");
@@ -249,6 +248,6 @@ public class AssetController {
         if (CollectionUtils.isEmpty(aids)) {
             return new RespPageBean();
         }
-        return assetService.getAssetByCondition(initData);
+        return assetService.getAssetPageInfoByIds(initData);
     }
 }

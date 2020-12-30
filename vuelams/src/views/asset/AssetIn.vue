@@ -300,7 +300,7 @@ export default {
     OrderDetail
   },
   mounted() {
-    this.initOrders();
+    this.clearAndInit();
     this.initTypes();
   },
   methods: {
@@ -351,15 +351,7 @@ export default {
         },
         createTime: "",
         updateTime: "",
-        asset: {
-          id: "",
-          brand: "",
-          type: "",
-          price: "",
-          fileList: [],
-          adv: {},
-          remark: ""
-        }
+        assetList: []
       };
     },
     showAddView() {
@@ -489,6 +481,13 @@ export default {
         priceHigh: null,
         dateScope: null
       }
+    },
+    clearAndInit() {
+      this.deleteRequest("/asset/clear").then(resp => {
+        if (resp) {
+          this.initOrders();
+        }
+      })
     }
   }
 }

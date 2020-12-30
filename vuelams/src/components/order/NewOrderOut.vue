@@ -145,10 +145,6 @@ export default {
           return this.dealDisabledDate(time);
         }
       },
-      deleteData: {
-        assetIds: [],
-        oid: null
-      },
       initData: {
         // 添加的全部资产id
         aids: [],

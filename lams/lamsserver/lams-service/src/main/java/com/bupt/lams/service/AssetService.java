@@ -77,17 +77,7 @@ public class AssetService {
                 availableList.add(asset);
             }
         }
-        Long total = Long.valueOf(availableList.size());
-        Integer end = Math.min(page + size, availableList.size());
-        // 展示的数据
-        List<Asset> res = new ArrayList<>();
-        for (Integer i = page; i < end; i++) {
-            res.add(availableList.get(i));
-        }
-        RespPageBean bean = new RespPageBean();
-        bean.setData(res);
-        bean.setTotal(total);
-        return bean;
+        return transToRespPageBean(page, size, availableList);
     }
 
     public RespPageBean getReturn(AssetQueryCondition condition) {
@@ -107,17 +97,7 @@ public class AssetService {
                 returnList.add(asset);
             }
         }
-        Long total = Long.valueOf(returnList.size());
-        Integer end = Math.min(page + size, returnList.size());
-        // 展示的数据
-        List<Asset> res = new ArrayList<>();
-        for (Integer i = page; i < end; i++) {
-            res.add(returnList.get(i));
-        }
-        RespPageBean bean = new RespPageBean();
-        bean.setData(res);
-        bean.setTotal(total);
-        return bean;
+        return transToRespPageBean(page, size, returnList);
     }
 
     public RespPageBean getCurrentAssetInfoByPage(Integer page, Integer size) {
@@ -282,6 +262,40 @@ public class AssetService {
         return assetMapper.getAssetInfoByIds(aids);
     }
 
+    public RespPageBean getAssetPageInfoByIds(AssetQueryCondition initData) {
+        List<Long> aids = initData.getAids();
+        Integer page = initData.getPage();
+        Integer size = initData.getSize();
+        if (page != null && size != null) {
+            page = (page - 1) * size;
+        }
+        // 所有满足查找条件的资产信息
+        List<Asset> data = assetMapper.getAssetInfoByIds(aids);
+        return transToRespPageBean(page, size, data);
+    }
+
+    /**
+     * 将结果集转化为展示集合
+     *
+     * @param page
+     * @param size
+     * @param data
+     * @return
+     */
+    private RespPageBean transToRespPageBean(Integer page, Integer size, List<Asset> data) {
+        Long total = Long.valueOf(data.size());
+        Integer end = Math.min(page + size, data.size());
+        // 展示的数据
+        List<Asset> res = new ArrayList<>();
+        for (Integer i = page; i < end; i++) {
+            res.add(data.get(i));
+        }
+        RespPageBean bean = new RespPageBean();
+        bean.setData(res);
+        bean.setTotal(total);
+        return bean;
+    }
+
     /**
      * 获取目前有效的资产的总数（包括：闲置，故障，使用中）
      *
@@ -298,21 +312,14 @@ public class AssetService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void addAsset(Asset asset, Long oid, Integer amount) {
+    public List<Long> addAsset(Asset asset, Integer amount) {
+        List<Long> aids = new ArrayList<>();
         for (Integer i = 0; i < amount; i++) {
             asset.setStatus(AssetStatusEnum.CREATE.getIndex());
             assetMapper.insertSelective(asset);
-            Order order = orderMapper.selectBaseOrderInfoById(oid);
-            // 如果工单id存在，那么是编辑工单，所以在添加的时候还要添加工单和资产的关系
-            if (oid != null && order != null) {
-                OrderAsset orderAsset = new OrderAsset();
-                orderAsset.setAid(asset.getId());
-                orderAsset.setOid(oid);
-                orderAsset.setCreateTime(new Date());
-                orderAsset.setUpdateTime(new Date());
-                orderAssetMapper.insertSelective(orderAsset);
-            }
+            aids.add(asset.getId());
         }
+        return aids;
     }
 
     @Transactional(rollbackFor = Exception.class)

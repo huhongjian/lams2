@@ -248,9 +248,12 @@
         select id
         from asset
     </select>
-    <select id="getAssetInfoByIds" parameterType="list" resultType="com.bupt.lams.model.Asset">
-        select a.*
-        from asset a
+    <select id="getAssetInfoByIds" parameterType="list" resultMap="BaseResultMap">
+        select a.*,
+        p.id as pid, p.aid as p_aid, p.name as p_name, p.createTime as p_createTime, p.*
+        from
+        asset a
+        left join asset_pics p on a.id = p.aid
         where 1=1
         <if test="list != null and list.size>0">
             and a.id in

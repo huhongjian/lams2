@@ -251,6 +251,9 @@ export default {
     },
     initAssets() {
       this.loading = true;
+      for (var i = 0; i < this.order.assetList.length; i++) {
+        this.initData.aids.push(this.order.assetList[i].id);
+      }
       let url = '/asset/getAssetByAids';
       this.postRequest(url, this.initData).then(resp => {
         this.loading = false;

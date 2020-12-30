@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,11 +42,16 @@ public class OrderService {
         if (page != null && size != null) {
             page = (page - 1) * size;
         }
-        condition.setPage(page);
         List<Order> data = orderMapper.getOrderByCondition(condition);
-        Long total = orderMapper.getTotalByCondition(condition);
+        Long total = Long.valueOf(data.size());
+        Integer end = Math.min(page + size, data.size());
+        // 展示的数据
+        List<Order> res = new ArrayList<>();
+        for (Integer i = page; i < end; i++) {
+            res.add(data.get(i));
+        }
         RespPageBean bean = new RespPageBean();
-        bean.setData(data);
+        bean.setData(res);
         bean.setTotal(total);
         return bean;
     }
@@ -122,7 +128,6 @@ public class OrderService {
     @Transactional(rollbackFor = Exception.class)
     @OperateRecord(description = "归还资产", clazz = ReturnAssetRecord.class)
     public void returnAsset(Order order) {
-        List<Asset> assetList = order.getAssetList();
         LamsUser user = UserInfoUtils.getLoginedUser();
         order.setUserEmail(user.getUsername());
         order.setCategory(ProcessTypeEnum.RETURN.getIndex());

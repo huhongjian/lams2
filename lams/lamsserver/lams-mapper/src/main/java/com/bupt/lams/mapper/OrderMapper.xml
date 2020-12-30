@@ -267,8 +267,5 @@
             <include refid="baseInfoQuery"/>
         </where>
         order by o.id
-        <if test="page !=null and size!=null">
-            limit #{page},#{size}
-        </if>
     </select>
 </mapper>

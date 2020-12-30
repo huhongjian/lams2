@@ -259,13 +259,11 @@
         p.id as pid, p.aid as p_aid, p.name as p_name, p.createTime as p_createTime, p.*
         from
         `order` o
-        left join lams_user u on o.userEmail = u.username,
-        order_asset oa,
-        asset a
+        left join lams_user u on o.userEmail = u.username
+        left join order_asset oa on o.id = oa.oid
+        left join asset a on a.id = oa.aid
         left join asset_pics p on a.id = p.aid
         <where>
-            o.id = oa.oid
-            and a.id = oa.aid
             <include refid="baseInfoQuery"/>
         </where>
         order by o.id

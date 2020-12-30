@@ -41,6 +41,7 @@
             </el-col>
           </el-row>
           <el-table
+              v-show="order.assetList&&order.assetList.length>0"
               :data="order.assetList"
               stripe
               border
@@ -132,8 +133,7 @@ export default {
       name: '',
       taskHandleDto: {
         id: null,
-        operateType: null,
-        candidateUser: null
+        operateType: null
       },
       urlList: []
     }

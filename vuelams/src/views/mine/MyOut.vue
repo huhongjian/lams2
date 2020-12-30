@@ -218,8 +218,8 @@ export default {
         status: "",
         statusName: "",
         expireTime: "",
-        reason: "测试",
-        userEmail: "admin",
+        reason: "",
+        userEmail: "",
         user: {
           id: "",
           name: "",
@@ -228,20 +228,11 @@ export default {
         },
         createTime: "",
         updateTime: "",
-        asset: {
-          id: "",
-          status: "",
-          statusName: "",
-          brand: "华为",
-          type: "手机",
-          price: "4000",
-          adv: {}
-        }
+        assetList: []
       },
       taskHandleDto: {
         id: null,
-        operateType: null,
-        candidateUser: null
+        operateType: null
       }
     }
   },
@@ -260,8 +251,8 @@ export default {
         status: "",
         statusName: "",
         expireTime: "",
-        reason: "测试",
-        userEmail: "admin",
+        reason: "",
+        userEmail: "",
         user: {
           id: "",
           name: "",
@@ -272,17 +263,11 @@ export default {
         },
         createTime: "",
         updateTime: "",
-        asset: {
-          id: "",
-          brand: "华为",
-          type: "手机",
-          price: "4000",
-          adv: {},
-        }
+        assetList: []
       };
     },
     showDetailView(data) {
-      this.title = '资产详情';
+      this.title = '离退单详情';
       this.order = data;
       this.dialogVisible2 = true;
     },
@@ -309,9 +294,7 @@ export default {
     },
     checkAndHandle(data) {
       this.taskHandleDto.operateType = data;
-      if (data == '5') {
-        this.visible = true;
-      } else if (data == '7') {
+      if (data == '7') {
         this.cancel();
       } else {
         this.handle();

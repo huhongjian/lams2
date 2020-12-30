@@ -26,28 +26,7 @@
         <div v-show="showAdvanceSearchView"
              style="border: 1px solid #759ad1;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;">
           <el-row>
-            <el-col :span="6">
-              类型:
-              <el-select v-model="searchValue.type"
-                         clearable
-                         placeholder="类型"
-                         size="mini"
-                         style="width: 130px;">
-                <el-option
-                    v-for="item in types"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.name">
-                </el-option>
-              </el-select>
-            </el-col>
-            <el-col :span="5">
-              品牌:
-              <el-input size="mini" style="width: 100px" prefix-icon="el-icon-edit"
-                        clearable
-                        v-model="searchValue.brand"></el-input>
-            </el-col>
-            <el-col :span="5">
+            <el-col :span="4">
               状态:
               <el-select v-model="searchValue.status" clearable placeholder="状态" size="mini" style="width: 130px;">
                 <el-option
@@ -58,14 +37,12 @@
                 </el-option>
               </el-select>
             </el-col>
-          </el-row>
-          <el-row style="margin-top: 10px">
             <el-col :span="6">
               申请人邮箱:
-              <el-input size="mini" style="width: 150px" clearable prefix-icon="el-icon-edit"
+              <el-input size="mini" style="width: 200px" clearable prefix-icon="el-icon-edit"
                         v-model="searchValue.userEmail"></el-input>
             </el-col>
-            <el-col :span="9">
+            <el-col :span="10">
               申请时间:
               <el-date-picker
                   v-model="searchValue.dateScope"
@@ -78,7 +55,7 @@
                   end-placeholder="结束日期">
               </el-date-picker>
             </el-col>
-            <el-col :span="5" :offset="4">
+            <el-col :span="4">
               <el-button size="mini" @click="clearSearchValue">重置</el-button>
               <el-button size="mini" @click="showAdvanceSearchView = false">取消</el-button>
               <el-button size="mini" icon="el-icon-search" type="primary" @click="initOrdersAdv">搜索</el-button>
@@ -89,16 +66,13 @@
     </div>
     <Mine v-on:currentSize="sizeChange" v-on:currentPage="currentChange" :orders="orders" :total="total" :page="page"
           :size="size" :loading="loading"></Mine>
-    <OrderEdit v-on:close="dialogVisible = false" :dialogVisible="dialogVisible" :order="order" :fileList="fileList"
-               :title="title"></OrderEdit>
-    <OrderDetail v-on:close="dialogVisible2 = false" :dialogVisible2="dialogVisible2" :order="order" :title="title"
+    <OrderDetail v-on:close="dialogVisible7 = false" :dialogVisible7="dialogVisible7" :order="order" :title="title"
                  :operateList='operateList'></OrderDetail>
   </div>
 </template>
 
 <script>
 import OrderDetail from "@/components/order/OrderDetail";
-import OrderEdit from "@/components/asset/AssetEdit";
 import Mine from "@/components/order/Mine";
 
 export default {
@@ -106,8 +80,6 @@ export default {
   data() {
     return {
       searchValue: {
-        type: null,
-        brand: null,
         status: null,
         userEmail: null,
         dateScope: null
@@ -116,9 +88,8 @@ export default {
       showAdvanceSearchView: false,
       orders: [],
       loading: false,
-      dialogVisible: false,
       // 详情页可见性
-      dialogVisible2: false,
+      dialogVisible7: false,
       total: 0,
       page: 1,
       keyword: '',
@@ -177,7 +148,7 @@ export default {
         },
         {
           id: 6,
-          name: "审批未通过"
+          name: "审批未通过（采购）"
         },
         {
           id: 7,
@@ -185,8 +156,24 @@ export default {
         },
         {
           id: 8,
-          name: "审批未通过"
-        }
+          name: "审批未通过（借用）"
+        },
+        {
+          id: 9,
+          name: "离退申请"
+        },
+        {
+          id: 10,
+          name: "归还中"
+        },
+        {
+          id: 11,
+          name: "已归还"
+        },
+        {
+          id: 12,
+          name: "审批未通过（归还）"
+        },
       ],
       type: "",
       fileList: []
@@ -194,8 +181,7 @@ export default {
   },
   components: {
     Mine,
-    OrderDetail,
-    OrderEdit
+    OrderDetail
   },
   mounted() {
     this.initOrders();
@@ -220,29 +206,13 @@ export default {
         },
         createTime: "",
         updateTime: "",
-        asset: {
-          id: "",
-          brand: "华为",
-          type: "手机",
-          price: "4000",
-          adv: {},
-        }
+        assetList: []
       };
-    },
-    showEditView(data) {
-      this.title = '编辑申请信息';
-      this.order = data;
-      if (this.order.asset.fileList && this.order.asset.fileList.length > 0) {
-        this.fileList = this.order.asset.fileList;
-      } else {
-        this.fileList = null;
-      }
-      this.dialogVisible = true;
     },
     showDetailView(data) {
       this.title = '申请单详情';
       this.order = data;
-      this.dialogVisible2 = true;
+      this.dialogVisible7 = true;
     },
     getOperateList(data) {
       this.getRequest('/order/task/getOperateList?id=' + data.id).then(resp => {
@@ -276,12 +246,6 @@ export default {
       this.type = 'advanced'
       this.loading = true;
       let url = '/order/task/getMyApply/?page=' + this.page + '&size=' + this.size;
-      if (this.searchValue.type) {
-        url += '&type=' + this.searchValue.type;
-      }
-      if (this.searchValue.brand) {
-        url += '&brand=' + this.searchValue.brand;
-      }
       if (this.searchValue.status) {
         url += '&status=' + this.searchValue.status;
       }
@@ -301,8 +265,6 @@ export default {
     },
     clearSearchValue() {
       this.searchValue = {
-        type: null,
-        brand: null,
         status: null,
         userEmail: null,
         beginDateScope: null

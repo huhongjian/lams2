@@ -38,13 +38,15 @@
             label="状态">
           <template slot-scope="scope">
             <span style="color: #00e079; font-weight: bold"
-                  v-if="scope.row.status=='2'||scope.row.status=='3'">{{ scope.row.statusName }}</span>
+                  v-if="scope.row.status=='2'||scope.row.status=='3'||scope.row.status=='5'||scope.row.status=='11'">{{
+                scope.row.statusName
+              }}</span>
             <span style="color: #ff4777; font-weight: bold"
-                  v-else-if="scope.row.status=='6'||scope.row.status=='8'||scope.row.status=='7'">{{
+                  v-else-if="scope.row.status=='6'||scope.row.status=='8'||scope.row.status=='12'">{{
                 scope.row.statusName
               }}</span>
             <span style="color: #c0c0c0;"
-                  v-else-if="scope.row.status=='5'">{{ scope.row.statusName }}</span>
+                  v-else-if="scope.row.status=='7'">{{ scope.row.statusName }}</span>
             <span v-else>{{ scope.row.statusName }}</span>
           </template>
         </el-table-column>
@@ -88,15 +90,6 @@
             label="更新时间"
             width="180">
         </el-table-column>
-        <el-table-column
-            v-if="isOut&&isOut==false"
-            fixed="right"
-            width="80"
-            label="操作">
-          <template slot-scope="scope">
-            <el-button @click="showEditView(scope.row)">编辑</el-button>
-          </template>
-        </el-table-column>
       </el-table>
       <div style="display: flex;justify-content: flex-end">
         <el-pagination
@@ -125,10 +118,7 @@ export default {
     },
     getOperateList(data) {
       this.$parent.getOperateList(data);
-    },
-    showEditView(data) {
-      this.$parent.showEditView(data);
-    },
+    }
   }
 }
 </script>

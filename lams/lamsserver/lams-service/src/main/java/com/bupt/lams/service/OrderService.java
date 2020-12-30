@@ -90,6 +90,7 @@ public class OrderService {
         order.setCategory(ProcessTypeEnum.LEAVE.getIndex());
         order.setStatus(OrderStatusEnum.STU_OUT.getIndex());
         order.setCreateTime(new Date());
+        order.setUpdateTime(new Date());
         orderMapper.insertSelective(order);
         try {
             taskOperateService.startWorkFlow(order, ProcessTypeEnum.LEAVE.getIndex(), null);

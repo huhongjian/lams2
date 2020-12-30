@@ -181,6 +181,10 @@ export default {
         {
           id: 8,
           name: '处理工单'
+        },
+        {
+          id: 9,
+          name: '归还资产'
         }],
       record: {
         id: "",

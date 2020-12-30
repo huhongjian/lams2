@@ -23,8 +23,55 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.db33c214.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-1f695432.8acaddfa.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-1f695432.8acaddfa.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-1f695432.8acaddfa.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-23bd4f34.5406743a.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-23bd4f34.5406743a.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-2d20e882.2e125898.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-2d20e882.2e125898.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-5aa7fc9d.d6fc4b8e.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-5aa7fc9d.d6fc4b8e.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-5aa7fc9d.d6fc4b8e.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-7970741e.b6a88522.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-7970741e.b6a88522.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-7970741e.b6a88522.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-cbb92fb4.f35340d1.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-cbb92fb4.f35340d1.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-cbb92fb4.f35340d1.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-e356b9a2.2107073c.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-e356b9a2.2107073c.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-e356b9a2.2107073c.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/db/migration/V1.8__lams.sql" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/db/migration/V1.8__lams.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/index.html.gz" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/index.html.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.8c86f92d.js" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.db33c214.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.8c86f92d.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.8c86f92d.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/app.db33c214.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-23bd4f34.20758145.js" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-23bd4f34.5406743a.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-23bd4f34.20758145.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-23bd4f34.20758145.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-2d20e882.adc724cc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-2d20e882.adc724cc.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-bb351b74.4b503545.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-bb351b74.4b503545.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-bb351b74.4b503545.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-c1cfb636.4e408eda.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-c1cfb636.4e408eda.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-c1cfb636.4e408eda.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-c7012f02.80f14314.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-c7012f02.80f14314.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-c7012f02.80f14314.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-cbb92fb4.5501ad79.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-cbb92fb4.5501ad79.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-cbb92fb4.5501ad79.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-e6dcbd2a.45e8453f.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-e6dcbd2a.45e8453f.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static/js/chunk-e6dcbd2a.45e8453f.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html.gz" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/static/index.html.gz" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,12 +99,12 @@
     </option>
     <option name="enabledProfiles">
       <list>
-        <option value="dev" />
+        <option value="product" />
       </list>
     </option>
     <option name="disabledProfiles">
       <list>
-        <option value="product" />
+        <option value="dev" />
       </list>
     </option>
   </component>
@@ -81,7 +128,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lamsserver/lams-workflow/src/main/resources/processes" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lamsserver/lams-web/src/main/resources/static" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -94,8 +141,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="I:\project\lams2\lams\lamsserver\lams-workflow\src\main\resources\processes" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources\static" />
+      <recent name="I:\project\lams2\lams\lamsserver\lams-workflow\src\main\resources\processes" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-mapper\src\main\java\com\bupt\lams\mapper" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources\env\product" />
@@ -197,14 +244,7 @@
       <workItem from="1608573977147" duration="18557000" />
       <workItem from="1609076631966" duration="26564000" />
       <workItem from="1609259592439" duration="29173000" />
-      <workItem from="1609335106759" duration="15739000" />
-    </task>
-    <task id="LOCAL-00094" summary="修复借用后，转交后，负责人展示问题">
-      <created>1604233422976</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1604233422977</updated>
+      <workItem from="1609335106759" duration="16481000" />
     </task>
     <task id="LOCAL-00095" summary="修复导出数据">
       <created>1604238455378</created>
@@ -542,7 +582,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609352914495</updated>
     </task>
-    <option name="localTasksCounter" value="143" />
+    <task id="LOCAL-00143" summary="修复订单删除">
+      <created>1609354187852</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1609354187852</updated>
+    </task>
+    <option name="localTasksCounter" value="144" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -561,7 +608,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="批量操作前端初步开发" />
     <MESSAGE value="采购单添加资产信息" />
     <MESSAGE value="取消时删除无效资产信息" />
     <MESSAGE value="修改新增入库单逻辑" />
@@ -586,7 +632,8 @@
     <MESSAGE value="优化我的模块" />
     <MESSAGE value="修复入库工单查询bug" />
     <MESSAGE value="修复编辑后，工单关联资产信息不展示bug&amp;仪表盘数据精度bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复编辑后，工单关联资产信息不展示bug&amp;仪表盘数据精度bug" />
+    <MESSAGE value="修复订单删除" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复订单删除" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1600784045187">
@@ -621,10 +668,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="607" y="180" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1609334464167" />
-    <state x="378" y="0" key="CommitChangelistDialog2" timestamp="1609352912935">
+    <state x="378" y="0" key="CommitChangelistDialog2" timestamp="1609354180200">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="378" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1609352912935" />
+    <state x="378" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1609354180200" />
     <state width="798" height="438" key="DebuggerActiveHint" timestamp="1609349296239">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -637,22 +684,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605165824589" />
-    <state width="1493" height="400" key="GridCell.Tab.0.bottom" timestamp="1609352762222">
+    <state width="1493" height="373" key="GridCell.Tab.0.bottom" timestamp="1609354496665">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="400" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609352762222" />
-    <state width="1493" height="400" key="GridCell.Tab.0.center" timestamp="1609352762222">
+    <state width="1493" height="373" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609354496665" />
+    <state width="1493" height="373" key="GridCell.Tab.0.center" timestamp="1609354496665">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="400" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1609352762222" />
-    <state width="1493" height="400" key="GridCell.Tab.0.left" timestamp="1609352762222">
+    <state width="1493" height="373" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1609354496665" />
+    <state width="1493" height="373" key="GridCell.Tab.0.left" timestamp="1609354496665">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="400" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1609352762222" />
-    <state width="1493" height="400" key="GridCell.Tab.0.right" timestamp="1609352762222">
+    <state width="1493" height="373" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1609354496665" />
+    <state width="1493" height="373" key="GridCell.Tab.0.right" timestamp="1609354496665">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="400" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1609352762222" />
+    <state width="1493" height="373" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1609354496665" />
     <state width="1493" height="400" key="GridCell.Tab.1.bottom" timestamp="1609352762223">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -701,10 +748,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1601976970035" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1609352916205">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1609354189778">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1609352916205" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1609354189778" />
     <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1609334288623">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -721,10 +768,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="172" key="extract.method.dialog/0.0.1536.824@0.0.1536.824" timestamp="1609303055593" />
-    <state x="468" y="144" width="690" height="630" key="find.popup" timestamp="1609337689186">
+    <state x="468" y="144" width="690" height="630" key="find.popup" timestamp="1609353953359">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="468" y="144" width="690" height="630" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1609337689186" />
+    <state x="468" y="144" width="690" height="630" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1609353953359" />
     <state x="578" y="306" key="git4idea.ui.GitResetDialog" timestamp="1605189376519">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

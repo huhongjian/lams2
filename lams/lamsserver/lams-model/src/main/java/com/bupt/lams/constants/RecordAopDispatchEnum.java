@@ -11,7 +11,8 @@ public enum RecordAopDispatchEnum {
     UPDATE_ORDER("编辑工单信息", 5),
     DELETE_ORDERS("删除工单", 6),
     CANCEL("取消工单", 7),
-    HANDLE("处理工单", 8);
+    HANDLE("处理工单", 8),
+    RETURN("归还资产", 9);
 
     private String name;
     private int index;

@@ -3,14 +3,13 @@ package com.bupt.lams.service;
 import com.bupt.lams.constants.OrderStatusEnum;
 import com.bupt.lams.constants.ProcessTypeEnum;
 import com.bupt.lams.dto.OrderQueryCondition;
-import com.bupt.lams.mapper.OrderAssetMapper;
 import com.bupt.lams.mapper.OrderMapper;
-import com.bupt.lams.model.*;
+import com.bupt.lams.model.Asset;
+import com.bupt.lams.model.LamsUser;
+import com.bupt.lams.model.Order;
+import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.annotation.OperateRecord;
-import com.bupt.lams.service.strategies.record.AddAssetRecord;
-import com.bupt.lams.service.strategies.record.BorrowAssetRecord;
-import com.bupt.lams.service.strategies.record.DeleteOrderRecord;
-import com.bupt.lams.service.strategies.record.UpdateOrderRecord;
+import com.bupt.lams.service.strategies.record.*;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,8 +30,6 @@ public class OrderService {
 
     @Resource
     OrderMapper orderMapper;
-    @Resource
-    OrderAssetMapper orderAssetMapper;
     @Resource
     OrderAssetService orderAssetService;
     @Resource
@@ -123,6 +119,7 @@ public class OrderService {
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @OperateRecord(description = "归还资产", clazz = ReturnAssetRecord.class)
     public void returnAsset(Order order) {
         List<Asset> assetList = order.getAssetList();
         LamsUser user = UserInfoUtils.getLoginedUser();

@@ -51,13 +51,8 @@ public class AssetService {
         if (page != null && size != null) {
             page = (page - 1) * size;
         }
-        condition.setPage(page);
         List<Asset> data = assetMapper.getAssetByCondition(condition);
-        Long total = assetMapper.getTotalByCondition(condition);
-        RespPageBean bean = new RespPageBean();
-        bean.setData(data);
-        bean.setTotal(total);
-        return bean;
+        return transToRespPageBean(page, size, data);
     }
 
     public RespPageBean getAvailable(AssetQueryCondition condition) {
@@ -71,8 +66,6 @@ public class AssetService {
         if (page != null && size != null) {
             page = (page - 1) * size;
         }
-        condition.setPage(null);
-        condition.setSize(null);
         // 所有满足查找条件的资产信息
         List<Asset> data = assetMapper.getAssetByCondition(condition);
         // 可以借用的资产信息

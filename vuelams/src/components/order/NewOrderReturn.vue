@@ -205,8 +205,6 @@ export default {
       }
     },
     showAddView() {
-      // this.emptyAsset();
-      // this.fileList = [];
       this.title2 = '选择资产';
       this.dialogVisible6 = true;
     },
@@ -245,9 +243,6 @@ export default {
     },
     initAssets() {
       this.loading = true;
-      for (var i = 0; i < this.order.assetList.length; i++) {
-        this.initData.aids.push(this.order.assetList[i].id);
-      }
       let url = '/asset/getAssetByAids';
       this.postRequest(url, this.initData).then(resp => {
         this.loading = false;
@@ -274,9 +269,7 @@ export default {
     handleAssetIds: function (assetIds) {
       // 编辑的时候，this.initData.aids是空的，展示的是this.order.assetList的资产信息，先同步一下
       // 因为后续会根据this.initData.aids获取资产信息
-      for (var i = 0; i < this.order.assetList.length; i++) {
-        this.initData.aids.push(this.order.assetList[i].id);
-      }
+      this.freshAids();
       // assetIds就是子组件AssetSelect传过来的值
       for (let i = 0; i < assetIds.length; i++) {
         this.initData.aids.push(assetIds[i]);
@@ -287,6 +280,11 @@ export default {
     dealDisabledDate(time) {
       var times = Date.now() - 8.64e7;
       return time.getTime() < times;
+    },
+    freshAids() {
+      for (var i = 0; i < this.order.assetList.length; i++) {
+        this.initData.aids.push(this.order.assetList[i].id);
+      }
     }
   }
 }

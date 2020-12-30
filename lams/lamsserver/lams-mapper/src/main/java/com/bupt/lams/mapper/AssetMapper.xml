@@ -75,9 +75,6 @@
             <include refid="baseInfoQuery"/>
         </where>
         order by a.id
-        <if test="page !=null and size!=null">
-            limit #{page},#{size}
-        </if>
     </select>
     <select id="getTotalByCondition" parameterType="com.bupt.lams.dto.AssetQueryCondition" resultType="java.lang.Long">
         select count(*)
@@ -205,7 +202,7 @@
         where id = #{aid}
     </select>
     <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
-        select count(id) as count, sum(price) as money, status, statusName
+        select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName
         from asset
         where status in (2, 3, 4, 6)
         <if test="list != null and list.size>0">
@@ -241,7 +238,7 @@
         group by date;
     </select>
     <select id="getAliveAssetTotalMoney" resultType="java.lang.Double">
-        select sum(price)
+        select cast(sum(price) as decimal (19,2))
         from asset
         where status in (2, 3, 6);
     </select>

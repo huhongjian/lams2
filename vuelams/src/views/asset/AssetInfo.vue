@@ -153,7 +153,7 @@
             prop="brand"
             label="品牌"
             align="left"
-            width="80">
+            width="150">
         </el-table-column>
         <el-table-column
             prop="price"

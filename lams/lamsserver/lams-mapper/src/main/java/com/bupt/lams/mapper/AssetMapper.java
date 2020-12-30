@@ -41,6 +41,11 @@ public interface AssetMapper {
 
     AssetStatusCount getTotalLineData(Date[] monthScope);
 
+    /**
+     * sum函数有精度问题，这里对结果保留两位小数
+     *
+     * @return
+     */
     Double getAliveAssetTotalMoney();
 
     List<Long> getAllAssetIds();

@@ -196,6 +196,8 @@ export default {
                 this.uploadData.aids.push(this.asset.id);
                 this.$refs.upload.submit();
                 this.$emit('close');
+                // 编辑完之后，aids是空的，先和当前的资产列表同步，再初始化资产信息
+                this.$parent.freshAids();
                 this.$parent.initAssets();
               }
             })

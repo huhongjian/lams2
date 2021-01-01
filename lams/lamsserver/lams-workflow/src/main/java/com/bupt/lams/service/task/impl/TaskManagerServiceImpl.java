@@ -27,8 +27,6 @@ import java.util.*;
 
 /**
  * Activiti 任务相关service实现类
- *
- * @author shanglonghua
  */
 @Service
 public class TaskManagerServiceImpl implements TaskManagerService {

@@ -44,7 +44,10 @@
 借用操作发起后，需要管理员审批，通过才算借用成功    
 撤回操作，只有自己的申请可以撤回，取消申请  
 #### 资产归还
+##### 流程图：
+![资产归还](https://raw.githubusercontent.com/huhongjian/images/main/img/20210117013509.png)
 点击`归还资产`归还资产  
+##### 操作说明
 ![归还资产](https://raw.githubusercontent.com/huhongjian/images/main/img/20210117010653.png)  
 选择要归还的资产  
 ![选择归还资产](https://raw.githubusercontent.com/huhongjian/images/main/img/20210117010742.png)  

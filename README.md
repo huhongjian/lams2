@@ -1,5 +1,5 @@
 # lams2
-新版本实验室管理系统   
+新版本实验室资产管理系统   
 ![系统展示](https://raw.githubusercontent.com/huhongjian/images/main/img/20210116235512.png)
 
 为实验室资产管理需求开发  

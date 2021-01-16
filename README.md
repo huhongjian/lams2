@@ -1,18 +1,20 @@
 # lams2
 新版本实验室管理系统   
-![系统展示](https://raw.githubusercontent.com/huhongjian/images/main/img/20201101232530.png)
+![系统展示](https://raw.githubusercontent.com/huhongjian/images/main/img/20210116235512.png)
 
 为实验室资产管理需求开发  
 目前支持：  
 - 仪表盘
 - 资产入库
 - 出库借用
+- 资产归还
 - 资产信息
 - 资产报修
 - 清退报废
 - 我的申请
 - 我的任务
 - 离退流程
+- 订单信息
 - 权限管理
 - 日志管理
 - 用户管理
@@ -22,12 +24,13 @@
 ##### 流程图：  
 ![资产入库](https://raw.githubusercontent.com/huhongjian/images/main/img/Snipaste_2020-10-08_20-06-17.jpg)
 ##### 操作说明
-点击新增资产发起采购请求  
-填写详细信息  
-![新资产采购申请](https://raw.githubusercontent.com/huhongjian/images/main/img/20201101232937.png)  
+点击`新增采购单`发起采购请求  
+填写理由  
+![新资产采购申请](https://raw.githubusercontent.com/huhongjian/images/main/img/20210116235843.png)  
+点击`新增资产`添加资产信息   
+![新增资产信息](https://raw.githubusercontent.com/huhongjian/images/main/img/20210117000223.png)
 申请之后，点击申请记录id，即可进行审批等操作   
-当资产入库成功之后，财务人员可以为资产添加订单信息  
-选择相关资产后，点击【添加订单信息】  
+当资产入库成功之后，财务人员可以为资产添加订单信息   
 #### 出库借用
 ##### 流程图  
 ![资产出库](https://raw.githubusercontent.com/huhongjian/images/main/img/20201008204610.png)  

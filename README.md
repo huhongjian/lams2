@@ -33,17 +33,27 @@
 当资产入库成功之后，财务人员可以为资产添加订单信息   
 #### 出库借用
 ##### 流程图  
-![资产出库](https://raw.githubusercontent.com/huhongjian/images/main/img/20201008204610.png)  
+![资产出库](https://raw.githubusercontent.com/huhongjian/images/main/img/20210117000709.png)  
 ##### 操作说明
 当新资产审批通过，财务做账，确认到库之后，点击入库。此时新资产入库成功，可以借用  
-点击“已入库”，“审批拒绝”（他人申请借用未通过，可以继续借用）或“已关闭”（他人借用申请取消，可以继续借用）资产，会出现借用按钮，发起借用流程  
-![资产借用](https://raw.githubusercontent.com/huhongjian/images/main/img/20201101233609.png)  
-借用操作发起后，需要管理员审批，通过才算借用成功  
-对于自己在用的资产，可以转交给其他用户，注意：必须要填写正确的邮箱  
-归还操作，资产重新入库  
+点击`借用资产`发起借用申请  
+填写理由和预计归还时间  
+![资产借用](https://raw.githubusercontent.com/huhongjian/images/main/img/20210117000900.png)  
+选择需要借用的资产  
+![选择资产](https://raw.githubusercontent.com/huhongjian/images/main/img/20210117001109.png)  
+借用操作发起后，需要管理员审批，通过才算借用成功    
 撤回操作，只有自己的申请可以撤回，取消申请  
+#### 资产归还
+点击`归还资产`归还资产  
+![归还资产](https://raw.githubusercontent.com/huhongjian/images/main/img/20210117010653.png)  
+选择要归还的资产  
+![选择归还资产](https://raw.githubusercontent.com/huhongjian/images/main/img/20210117010742.png)  
+确认后，归还申请成功，管理员确定后，审批归还工单  
 #### 资产信息
-全部资产信息，需要管理员权限
+全部资产信息，如果要修改，需要管理员权限  
+![资产信息](https://raw.githubusercontent.com/huhongjian/images/main/img/20210117010909.png)  
+勾选资产，点击`添加订单信息`，可以为已经入库的资产，添加采购时的订单信息  
+![添加订单信息](https://raw.githubusercontent.com/huhongjian/images/main/img/20210117011036.png)  
 #### 资产报修
 所有用户都可以给资产报修，报修前需要先归还
 #### 资产清退
@@ -74,3 +84,4 @@
 ##### 2020.10.21 第二版上线：仪表盘，资产信息管理，资产报修，资产清退等
 ##### 2020.11.01 第三版上线：学生离退流程、操作日志、图片上传等
 ##### 2020.11.09 第四版上线：订单信息管理
+##### 2020.12.31 第五版上线：支持一个工单对应多个资产，删除转交，新增归还流程等

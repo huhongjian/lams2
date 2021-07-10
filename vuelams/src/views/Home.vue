@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-header class="homeHeader">
-        <div class="title">实验室资产管理系统</div>
+        <div class="title">实验室预算及资产管理系统</div>
         <div>
           <el-dropdown class="userInfo" @command="commandHandler">
             <span class="el-dropdown-link">

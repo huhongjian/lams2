@@ -1,7 +1,7 @@
 <template>
   <div>
     <div width="100%">
-      <el-card class="box-card" style="background-color: #fff143">
+      <el-card class="box-card" style="background-color: #ffffff">
         <div slot="header" class="clearfix">
           <span class="box-title">总资产数</span>
         </div>
@@ -9,7 +9,7 @@
           {{ headTableData.total }}
         </div>
       </el-card>
-      <el-card class="box-card" style="background-color: #44cef6">
+      <el-card class="box-card" style="background-color: #ffffff">
         <div slot="header" class="clearfix">
           <span class="box-title">使用中数量</span>
         </div>
@@ -17,7 +17,7 @@
           {{ headTableData.inUse }}
         </div>
       </el-card>
-      <el-card class="box-card" style="background-color: #9ed048">
+      <el-card class="box-card" style="background-color: #ffffff">
         <div slot="header" class="clearfix">
           <span class="box-title">闲置数量</span>
         </div>
@@ -25,7 +25,7 @@
           {{ headTableData.free }}
         </div>
       </el-card>
-      <el-card class="box-card" style="background-color: #cca4e3">
+      <el-card class="box-card" style="background-color: #ffffff">
         <div slot="header" class="clearfix">
           <span class="box-title">维修中数量</span>
         </div>
@@ -33,7 +33,7 @@
           {{ headTableData.inRepair }}
         </div>
       </el-card>
-      <el-card class="box-card" style="background-color: #f9906f">
+      <el-card class="box-card" style="background-color: #ffffff">
         <div slot="header" class="clearfix">
           <span class="box-title">资产总金额（元）</span>
         </div>
@@ -41,7 +41,7 @@
           {{ headTableData.money }}
         </div>
       </el-card>
-      <el-card class="box-card" style="background-color: #c2ccd0">
+      <el-card class="box-card" style="background-color: #ffffff">
         <div slot="header" class="clearfix">
           <span class="box-title">报废数量</span>
         </div>

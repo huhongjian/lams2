@@ -28,11 +28,14 @@
         <if test="projectId !=null">
             and p.id = #{projectId}
         </if>
-        <if test="projectName !=null and type!=''">
+        <if test="projectName !=null and projectName!=''">
             and p.projectName like concat('%',#{projectName},'%')
         </if>
-        <if test="createEmail !=null and createEmail!=''">
-            and p.createEmail like concat('%',#{createEmail},'%')
+        <if test="projectType !=null and projectType!=''">
+            and p.projectType like concat('%',#{projectType},'%')
+        </if>
+        <if test="userEmail !=null and userEmail!=''">
+            and p.userEmail like concat('%',#{userEmail},'%')
         </if>
         <if test="startDate !=null and endDate !=null">
             and p.createTime between #{startDate} and #{endDate}

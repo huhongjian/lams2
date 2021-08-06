@@ -8,33 +8,33 @@
       <div>
         <el-form :model="project" :rules="rules" ref="projectForm">
           <el-row>
-            <el-col :span="15">
-              <el-form-item label="项目名称:" prop="projectName">
-                <el-input size="mini" style="width: 800px" prefix-icon="el-icon-edit"
-                          v-model="project.projectName"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="15">
-              <el-form-item label="类型:" prop="projectType">
-                <el-select style="width: 800px" v-model="project.projectType" clearable placeholder="请选择">
-                  <el-option
-                      v-for="item in projectTypes"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.name">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="15">
+            <el-form-item label="项目名称:" prop="projectName">
+              <el-input size="mini" style="width: 800px" prefix-icon="el-icon-edit"
+                        v-model="project.projectName"></el-input>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item label="类型:" prop="projectType">
+              <el-select style="width: 800px" v-model="project.projectType" clearable placeholder="请选择">
+                <el-option
+                    v-for="item in projectTypes"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.name">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-col :span="10">
               <el-form-item label="项目总体执行年限（年）:" prop="projectYears">
-                <el-input size="mini" style="width: 800px" prefix-icon="el-icon-edit"
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                           v-model="project.years"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="15">
+            <el-col :span="10">
               <el-form-item label="资助额度（万元）:" prop="projectFunding">
-                <el-input size="mini" style="width: 800px" prefix-icon="el-icon-edit"
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                           v-model="project.funding"></el-input>
               </el-form-item>
             </el-col>

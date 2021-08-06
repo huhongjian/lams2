@@ -48,10 +48,6 @@
           <el-button type="primary" icon="el-icon-plus" @click="showAddView">
             新增项目
           </el-button>
-          <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
-                     icon="el-icon-download">
-            导出数据
-          </el-button>
           <el-button @click="deleteProject" style="display: inline-flex;margin-left: 8px" type="danger">
             删除
           </el-button>
@@ -80,16 +76,16 @@
             <el-col :span="10">
               项目名称:
               <el-input size="mini" style="width: 220px" clearable prefix-icon="el-icon-edit"
-                        v-model="searchValue.userEmail"></el-input>
+                        v-model="searchValue.projectName"></el-input>
             </el-col>
             <el-col :span="10">
               项目类别:
-              <el-select v-model="searchValue.status" clearable placeholder="状态" size="mini" style="width: 300px;">
+              <el-select v-model="searchValue.projectType" clearable placeholder="项目类别" size="mini" style="width: 300px;">
                 <el-option
                     v-for="item in projectTypes"
                     :key="item.id"
                     :label="item.name"
-                    :value="item.id">
+                    :value="item.name">
                 </el-option>
               </el-select>
             </el-col>
@@ -116,7 +112,7 @@
             <el-col :span="4">
               <el-button size="mini" @click="clearSearchValue">重置</el-button>
               <el-button size="mini" @click="showAdvanceSearchView = false">取消</el-button>
-              <el-button size="mini" icon="el-icon-search" type="primary" @click="initOrdersAdv">搜索</el-button>
+              <el-button size="mini" icon="el-icon-search" type="primary" @click="initProjectsAdv">搜索</el-button>
             </el-col>
           </el-row>
         </div>
@@ -143,7 +139,7 @@
             align="left"
             width="80">
           <template slot-scope="scope">
-            <el-button size="mini" @click="getProject(scope.row)">{{ scope.row.id }}</el-button>
+            <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
           </template>
         </el-table-column>
         <el-table-column
@@ -177,13 +173,13 @@
             prop="user.name"
             width="95"
             align="left"
-            label="申请人">
+            label="创建人">
         </el-table-column>
         <el-table-column
             prop="createTime"
             width="100"
             align="left"
-            label="申请时间">
+            label="创建时间">
         </el-table-column>
         <el-table-column
             fixed="right"
@@ -228,7 +224,8 @@ export default {
         cleaned: ''
       },
       searchValue: {
-        status: null,
+        projectName: null,
+        projectType: null,
         userEmail: null,
         dateScope: null
       },
@@ -272,7 +269,7 @@ export default {
   mounted() {
     this.initProjectTypes();
     this.initProjects();
-    this.initHeadTableData();
+    // this.initHeadTableData();
   },
   methods: {
     emptyProject() {
@@ -306,18 +303,31 @@ export default {
       this.title = '新增科研项目';
       this.newProjectVisible = true;
     },
+    showEditView(data) {
+      this.title = '编辑科研项目';
+      this.project = data;
+      this.newProjectVisible = true;
+    },
     showDetailView(data) {
       this.title = '科研项目详情';
       this.project = data;
       this.projectDetailVisible = true;
     },
-    sizeChange: function (currentSize) {
+    sizeChange(currentSize) {
       this.size = currentSize;
-      this.initOrders();
+      if (this.type && this.type == 'advanced') {
+        this.initProjectsAdv();
+      } else {
+        this.initProjects();
+      }
     },
-    currentChange: function (currentPage) {
+    currentChange(currentPage) {
       this.page = currentPage;
-      this.initOrdersAdv();
+      if (this.type && this.type == 'advanced') {
+        this.initProjectsAdv();
+      } else {
+        this.initProjects();
+      }
     },
     initProjects() {
       this.type = '';
@@ -331,12 +341,15 @@ export default {
         }
       });
     },
-    initOrdersAdv() {
+    initProjectsAdv() {
       this.type = 'advanced'
       this.loading = true;
-      let url = '/order/project/get/?page=' + this.page + '&size=' + this.size;
-      if (this.searchValue.status) {
-        url += '&status=' + this.searchValue.status;
+      let url = '/project/get/?page=' + this.page + '&size=' + this.size;
+      if (this.searchValue.projectName) {
+        url += '&projectName=' + this.searchValue.projectName;
+      }
+      if (this.searchValue.projectType) {
+        url += '&projectType=' + this.searchValue.projectType;
       }
       if (this.searchValue.userEmail) {
         url += '&userEmail=' + this.searchValue.userEmail;
@@ -347,16 +360,17 @@ export default {
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
-          this.orders = resp.data;
+          this.projects = resp.data;
           this.total = resp.total;
         }
       });
     },
     clearSearchValue() {
       this.searchValue = {
-        status: null,
+        projectName: null,
+        projectType: null,
         userEmail: null,
-        beginDateScope: null
+        dateScope: null
       }
     },
     initProjectTypes() {

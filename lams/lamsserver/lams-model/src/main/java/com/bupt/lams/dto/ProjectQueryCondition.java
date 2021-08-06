@@ -26,5 +26,5 @@ public class ProjectQueryCondition {
      */
     private String projectName;
     private String projectType;
-    private String createEmail;
+    private String userEmail;
 }

@@ -41,18 +41,6 @@
             and p.createTime between #{startDate} and #{endDate}
         </if>
     </sql>
-    <select id="getProjectByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"
-            resultMap="AllInfoResultMap">
-        select p.*,
-        u.id as uid, u.*
-        from
-        project p
-        left join lams_user u on p.userEmail = u.username
-        <where>
-            <include refid="baseInfoQuery"/>
-        </where>
-        order by p.id
-    </select>
     <select id="getMaterialFeeList" resultType="com.bupt.lams.model.planItem.MaterialFee">
         select m.*
         from

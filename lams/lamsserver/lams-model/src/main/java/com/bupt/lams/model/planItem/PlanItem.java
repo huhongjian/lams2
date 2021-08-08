@@ -25,6 +25,11 @@ public class PlanItem implements Serializable {
     private String remark;
 
     /**
+     * 合计（万元）
+     */
+    private Double subTotal;
+
+    /**
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")

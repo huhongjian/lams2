@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bupt.lams.mapper.TestingFeeMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.Project">
+        <id column="id" property="id"/>
+        <result column="projectName" property="projectName"/>
+        <result column="projectType" property="projectType"/>
+        <result column="years" property="years"/>
+        <result column="funding" property="funding"/>
+        <result column="executeRate" property="executeRate"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+    </resultMap>
+    <resultMap id="AllInfoResultMap" type="com.bupt.lams.model.Project" extends="BaseResultMap">
+        <association property="user" javaType="com.bupt.lams.model.LamsUser">
+            <id column="uid" property="id"/>
+            <result column="name" property="name"/>
+            <result column="phone" property="phone"/>
+            <result column="username" property="username"/>
+            <result column="enabled" property="enabled"/>
+            <result column="remark" property="remark"/>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, projectName, projectType, `years`, funding, executeRate, createTime, updateTime
+  </sql>
+    <sql id="baseInfoQuery">
+        <if test="projectId !=null">
+            and p.id = #{projectId}
+        </if>
+        <if test="projectName !=null and projectName!=''">
+            and p.projectName like concat('%',#{projectName},'%')
+        </if>
+        <if test="projectType !=null and projectType!=''">
+            and p.projectType like concat('%',#{projectType},'%')
+        </if>
+        <if test="userEmail !=null and userEmail!=''">
+            and p.userEmail like concat('%',#{userEmail},'%')
+        </if>
+        <if test="startDate !=null and endDate !=null">
+            and p.createTime between #{startDate} and #{endDate}
+        </if>
+    </sql>
+    <select id="getTestingFeeList" resultType="com.bupt.lams.model.planItem.TestingFee">
+        select t.*
+        from
+        testing_fee t
+        order by t.id
+    </select>
+    <update id="updateAssetStatus" parameterType="com.bupt.lams.model.Asset">
+        update asset a
+        set
+            a.status = #{status},
+            a.statusName = #{statusName}
+        where a.id = #{id}model
+    </update>
+    <update id="updateAsset" parameterType="com.bupt.lams.model.Asset">
+        update asset
+        set
+        from
+        <trim suffixOverrides=",">
+            <if test="type != null and type != ''">
+                `type` = #{type},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="statusName != null and statusName != ''">
+                statusName = #{statusName},
+            </if>
+            <if test="assetName != null and assetName != ''">
+                assetName = #{assetName},
+            </if>
+            <if test="brand != null and brand != ''">
+                brand = #{brand},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="adv != null">
+                adv = #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="readyDate != null">
+                readyDate = #{readyDate},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <insert id="insertSelective" parameterType="com.bupt.lams.model.planItem.TestingFee" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into testing_fee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="content != null and content != ''">
+                `content`,
+            </if>
+            <if test="times != null">
+                times,
+            </if>
+            <if test="unitPrice != null">
+                unitPrice,
+            </if>
+            <if test="subTotal != null">
+                subTotal,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="updateTime != null">
+                updateTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="content != null and content != ''">
+                #{content},
+            </if>
+            <if test="times != null">
+                #{times},
+            </if>
+            <if test="unitPrice != null">
+                #{unitPrice},
+            </if>
+            <if test="subTotal != null">
+                #{subTotal},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateProject" parameterType="com.bupt.lams.model.Project">
+        update project
+        set
+        <trim suffixOverrides=",">
+            <if test="projectName != null and projectName != ''">
+                `projectName` = #{projectName},
+            </if>
+            <if test="projectType != null and projectType != ''">
+                projectType = #{projectType},
+            </if>
+            <if test="years != null">
+                years = #{years},
+            </if>
+            <if test="funding != funding">
+                funding = #{funding},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="getAssetById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * from asset
+        where id = #{aid}
+    </select>
+    <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
+        select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName
+        from asset
+        where status in (2, 3, 4, 6)
+        <if test="list != null and list.size>0">
+            and type in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        group by status, statusName;
+    </select>
+    <select id="getAssetTypeCount" resultType="com.bupt.lams.dto.AssetStatusCount">
+        select count(id) as count, `type`
+        from asset
+        where status in (2, 3, 4, 6)
+        group by `type`;
+    </select>
+    <select id="getLineData" resultType="com.bupt.lams.dto.AssetStatusCount">
+        select count(id) as count, status, statusName, DATE_FORMAT(readyDate,'%Y-%m') `date`
+        from asset
+        where status in (2, 3, 6)
+        <if test="monthScope !=null">
+            and readyDate between #{monthScope[0]} and #{monthScope[1]}
+        </if>
+        group by status, statusName, `date`
+    </select>
+    <select id="getTotalLineData" resultType="com.bupt.lams.dto.AssetStatusCount">
+        select count(id) as count, DATE_FORMAT(readyDate,'%Y-%m') date
+        from asset
+        where status in (2, 3, 6)
+        <if test="monthScope !=null">
+            and readyDate between #{monthScope[0]} and #{monthScope[1]}
+        </if>
+        group by date;
+    </select>
+    <select id="getAliveAssetTotalMoney" resultType="java.lang.Double">
+        select cast(sum(price) as decimal (19,2))
+        from asset
+        where status in (2, 3, 6);
+    </select>
+    <select id="getAllAssetIds" resultType="java.lang.Long">
+        select id
+        from asset
+    </select>
+    <select id="getAssetInfoByIds" parameterType="list" resultMap="BaseResultMap">
+        select a.*,
+        p.id as pid, p.aid as p_aid, p.name as p_name, p.createTime as p_createTime, p.*
+        from
+        asset a
+        left join asset_pics p on a.id = p.aid
+        where 1=1
+        <if test="list != null and list.size>0">
+            and a.id in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        order by a.id
+    </select>
+    <delete id="deleteManyByAids" parameterType="list">
+        delete
+        from asset
+        where
+        id in
+        <foreach collection="list" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+    <delete id="clearAssets">
+        delete a.*
+        from asset a
+         left join order_asset oa on oa.aid = a.id
+         left join `order` o on oa.oid = o.id
+        where oid is null;
+    </delete>
+</mapper>

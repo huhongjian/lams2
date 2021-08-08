@@ -60,7 +60,7 @@
               删除
             </el-button>
           </el-row>
-          <el-collapse @change="initEquipmentFeeList">
+          <el-collapse @change="initPlanItemList">
             <el-collapse-item title="设备费" name="1">
               <el-table
                   :data="equipmentFeeList"
@@ -120,7 +120,7 @@
             </el-collapse-item>
             <el-collapse-item title="材料费" name="2">
               <el-table
-                  :data="planSubjects"
+                  :data="materialFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -144,37 +144,37 @@
                 </el-table-column>
                 <el-table-column
                     fixed
-                    prop="assetName"
+                    prop="materialName"
                     :show-overflow-tooltip="true"
                     align="left"
                     label="材料用途">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="specification"
                     align="left"
                     label="规格"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="amount"
                     align="left"
                     label="数量"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="unitPrice"
                     align="left"
                     label="单价（万元）"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="unit"
                     align="left"
                     label="单位"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="subTotal"
                     align="left"
                     label="小计（万元）"
                     width="200">
@@ -183,7 +183,7 @@
             </el-collapse-item>
             <el-collapse-item title="测试化验加工费" name="3">
               <el-table
-                  :data="planSubjects"
+                  :data="testingFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -206,26 +206,25 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                    fixed
-                    prop="assetName"
+                    prop="content"
                     :show-overflow-tooltip="true"
                     align="left"
                     label="加工内容">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="times"
                     align="left"
                     label="次数"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="unitPrice"
                     align="left"
                     label="单价（万元）"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="subTotal"
                     align="left"
                     label="合计（万元）"
                     width="200">
@@ -233,8 +232,9 @@
               </el-table>
             </el-collapse-item>
             <el-collapse-item title="差旅/会议/国际合作与交流费" name="4">
+              <el-tag>北京市内交通费</el-tag>
               <el-table
-                  :data="planSubjects"
+                  :data="transportationFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -257,20 +257,12 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                    fixed
-                    prop="assetName"
-                    :show-overflow-tooltip="true"
+                    prop="remark"
                     align="left"
-                    label="类别">
+                    label="说明">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
-                    align="left"
-                    label="说明"
-                    width="200">
-                </el-table-column>
-                <el-table-column
-                    prop="type"
+                    prop="subTotal"
                     align="left"
                     label="合计（万元）"
                     width="200">
@@ -279,7 +271,7 @@
             </el-collapse-item>
             <el-collapse-item title="出版/文献/信息传播/知识产权事务费" name="5">
               <el-table
-                  :data="planSubjects"
+                  :data="publishFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -303,19 +295,19 @@
                 </el-table-column>
                 <el-table-column
                     fixed
-                    prop="assetName"
+                    prop="type"
                     :show-overflow-tooltip="true"
                     align="left"
+                    width="200"
                     label="类别">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="remark"
                     align="left"
-                    label="说明"
-                    width="200">
+                    label="说明">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="subTotal"
                     align="left"
                     label="合计（万元）"
                     width="200">
@@ -324,7 +316,7 @@
             </el-collapse-item>
             <el-collapse-item title="劳务费" name="6">
               <el-table
-                  :data="planSubjects"
+                  :data="paymentList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -348,37 +340,37 @@
                 </el-table-column>
                 <el-table-column
                     fixed
-                    prop="assetName"
+                    prop="personnelType"
                     :show-overflow-tooltip="true"
                     align="left"
                     label="人员种类">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="content"
                     align="left"
                     label="工作内容"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="amount"
                     align="left"
                     label="人数"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="standard"
                     align="left"
                     label="标准（元）"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="hours"
                     align="left"
                     label="工作时间"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="subTotal"
                     align="left"
                     label="合计（万元）"
                     width="200">
@@ -387,7 +379,7 @@
             </el-collapse-item>
             <el-collapse-item title="专家咨询费" name="7">
               <el-table
-                  :data="planSubjects"
+                  :data="advisoryList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -411,37 +403,37 @@
                 </el-table-column>
                 <el-table-column
                     fixed
-                    prop="assetName"
+                    prop="content"
                     :show-overflow-tooltip="true"
                     align="left"
                     label="咨询内容">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="personnelType"
                     align="left"
                     label="人员类型"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="standard"
                     align="left"
                     label="标准（元/天）"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="amount"
                     align="left"
                     label="人数"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="days"
                     align="left"
                     label="天数"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="subTotal"
                     align="left"
                     label="总计（万元）"
                     width="200">
@@ -450,7 +442,7 @@
             </el-collapse-item>
             <el-collapse-item title="其他支出" name="8">
               <el-table
-                  :data="planSubjects"
+                  :data="otherFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -474,19 +466,19 @@
                 </el-table-column>
                 <el-table-column
                     fixed
-                    prop="assetName"
+                    prop="type"
                     :show-overflow-tooltip="true"
                     align="left"
-                    label="类别">
-                </el-table-column>
-                <el-table-column
-                    prop="type"
-                    align="left"
-                    label="说明"
+                    label="类别"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="type"
+                    prop="remark"
+                    align="left"
+                    label="说明">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
                     align="left"
                     label="合计（万元）"
                     width="200">
@@ -516,7 +508,15 @@ export default {
   data() {
     return {
       planSubjects: [],
+      // 预算明细类型
       equipmentFeeList: [],
+      materialFeeList: [],
+      testingFeeList: [],
+      transportationFeeList: [],
+      publishFeeList: [],
+      paymentList: [],
+      advisoryList: [],
+      otherFeeList: [],
       // 初始化资产信息
       initData: {
         // 添加的全部资产id
@@ -555,12 +555,50 @@ export default {
     this.initPlanItemTypes();
   },
   methods: {
-    initEquipmentFeeList(val){
-      alert(val);
-      let url = '/planItem/get/equipmentFee';
-      this.getRequest(url).then(resp => {
+    initPlanItemList(val) {
+      this.getRequest('/planItem/equipmentFee/get').then(resp => {
         if (resp) {
           this.equipmentFeeList = resp.obj;
+        }
+      });
+      this.getRequest('/planItem/materialFee/get').then(resp => {
+        if (resp) {
+          this.materialFeeList = resp.obj;
+        }
+      });
+      this.getRequest('/planItem/testingFee/get').then(resp => {
+        if (resp) {
+          this.testingFeeList = resp.obj;
+        }
+      });
+      this.getRequest('/planItem/transportationFee/get').then(resp => {
+        if (resp) {
+          this.transportationFeeList = resp.obj;
+        }
+      });
+      this.getRequest('/planItem/publishFee/get').then(resp => {
+        if (resp) {
+          this.publishFeeList = resp.obj;
+        }
+      });
+      this.getRequest('/planItem/materialFee/get').then(resp => {
+        if (resp) {
+          this.materialFeeList = resp.obj;
+        }
+      });
+      this.getRequest('/planItem/payment/get').then(resp => {
+        if (resp) {
+          this.paymentList = resp.obj;
+        }
+      });
+      this.getRequest('/planItem/advisory/get').then(resp => {
+        if (resp) {
+          this.advisoryList = resp.obj;
+        }
+      });
+      this.getRequest('/planItem/otherFee/get').then(resp => {
+        if (resp) {
+          this.otherFeeList = resp.obj;
         }
       });
     },

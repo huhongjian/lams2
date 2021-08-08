@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 设备费service
+ * 材料费service
  */
 @Service
 public class MaterialFeeService {
@@ -38,27 +38,5 @@ public class MaterialFeeService {
 
     public void updateAsset(Project project) {
         materialFeeMapper.updateProject(project);
-    }
-
-    /**
-     * 将结果集转化为展示集合
-     *
-     * @param page
-     * @param size
-     * @param data
-     * @return
-     */
-    private RespPageBean transToRespPageBean(Integer page, Integer size, List<Project> data) {
-        Long total = Long.valueOf(data.size());
-        Integer end = Math.min(page + size, data.size());
-        // 展示的数据
-        List<Project> res = new ArrayList<>();
-        for (Integer i = page; i < end; i++) {
-            res.add(data.get(i));
-        }
-        RespPageBean bean = new RespPageBean();
-        bean.setData(res);
-        bean.setTotal(total);
-        return bean;
     }
 }

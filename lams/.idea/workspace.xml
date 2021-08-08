@@ -23,33 +23,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/EquipmentFeeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/EquipmentFeeMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/MaterialFeeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/MaterialFeeMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PlanItemTypeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PlanItemTypeMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/constants/PlanItemTypeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/PlanItemType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/planItem/EquipmentFee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/planItem/MaterialFee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/planItem/PlanItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/EquipmentFeeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/MaterialFeeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/PlanItemTypesService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/PlanItemController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/PlanItemTypeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../vuelams/src/components/budget/NewPlan.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../vuelams/src/components/budget/NewPlanItem.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../vuelams/src/components/budget/PlanDetail.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../vuelams/src/views/budget/BudgetPlan.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../vuelams/src/views/budget/BudgetRecord.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AdvisoryMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/AdvisoryMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OtherFeeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/OtherFeeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PaymentMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PaymentMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PublishFeeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PublishFeeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/TestingFeeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/TestingFeeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/TransportationFeeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/TransportationFeeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/planItem/Advisory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/planItem/OtherFee.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/planItem/Payment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/planItem/PublishFee.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/planItem/TestingFee.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/AdvisoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/OtherFeeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/PaymentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/PublishFeeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TestingFeeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/TransportationFeeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/AdvisoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/MaterialFeeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/OtherFeeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/PaymentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/PublishFeeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/TestingFeeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/TransportationFeeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/ProjectMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/ProjectMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/ProjectQueryCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/ProjectQueryCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/budget/NewProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/budget/NewProject.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/budget/ProjectDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/budget/ProjectDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/budget/BudgetProject.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/budget/BudgetProject.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/MaterialFeeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/MaterialFeeMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/MaterialFeeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/MaterialFeeMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/planItem/PlanItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/planItem/PlanItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/EquipmentFeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/EquipmentFeeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/MaterialFeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/MaterialFeeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/PlanItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/EquipmentFeeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/budget/NewPlan.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/budget/NewPlan.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/budget/NewPlanItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/budget/NewPlanItem.vue" afterDir="false" />
     </list>
     <list id="d9c6d090-d8d0-42d6-8b8c-ce0025f2f90f" name="不提交" comment="">
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" afterDir="false" />
@@ -95,6 +107,7 @@
   <component name="ProjectId" id="1hb0UkPRjflKLlfnpkI39IZz8Ct" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
+    <option name="flattenPackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -127,24 +140,24 @@
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources" />
-      <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources\env" />
-      <recent name="I:\project\lams2\lams\lamsserver" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.bupt.lams.mapper" />
-      <recent name="com.bupt.lams.model.planItem" />
-      <recent name="com.bupt.lams.service" />
-      <recent name="com.bupt.lams.constants" />
-      <recent name="com.bupt.lams.model" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="I:\project\lams2\lams\lamsserver\lams-mapper\src\main\java\com\bupt\lams\mapper" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources\static" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-workflow\src\main\resources\processes" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources" />
       <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources\env\product" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.bupt.lams.mapper" />
+      <recent name="com.bupt.lams.service" />
+      <recent name="com.bupt.lams.controller.budget" />
+      <recent name="com.bupt.lams.model.planItem" />
+      <recent name="com.bupt.lams.constants" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources" />
+      <recent name="I:\project\lams2\lams\lamsserver\lams-web\src\main\resources\env" />
+      <recent name="I:\project\lams2\lams\lamsserver" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -153,6 +166,17 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.LamsApplication">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="remote" type="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -232,14 +256,8 @@
       <workItem from="1609076631966" duration="26564000" />
       <workItem from="1609259592439" duration="29173000" />
       <workItem from="1609335106759" duration="17679000" />
-      <workItem from="1627996831881" duration="1252000" />
-    </task>
-    <task id="LOCAL-00097" summary="新增资产名称和备注的字段">
-      <created>1604724309656</created>
-      <option name="number" value="00097" />
-      <option name="presentableId" value="LOCAL-00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1604724309656</updated>
+      <workItem from="1627996831881" duration="10069000" />
+      <workItem from="1628301805541" duration="13690000" />
     </task>
     <task id="LOCAL-00098" summary="新增订单信息功能">
       <created>1604769859289</created>
@@ -577,7 +595,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625923868116</updated>
     </task>
-    <option name="localTasksCounter" value="146" />
+    <task id="LOCAL-00146" summary="科研项目">
+      <created>1628245199127</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1628245199128</updated>
+    </task>
+    <option name="localTasksCounter" value="147" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -624,62 +649,66 @@
     <option name="LAST_COMMIT_MESSAGE" value="科研项目" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="354" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1626192841778">
+    <state x="354" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1628347839869">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="354" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1626192841778" />
-    <state x="350" y="0" key="CommitChangelistDialog2" timestamp="1625923865744">
+    <state x="354" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1628347839869" />
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1628418342634">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="350" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1625923865744" />
-    <state width="1493" height="270" key="GridCell.Tab.0.bottom" timestamp="1628245082815">
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1628418342634" />
+    <state x="350" y="0" key="CommitChangelistDialog2" timestamp="1628245193636">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="270" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1628245082815" />
-    <state width="1493" height="270" key="GridCell.Tab.0.center" timestamp="1628245082815">
+    <state x="350" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1628245193636" />
+    <state width="1493" height="247" key="GridCell.Tab.0.bottom" timestamp="1628426931739">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="270" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1628245082815" />
-    <state width="1493" height="270" key="GridCell.Tab.0.left" timestamp="1628245082815">
+    <state width="1493" height="247" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1628426931739" />
+    <state width="1493" height="247" key="GridCell.Tab.0.center" timestamp="1628426931739">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="270" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1628245082815" />
-    <state width="1493" height="270" key="GridCell.Tab.0.right" timestamp="1628245082815">
+    <state width="1493" height="247" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1628426931739" />
+    <state width="1493" height="247" key="GridCell.Tab.0.left" timestamp="1628426931739">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="270" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1628245082815" />
-    <state width="1493" height="270" key="GridCell.Tab.1.bottom" timestamp="1628245082816">
+    <state width="1493" height="247" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1628426931739" />
+    <state width="1493" height="247" key="GridCell.Tab.0.right" timestamp="1628426931739">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="270" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1628245082816" />
-    <state width="1493" height="270" key="GridCell.Tab.1.center" timestamp="1628245082816">
+    <state width="1493" height="247" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1628426931739" />
+    <state width="1493" height="247" key="GridCell.Tab.1.bottom" timestamp="1628426931740">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="270" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1628245082816" />
-    <state width="1493" height="270" key="GridCell.Tab.1.left" timestamp="1628245082816">
+    <state width="1493" height="247" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1628426931740" />
+    <state width="1493" height="247" key="GridCell.Tab.1.center" timestamp="1628426931739">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="270" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1628245082816" />
-    <state width="1493" height="270" key="GridCell.Tab.1.right" timestamp="1628245082816">
+    <state width="1493" height="247" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1628426931739" />
+    <state width="1493" height="247" key="GridCell.Tab.1.left" timestamp="1628426931739">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="270" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1628245082816" />
-    <state width="1493" height="270" key="GridCell.Tab.2.bottom" timestamp="1628245082816">
+    <state width="1493" height="247" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1628426931739" />
+    <state width="1493" height="247" key="GridCell.Tab.1.right" timestamp="1628426931740">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="270" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1628245082816" />
-    <state width="1493" height="270" key="GridCell.Tab.2.center" timestamp="1628245082816">
+    <state width="1493" height="247" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1628426931740" />
+    <state width="1493" height="247" key="GridCell.Tab.2.bottom" timestamp="1628426931740">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="270" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1628245082816" />
-    <state width="1493" height="270" key="GridCell.Tab.2.left" timestamp="1628245082816">
+    <state width="1493" height="247" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1628426931740" />
+    <state width="1493" height="247" key="GridCell.Tab.2.center" timestamp="1628426931740">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="270" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1628245082816" />
-    <state width="1493" height="270" key="GridCell.Tab.2.right" timestamp="1628245082816">
+    <state width="1493" height="247" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1628426931740" />
+    <state width="1493" height="247" key="GridCell.Tab.2.left" timestamp="1628426931740">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="270" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1628245082816" />
+    <state width="1493" height="247" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1628426931740" />
+    <state width="1493" height="247" key="GridCell.Tab.2.right" timestamp="1628426931740">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="247" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1628426931740" />
     <state x="502" y="114" key="RollbackChangesDialog" timestamp="1625923759795">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -692,18 +721,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="599" y="281" key="VCS.EditChangelistDialog/0.0.1536.824@0.0.1536.824" timestamp="1625923818200" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1625923870257">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1628245201601">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1625923870257" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1628245201601" />
     <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1625998686587">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1625998686587" />
-    <state x="311" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1626191548655">
+    <state x="311" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1628420230239">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="311" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1626191548655" />
+    <state x="311" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1628420230239" />
     <state x="468" y="144" width="600" height="536" key="find.popup" timestamp="1624891952600">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -717,14 +746,19 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/PlanItemController.java</url>
-          <line>86</line>
-          <option name="timeStamp" value="15" />
+          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/PaymentController.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/MaterialFeeService.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="16" />
+          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/AdvisoryController.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/OtherFeeController.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

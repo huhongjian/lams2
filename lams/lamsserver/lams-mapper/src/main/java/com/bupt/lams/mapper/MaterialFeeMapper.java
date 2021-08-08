@@ -9,13 +9,6 @@ import com.bupt.lams.model.planItem.MaterialFee;
 import java.util.List;
 
 public interface MaterialFeeMapper {
-    /**
-     * 根据条件获取科研项目信息
-     *
-     * @param condition
-     * @return
-     */
-    List<Project> getProjectByCondition(ProjectQueryCondition condition);
 
     List<MaterialFee> getMaterialFeeList();
     /**

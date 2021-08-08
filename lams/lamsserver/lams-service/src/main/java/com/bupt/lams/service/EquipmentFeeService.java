@@ -36,26 +36,4 @@ public class EquipmentFeeService {
     public void updateAsset(Project project) {
         equipmentFeeMapper.updateProject(project);
     }
-
-    /**
-     * 将结果集转化为展示集合
-     *
-     * @param page
-     * @param size
-     * @param data
-     * @return
-     */
-    private RespPageBean transToRespPageBean(Integer page, Integer size, List<Project> data) {
-        Long total = Long.valueOf(data.size());
-        Integer end = Math.min(page + size, data.size());
-        // 展示的数据
-        List<Project> res = new ArrayList<>();
-        for (Integer i = page; i < end; i++) {
-            res.add(data.get(i));
-        }
-        RespPageBean bean = new RespPageBean();
-        bean.setData(res);
-        bean.setTotal(total);
-        return bean;
-    }
 }

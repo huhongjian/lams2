@@ -177,9 +177,9 @@
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="其他费用（人/天）:" prop="other">
+                <el-form-item label="其他费用（人/天）:" prop="otherCost">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.other"></el-input>
+                            v-model="planItem.otherCost"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -212,42 +212,42 @@
               </el-form-item>
             </el-row>
             <el-row>
-              <el-form-item label="调研目的:" prop="relation">
+              <el-form-item label="调研目的:" prop="purpose">
                 <el-input size="mini" prefix-icon="el-icon-edit"
-                          v-model="planItem.relation"></el-input>
+                          v-model="planItem.purpose"></el-input>
               </el-form-item>
             </el-row>
             <el-row>
               <el-col :span="6">
-                <el-form-item label="人员类别:" prop="meal">
+                <el-form-item label="人员类别:" prop="personnelType">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.meal"></el-input>
+                            v-model="planItem.personnelType"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="人次:" prop="other">
+                <el-form-item label="人次:" prop="times">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.other"></el-input>
+                            v-model="planItem.times"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="6">
-                <el-form-item label="往返交通费（元）:" prop="meal">
+                <el-form-item label="往返交通费（元）:" prop="transFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.meal"></el-input>
+                            v-model="planItem.transFee"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="住宿（元）:" prop="other">
+                <el-form-item label="住宿（元）:" prop="accFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.other"></el-input>
+                            v-model="planItem.accFee"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="公杂费:" prop="other">
+                <el-form-item label="公杂费:" prop="otherFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.other"></el-input>
+                            v-model="planItem.otherFee"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
@@ -260,64 +260,66 @@
           </el-form>
           <el-form v-show="planItem.subType==3" :model="planItem">
             <el-row>
-              <el-form-item label="会议名称:" prop="place">
+              <el-form-item label="会议名称:" prop="meetingName">
                 <el-input size="mini" prefix-icon="el-icon-edit"
-                          v-model="planItem.place"></el-input>
+                          v-model="planItem.meetingName"></el-input>
               </el-form-item>
             </el-row>
             <el-row>
               <el-col :span="6">
-                <el-form-item label="人员类别:" prop="type">
+                <el-form-item label="人员类别:" prop="personnelType">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.type"></el-input>
+                            v-model="planItem.personnelType"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="人次:" prop="other">
+                <el-form-item label="人次:" prop="times">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.other"></el-input>
+                            v-model="planItem.times"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="年度:" prop="other">
+                <el-form-item label="年度:" prop="year">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.other"></el-input>
+                            v-model="planItem.year"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="会期（天）:" prop="other">
+                <el-form-item label="会期（天）:" prop="days">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.other"></el-input>
+                            v-model="planItem.days"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="6">
-                <el-form-item label="注册费（元/人）:" prop="other">
+                <el-form-item label="注册费（元/人）:" prop="registrationFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.other"></el-input>
+                            v-model="planItem.registrationFee"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="往返交通费（元）:" prop="meal">
+                <el-form-item label="往返交通费（元）:" prop="transFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.meal"></el-input>
+                            v-model="planItem.transFee"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="住宿及补助费（元）:" prop="other">
+                <el-form-item label="住宿及补助费（元）:" prop="accommodationFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.other"></el-input>
+                            v-model="planItem.accommodationFee"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
           </el-form>
-          <el-row>
-            <el-form-item label="合计（万元）:" prop="subTotal">
-              <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                        v-model="planItem.subTotal"></el-input>
-            </el-form-item>
-          </el-row>
+          <el-form v-show="planItem.subType==4" :model="planItem">
+            <el-row>
+              <el-form-item label="合计（万元）:" prop="subTotal">
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                          v-model="planItem.subTotal"></el-input>
+              </el-form-item>
+            </el-row>
+          </el-form>
         </el-form>
         <el-form v-show="planItem.itemType==5" :model="planItem">
           <el-row>

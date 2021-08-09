@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 实验室资产信息pojo
+ * 科研项目信息pojo
  */
 @Data
 public class Project implements Serializable {

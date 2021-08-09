@@ -232,6 +232,208 @@
               </el-table>
             </el-collapse-item>
             <el-collapse-item title="差旅/会议/国际合作与交流费" name="4">
+              <el-tag>会议费</el-tag>
+              <el-table
+                  :data="meetingFeeList"
+                  @selection-change="handleSelectionChange"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    type="selection"
+                    width="55">
+                </el-table-column>
+                <el-table-column
+                    fixed
+                    label="序号"
+                    align="left"
+                    width="100">
+                  <template slot-scope="scope">
+                    <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                    prop="content"
+                    align="left"
+                    label="会议内容">
+                </el-table-column>
+                <el-table-column
+                    prop="relation"
+                    align="left"
+                    label="与课题相关性">
+                </el-table-column>
+                <el-table-column
+                    prop="meal"
+                    align="left"
+                    label="伙食费（人/天）">
+                </el-table-column>
+                <el-table-column
+                    prop="otherCost"
+                    align="left"
+                    label="其他费用（人/天）"
+                    width="150">
+                </el-table-column>
+                <el-table-column
+                    prop="days"
+                    align="left"
+                    label="天数">
+                </el-table-column>
+                <el-table-column
+                    prop="amount"
+                    align="left"
+                    label="参会人数">
+                </el-table-column>
+                <el-table-column
+                    prop="meetingNum"
+                    align="left"
+                    label="会议次数">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    align="left"
+                    label="合计（万元）">
+                </el-table-column>
+              </el-table>
+              <el-tag>课题调研差旅费</el-tag>
+              <el-table
+                  :data="researchFeeList"
+                  @selection-change="handleSelectionChange"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    type="selection"
+                    width="55">
+                </el-table-column>
+                <el-table-column
+                    fixed
+                    label="序号"
+                    align="left">
+                  <template slot-scope="scope">
+                    <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                    prop="place"
+                    align="left"
+                    label="调研地点">
+                </el-table-column>
+                <el-table-column
+                    prop="purpose"
+                    align="left"
+                    label="调研目的">
+                </el-table-column>
+                <el-table-column
+                    prop="personnelType"
+                    align="left"
+                    label="人员类别">
+                </el-table-column>
+                <el-table-column
+                    prop="times"
+                    align="left"
+                    label="人次">
+                </el-table-column>
+                <el-table-column
+                    prop="transFee"
+                    align="left"
+                    label="交通费（元）">
+                </el-table-column>
+                <el-table-column
+                    prop="accommodationFee"
+                    align="left"
+                    label="住宿（元）">
+                </el-table-column>
+                <el-table-column
+                    prop="otherFee"
+                    align="left"
+                    label="公杂费（元）">
+                </el-table-column>
+                <el-table-column
+                    prop="days"
+                    align="left"
+                    label="天数">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    align="left"
+                    label="合计（万元）">
+                </el-table-column>
+              </el-table>
+              <el-tag>国内学术会议差旅费</el-tag>
+              <el-table
+                  :data="academicFeeList"
+                  @selection-change="handleSelectionChange"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    type="selection"
+                    width="55">
+                </el-table-column>
+                <el-table-column
+                    fixed
+                    label="序号"
+                    align="left"
+                    width="100">
+                  <template slot-scope="scope">
+                    <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                    prop="meetingName"
+                    align="left"
+                    label="会议名称">
+                </el-table-column>
+                <el-table-column
+                    prop="personnelType"
+                    align="left"
+                    label="人员类别">
+                </el-table-column>
+                <el-table-column
+                    prop="times"
+                    align="left"
+                    label="人次">
+                </el-table-column>
+                <el-table-column
+                    prop="year"
+                    align="left"
+                    label="年度">
+                </el-table-column>
+                <el-table-column
+                    prop="days"
+                    align="left"
+                    label="会期（天）">
+                </el-table-column>
+                <el-table-column
+                    prop="transFee"
+                    align="left"
+                    label="往返交通费（元）"
+                    width="150">
+                </el-table-column>
+                <el-table-column
+                    prop="accommodationFee"
+                    align="left"
+                    label="住宿及补助费（元）"
+                    width="150">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    align="left"
+                    label="合计（万元）">
+                </el-table-column>
+              </el-table>
               <el-tag>北京市内交通费</el-tag>
               <el-table
                   :data="transportationFeeList"
@@ -490,7 +692,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="$emit('close')">取 消</el-button>
-    <el-button type="primary" @click="doAddPlanItem">确 定</el-button>
+    <el-button type="primary" @click="doAddPlan">确 定</el-button>
   </span>
     </el-dialog>
     <NewPlanItem v-on:close="newPlanItemVisible = false" :planItem="planItem"
@@ -512,6 +714,9 @@ export default {
       equipmentFeeList: [],
       materialFeeList: [],
       testingFeeList: [],
+      meetingFeeList: [],
+      researchFeeList: [],
+      academicFeeList: [],
       transportationFeeList: [],
       publishFeeList: [],
       paymentList: [],
@@ -571,6 +776,21 @@ export default {
           this.testingFeeList = resp.obj;
         }
       });
+      this.getRequest('/planItem/meetingFee/get').then(resp => {
+        if (resp) {
+          this.meetingFeeList = resp.obj;
+        }
+      });
+      this.getRequest('/planItem/researchFee/get').then(resp => {
+        if (resp) {
+          this.researchFeeList = resp.obj;
+        }
+      });
+      this.getRequest('/planItem/academicFee/get').then(resp => {
+        if (resp) {
+          this.academicFeeList = resp.obj;
+        }
+      });
       this.getRequest('/planItem/transportationFee/get').then(resp => {
         if (resp) {
           this.transportationFeeList = resp.obj;
@@ -622,7 +842,7 @@ export default {
         }
       });
     },
-    doAddPlanItem() {
+    doAddPlan() {
       if (this.project.id) {
         this.$refs['projectForm'].validate(valid => {
           if (valid) {

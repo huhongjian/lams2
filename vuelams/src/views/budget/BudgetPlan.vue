@@ -163,7 +163,7 @@
       </div>
     </div>
     <NewPlan v-on:close="newPlanVisible = false" :newPlanVisible="newPlanVisible" :plan="plan"
-                :title="title" :projectTypes="projectTypes"></NewPlan>
+             :title="title" :projectLists="projectLists"></NewPlan>
     <PlanDetail v-on:close="projectDetailVisible = false" :projectDetailVisible="projectDetailVisible"
                 :plan="plan" :title="title"></PlanDetail>
   </div>
@@ -207,9 +207,9 @@ export default {
         planStatus: "",
         planStatusName: "",
         projectId: "",
-        funding:"",
-        unfulfilledQuota:"",
-        executeRate:"",
+        funding: "",
+        unfulfilledQuota: "",
+        executeRate: "",
         userEmail: "admin",
         user: {
           id: "",
@@ -233,7 +233,7 @@ export default {
         createTime: "",
         updateTime: ""
       },
-      projectTypes: [],
+      projectLists: [],
       type: ""
     }
   },
@@ -242,23 +242,24 @@ export default {
     PlanDetail
   },
   mounted() {
-    this.initProjectTypes();
+    this.initProjects();
     this.initPlans();
   },
   methods: {
-    exportData(){
+    exportData() {
 
     },
-    handleSelectionChange(){
+    handleSelectionChange() {
 
     },
-    showEditView(){
+    showEditView() {
+      this.title = '编辑预算计划';
+      this.newPlanVisible = true;
+    },
+    getProject(data) {
 
     },
-    getProject(data){
-
-    },
-    deleteProject(){
+    deleteProject() {
 
     },
     emptyProject() {
@@ -345,11 +346,11 @@ export default {
         beginDateScope: null
       }
     },
-    initProjectTypes() {
-      let url = '/project/types/get';
+    initProjects() {
+      let url = '/project/get/all';
       this.getRequest(url).then(resp => {
         if (resp) {
-          this.projectTypes = resp.obj;
+          this.projectLists = resp.obj;
         }
       });
     },

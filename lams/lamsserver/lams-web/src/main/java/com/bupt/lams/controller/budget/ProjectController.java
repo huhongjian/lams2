@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 科研项目相关
@@ -30,6 +31,20 @@ public class ProjectController {
             projectQueryCondition.setEndDate(dateScope[1]);
         }
         return projectService.getProjectByCondition(projectQueryCondition);
+    }
+
+    @GetMapping("/get/all")
+    public RespBean getAllProjectList() {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        try {
+            List<Project> data = projectService.getAllProjects();
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取项目列表失败", e);
+            return RespBean.error("获取项目列表失败！");
+        }
+        return response;
     }
 
     @PostMapping("/add")

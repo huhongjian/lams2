@@ -18,9 +18,9 @@
               <el-form-item label="科研项目:" prop="projectId">
                 <el-select style="width: 500px" v-model="plan.projectId" clearable placeholder="请选择归属的科研项目">
                   <el-option
-                      v-for="item in projectTypes"
+                      v-for="item in projectLists"
                       :key="item.id"
-                      :label="item.name"
+                      :label="item.projectName"
                       :value="item.id">
                   </el-option>
                 </el-select>
@@ -707,7 +707,7 @@ import NewPlanItem from "@/components/budget/NewPlanItem";
 
 export default {
   name: "NewPlan",
-  props: ['plan', 'title', 'newPlanVisible', 'projectTypes'],
+  props: ['plan', 'title', 'newPlanVisible', 'projectLists'],
   data() {
     return {
       // 预算明细类型id数组

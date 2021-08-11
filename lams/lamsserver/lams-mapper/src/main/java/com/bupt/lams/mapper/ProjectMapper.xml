@@ -53,6 +53,12 @@
         </where>
         order by p.id
     </select>
+    <select id="getAllProjects" resultMap="BaseResultMap">
+        select *
+        from
+        project p
+        order by p.id
+    </select>
     <select id="getTotalByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"
             resultType="java.lang.Long">
         select count(*)

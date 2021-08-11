@@ -9,7 +9,7 @@
         <result column="projectId" property="projectId"/>
         <result column="userEmail" property="userEmail"/>
         <result column="funding" property="funding"/>
-        <result column="unFullFilledQuota" property="unFullFilledQuota"/>
+        <result column="unfulfilledQuota" property="unfulfilledQuota"/>
         <result column="executeRate" property="executeRate"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>

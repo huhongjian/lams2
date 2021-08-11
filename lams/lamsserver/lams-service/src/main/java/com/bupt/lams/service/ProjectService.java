@@ -31,6 +31,10 @@ public class ProjectService {
         return transToRespPageBean(page, size, data);
     }
 
+    public List<Project> getAllProjects() {
+        return projectMapper.getAllProjects();
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public Long addProject(Project project) {
         LamsUser user = UserInfoUtils.getLoginedUser();

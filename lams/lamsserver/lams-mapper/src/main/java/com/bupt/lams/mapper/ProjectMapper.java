@@ -16,6 +16,12 @@ public interface ProjectMapper {
     List<Project> getProjectByCondition(ProjectQueryCondition condition);
 
     /**
+     * 获取全部科研项目信息
+     *
+     */
+    List<Project> getAllProjects();
+
+    /**
      * 获取符合条件的资产总数
      *
      * @param condition

@@ -9,4 +9,6 @@ public interface PaymentMapper {
     List<Payment> getPaymentList();
 
     int insertSelective(Payment payment);
+
+    List<Payment> getPaymentByIds(List<Long> ids);
 }

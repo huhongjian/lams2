@@ -432,7 +432,7 @@
 
 export default {
   name: "NewProjectItem",
-  props: ['planItem', 'title', 'newPlanItemVisible', "planItemTypes"],
+  props: ['planItem', 'title', 'newPlanItemVisible'],
   data() {
     return {
       // 初始化资产信息
@@ -453,6 +453,40 @@ export default {
       title2: '',
       loading: false,
       countType: null,
+      planItemTypes: [
+        {
+          id: 1,
+          name: '设备费'
+        },
+        {
+          id: 2,
+          name: '材料费'
+        },
+        {
+          id: 3,
+          name: '测试化验加工费'
+        },
+        {
+          id: 4,
+          name: '差旅/会议/国际合作与交流费'
+        },
+        {
+          id: 5,
+          name: '出版/文献/信息传播/知识产权事务费'
+        },
+        {
+          id: 6,
+          name: '劳务费'
+        },
+        {
+          id: 7,
+          name: '专家咨询费'
+        },
+        {
+          id: 8,
+          name: '其他支出'
+        },
+      ],
       countTypeList: [
         {
           id: 1,
@@ -537,8 +571,7 @@ export default {
             let url = "/planItem/" + this.itemUrl + "/add/";
             this.postRequest(url, this.planItem).then(resp => {
               if (resp) {
-                this.$emit('close');
-                // this.$parent.initProjects();
+                this.$emit('handlePlanItemIds', this.planItem.itemType, this.planItem.subType, resp.obj);
               }
             })
           }

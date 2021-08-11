@@ -2,8 +2,10 @@ package com.bupt.lams.service;
 
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.mapper.MaterialFeeMapper;
+import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.Project;
 import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.model.planItem.Advisory;
 import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.MaterialFee;
 import org.springframework.stereotype.Service;
@@ -36,7 +38,24 @@ public class MaterialFeeService {
         return materialFee.getId();
     }
 
-    public void updateAsset(Project project) {
-        materialFeeMapper.updateProject(project);
+    public List<MaterialFee> getMaterialFeeByPlanAndItem(List<PlanAndItem> planAndItemList) {
+        List<MaterialFee> res = new ArrayList<>();
+        List<Long> idList = new ArrayList<>();
+        if (planAndItemList == null || planAndItemList.size() == 0) {
+            return res;
+        }
+        for (PlanAndItem item : planAndItemList) {
+            if (item.getItid() == PlanItemTypeEnum.MATERIAL.getIndex()) {
+                idList.add(item.getIid());
+            }
+        }
+        if (idList.size() == 0) {
+            return res;
+        }
+        return materialFeeMapper.getMaterialFeeByIds(idList);
+    }
+
+    public List<MaterialFee> getMaterialFeeListByIds(List<Long> pids) {
+        return materialFeeMapper.getMaterialFeeByIds(pids);
     }
 }

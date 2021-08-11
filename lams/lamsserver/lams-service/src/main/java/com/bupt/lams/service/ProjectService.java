@@ -1,14 +1,10 @@
 package com.bupt.lams.service;
 
-import com.bupt.lams.constants.AssetStatusEnum;
 import com.bupt.lams.dto.ProjectQueryCondition;
 import com.bupt.lams.mapper.ProjectMapper;
-import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.Project;
 import com.bupt.lams.model.RespPageBean;
-import com.bupt.lams.service.annotation.OperateRecord;
-import com.bupt.lams.service.strategies.record.UpdateAssetRecord;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

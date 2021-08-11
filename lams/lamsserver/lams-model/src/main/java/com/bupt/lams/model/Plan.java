@@ -1,10 +1,13 @@
 package com.bupt.lams.model;
 
+import com.bupt.lams.constants.PlanStatusEnum;
+import com.bupt.lams.model.planItem.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 预算计划信息pojo
@@ -17,6 +20,7 @@ public class Plan implements Serializable {
     private String planStatusName;
     private Long projectId;
     private String userEmail;
+    private String remark;
 
     /**
      * 用户
@@ -31,7 +35,7 @@ public class Plan implements Serializable {
     /**
      * 未执行额度
      */
-    private Double unFullFilledQuota;
+    private Double unfulfilledQuota;
 
     /**
      * 执行率
@@ -49,4 +53,24 @@ public class Plan implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date updateTime;
+
+    /**
+     * 关联的预算明细
+     */
+    List<AcademicFee> academicFeeList;
+    List<Advisory> advisoryList;
+    List<EquipmentFee> equipmentFeeList;
+    List<MaterialFee> materialFeeList;
+    List<MeetingFee> meetingFeeList;
+    List<OtherFee> otherFeeList;
+    List<Payment> paymentList;
+    List<PlanItem> transFeeList;
+    List<PublishFee> publishFeeList;
+    List<ResearchFee> researchFeeList;
+    List<TestingFee> testingFeeList;
+
+    public void setStatus(Integer status) {
+        this.planStatus = status;
+        this.planStatusName = PlanStatusEnum.getNameByIndex(status);
+    }
 }

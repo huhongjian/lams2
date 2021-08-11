@@ -28,9 +28,4 @@ public class EquipmentFee extends PlanItem implements Serializable {
      * 单价
      */
     private Double unitPrice;
-
-    /**
-     * 合计
-     */
-    private Double subTotal;
 }

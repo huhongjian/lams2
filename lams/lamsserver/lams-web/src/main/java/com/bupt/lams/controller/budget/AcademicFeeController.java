@@ -3,6 +3,7 @@ package com.bupt.lams.controller.budget;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.AcademicFee;
 import com.bupt.lams.service.AcademicFeeService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +45,31 @@ public class AcademicFeeController {
             return RespBean.error("国内学术会议差旅费不能为空！");
         }
         try {
-            academicFeeService.addAcademicFee(academicFee);
+            Long id = academicFeeService.addAcademicFee(academicFee);
+            response.setObj(id);
         } catch (Exception e) {
             logger.error("新增国内学术会议差旅费失败", e);
             return RespBean.error("新增国内学术会议差旅费失败！");
+        }
+        return response;
+    }
+
+    /**
+     * 根据预算明细id列表，获取预算明细信息
+     */
+    @PostMapping("/getByIds")
+    public RespBean getAcademicFeeByIds(@RequestBody List<Long> pids) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (CollectionUtils.isEmpty(pids)) {
+            return response;
+        }
+        try {
+            List<AcademicFee> data = academicFeeService.getAcademicFeeListByIds(pids);
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取国内学术会议差旅费信息失败", e);
+            return RespBean.error("获取国内学术会议差旅费信息失败！");
         }
         return response;
     }

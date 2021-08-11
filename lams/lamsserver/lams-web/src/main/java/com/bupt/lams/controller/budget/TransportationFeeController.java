@@ -3,6 +3,7 @@ package com.bupt.lams.controller.budget;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.PlanItem;
 import com.bupt.lams.service.TransportationFeeService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +45,31 @@ public class TransportationFeeController {
             return RespBean.error("差旅/会议/国际合作与交流费不能为空！");
         }
         try {
-            transportationFeeService.addTransportationFee(transportationFee);
+            Long id = transportationFeeService.addTransportationFee(transportationFee);
+            response.setObj(id);
         } catch (Exception e) {
             logger.error("新增差旅/会议/国际合作与交流费失败", e);
             return RespBean.error("新增差旅/会议/国际合作与交流费失败！");
+        }
+        return response;
+    }
+
+    /**
+     * 根据预算明细id列表，获取预算明细信息
+     */
+    @PostMapping("/getByIds")
+    public RespBean getTransportationFeeListByIds(@RequestBody List<Long> pids) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (CollectionUtils.isEmpty(pids)) {
+            return response;
+        }
+        try {
+            List<PlanItem> data = transportationFeeService.getTransportationFeeListByIds(pids);
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取北京市内交通费信息失败", e);
+            return RespBean.error("获取北京市内交通费信息失败！");
         }
         return response;
     }

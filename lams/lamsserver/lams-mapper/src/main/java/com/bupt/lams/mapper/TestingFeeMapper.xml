@@ -96,6 +96,12 @@
             keyProperty="id">
         insert into testing_fee
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="itemType != null">
+                `itemType`,
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                itemTypeName,
+            </if>
             <if test="content != null and content != ''">
                 `content`,
             </if>
@@ -116,6 +122,12 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="itemType != null">
+                #{itemType},
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                #{itemTypeName},
+            </if>
             <if test="content != null and content != ''">
                 #{content},
             </if>
@@ -136,34 +148,18 @@
             </if>
         </trim>
     </insert>
-    <update id="updateProject" parameterType="com.bupt.lams.model.Project">
-        update project
-        set
-        <trim suffixOverrides=",">
-            <if test="projectName != null and projectName != ''">
-                `projectName` = #{projectName},
-            </if>
-            <if test="projectType != null and projectType != ''">
-                projectType = #{projectType},
-            </if>
-            <if test="years != null">
-                years = #{years},
-            </if>
-            <if test="funding != funding">
-                funding = #{funding},
-            </if>
-            <if test="createTime != null">
-                createTime = #{createTime},
-            </if>
-            updateTime = NOW()
-        </trim>
-        <where>
-            id = #{id}
-        </where>
-    </update>
-    <select id="getAssetById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select * from asset
-        where id = #{aid}
+    <select id="getTestingFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.TestingFee">
+        select t.*
+        from
+        testing_fee t
+        where 1=1
+        <if test="list != null and list.size>0">
+            and t.id in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        order by t.id
     </select>
     <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
         select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName

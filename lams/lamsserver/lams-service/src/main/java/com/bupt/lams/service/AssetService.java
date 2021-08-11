@@ -292,8 +292,10 @@ public class AssetService {
     @Transactional(rollbackFor = Exception.class)
     public List<Long> addAsset(Asset asset, Integer amount) {
         List<Long> aids = new ArrayList<>();
+        String username = UserInfoUtils.getLoginedUser().getUsername();
         for (Integer i = 0; i < amount; i++) {
             asset.setStatus(AssetStatusEnum.CREATE.getIndex());
+            asset.setUserEmail(username);
             assetMapper.insertSelective(asset);
             aids.add(asset.getId());
         }
@@ -301,10 +303,11 @@ public class AssetService {
     }
 
     /**
-     * 清空多余的资产信息，即，没有和采购单关联的资产信息
+     * 清空本人创建的、多余的资产信息，即，没有和采购单关联的资产信息
      */
     public void clearAssets() {
-        assetMapper.clearAssets();
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        assetMapper.clearAssets(user.getUsername());
     }
 
     public void addAssetOrderRelation(List<Long> assetIds, Long oid) {

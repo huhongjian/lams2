@@ -3,6 +3,7 @@ package com.bupt.lams.controller.budget;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.OtherFee;
 import com.bupt.lams.service.OtherFeeService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +45,31 @@ public class OtherFeeController {
             return RespBean.error("其他支出不能为空！");
         }
         try {
-            otherFeeService.addOtherFee(otherFee);
+            Long id = otherFeeService.addOtherFee(otherFee);
+            response.setObj(id);
         } catch (Exception e) {
             logger.error("新增其他支出失败", e);
             return RespBean.error("新增其他支出失败！");
+        }
+        return response;
+    }
+
+    /**
+     * 根据预算明细id列表，获取预算明细信息
+     */
+    @PostMapping("/getByIds")
+    public RespBean getOtherFeeByIds(@RequestBody List<Long> pids) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (CollectionUtils.isEmpty(pids)) {
+            return response;
+        }
+        try {
+            List<OtherFee> data = otherFeeService.getOtherFeeListByIds(pids);
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取其他支出信息失败", e);
+            return RespBean.error("获取其他支出信息失败！");
         }
         return response;
     }

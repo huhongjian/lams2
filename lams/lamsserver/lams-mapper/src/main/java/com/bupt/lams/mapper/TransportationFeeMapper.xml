@@ -96,8 +96,11 @@
             keyProperty="id">
         insert into transportation_fee
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="itemType != null">
+                `itemType`,
+            </if>
             <if test="itemTypeName != null and itemTypeName != ''">
-                `itemTypeName`,
+                itemTypeName,
             </if>
             <if test="remark != null and remark != ''">
                 `remark`,
@@ -113,6 +116,12 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="itemType != null">
+                #{itemType},
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                #{itemTypeName},
+            </if>
             <if test="itemTypeName != null and itemTypeName != ''">
                 #{itemTypeName},
             </if>
@@ -130,9 +139,18 @@
             </if>
         </trim>
     </insert>
-    <select id="getAssetById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select * from asset
-        where id = #{aid}
+    <select id="getTransportationFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.PlanItem">
+        select t.*
+        from
+        transportation_fee t
+        where 1=1
+        <if test="list != null and list.size>0">
+            and t.id in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        order by t.id
     </select>
     <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
         select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName

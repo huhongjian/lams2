@@ -144,6 +144,9 @@
             <if test="funding != null">
                 #{funding},
             </if>
+            <if test="executeRate != null">
+                #{executeRate},
+            </if>
             <if test="createTime != null">
                 #{createTime},
             </if>

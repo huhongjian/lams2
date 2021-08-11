@@ -2,6 +2,7 @@ package com.bupt.lams.mapper;
 
 import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.dto.ProjectQueryCondition;
+import com.bupt.lams.model.planItem.Advisory;
 import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.Project;
 
@@ -27,5 +28,5 @@ public interface EquipmentFeeMapper {
 
     int insertSelective(EquipmentFee equipmentFee);
 
-    void updateProject(Project project);
+    List<EquipmentFee> getEquipmentFeeByIds(List<Long> ids);
 }

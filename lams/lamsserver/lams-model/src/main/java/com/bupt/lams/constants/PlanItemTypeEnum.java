@@ -7,11 +7,14 @@ public enum PlanItemTypeEnum {
     EQUIPMENT("设备费", 1),
     MATERIAL("材料费", 2),
     TESTING("测试化验加工费", 3),
-    MEETING("差旅/会议/国际合作与交流费", 4),
-    PUBLISH("出版/文献/信息传播/知识产权事务费", 5),
-    PAYMENT("劳务费", 6),
-    ADVISORY("专家咨询费", 7),
-    OTHERS("其他支出", 8);
+    MEETING("会议费", 4),
+    RESEARCH("课题调研差旅费", 5),
+    ACADEMIC("国内学术会议差旅费", 6),
+    TRANSPORTATION("北京市内交通费", 7),
+    PUBLISH("出版/文献/信息传播/知识产权事务费", 8),
+    PAYMENT("劳务费", 9),
+    ADVISORY("专家咨询费", 10),
+    OTHERS("其他支出", 11);
 
     private String name;
     private int index;

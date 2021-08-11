@@ -9,4 +9,6 @@ public interface PublishFeeMapper {
     List<PublishFee> getPublishFeeList();
 
     int insertSelective(PublishFee publishFee);
+
+    List<PublishFee> getPublishFeeByIds(List<Long> ids);
 }

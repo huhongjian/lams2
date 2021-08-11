@@ -1,9 +1,9 @@
 package com.bupt.lams.controller.budget;
 
-import com.bupt.lams.model.Project;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.service.EquipmentFeeService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +52,8 @@ public class EquipmentFeeController {
             equipmentFee.setAmount(0);
         }
         try {
-            equipmentService.addEquipmentFee(equipmentFee);
+            Long id = equipmentService.addEquipmentFee(equipmentFee);
+            response.setObj(id);
         } catch (Exception e) {
             logger.error("新增设备费失败", e);
             return RespBean.error("新增设备费失败！");
@@ -60,13 +61,23 @@ public class EquipmentFeeController {
         return response;
     }
 
-    @PutMapping("/edit")
-    public RespBean updateProject(@RequestBody Project project) {
-        try {
-            equipmentService.updateAsset(project);
-        } catch (Exception e) {
-            return RespBean.error("更新失败!");
+    /**
+     * 根据预算明细id列表，获取预算明细信息
+     */
+    @PostMapping("/getByIds")
+    public RespBean getEquipmentFeeByIds(@RequestBody List<Long> pids) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (CollectionUtils.isEmpty(pids)) {
+            return response;
         }
-        return RespBean.ok("更新成功!");
+        try {
+            List<EquipmentFee> data = equipmentService.getEquipmentFeeListByIds(pids);
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取设备费信息失败", e);
+            return RespBean.error("获取设备费信息失败！");
+        }
+        return response;
     }
 }

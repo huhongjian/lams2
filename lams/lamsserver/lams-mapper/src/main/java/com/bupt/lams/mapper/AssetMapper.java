@@ -54,5 +54,5 @@ public interface AssetMapper {
 
     void deleteManyByAids(List<Long> aids);
 
-    void clearAssets();
+    void clearAssets(String userEmail);
 }

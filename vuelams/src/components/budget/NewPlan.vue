@@ -6,41 +6,41 @@
         :before-close="handleClose"
         width="80%">
       <div>
-        <el-form :model="project" :rules="rules" ref="projectForm">
+        <el-form :model="plan" :rules="rules" ref="planForm">
           <el-row>
-            <el-form-item label="预算计划名称:" prop="projectName">
+            <el-form-item label="预算计划名称:" prop="planName">
               <el-input size="mini" style="width: 800px" prefix-icon="el-icon-edit"
-                        v-model="project.projectName"></el-input>
+                        v-model="plan.planName"></el-input>
             </el-form-item>
           </el-row>
           <el-row>
             <el-col :span="15">
-              <el-form-item label="科研项目:" prop="projectType">
-                <el-select style="width: 500px" v-model="project.projectType" clearable placeholder="请选择">
+              <el-form-item label="科研项目:" prop="projectId">
+                <el-select style="width: 500px" v-model="plan.projectId" clearable placeholder="请选择归属的科研项目">
                   <el-option
                       v-for="item in projectTypes"
                       :key="item.id"
                       :label="item.name"
-                      :value="item.name">
+                      :value="item.id">
                   </el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="5">
-              <el-form-item label="本计划预算（万元）:" prop="projectName">
+              <el-form-item label="本计划预算（万元）:" prop="funding">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                          v-model="project.projectName"></el-input>
+                          v-model="plan.funding"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="20">
-              <el-form-item label="备注:" prop="reason">
+              <el-form-item label="备注:" prop="remark">
                 <el-input size="mini"
                           type="textarea"
                           :rows="2"
-                          placeholder="请输入申请理由"
-                          v-model="project.projectName"></el-input>
+                          placeholder="请输入预算计划备注说明"
+                          v-model="plan.remark"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -60,10 +60,10 @@
               删除
             </el-button>
           </el-row>
-          <el-collapse @change="initPlanItemList">
+          <el-collapse>
             <el-collapse-item title="设备费" name="1">
               <el-table
-                  :data="equipmentFeeList"
+                  :data="plan.equipmentFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -120,7 +120,7 @@
             </el-collapse-item>
             <el-collapse-item title="材料费" name="2">
               <el-table
-                  :data="materialFeeList"
+                  :data="plan.materialFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -183,7 +183,7 @@
             </el-collapse-item>
             <el-collapse-item title="测试化验加工费" name="3">
               <el-table
-                  :data="testingFeeList"
+                  :data="plan.testingFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -234,7 +234,7 @@
             <el-collapse-item title="差旅/会议/国际合作与交流费" name="4">
               <el-tag>会议费</el-tag>
               <el-table
-                  :data="meetingFeeList"
+                  :data="plan.meetingFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -300,7 +300,7 @@
               </el-table>
               <el-tag>课题调研差旅费</el-tag>
               <el-table
-                  :data="researchFeeList"
+                  :data="plan.researchFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -369,7 +369,7 @@
               </el-table>
               <el-tag>国内学术会议差旅费</el-tag>
               <el-table
-                  :data="academicFeeList"
+                  :data="plan.academicFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -436,7 +436,7 @@
               </el-table>
               <el-tag>北京市内交通费</el-tag>
               <el-table
-                  :data="transportationFeeList"
+                  :data="plan.transportationFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -473,7 +473,7 @@
             </el-collapse-item>
             <el-collapse-item title="出版/文献/信息传播/知识产权事务费" name="5">
               <el-table
-                  :data="publishFeeList"
+                  :data="plan.publishFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -518,7 +518,7 @@
             </el-collapse-item>
             <el-collapse-item title="劳务费" name="6">
               <el-table
-                  :data="paymentList"
+                  :data="plan.paymentList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -581,7 +581,7 @@
             </el-collapse-item>
             <el-collapse-item title="专家咨询费" name="7">
               <el-table
-                  :data="advisoryList"
+                  :data="plan.advisoryList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -644,7 +644,7 @@
             </el-collapse-item>
             <el-collapse-item title="其他支出" name="8">
               <el-table
-                  :data="otherFeeList"
+                  :data="plan.otherFeeList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -695,9 +695,10 @@
     <el-button type="primary" @click="doAddPlan">确 定</el-button>
   </span>
     </el-dialog>
-    <NewPlanItem v-on:close="newPlanItemVisible = false" :planItem="planItem"
-                 :newPlanItemVisible="newPlanItemVisible" :title="planItemTitle"
-                 :planItemTypes="planItemTypes"></NewPlanItem>
+    <NewPlanItem v-on:close="newPlanItemVisible = false"
+                 v-on:handlePlanItemIds="handlePlanItemIds"
+                 :planItem="planItem"
+                 :newPlanItemVisible="newPlanItemVisible" :title="planItemTitle"></NewPlanItem>
   </div>
 </template>
 
@@ -705,12 +706,11 @@
 import NewPlanItem from "@/components/budget/NewPlanItem";
 
 export default {
-  name: "NewProject",
-  props: ['project', 'title', 'newPlanVisible', 'projectTypes'],
+  name: "NewPlan",
+  props: ['plan', 'title', 'newPlanVisible', 'projectTypes'],
   data() {
     return {
-      planSubjects: [],
-      // 预算明细类型
+      // 预算明细类型id数组
       equipmentFeeList: [],
       materialFeeList: [],
       testingFeeList: [],
@@ -756,71 +756,65 @@ export default {
   components: {
     NewPlanItem
   },
-  mounted() {
-    this.initPlanItemTypes();
-  },
   methods: {
-    initPlanItemList(val) {
-      this.getRequest('/planItem/equipmentFee/get').then(resp => {
+    initPlanItemList() {
+      this.loading = true;
+      this.postRequest('/planItem/equipmentFee/getByIds', this.equipmentFeeList).then(resp => {
         if (resp) {
-          this.equipmentFeeList = resp.obj;
+          this.plan.equipmentFeeList = resp.obj;
         }
       });
-      this.getRequest('/planItem/materialFee/get').then(resp => {
+      this.postRequest('/planItem/materialFee/getByIds', this.materialFeeList).then(resp => {
         if (resp) {
-          this.materialFeeList = resp.obj;
+          this.plan.materialFeeList = resp.obj;
         }
       });
-      this.getRequest('/planItem/testingFee/get').then(resp => {
+      this.postRequest('/planItem/testingFee/getByIds', this.testingFeeList).then(resp => {
         if (resp) {
-          this.testingFeeList = resp.obj;
+          this.plan.testingFeeList = resp.obj;
         }
       });
-      this.getRequest('/planItem/meetingFee/get').then(resp => {
+      this.postRequest('/planItem/meetingFee/getByIds', this.meetingFeeList).then(resp => {
         if (resp) {
-          this.meetingFeeList = resp.obj;
+          this.plan.meetingFeeList = resp.obj;
         }
       });
-      this.getRequest('/planItem/researchFee/get').then(resp => {
+      this.postRequest('/planItem/researchFee/getByIds', this.researchFeeList).then(resp => {
         if (resp) {
-          this.researchFeeList = resp.obj;
+          this.plan.researchFeeList = resp.obj;
         }
       });
-      this.getRequest('/planItem/academicFee/get').then(resp => {
+      this.postRequest('/planItem/academicFee/getByIds', this.academicFeeList).then(resp => {
         if (resp) {
-          this.academicFeeList = resp.obj;
+          this.plan.academicFeeList = resp.obj;
         }
       });
-      this.getRequest('/planItem/transportationFee/get').then(resp => {
+      this.postRequest('/planItem/transportationFee/getByIds', this.transportationFeeList).then(resp => {
         if (resp) {
-          this.transportationFeeList = resp.obj;
+          this.plan.transportationFeeList = resp.obj;
         }
       });
-      this.getRequest('/planItem/publishFee/get').then(resp => {
+      this.postRequest('/planItem/publishFee/getByIds', this.publishFeeList).then(resp => {
         if (resp) {
-          this.publishFeeList = resp.obj;
+          this.plan.publishFeeList = resp.obj;
         }
       });
-      this.getRequest('/planItem/materialFee/get').then(resp => {
+      this.postRequest('/planItem/payment/getByIds', this.paymentList).then(resp => {
         if (resp) {
-          this.materialFeeList = resp.obj;
+          this.plan.paymentList = resp.obj;
         }
       });
-      this.getRequest('/planItem/payment/get').then(resp => {
+      this.postRequest('/planItem/advisory/getByIds', this.advisoryList).then(resp => {
         if (resp) {
-          this.paymentList = resp.obj;
+          this.plan.advisoryList = resp.obj;
         }
       });
-      this.getRequest('/planItem/advisory/get').then(resp => {
+      this.postRequest('/planItem/otherFee/getByIds', this.otherFeeList).then(resp => {
         if (resp) {
-          this.advisoryList = resp.obj;
+          this.plan.otherFeeList = resp.obj;
         }
       });
-      this.getRequest('/planItem/otherFee/get').then(resp => {
-        if (resp) {
-          this.otherFeeList = resp.obj;
-        }
-      });
+      this.loading = false;
     },
     exportData() {
 
@@ -834,33 +828,25 @@ export default {
     showDetailView() {
 
     },
-    initPlanItemTypes() {
-      let url = '/plan/item/types/get';
-      this.getRequest(url).then(resp => {
-        if (resp) {
-          this.planItemTypes = resp.obj;
-        }
-      });
-    },
     doAddPlan() {
-      if (this.project.id) {
-        this.$refs['projectForm'].validate(valid => {
+      if (this.plan.id) {
+        this.$refs['planForm'].validate(valid => {
           if (valid) {
-            this.putRequest("/project/edit", this.project).then(resp => {
+            this.putRequest("/plan/edit", this.plan).then(resp => {
               if (resp) {
                 this.$emit('close');
-                this.$parent.initProjects();
+                this.$parent.initPlans();
               }
             })
           }
         });
       } else {
-        this.$refs['projectForm'].validate(valid => {
+        this.$refs['planForm'].validate(valid => {
           if (valid) {
-            this.postRequest("/project/add", this.project).then(resp => {
+            this.postRequest("/plan/add", this.plan).then(resp => {
               if (resp) {
                 this.$emit('close');
-                this.$parent.initProjects();
+                this.$parent.initPlans();
               }
             })
           }
@@ -868,12 +854,7 @@ export default {
       }
     },
     emptyItem() {
-      this.planItem = {
-        planItemId: null,
-        planItemType: '',
-        planItemRemark: '',
-        equipmentFee: {}
-      }
+      this.planItem = {}
     },
     showAddView() {
       this.emptyItem();
@@ -882,6 +863,94 @@ export default {
     },
     handleClose() {
       this.$emit('close');
+    },
+    handlePlanItemIds(itemType, subType, id) {
+      this.freshPids();
+      if (itemType == 1) {
+        this.equipmentFeeList.push(id)
+      } else if (itemType == 2) {
+        this.materialFeeList.push(id)
+      } else if (itemType == 3) {
+        this.testingFeeList.push(id)
+      } else if (itemType == 4 && subType == 1) {
+        this.meetingFeeList.push(id)
+      } else if (itemType == 4 && subType == 2) {
+        this.researchFeeList.push(id)
+      } else if (itemType == 4 && subType == 3) {
+        this.academicFeeList.push(id)
+      } else if (itemType == 4 && subType == 4) {
+        this.transportationFeeList.push(id)
+      } else if (itemType == 5) {
+        this.publishFeeList.push(id)
+      } else if (itemType == 6) {
+        this.paymentList.push(id)
+      } else if (itemType == 7) {
+        this.advisoryList.push(id)
+      } else if (itemType == 8) {
+        this.otherFeeList.push(id)
+      }
+      this.initPlanItemList()
+      this.newPlanItemVisible = false;
+    },
+    freshPids() {
+      if (this.plan == null) {
+        return
+      }
+      if (this.plan.equipmentFeeList != null) {
+        for (var i = 0; i < this.plan.equipmentFeeList.length; i++) {
+          this.equipmentFeeList.push(this.plan.equipmentFeeList[i].id);
+        }
+      }
+      if (this.plan.materialFeeList != null) {
+        for (var i = 0; i < this.plan.materialFeeList.length; i++) {
+          this.materialFeeList.push(this.plan.materialFeeList[i].id);
+        }
+      }
+      if (this.plan.testingFeeList != null) {
+        for (var i = 0; i < this.plan.testingFeeList.length; i++) {
+          this.testingFeeList.push(this.plan.testingFeeList[i].id);
+        }
+      }
+      if (this.plan.meetingFeeList != null) {
+        for (var i = 0; i < this.plan.meetingFeeList.length; i++) {
+          this.meetingFeeList.push(this.plan.meetingFeeList[i].id);
+        }
+      }
+      if (this.plan.researchFeeList != null) {
+        for (var i = 0; i < this.plan.researchFeeList.length; i++) {
+          this.researchFeeList.push(this.plan.researchFeeList[i].id);
+        }
+      }
+      if (this.plan.academicFeeList != null) {
+        for (var i = 0; i < this.plan.academicFeeList.length; i++) {
+          this.academicFeeList.push(this.plan.academicFeeList[i].id);
+        }
+      }
+      if (this.plan.transportationFeeList != null) {
+        for (var i = 0; i < this.plan.transportationFeeList.length; i++) {
+          this.transportationFeeList.push(this.plan.transportationFeeList[i].id);
+        }
+      }
+      if (this.plan.publishFeeList != null) {
+        for (var i = 0; i < this.plan.publishFeeList.length; i++) {
+          this.publishFeeList.push(this.plan.publishFeeList[i].id);
+        }
+      }
+      if (this.plan.paymentList != null) {
+        for (var i = 0; i < this.plan.paymentList.length; i++) {
+          this.paymentList.push(this.plan.paymentList[i].id);
+        }
+      }
+      if (this.plan.advisoryList != null) {
+        for (var i = 0; i < this.plan.advisoryList.length; i++) {
+          this.advisoryList.push(this.plan.advisoryList[i].id);
+        }
+      }
+      if (this.plan.otherFeeList != null) {
+        for (var i = 0; i < this.plan.otherFeeList.length; i++) {
+          this.otherFeeList.push(this.plan.otherFeeList[i].id);
+        }
+      }
     }
   }
 }

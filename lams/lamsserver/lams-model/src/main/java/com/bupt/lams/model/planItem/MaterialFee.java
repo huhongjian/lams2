@@ -35,11 +35,6 @@ public class MaterialFee extends PlanItem implements Serializable {
     private Double unitPrice;
 
     /**
-     * 合计
-     */
-    private Double subTotal;
-
-    /**
      * 单位
      */
     private String unit;

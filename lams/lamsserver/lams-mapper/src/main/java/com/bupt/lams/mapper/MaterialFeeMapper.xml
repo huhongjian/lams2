@@ -104,6 +104,12 @@
             keyProperty="id">
         insert into material_fee
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="itemType != null">
+                `itemType`,
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                itemTypeName,
+            </if>
             <if test="usage != null and usage != ''">
                 `usage`,
             </if>
@@ -133,6 +139,12 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="itemType != null">
+                #{itemType},
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                #{itemTypeName},
+            </if>
             <if test="usage != null and usage != ''">
                 #{usage},
             </if>
@@ -162,34 +174,18 @@
             </if>
         </trim>
     </insert>
-    <update id="updateProject" parameterType="com.bupt.lams.model.Project">
-        update project
-        set
-        <trim suffixOverrides=",">
-            <if test="projectName != null and projectName != ''">
-                `projectName` = #{projectName},
-            </if>
-            <if test="projectType != null and projectType != ''">
-                projectType = #{projectType},
-            </if>
-            <if test="years != null">
-                years = #{years},
-            </if>
-            <if test="funding != funding">
-                funding = #{funding},
-            </if>
-            <if test="createTime != null">
-                createTime = #{createTime},
-            </if>
-            updateTime = NOW()
-        </trim>
-        <where>
-            id = #{id}
-        </where>
-    </update>
-    <select id="getAssetById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select * from asset
-        where id = #{aid}
+    <select id="getMaterialFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.MaterialFee">
+        select m.*
+        from
+        material_fee m
+        where 1=1
+        <if test="list != null and list.size>0">
+            and m.id in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        order by m.id
     </select>
     <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
         select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName

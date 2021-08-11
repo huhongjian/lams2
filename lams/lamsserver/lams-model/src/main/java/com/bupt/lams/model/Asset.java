@@ -33,6 +33,11 @@ public class Asset implements Serializable {
     private String remark;
 
     /**
+     * 申请用户邮箱
+     */
+    private String userEmail;
+
+    /**
      * 入库时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")

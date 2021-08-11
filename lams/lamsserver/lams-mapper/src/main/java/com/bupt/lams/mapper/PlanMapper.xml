@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bupt.lams.mapper.PlanMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.Plan">
+        <id column="id" property="id"/>
+        <result column="planName" property="planName"/>
+        <result column="planStatus" property="planStatus"/>
+        <result column="planStatusName" property="planStatusName"/>
+        <result column="projectId" property="projectId"/>
+        <result column="userEmail" property="userEmail"/>
+        <result column="funding" property="funding"/>
+        <result column="unFullFilledQuota" property="unFullFilledQuota"/>
+        <result column="executeRate" property="executeRate"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+    </resultMap>
+    <resultMap id="AllInfoResultMap" type="com.bupt.lams.model.Plan" extends="BaseResultMap">
+        <association property="user" javaType="com.bupt.lams.model.LamsUser">
+            <id column="uid" property="id"/>
+            <result column="name" property="name"/>
+            <result column="phone" property="phone"/>
+            <result column="username" property="username"/>
+            <result column="enabled" property="enabled"/>
+            <result column="remark" property="remark"/>
+        </association>
+<!--        <collection property="academicFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.AcademicFee">-->
+<!--            <id column="ac_id" property="id"/>-->
+<!--            <result column="ac_meetingName" property="meetingName"/>-->
+<!--            <result column="ac_personnelType" property="personnelType"/>-->
+<!--            <result column="ac_times" property="times"/>-->
+<!--            <result column="ac_year" property="year"/>-->
+<!--            <result column="ac_days" property="days"/>-->
+<!--            <result column="ac_transFee" property="transFee"/>-->
+<!--            <result column="ac_accommodationFee" property="accommodationFee"/>-->
+<!--            <result column="ac_itemType" property="itemType"/>-->
+<!--            <result column="ac_itemTypeName" property="itemTypeName"/>-->
+<!--            <result column="ac_remark" property="remark"/>-->
+<!--            <result column="ac_subTotal" property="subTotal"/>-->
+<!--            <result column="ac_createTime" property="createTime"/>-->
+<!--            <result column="ac_updateTime" property="updateTime"/>-->
+<!--        </collection>-->
+<!--        <collection property="advisoryList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.Advisory">-->
+<!--            <id column="ad_id" property="id"/>-->
+<!--            <result column="ad_personnelType" property="personnelType"/>-->
+<!--            <result column="ad_content" property="content"/>-->
+<!--            <result column="ad_amount" property="amount"/>-->
+<!--            <result column="ad_standard" property="standard"/>-->
+<!--            <result column="ad_days" property="days"/>-->
+<!--            <result column="ad_itemType" property="itemType"/>-->
+<!--            <result column="ad_itemTypeName" property="itemTypeName"/>-->
+<!--            <result column="ad_remark" property="remark"/>-->
+<!--            <result column="ad_subTotal" property="subTotal"/>-->
+<!--            <result column="ad_createTime" property="createTime"/>-->
+<!--            <result column="ad_updateTime" property="updateTime"/>-->
+<!--        </collection>-->
+<!--        <collection property="equipmentFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.EquipmentFee">-->
+<!--            <id column="eq_id" property="id"/>-->
+<!--            <result column="eq_equipmentName" property="equipmentName"/>-->
+<!--            <result column="eq_usage" property="usage"/>-->
+<!--            <result column="eq_amount" property="amount"/>-->
+<!--            <result column="eq_unitPrice" property="unitPrice"/>-->
+<!--            <result column="eq_itemType" property="itemType"/>-->
+<!--            <result column="eq_itemTypeName" property="itemTypeName"/>-->
+<!--            <result column="eq_remark" property="remark"/>-->
+<!--            <result column="eq_subTotal" property="subTotal"/>-->
+<!--            <result column="eq_createTime" property="createTime"/>-->
+<!--            <result column="eq_updateTime" property="updateTime"/>-->
+<!--        </collection>-->
+<!--        <collection property="materialFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.MaterialFee">-->
+<!--            <id column="ma_id" property="id"/>-->
+<!--            <result column="ma_materialName" property="materialName"/>-->
+<!--            <result column="ma_specification" property="specification"/>-->
+<!--            <result column="ma_usage" property="usage"/>-->
+<!--            <result column="ma_amount" property="amount"/>-->
+<!--            <result column="ma_unitPrice" property="unitPrice"/>-->
+<!--            <result column="ma_itemType" property="itemType"/>-->
+<!--            <result column="ma_itemTypeName" property="itemTypeName"/>-->
+<!--            <result column="ma_remark" property="remark"/>-->
+<!--            <result column="ma_subTotal" property="subTotal"/>-->
+<!--            <result column="ma_createTime" property="createTime"/>-->
+<!--            <result column="ma_updateTime" property="updateTime"/>-->
+<!--        </collection>-->
+<!--        <collection property="meetingFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.MeetingFee">-->
+<!--            <id column="me_id" property="id"/>-->
+<!--            <result column="me_content" property="content"/>-->
+<!--            <result column="me_relation" property="relation"/>-->
+<!--            <result column="me_meal" property="meal"/>-->
+<!--            <result column="me_otherCost" property="otherCost"/>-->
+<!--            <result column="me_days" property="days"/>-->
+<!--            <result column="me_amount" property="amount"/>-->
+<!--            <result column="me_meetingNum" property="meetingNum"/>-->
+<!--            <result column="me_itemType" property="itemType"/>-->
+<!--            <result column="me_itemTypeName" property="itemTypeName"/>-->
+<!--            <result column="me_remark" property="remark"/>-->
+<!--            <result column="me_subTotal" property="subTotal"/>-->
+<!--            <result column="me_createTime" property="createTime"/>-->
+<!--            <result column="me_updateTime" property="updateTime"/>-->
+<!--        </collection>-->
+<!--        <collection property="otherFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.OtherFee">-->
+<!--            <id column="ot_id" property="id"/>-->
+<!--            <result column="ot_type" property="type"/>-->
+<!--            <result column="ot_itemType" property="itemType"/>-->
+<!--            <result column="ot_itemTypeName" property="itemTypeName"/>-->
+<!--            <result column="ot_remark" property="remark"/>-->
+<!--            <result column="ot_subTotal" property="subTotal"/>-->
+<!--            <result column="ot_createTime" property="createTime"/>-->
+<!--            <result column="ot_updateTime" property="updateTime"/>-->
+<!--        </collection>-->
+<!--        <collection property="paymentList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.Payment">-->
+<!--            <id column="pa_id" property="id"/>-->
+<!--            <result column="pa_personnelType" property="personnelType"/>-->
+<!--            <result column="pa_content" property="content"/>-->
+<!--            <result column="pa_amount" property="amount"/>-->
+<!--            <result column="pa_standard" property="standard"/>-->
+<!--            <result column="pa_hours" property="hours"/>-->
+<!--            <result column="pa_itemType" property="itemType"/>-->
+<!--            <result column="pa_itemTypeName" property="itemTypeName"/>-->
+<!--            <result column="pa_remark" property="remark"/>-->
+<!--            <result column="pa_subTotal" property="subTotal"/>-->
+<!--            <result column="pa_createTime" property="createTime"/>-->
+<!--            <result column="pa_updateTime" property="updateTime"/>-->
+<!--        </collection>-->
+<!--        <collection property="transFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.PlanItem">-->
+<!--            <id column="tr_id" property="id"/>-->
+<!--            <result column="tr_itemType" property="itemType"/>-->
+<!--            <result column="tr_itemTypeName" property="itemTypeName"/>-->
+<!--            <result column="tr_remark" property="remark"/>-->
+<!--            <result column="tr_subTotal" property="subTotal"/>-->
+<!--            <result column="tr_createTime" property="createTime"/>-->
+<!--            <result column="tr_updateTime" property="updateTime"/>-->
+<!--        </collection>-->
+<!--        <collection property="publishFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.PublishFee">-->
+<!--            <id column="pu_id" property="id"/>-->
+<!--            <result column="pu_type" property="type"/>-->
+<!--            <result column="pu_itemType" property="itemType"/>-->
+<!--            <result column="pu_itemTypeName" property="itemTypeName"/>-->
+<!--            <result column="pu_remark" property="remark"/>-->
+<!--            <result column="pu_subTotal" property="subTotal"/>-->
+<!--            <result column="pu_createTime" property="createTime"/>-->
+<!--            <result column="pu_updateTime" property="updateTime"/>-->
+<!--        </collection>-->
+<!--        <collection property="researchFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.ResearchFee">-->
+<!--            <id column="re_id" property="id"/>-->
+<!--            <result column="re_place" property="place"/>-->
+<!--            <result column="re_purpose" property="purpose"/>-->
+<!--            <result column="re_personnelType" property="personnelType"/>-->
+<!--            <result column="re_times" property="times"/>-->
+<!--            <result column="re_transFee" property="transFee"/>-->
+<!--            <result column="re_accommodationFee" property="accommodationFee"/>-->
+<!--            <result column="re_otherFee" property="otherFee"/>-->
+<!--            <result column="re_days" property="days"/>-->
+<!--            <result column="re_itemType" property="itemType"/>-->
+<!--            <result column="re_itemTypeName" property="itemTypeName"/>-->
+<!--            <result column="re_remark" property="remark"/>-->
+<!--            <result column="re_subTotal" property="subTotal"/>-->
+<!--            <result column="re_createTime" property="createTime"/>-->
+<!--            <result column="re_updateTime" property="updateTime"/>-->
+<!--        </collection>-->
+<!--        <collection property="testingFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.TestingFee">-->
+<!--            <id column="te_id" property="id"/>-->
+<!--            <result column="te_content" property="content"/>-->
+<!--            <result column="te_times" property="times"/>-->
+<!--            <result column="te_unitPrice" property="unitPrice"/>-->
+<!--            <result column="te_itemType" property="itemType"/>-->
+<!--            <result column="te_itemTypeName" property="itemTypeName"/>-->
+<!--            <result column="te_remark" property="remark"/>-->
+<!--            <result column="te_subTotal" property="subTotal"/>-->
+<!--            <result column="te_createTime" property="createTime"/>-->
+<!--            <result column="te_updateTime" property="updateTime"/>-->
+<!--        </collection>-->
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, projectName, projectType, `years`, funding, executeRate, createTime, updateTime
+  </sql>
+    <sql id="baseInfoQuery">
+        <if test="projectId !=null">
+            and p.id = #{projectId}
+        </if>
+        <if test="projectName !=null and projectName!=''">
+            and p.projectName like concat('%',#{projectName},'%')
+        </if>
+        <if test="projectType !=null and projectType!=''">
+            and p.projectType like concat('%',#{projectType},'%')
+        </if>
+        <if test="userEmail !=null and userEmail!=''">
+            and p.userEmail like concat('%',#{userEmail},'%')
+        </if>
+        <if test="startDate !=null and endDate !=null">
+            and p.createTime between #{startDate} and #{endDate}
+        </if>
+    </sql>
+    <select id="getPlanByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"
+            resultMap="AllInfoResultMap">
+        select p.*,
+        u.id as uid, u.*
+        from
+        plan p
+        left join lams_user u on p.userEmail = u.username
+        <where>
+            <include refid="baseInfoQuery"/>
+        </where>
+        order by p.id
+    </select>
+    <select id="getTotalByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"
+            resultType="java.lang.Long">
+        select count(*)
+        project p
+        <where>
+            <include refid="baseInfoQuery"/>
+        </where>
+    </select>
+    <update id="updateAssetStatus" parameterType="com.bupt.lams.model.Asset">
+        update asset a
+        set
+            a.status = #{status},
+            a.statusName = #{statusName}
+        where a.id = #{id}model
+    </update>
+    <update id="updateAsset" parameterType="com.bupt.lams.model.Asset">
+        update asset
+        set
+        from
+        <trim suffixOverrides=",">
+            <if test="type != null and type != ''">
+                `type` = #{type},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="statusName != null and statusName != ''">
+                statusName = #{statusName},
+            </if>
+            <if test="assetName != null and assetName != ''">
+                assetName = #{assetName},
+            </if>
+            <if test="brand != null and brand != ''">
+                brand = #{brand},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="adv != null">
+                adv = #{adv, typeHandler=com.bupt.lams.mybatis.JsonToObjectTypeHandler},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="readyDate != null">
+                readyDate = #{readyDate},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <insert id="insertSelective" parameterType="com.bupt.lams.model.Plan" useGeneratedKeys="true" keyProperty="id">
+        insert into plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="planName != null and planName != ''">
+                `planName`,
+            </if>
+            <if test="planStatus != null">
+                planStatus,
+            </if>
+            <if test="planStatusName != null and planStatusName != ''">
+                planStatusName,
+            </if>
+            <if test="projectId != null">
+                projectId,
+            </if>
+            <if test="userEmail != null and userEmail != ''">
+                userEmail,
+            </if>
+            <if test="funding != null">
+                funding,
+            </if>
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota,
+            </if>
+            <if test="executeRate != null">
+                executeRate,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="updateTime != null">
+                updateTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="planName != null and planName != ''">
+                #{planName},
+            </if>
+            <if test="planStatus != null">
+                #{planStatus},
+            </if>
+            <if test="planStatusName != null and planStatusName != ''">
+                #{planStatusName},
+            </if>
+            <if test="projectId != null">
+                #{projectId},
+            </if>
+            <if test="userEmail != null and userEmail != ''">
+                #{userEmail},
+            </if>
+            <if test="funding != null">
+                #{funding},
+            </if>
+            <if test="unfulfilledQuota != null">
+                #{unfulfilledQuota},
+            </if>
+            <if test="executeRate != null">
+                #{executeRate},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateProject" parameterType="com.bupt.lams.model.Project">
+        update project
+        set
+        <trim suffixOverrides=",">
+            <if test="projectName != null and projectName != ''">
+                `projectName` = #{projectName},
+            </if>
+            <if test="projectType != null and projectType != ''">
+                projectType = #{projectType},
+            </if>
+            <if test="years != null">
+                years = #{years},
+            </if>
+            <if test="funding != funding">
+                funding = #{funding},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="getAssetById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * from asset
+        where id = #{aid}
+    </select>
+    <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
+        select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName
+        from asset
+        where status in (2, 3, 4, 6)
+        <if test="list != null and list.size>0">
+            and type in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        group by status, statusName;
+    </select>
+    <select id="getAssetTypeCount" resultType="com.bupt.lams.dto.AssetStatusCount">
+        select count(id) as count, `type`
+        from asset
+        where status in (2, 3, 4, 6)
+        group by `type`;
+    </select>
+    <select id="getLineData" resultType="com.bupt.lams.dto.AssetStatusCount">
+        select count(id) as count, status, statusName, DATE_FORMAT(readyDate,'%Y-%m') `date`
+        from asset
+        where status in (2, 3, 6)
+        <if test="monthScope !=null">
+            and readyDate between #{monthScope[0]} and #{monthScope[1]}
+        </if>
+        group by status, statusName, `date`
+    </select>
+    <select id="getTotalLineData" resultType="com.bupt.lams.dto.AssetStatusCount">
+        select count(id) as count, DATE_FORMAT(readyDate,'%Y-%m') date
+        from asset
+        where status in (2, 3, 6)
+        <if test="monthScope !=null">
+            and readyDate between #{monthScope[0]} and #{monthScope[1]}
+        </if>
+        group by date;
+    </select>
+    <select id="getAliveAssetTotalMoney" resultType="java.lang.Double">
+        select cast(sum(price) as decimal (19,2))
+        from asset
+        where status in (2, 3, 6);
+    </select>
+    <select id="getAllAssetIds" resultType="java.lang.Long">
+        select id
+        from asset
+    </select>
+    <select id="getAssetInfoByIds" parameterType="list" resultMap="BaseResultMap">
+        select a.*,
+        p.id as pid, p.aid as p_aid, p.name as p_name, p.createTime as p_createTime, p.*
+        from
+        asset a
+        left join asset_pics p on a.id = p.aid
+        where 1=1
+        <if test="list != null and list.size>0">
+            and a.id in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        order by a.id
+    </select>
+    <delete id="deleteManyByAids" parameterType="list">
+        delete
+        from asset
+        where
+        id in
+        <foreach collection="list" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+    <delete id="clearAssets">
+        delete a.*
+        from asset a
+         left join order_asset oa on oa.aid = a.id
+         left join `order` o on oa.oid = o.id
+        where oid is null;
+    </delete>
+</mapper>

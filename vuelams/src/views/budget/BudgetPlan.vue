@@ -17,10 +17,10 @@
         <div>
           <el-input placeholder="请输入项目序号进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
                     clearable
-                    @clear="initProjects"
+                    @clear="initPlans"
                     style="width: 350px;margin-right: 10px" v-model="keyword"
-                    @keydown.enter.native="initProjects" :disabled="showAdvanceSearchView"></el-input>
-          <el-button icon="el-icon-search" type="primary" @click="initProjects"
+                    @keydown.enter.native="initPlans" :disabled="showAdvanceSearchView"></el-input>
+          <el-button icon="el-icon-search" type="primary" @click="initPlans"
                      :disabled="showAdvanceSearchView">
             搜索
           </el-button>
@@ -82,7 +82,7 @@
     </div>
     <div style="margin-top: 10px">
       <el-table
-          :data="projects"
+          :data="plans"
           @selection-change="handleSelectionChange"
           stripe
           border
@@ -105,18 +105,18 @@
           </template>
         </el-table-column>
         <el-table-column
-            prop="projectName"
+            prop="planName"
             align="left"
             :show-overflow-tooltip="true"
             label="预算计划名称">
         </el-table-column>
         <el-table-column
-            prop="projectType"
-            :show-overflow-tooltip="true"
+            prop="planStatusName"
+            width="120"
             label="状态">
         </el-table-column>
         <el-table-column
-            prop="years"
+            prop="projectId"
             width="120"
             label="科研项目">
         </el-table-column>
@@ -126,13 +126,13 @@
             label="预算额度（万元）">
         </el-table-column>
         <el-table-column
-            prop="executeRate"
-            width="95"
+            prop="unfulfilledQuota"
+            width="150"
             align="left"
             label="未执行额度（万元）">
         </el-table-column>
         <el-table-column
-            prop="user.name"
+            prop="executeRate"
             width="95"
             align="left"
             label="执行率">
@@ -162,10 +162,10 @@
         </el-pagination>
       </div>
     </div>
-    <NewPlan v-on:close="newPlanVisible = false" :newPlanVisible="newPlanVisible" :project="project"
+    <NewPlan v-on:close="newPlanVisible = false" :newPlanVisible="newPlanVisible" :plan="plan"
                 :title="title" :projectTypes="projectTypes"></NewPlan>
     <PlanDetail v-on:close="projectDetailVisible = false" :projectDetailVisible="projectDetailVisible"
-                   :project="project" :title="title"></PlanDetail>
+                :plan="plan" :title="title"></PlanDetail>
   </div>
 </template>
 
@@ -201,12 +201,15 @@ export default {
       page: 1,
       keyword: '',
       size: 10,
-      project: {
+      plan: {
         id: "",
-        name: "",
-        type: "",
-        years: "",
-        funding: "",
+        planName: "",
+        planStatus: "",
+        planStatusName: "",
+        projectId: "",
+        funding:"",
+        unfulfilledQuota:"",
+        executeRate:"",
         userEmail: "admin",
         user: {
           id: "",
@@ -216,6 +219,17 @@ export default {
           enabled: "",
           remark: ""
         },
+        equipmentFeeList: [],
+        materialFeeList: [],
+        testingFeeList: [],
+        meetingFeeList: [],
+        researchFeeList: [],
+        academicFeeList: [],
+        transportationFeeList: [],
+        publishFeeList: [],
+        paymentList: [],
+        advisoryList: [],
+        otherFeeList: [],
         createTime: "",
         updateTime: ""
       },
@@ -229,7 +243,7 @@ export default {
   },
   mounted() {
     this.initProjectTypes();
-    this.initProjects();
+    this.initPlans();
   },
   methods: {
     exportData(){
@@ -291,14 +305,14 @@ export default {
       this.page = currentPage;
       this.initOrdersAdv();
     },
-    initProjects() {
+    initPlans() {
       this.type = '';
       this.loading = true;
-      let url = '/project/get/?page=' + this.page + '&size=' + this.size + "&projectId=" + this.keyword;
+      let url = '/plan/get/?page=' + this.page + '&size=' + this.size + "&planId=" + this.keyword;
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
-          this.projects = resp.data;
+          this.plans = resp.data;
           this.total = resp.total;
         }
       });

@@ -21,5 +21,5 @@ public interface MaterialFeeMapper {
 
     int insertSelective(MaterialFee materialFee);
 
-    void updateProject(Project project);
+    List<MaterialFee> getMaterialFeeByIds(List<Long> ids);
 }

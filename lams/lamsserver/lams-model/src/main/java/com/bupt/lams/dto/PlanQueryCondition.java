@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Data
 public class PlanQueryCondition {
-    private Long projectId;
+    private Long planId;
     /**
      * 分页信息
      */

@@ -32,7 +32,7 @@ public class PlanAndPlanItemService {
         List<PlanAndItem> planAndItemList = new ArrayList<>();
         planAndItemList = addPlanAndItemRelation(plan.getId(), plan.getAdvisoryList() == null ? null : new ArrayList<>(plan.getAdvisoryList()), planAndItemList);
         planAndItemList = addPlanAndItemRelation(plan.getId(), plan.getAcademicFeeList() == null ? null : new ArrayList<>(plan.getAcademicFeeList()), planAndItemList);
-        planAndItemList = addPlanAndItemRelation(plan.getId(), plan.getEquipmentFeeList() == null ? null : new ArrayList<>(plan.getEquipmentFeeList()), planAndItemList);
+        planAndItemList = addPlanAndItemRelation(plan.getId(), plan.getEquipmentFeeData() == null || plan.getEquipmentFeeData().getEquipmentFeeList() == null ? null : new ArrayList<>(plan.getEquipmentFeeData().getEquipmentFeeList()), planAndItemList);
         planAndItemList = addPlanAndItemRelation(plan.getId(), plan.getMaterialFeeList() == null ? null : new ArrayList<>(plan.getMaterialFeeList()), planAndItemList);
         planAndItemList = addPlanAndItemRelation(plan.getId(), plan.getMeetingFeeList() == null ? null : new ArrayList<>(plan.getMeetingFeeList()), planAndItemList);
         planAndItemList = addPlanAndItemRelation(plan.getId(), plan.getOtherFeeList() == null ? null : new ArrayList<>(plan.getOtherFeeList()), planAndItemList);

@@ -18,15 +18,12 @@ public interface EquipmentFeeMapper {
     List<Project> getProjectByCondition(ProjectQueryCondition condition);
 
     List<EquipmentFee> getEquipmentFeeList();
-    /**
-     * 获取符合条件的资产总数
-     *
-     * @param condition
-     * @return
-     */
-    Long getTotalByCondition(AssetQueryCondition condition);
 
     int insertSelective(EquipmentFee equipmentFee);
 
     List<EquipmentFee> getEquipmentFeeByIds(List<Long> ids);
+
+    EquipmentFee getEquipmentFeeById(Long id);
+
+    void update(EquipmentFee equipmentFee);
 }

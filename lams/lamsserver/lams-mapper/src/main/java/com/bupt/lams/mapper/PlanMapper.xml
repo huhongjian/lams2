@@ -7,6 +7,7 @@
         <result column="planStatus" property="planStatus"/>
         <result column="planStatusName" property="planStatusName"/>
         <result column="projectId" property="projectId"/>
+        <result column="projectName" property="projectName"/>
         <result column="userEmail" property="userEmail"/>
         <result column="funding" property="funding"/>
         <result column="unfulfilledQuota" property="unfulfilledQuota"/>
@@ -173,8 +174,8 @@
     id, projectName, projectType, `years`, funding, executeRate, createTime, updateTime
   </sql>
     <sql id="baseInfoQuery">
-        <if test="projectId !=null">
-            and p.id = #{projectId}
+        <if test="planId !=null">
+            and p.id = #{planId}
         </if>
         <if test="projectName !=null and projectName!=''">
             and p.projectName like concat('%',#{projectName},'%')
@@ -192,10 +193,12 @@
     <select id="getPlanByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"
             resultMap="AllInfoResultMap">
         select p.*,
-        u.id as uid, u.*
+        u.id as uid, u.*,
+        pr.projectName
         from
         plan p
         left join lams_user u on p.userEmail = u.username
+        left join project pr on p.projectId = pr.id
         <where>
             <include refid="baseInfoQuery"/>
         </where>
@@ -321,21 +324,39 @@
             </if>
         </trim>
     </insert>
-    <update id="updateProject" parameterType="com.bupt.lams.model.Project">
-        update project
+    <update id="updatePlan" parameterType="com.bupt.lams.model.Plan">
+        update plan
         set
         <trim suffixOverrides=",">
+            <if test="planName != null and planName != ''">
+                `planName` = #{planName},
+            </if>
+            <if test="planStatus != null">
+                `planStatus` = #{planStatus},
+            </if>
+            <if test="planStatusName != null and planStatusName != ''">
+                planStatusName = #{planStatusName},
+            </if>
+            <if test="projectId != null">
+                projectId = #{projectId},
+            </if>
             <if test="projectName != null and projectName != ''">
-                `projectName` = #{projectName},
+                projectName = #{projectName},
             </if>
-            <if test="projectType != null and projectType != ''">
-                projectType = #{projectType},
+            <if test="userEmail != null and userEmail != ''">
+                userEmail = #{userEmail},
             </if>
-            <if test="years != null">
-                years = #{years},
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
             </if>
-            <if test="funding != funding">
+            <if test="funding != null">
                 funding = #{funding},
+            </if>
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota = #{unfulfilledQuota},
+            </if>
+            <if test="executeRate != null">
+                executeRate = #{executeRate},
             </if>
             <if test="createTime != null">
                 createTime = #{createTime},
@@ -346,9 +367,9 @@
             id = #{id}
         </where>
     </update>
-    <select id="getAssetById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select * from asset
-        where id = #{aid}
+    <select id="getPlanById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * from plan
+        where id = #{id}
     </select>
     <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
         select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName

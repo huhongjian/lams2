@@ -19,6 +19,7 @@ public class Plan implements Serializable {
     private Integer planStatus;
     private String planStatusName;
     private Long projectId;
+    private String projectName;
     private String userEmail;
     private String remark;
 
@@ -59,7 +60,7 @@ public class Plan implements Serializable {
      */
     List<AcademicFee> academicFeeList;
     List<Advisory> advisoryList;
-    List<EquipmentFee> equipmentFeeList;
+    EquipmentFeeData equipmentFeeData;
     List<MaterialFee> materialFeeList;
     List<MeetingFee> meetingFeeList;
     List<OtherFee> otherFeeList;

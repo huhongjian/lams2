@@ -2,9 +2,7 @@ package com.bupt.lams.mapper;
 
 import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.dto.PlanQueryCondition;
-import com.bupt.lams.dto.ProjectQueryCondition;
 import com.bupt.lams.model.Plan;
-import com.bupt.lams.model.Project;
 
 import java.util.List;
 
@@ -27,5 +25,7 @@ public interface PlanMapper {
 
     int insertSelective(Plan plan);
 
-    void updateProject(Project project);
+    void updatePlan(Plan plan);
+
+    Plan getPlanById(Long id);
 }

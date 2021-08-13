@@ -64,7 +64,7 @@ public class ProjectController {
     @PutMapping("/edit")
     public RespBean updateProject(@RequestBody Project project) {
         try {
-            projectService.updateAsset(project);
+            projectService.updateProject(project);
         } catch (Exception e) {
             return RespBean.error("更新失败!");
         }

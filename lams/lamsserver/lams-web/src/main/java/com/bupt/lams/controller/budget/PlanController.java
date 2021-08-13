@@ -48,9 +48,9 @@ public class PlanController {
     }
 
     @PutMapping("/edit")
-    public RespBean updateProject(@RequestBody Project project) {
+    public RespBean updateProject(@RequestBody Plan plan) {
         try {
-            planService.updateAsset(project);
+            planService.updatePlan(plan);
         } catch (Exception e) {
             return RespBean.error("更新失败!");
         }

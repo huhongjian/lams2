@@ -32,6 +32,11 @@ public class Project implements Serializable {
     private Double funding;
 
     /**
+     * 未执行额度
+     */
+    private Double unfulfilledQuota;
+
+    /**
      * 执行率
      */
     private Double executeRate;

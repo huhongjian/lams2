@@ -32,4 +32,6 @@ public interface ProjectMapper {
     int insertSelective(Project project);
 
     void updateProject(Project project);
+
+    Project getProjectById(Long id);
 }

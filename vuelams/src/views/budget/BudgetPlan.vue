@@ -101,7 +101,7 @@
             align="left"
             width="80">
           <template slot-scope="scope">
-            <el-button size="mini" @click="getProject(scope.row)">{{ scope.row.id }}</el-button>
+            <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
           </template>
         </el-table-column>
         <el-table-column
@@ -164,8 +164,9 @@
     </div>
     <NewPlan v-on:close="newPlanVisible = false" :newPlanVisible="newPlanVisible" :plan="plan"
              :title="title" :projectLists="projectLists"></NewPlan>
-    <PlanDetail v-on:close="projectDetailVisible = false" :projectDetailVisible="projectDetailVisible"
-                :plan="plan" :title="title"></PlanDetail>
+    <PlanDetail v-on:close="planDetailVisible = false"
+                v-on:freshPlan="freshPlan"
+                :planDetailVisible="planDetailVisible" :plan="plan" :title="title"></PlanDetail>
   </div>
 </template>
 
@@ -196,7 +197,7 @@ export default {
       loading: false,
       newPlanVisible: false,
       // 详情页可见性
-      projectDetailVisible: false,
+      planDetailVisible: false,
       total: 0,
       page: 1,
       keyword: '',
@@ -219,7 +220,7 @@ export default {
           enabled: "",
           remark: ""
         },
-        equipmentFeeList: [],
+        equipmentFeeData: {},
         materialFeeList: [],
         testingFeeList: [],
         meetingFeeList: [],
@@ -252,12 +253,10 @@ export default {
     handleSelectionChange() {
 
     },
-    showEditView() {
+    showEditView(data) {
       this.title = '编辑预算计划';
+      this.plan = data;
       this.newPlanVisible = true;
-    },
-    getProject(data) {
-
     },
     deleteProject() {
 
@@ -293,10 +292,18 @@ export default {
       this.title = '新增预算计划';
       this.newPlanVisible = true;
     },
+    freshPlan(id) {
+      let url = '/plan/get/?page=1&size=1&planId=' + id;
+      this.getRequest(url).then(resp => {
+        if (resp) {
+          this.plan = resp.data[0];
+        }
+      });
+    },
     showDetailView(data) {
       this.title = '科研项目详情';
-      this.project = data;
-      this.projectDetailVisible = true;
+      this.plan = data;
+      this.planDetailVisible = true;
     },
     sizeChange: function (currentSize) {
       this.size = currentSize;
@@ -359,31 +366,4 @@ export default {
 </script>
 
 <style scoped>
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both
-}
-
-.box-card {
-  width: 19.8%;
-  float: left;
-}
-
-.box-title {
-  font-size: 14px;
-  font-family: 微软雅黑;
-  font-weight: bold;
-}
-
-.box-value {
-  font-size: 14px;
-  font-family: 微软雅黑;
-  font-weight: bold;
-}
 </style>

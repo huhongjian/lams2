@@ -59,14 +59,6 @@
         equipment_fee e
         order by e.id
     </select>
-    <select id="getTotalByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"
-            resultType="java.lang.Long">
-        select count(*)
-        project p
-        <where>
-            <include refid="baseInfoQuery"/>
-        </where>
-    </select>
     <update id="updateAssetStatus" parameterType="com.bupt.lams.model.Asset">
         update asset a
         set
@@ -137,6 +129,12 @@
             <if test="subTotal != null">
                 subTotal,
             </if>
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota,
+            </if>
+            <if test="executeRate != null">
+                executeRate,
+            </if>
             <if test="createTime != null">
                 createTime,
             </if>
@@ -166,6 +164,12 @@
             <if test="subTotal != null">
                 #{subTotal},
             </if>
+            <if test="unfulfilledQuota != null">
+                #{unfulfilledQuota},
+            </if>
+            <if test="executeRate != null">
+                #{executeRate},
+            </if>
             <if test="createTime != null">
                 #{createTime},
             </if>
@@ -174,6 +178,46 @@
             </if>
         </trim>
     </insert>
+    <update id="update" parameterType="com.bupt.lams.model.planItem.EquipmentFee">
+        update equipment_fee
+        set
+        <trim suffixOverrides=",">
+            <if test="itemType != null">
+                `itemType` = #{itemType},
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                itemTypeName = #{itemTypeName},
+            </if>
+            <if test="equipmentName != null and equipmentName != ''">
+                `equipmentName` = #{equipmentName},
+            </if>
+            <if test="usage != null and usage != ''">
+                `usage` = #{usage},
+            </if>
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+            <if test="unitPrice != null">
+                unitPrice = #{unitPrice},
+            </if>
+            <if test="subTotal != null">
+                subTotal = #{subTotal},
+            </if>
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota = #{unfulfilledQuota},
+            </if>
+            <if test="executeRate != null">
+                executeRate = #{executeRate},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
     <select id="getEquipmentFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.EquipmentFee">
         select e.*
         from
@@ -186,6 +230,13 @@
             </foreach>
         </if>
         order by e.id
+    </select>
+    <select id="getEquipmentFeeById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.EquipmentFee">
+        select e.*
+        from
+        equipment_fee e
+        where
+        e.id = #{id}
     </select>
     <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
         select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName

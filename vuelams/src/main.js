@@ -49,7 +49,7 @@ import {
     DatePicker,
     RadioGroup,
     CollapseItem,
-    Switch
+    Switch, Progress
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
@@ -99,6 +99,8 @@ Vue.use(Image);
 Vue.use(Select);
 Vue.use(Form);
 Vue.use(Tag);
+// 新使用一个组件要在这里注册
+Vue.use(Progress)
 Vue.prototype.$alert = MessageBox.alert
 Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$message = Message

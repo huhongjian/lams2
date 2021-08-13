@@ -174,8 +174,14 @@
             <if test="years != null">
                 years = #{years},
             </if>
-            <if test="funding != funding">
+            <if test="funding != null">
                 funding = #{funding},
+            </if>
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota = #{unfulfilledQuota},
+            </if>
+            <if test="executeRate != null">
+                executeRate = #{executeRate},
             </if>
             <if test="createTime != null">
                 createTime = #{createTime},
@@ -186,9 +192,9 @@
             id = #{id}
         </where>
     </update>
-    <select id="getAssetById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select * from asset
-        where id = #{aid}
+    <select id="getProjectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * from project
+        where id = #{id}
     </select>
     <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
         select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName

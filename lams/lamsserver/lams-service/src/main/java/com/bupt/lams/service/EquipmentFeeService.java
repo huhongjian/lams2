@@ -7,10 +7,12 @@ import com.bupt.lams.model.planItem.Advisory;
 import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.Project;
 import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.model.planItem.EquipmentFeeData;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,11 +36,11 @@ public class EquipmentFeeService {
         return equipmentFee.getId();
     }
 
-    public List<EquipmentFee> getEquipmentFeeByPlanAndItem(List<PlanAndItem> planAndItemList) {
-        List<EquipmentFee> res = new ArrayList<>();
+    public EquipmentFeeData getEquipmentFeeByPlanAndItem(List<PlanAndItem> planAndItemList) {
+        EquipmentFeeData data = new EquipmentFeeData();
         List<Long> idList = new ArrayList<>();
         if (planAndItemList == null || planAndItemList.size() == 0) {
-            return res;
+            return data;
         }
         for (PlanAndItem item : planAndItemList) {
             if (item.getItid() == PlanItemTypeEnum.EQUIPMENT.getIndex()) {
@@ -46,12 +48,33 @@ public class EquipmentFeeService {
             }
         }
         if (idList.size() == 0) {
-            return res;
+            return data;
         }
-        return equipmentFeeMapper.getEquipmentFeeByIds(idList);
+        Double total = new Double(0.0);
+        Double unfulfilledQuota = new Double(0.0);
+        DecimalFormat df = new DecimalFormat("#.00");
+        List<EquipmentFee> equipmentFeeList = equipmentFeeMapper.getEquipmentFeeByIds(idList);
+        for (EquipmentFee fee : equipmentFeeList) {
+            total = total + fee.getSubTotal();
+            unfulfilledQuota = unfulfilledQuota + fee.getUnfulfilledQuota();
+        }
+        data.setFunding(total);
+        data.setUnfulfilledQuota(unfulfilledQuota);
+        Double executeRate = (total - unfulfilledQuota) / total * 100;
+        data.setExecuteRate(new Double(df.format(executeRate.doubleValue())));
+        data.setEquipmentFeeList(equipmentFeeList);
+        return data;
     }
 
     public List<EquipmentFee> getEquipmentFeeListByIds(List<Long> pids) {
         return equipmentFeeMapper.getEquipmentFeeByIds(pids);
+    }
+
+    public void update(EquipmentFee equipmentFee) {
+        equipmentFeeMapper.update(equipmentFee);
+    }
+
+    public EquipmentFee getEquipmentFeeById(Long id) {
+        return equipmentFeeMapper.getEquipmentFeeById(id);
     }
 }

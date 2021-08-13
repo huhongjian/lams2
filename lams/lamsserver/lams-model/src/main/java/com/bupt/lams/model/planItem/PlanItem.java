@@ -30,6 +30,16 @@ public class PlanItem implements Serializable {
     private Double subTotal;
 
     /**
+     * 未执行额度（万元）
+     */
+    private Double unfulfilledQuota;
+
+    /**
+     * 执行率
+     */
+    private Double executeRate;
+
+    /**
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")

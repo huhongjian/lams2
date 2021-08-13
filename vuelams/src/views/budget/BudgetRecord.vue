@@ -131,7 +131,7 @@
         <el-table-column
             prop="createTime"
             width="100"
-            align="left"
+            align="left"v
             label="申请时间">
         </el-table-column>
         <el-table-column

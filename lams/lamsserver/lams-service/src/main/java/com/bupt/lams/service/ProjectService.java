@@ -43,8 +43,12 @@ public class ProjectService {
         return project.getId();
     }
 
-    public void updateAsset(Project project) {
+    public void updateProject(Project project) {
         projectMapper.updateProject(project);
+    }
+
+    public Project getProjectById(Long id) {
+        return projectMapper.getProjectById(id);
     }
 
     /**

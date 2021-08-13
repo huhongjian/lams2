@@ -69,8 +69,8 @@ public class PlanService {
         return plan.getId();
     }
 
-    public void updateAsset(Project project) {
-        planMapper.updateProject(project);
+    public void updatePlan(Plan plan) {
+        planMapper.updatePlan(plan);
     }
 
     /**
@@ -103,7 +103,7 @@ public class PlanService {
             List<PlanAndItem> planAndItemList = planAndPlanItemService.getPlanAndItemListByPid(plan.getId());
             plan.setAcademicFeeList(academicFeeService.getAcademicFeeByPlanAndItem(planAndItemList));
             plan.setAdvisoryList(advisoryService.getAdvisoryByPlanAndItem(planAndItemList));
-            plan.setEquipmentFeeList(equipmentFeeService.getEquipmentFeeByPlanAndItem(planAndItemList));
+            plan.setEquipmentFeeData(equipmentFeeService.getEquipmentFeeByPlanAndItem(planAndItemList));
             plan.setMaterialFeeList(materialFeeService.getMaterialFeeByPlanAndItem(planAndItemList));
             plan.setMeetingFeeList(meetingFeeService.getMeetingFeeByPlanAndItem(planAndItemList));
             plan.setOtherFeeList(otherFeeService.getOtherFeeByPlanAndItem(planAndItemList));
@@ -114,5 +114,9 @@ public class PlanService {
             plan.setTestingFeeList(testingFeeService.getTestingFeeByPlanAndItem(planAndItemList));
         }
         return planList;
+    }
+
+    public Plan getPlanById(Long id) {
+        return planMapper.getPlanById(id);
     }
 }

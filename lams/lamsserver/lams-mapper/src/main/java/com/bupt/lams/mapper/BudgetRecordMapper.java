@@ -1,7 +1,7 @@
 package com.bupt.lams.mapper;
 
 import com.bupt.lams.dto.AssetQueryCondition;
-import com.bupt.lams.dto.ProjectQueryCondition;
+import com.bupt.lams.dto.ExecutionQueryCondition;
 import com.bupt.lams.model.BudgetRecord;
 import com.bupt.lams.model.Project;
 
@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface BudgetRecordMapper {
     /**
-     * 根据条件获取科研项目信息
+     * 根据条件获取执行流水信息
      *
      * @param condition
      * @return
      */
-    List<Project> getProjectByCondition(ProjectQueryCondition condition);
+    List<BudgetRecord> getBudgetRecordByCondition(ExecutionQueryCondition condition);
 
     /**
      * 获取全部科研项目信息

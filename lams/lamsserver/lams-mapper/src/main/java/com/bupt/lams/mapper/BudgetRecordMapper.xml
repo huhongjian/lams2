@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bupt.lams.mapper.BudgetRecordMapper">
-    <resultMap id="BaseResultMap" type="com.bupt.lams.model.Project">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.BudgetRecord">
         <id column="id" property="id"/>
-        <result column="projectName" property="projectName"/>
-        <result column="projectType" property="projectType"/>
-        <result column="years" property="years"/>
         <result column="funding" property="funding"/>
-        <result column="executeRate" property="executeRate"/>
+        <result column="projectId" property="projectId"/>
+        <result column="projectName" property="projectName"/>
+        <result column="planId" property="planId"/>
+        <result column="planName" property="planName"/>
+        <result column="planItemId" property="planItemId"/>
+        <result column="itemType" property="itemType"/>
+        <result column="itemTypeName" property="itemTypeName"/>
+        <result column="remark" property="remark"/>
+        <result column="userEmail" property="userEmail"/>
+        <result column="executeDate" property="executeDate"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
     </resultMap>
-    <resultMap id="AllInfoResultMap" type="com.bupt.lams.model.Project" extends="BaseResultMap">
+    <resultMap id="AllInfoResultMap" type="com.bupt.lams.model.BudgetRecord" extends="BaseResultMap">
         <association property="user" javaType="com.bupt.lams.model.LamsUser">
             <id column="uid" property="id"/>
             <result column="name" property="name"/>
@@ -25,7 +31,7 @@
     id, projectName, projectType, `years`, funding, executeRate, createTime, updateTime
   </sql>
     <sql id="baseInfoQuery">
-        <if test="projectId !=null">
+        <if test="id !=null">
             and p.id = #{projectId}
         </if>
         <if test="projectName !=null and projectName!=''">
@@ -41,17 +47,17 @@
             and p.createTime between #{startDate} and #{endDate}
         </if>
     </sql>
-    <select id="getProjectByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"
+    <select id="getBudgetRecordByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"
             resultMap="AllInfoResultMap">
-        select p.*,
+        select b.*,
         u.id as uid, u.*
         from
-        project p
-        left join lams_user u on p.userEmail = u.username
+        budget_record b
+        left join lams_user u on b.userEmail = u.username
         <where>
             <include refid="baseInfoQuery"/>
         </where>
-        order by p.id
+        order by b.id
     </select>
     <select id="getAllProjects" resultMap="BaseResultMap">
         select *

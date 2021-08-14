@@ -1,6 +1,6 @@
 package com.bupt.lams.controller.budget;
 
-import com.bupt.lams.dto.ProjectQueryCondition;
+import com.bupt.lams.dto.ExecutionQueryCondition;
 import com.bupt.lams.model.BudgetRecord;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.Date;
 
 /**
- * 科研项目相关
+ * 预算执行流水相关
  */
 @RestController
 @RequestMapping("/execution")
@@ -24,12 +24,12 @@ public class ExecutionController {
     BudgetRecordService budgetRecordService;
 
     @GetMapping("/get")
-    public RespPageBean getProjectInfoByPage(ProjectQueryCondition projectQueryCondition, Date[] dateScope) {
+    public RespPageBean getBudgetRecordByPage(ExecutionQueryCondition executionQueryCondition, Date[] dateScope) {
         if (dateScope != null && dateScope.length == 2) {
-            projectQueryCondition.setStartDate(dateScope[0]);
-            projectQueryCondition.setEndDate(dateScope[1]);
+            executionQueryCondition.setStartDate(dateScope[0]);
+            executionQueryCondition.setEndDate(dateScope[1]);
         }
-        return budgetRecordService.getProjectByCondition(projectQueryCondition);
+        return budgetRecordService.getBudgetRecordByCondition(executionQueryCondition);
     }
 
     @PostMapping("/add")

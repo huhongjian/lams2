@@ -1,6 +1,6 @@
 package com.bupt.lams.service;
 
-import com.bupt.lams.dto.ProjectQueryCondition;
+import com.bupt.lams.dto.ExecutionQueryCondition;
 import com.bupt.lams.mapper.BudgetRecordMapper;
 import com.bupt.lams.model.*;
 import com.bupt.lams.model.planItem.EquipmentFee;
@@ -33,13 +33,13 @@ public class BudgetRecordService {
     @Resource
     EquipmentFeeService equipmentFeeService;
 
-    public RespPageBean getProjectByCondition(ProjectQueryCondition condition) {
+    public RespPageBean getBudgetRecordByCondition(ExecutionQueryCondition condition) {
         Integer page = condition.getPage();
         Integer size = condition.getSize();
         if (page != null && size != null) {
             page = (page - 1) * size;
         }
-        List<Project> data = budgetRecordMapper.getProjectByCondition(condition);
+        List<BudgetRecord> data = budgetRecordMapper.getBudgetRecordByCondition(condition);
         return transToRespPageBean(page, size, data);
     }
 
@@ -64,11 +64,11 @@ public class BudgetRecordService {
      * @param data
      * @return
      */
-    private RespPageBean transToRespPageBean(Integer page, Integer size, List<Project> data) {
+    private RespPageBean transToRespPageBean(Integer page, Integer size, List<BudgetRecord> data) {
         Long total = Long.valueOf(data.size());
         Integer end = Math.min(page + size, data.size());
         // 展示的数据
-        List<Project> res = new ArrayList<>();
+        List<BudgetRecord> res = new ArrayList<>();
         for (Integer i = page; i < end; i++) {
             res.add(data.get(i));
         }

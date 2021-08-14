@@ -33,6 +33,11 @@ public class BudgetRecord implements Serializable {
     private String userEmail;
 
     /**
+     * 用户信息
+     */
+    private LamsUser user;
+
+    /**
      * 执行时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")

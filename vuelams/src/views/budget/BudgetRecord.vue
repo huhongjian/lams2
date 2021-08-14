@@ -79,7 +79,7 @@
     </div>
     <div style="margin-top: 10px">
       <el-table
-          :data="projects"
+          :data="executions"
           @selection-change="handleSelectionChange"
           stripe
           border
@@ -94,53 +94,49 @@
         </el-table-column>
         <el-table-column
             fixed
+            prop="id"
             label="流水编号"
             align="left"
             width="80">
-          <template slot-scope="scope">
-            <el-button size="mini" @click="getProject(scope.row)">{{ scope.row.id }}</el-button>
-          </template>
+        </el-table-column>
+        <el-table-column
+            prop="funding"
+            align="left"
+            label="金额（万元）"
+            width="100">
         </el-table-column>
         <el-table-column
             prop="projectName"
-            align="left"
-            :show-overflow-tooltip="true"
-            label="金额（万元）">
-        </el-table-column>
-        <el-table-column
-            prop="projectType"
             :show-overflow-tooltip="true"
             label="科研项目">
         </el-table-column>
         <el-table-column
-            prop="years"
-            width="120"
+            prop="planName"
+            :show-overflow-tooltip="true"
             label="预算计划">
         </el-table-column>
         <el-table-column
-            prop="funding"
+            prop="itemTypeName"
+            :show-overflow-tooltip="true"
             width="120"
             label="预算科目">
         </el-table-column>
         <el-table-column
-            prop="executeRate"
-            width="95"
+            prop="remark"
             align="left"
             label="备注">
         </el-table-column>
         <el-table-column
-            prop="createTime"
-            width="100"
-            align="left"v
-            label="申请时间">
+            prop="userEmail"
+            width="150"
+            align="left"
+            label="执行用户">
         </el-table-column>
         <el-table-column
-            fixed="right"
-            width="80"
-            label="操作">
-          <template slot-scope="scope">
-            <el-button @click="showEditView(scope.row)">编辑</el-button>
-          </template>
+            prop="executeDate"
+            width="100"
+            align="left"
+            label="执行时间">
         </el-table-column>
       </el-table>
       <div style="display: flex;justify-content: flex-end">
@@ -183,7 +179,7 @@ export default {
       },
       title: '',
       showAdvanceSearchView: false,
-      projects: [],
+      executions: [],
       loading: false,
       newProjectVisible: false,
       // 详情页可见性
@@ -219,9 +215,7 @@ export default {
     ProjectDetail
   },
   mounted() {
-    this.initProjectTypes();
-    this.initProjects();
-    this.initHeadTableData();
+    this.initExecutions();
   },
   methods: {
     emptyProject() {
@@ -268,14 +262,14 @@ export default {
       this.page = currentPage;
       this.initOrdersAdv();
     },
-    initProjects() {
+    initExecutions() {
       this.type = '';
       this.loading = true;
-      let url = '/project/get/?page=' + this.page + '&size=' + this.size + "&projectId=" + this.keyword;
+      let url = '/execution/get/?page=' + this.page + '&size=' + this.size + "&executionId=" + this.keyword;
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
-          this.projects = resp.data;
+          this.executions = resp.data;
           this.total = resp.total;
         }
       });

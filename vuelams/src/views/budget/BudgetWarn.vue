@@ -71,7 +71,7 @@
     </div>
     <div style="margin-top: 10px">
       <el-table
-          :data="projects"
+          :data="contents"
           @selection-change="handleSelectionChange"
           stripe
           border
@@ -98,38 +98,33 @@
             label="项目名称">
         </el-table-column>
         <el-table-column
-            prop="projectType"
+            prop="planName"
             :show-overflow-tooltip="true"
             label="预算计划">
         </el-table-column>
         <el-table-column
-            prop="years"
+            prop="itemTypeName"
             width="120"
+            :show-overflow-tooltip="true"
             label="预算科目">
         </el-table-column>
         <el-table-column
-            prop="funding"
-            width="120"
-            label="报警执行率">
-        </el-table-column>
-        <el-table-column
             prop="executeRate"
             width="95"
-            align="left"
-            label="报警频率">
+            label="当前执行率%">
         </el-table-column>
         <el-table-column
-            prop="executeRate"
-            width="200"
+            prop="needExecuteRate"
+            width="95"
+            align="left"
+            label="预期执行率%">
+        </el-table-column>
+        <el-table-column
+            prop="toEmail"
+            width="150"
             align="left"
             :show-overflow-tooltip="true"
             label="接收人">
-        </el-table-column>
-        <el-table-column
-            prop="user.name"
-            width="95"
-            align="left"
-            label="创建人">
         </el-table-column>
         <el-table-column
             prop="createTime"
@@ -167,6 +162,9 @@
 <script>
 export default {
   name: "BudgetWarn",
+  mounted() {
+    this.initContents();
+  },
   data() {
     return {
       headTableData: {
@@ -185,7 +183,7 @@ export default {
       },
       title: '',
       showAdvanceSearchView: false,
-      projects: [],
+      contents: [],
       loading: false,
       newWarningVisible: false,
       // 详情页可见性
@@ -235,6 +233,18 @@ export default {
     handleClose() {
       this.countType = null;
       this.$emit('close');
+    },
+    initContents() {
+      this.type = '';
+      this.loading = true;
+      let url = '/warning/record/get/?page=' + this.page + '&size=' + this.size + "&id=" + this.keyword;
+      this.getRequest(url).then(resp => {
+        this.loading = false;
+        if (resp) {
+          this.contents = resp.data;
+          this.total = resp.total;
+        }
+      });
     },
   }
 }

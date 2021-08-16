@@ -1,10 +1,12 @@
 package com.bupt.lams.controller.budget;
 
-import com.bupt.lams.dto.ExecutionQueryCondition;
 import com.bupt.lams.dto.WarningConfigQueryCondition;
+import com.bupt.lams.dto.WarningRecordQueryCondition;
+import com.bupt.lams.model.MessageContent;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.model.WarningConfig;
+import com.bupt.lams.service.MessageContentService;
 import com.bupt.lams.service.WarningConfigService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +25,10 @@ public class WarningController {
 
     @Resource
     WarningConfigService warningConfigService;
+    @Resource
+    MessageContentService messageContentService;
 
-    @GetMapping("/get")
+    @GetMapping("/config/get")
     public RespPageBean getWarningConfigByPage(WarningConfigQueryCondition executionQueryCondition, Date[] dateScope) {
         if (dateScope != null && dateScope.length == 2) {
             executionQueryCondition.setStartDate(dateScope[0]);
@@ -33,7 +37,16 @@ public class WarningController {
         return warningConfigService.getWarningConfigByCondition(executionQueryCondition);
     }
 
-    @PostMapping("/add")
+    @GetMapping("/record/get")
+    public RespPageBean getWarningRecordByPage(WarningRecordQueryCondition warningRecordQueryCondition, Date[] dateScope) {
+        if (dateScope != null && dateScope.length == 2) {
+            warningRecordQueryCondition.setStartDate(dateScope[0]);
+            warningRecordQueryCondition.setEndDate(dateScope[1]);
+        }
+        return messageContentService.getMessageContentByCondition(warningRecordQueryCondition);
+    }
+
+    @PostMapping("/config/add")
     public RespBean addConfig(@RequestBody WarningConfig config) {
         RespBean response = new RespBean();
         response.setStatus(200);

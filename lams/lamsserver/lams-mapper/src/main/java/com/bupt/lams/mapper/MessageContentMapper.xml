@@ -3,6 +3,33 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bupt.lams.mapper.MessageContentMapper">
+    <sql id="baseInfoQuery">
+        <if test="id !=null">
+            and p.id = #{id}
+        </if>
+        <if test="projectName !=null and projectName!=''">
+            and p.projectName like concat('%',#{projectName},'%')
+        </if>
+        <if test="projectType !=null and projectType!=''">
+            and p.projectType like concat('%',#{projectType},'%')
+        </if>
+        <if test="userEmail !=null and userEmail!=''">
+            and p.userEmail like concat('%',#{userEmail},'%')
+        </if>
+        <if test="startDate !=null and endDate !=null">
+            and p.createTime between #{startDate} and #{endDate}
+        </if>
+    </sql>
+    <select id="getByCondition" parameterType="com.bupt.lams.dto.WarningRecordQueryCondition"
+            resultType="com.bupt.lams.model.MessageContent">
+        select m.*
+        from
+        message_content m
+        <where>
+            <include refid="baseInfoQuery"/>
+        </where>
+        order by m.id
+    </select>
     <update id="updateMailSendLogStatus">
         update mail_send_log set status = #{status} where msgId=#{msgId};
     </update>

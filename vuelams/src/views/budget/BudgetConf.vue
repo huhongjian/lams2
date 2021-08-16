@@ -236,7 +236,7 @@ export default {
     initConfigs(){
       this.type = '';
       this.loading = true;
-      let url = '/warning/get/?page=' + this.page + '&size=' + this.size + "&projectId=" + this.keyword;
+      let url = '/warning/config/get/?page=' + this.page + '&size=' + this.size + "&projectId=" + this.keyword;
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {

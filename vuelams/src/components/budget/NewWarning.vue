@@ -222,7 +222,7 @@ export default {
       } else {
         this.$refs['configForm'].validate(valid => {
           if (valid) {
-            this.postRequest("/warning/add", this.warningConfig).then(resp => {
+            this.postRequest("/warning/config/add", this.warningConfig).then(resp => {
               if (resp) {
                 this.$emit('close');
                 this.$parent.initConfigs();

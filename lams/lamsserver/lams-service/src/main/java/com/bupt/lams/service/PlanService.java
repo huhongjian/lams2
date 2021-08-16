@@ -5,6 +5,7 @@ import com.bupt.lams.dto.PlanQueryCondition;
 import com.bupt.lams.mapper.PlanMapper;
 import com.bupt.lams.model.*;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,9 +53,24 @@ public class PlanService {
         if (page != null && size != null) {
             page = (page - 1) * size;
         }
+        List<Plan> data = getFullPlanInfo(condition);
+        return transToRespPageBean(page, size, data);
+    }
+
+    public List<Plan> getFullPlanInfo(PlanQueryCondition condition) {
         List<Plan> data = planMapper.getPlanByCondition(condition);
         data = buildPlanInfo(data);
-        return transToRespPageBean(page, size, data);
+        return data;
+    }
+
+    public Plan getFullPlanInfoById(Long id) {
+        PlanQueryCondition condition = new PlanQueryCondition();
+        condition.setPlanId(id);
+        List<Plan> planList = getFullPlanInfo(condition);
+        if (CollectionUtils.isEmpty(planList)) {
+            return null;
+        }
+        return planList.get(0);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -118,5 +134,9 @@ public class PlanService {
 
     public Plan getPlanById(Long id) {
         return planMapper.getPlanById(id);
+    }
+
+    public List<Plan> getAllPlans() {
+        return planMapper.getAllPlans();
     }
 }

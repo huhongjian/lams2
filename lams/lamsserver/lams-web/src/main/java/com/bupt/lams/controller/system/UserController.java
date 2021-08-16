@@ -30,8 +30,22 @@ public class UserController {
         return userService.getUsersByPage(keywords, page, size);
     }
 
+    @GetMapping("/all")
+    public RespBean getAllUsers() {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        try {
+            List<LamsUser> data = userService.getAllUsers();
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取用户列表失败", e);
+            return RespBean.error("获取用户列表失败！");
+        }
+        return response;
+    }
+
     @PutMapping("/")
-    public RespBean updateHr(@RequestBody LamsUser lamsUser) {
+    public RespBean updateUser(@RequestBody LamsUser lamsUser) {
         if (userService.updateUser(lamsUser) == 1) {
             return RespBean.ok("更新成功!");
         }

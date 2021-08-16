@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/lamsserver/lams-web/lams-web.iml" filepath="$PROJECT_DIR$/lamsserver/lams-web/lams-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/lamsserver/lams-workflow/lams-workflow.iml" filepath="$PROJECT_DIR$/lamsserver/lams-workflow/lams-workflow.iml" />
       <module fileurl="file://$PROJECT_DIR$/lamsserver/lamsserver.iml" filepath="$PROJECT_DIR$/lamsserver/lamsserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/messageserver/messageserver.iml" filepath="$PROJECT_DIR$/messageserver/messageserver.iml" />
     </modules>
   </component>
 </project>

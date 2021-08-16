@@ -27,6 +27,8 @@ public interface LamsUserMapper {
 
     List<LamsUser> getAllUsersExceptCurrent(Integer id);
 
+    List<LamsUser> getAllUsers();
+
     Integer updatePasswd(@Param("uid") Integer uid, @Param("encodePass") String encodePass);
 
     void enabledChangeByUsername(@Param("username") String username, @Param("enabled") Integer enabled);

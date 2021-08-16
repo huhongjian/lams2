@@ -11,3 +11,9 @@ spring:
     password: 123456
   cache:
     cache-names: menus_cache
+  rabbitmq:
+    username: admin
+    password: admin
+    host: 47.111.82.18
+    publisher-confirms: true
+    publisher-returns: true

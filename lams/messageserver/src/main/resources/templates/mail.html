@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>您有预算计划即将超时！</title>
+</head>
+<body>
+您有预算计划需要关注，详细信息如下：
+<table border="1">
+    <tr>
+        <td>科研项目</td>
+        <td th:text="${projectName}"></td>
+    </tr>
+    <tr>
+        <td>预算计划</td>
+        <td th:text="${planName}"></td>
+    </tr>
+    <tr>
+        <td>预算科目</td>
+        <td th:text="${itemTypeName}"></td>
+    </tr>
+    <tr>
+        <td>当前执行率</td>
+        <td th:text="${executeRate}"></td>
+    </tr>
+    <tr>
+        <td>预期执行率</td>
+        <td th:text="${needExecuteRate}"></td>
+    </tr>
+</table>
+</body>
+</html>

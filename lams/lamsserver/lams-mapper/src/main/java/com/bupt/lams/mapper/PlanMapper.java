@@ -15,6 +15,8 @@ public interface PlanMapper {
      */
     List<Plan> getPlanByCondition(PlanQueryCondition condition);
 
+    List<Plan> getAllPlans();
+
     /**
      * 获取符合条件的资产总数
      *

@@ -23,6 +23,9 @@
     <select id="getAllUsersExceptCurrent" resultMap="BaseResultMap">
         select * from lams_user where id !=#{id};
     </select>
+    <select id="getAllUsers" resultMap="BaseResultMap">
+        select * from lams_user;
+    </select>
     <select id="getRolesById" resultType="com.bupt.lams.model.Role">
     select r.* from role r,lams_user_role lrr where lrr.`rid`=r.`id` and lrr.`uid`=#{id}
   </select>

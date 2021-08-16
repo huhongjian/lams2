@@ -78,6 +78,10 @@ public class UserService implements UserDetailsService {
         return lamsUserMapper.getAllUsersExceptCurrent(UserInfoUtils.getLoginedUser().getId());
     }
 
+    public List<LamsUser> getAllUsers() {
+        return lamsUserMapper.getAllUsers();
+    }
+
     public Integer updateUserById(LamsUser lamsUser) {
         return lamsUserMapper.updateByPrimaryKeySelective(lamsUser);
     }

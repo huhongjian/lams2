@@ -1,10 +1,7 @@
 package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanQueryCondition;
-import com.bupt.lams.model.Plan;
-import com.bupt.lams.model.Project;
-import com.bupt.lams.model.RespBean;
-import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.model.*;
 import com.bupt.lams.service.PlanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 预算计划相关
@@ -31,6 +29,20 @@ public class PlanController {
             planQueryCondition.setEndDate(dateScope[1]);
         }
         return planService.getPlanByCondition(planQueryCondition);
+    }
+
+    @GetMapping("/get/all")
+    public RespBean getAllPlan() {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        try {
+            List<Plan> data = planService.getAllPlans();
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取预算计划列表失败", e);
+            return RespBean.error("获取预算计划列表失败！");
+        }
+        return response;
     }
 
     @PostMapping("/add")

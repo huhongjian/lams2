@@ -102,6 +102,7 @@ export default {
               if (resp) {
                 this.$emit('close');
                 this.$parent.initProjects();
+                this.$parent.initHeadTableData();
               }
             })
           }
@@ -113,6 +114,7 @@ export default {
               if (resp) {
                 this.$emit('close');
                 this.$parent.initProjects();
+                this.$parent.initHeadTableData();
               }
             })
           }

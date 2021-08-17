@@ -391,6 +391,7 @@ export default {
           if (resp) {
             this.projectIds = [];
             this.initProjects();
+            this.initHeadTableData();
           }
         })
       }).catch(() => {

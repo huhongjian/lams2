@@ -148,6 +148,9 @@
             <if test="projectType != null and projectType != ''">
                 projectType = #{projectType},
             </if>
+            <if test="userEmail != null and userEmail != ''">
+                userEmail = #{userEmail},
+            </if>
             <if test="years != null">
                 years = #{years},
             </if>

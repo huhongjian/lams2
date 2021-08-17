@@ -71,6 +71,11 @@ public class ProjectController {
     @PutMapping("/edit")
     public RespBean updateProject(@RequestBody Project project) {
         try {
+            Project oldProject = projectService.getProjectById(project.getId());
+            Double used = oldProject.getFunding() - oldProject.getUnfulfilledQuota();
+            if (project.getFunding() < used) {
+                return RespBean.error("更新失败!总额度小于已执行额度！");
+            }
             projectService.updateProject(project);
         } catch (Exception e) {
             return RespBean.error("更新失败!");

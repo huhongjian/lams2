@@ -1,5 +1,6 @@
 package com.bupt.lams.controller.budget;
 
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.MaterialFee;
 import com.bupt.lams.service.MaterialFeeService;
@@ -72,7 +73,7 @@ public class MaterialFeeController {
             return response;
         }
         try {
-            List<MaterialFee> data = materialFeeService.getMaterialFeeListByIds(pids);
+            PlanItemData data = materialFeeService.getMaterialFeeDataByIds(pids);
             response.setObj(data);
         } catch (Exception e) {
             logger.error("获取材料费信息失败", e);

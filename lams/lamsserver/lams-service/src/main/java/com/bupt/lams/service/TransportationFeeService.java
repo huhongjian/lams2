@@ -1,10 +1,13 @@
 package com.bupt.lams.service;
 
 import com.bupt.lams.constants.PlanItemTypeEnum;
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.TransportationFeeMapper;
 import com.bupt.lams.model.PlanAndItem;
+import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.PlanItem;
 import com.bupt.lams.model.planItem.TestingFee;
+import com.bupt.lams.utils.TransferUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,11 +38,11 @@ public class TransportationFeeService {
         return transportationFee.getId();
     }
 
-    public List<PlanItem> getTransportationFeeByPlanAndItem(List<PlanAndItem> planAndItemList) {
-        List<PlanItem> res = new ArrayList<>();
+    public PlanItemData getDataByPlanAndItem(List<PlanAndItem> planAndItemList) {
+        PlanItemData data = new PlanItemData();
         List<Long> idList = new ArrayList<>();
         if (planAndItemList == null || planAndItemList.size() == 0) {
-            return res;
+            return data;
         }
         for (PlanAndItem item : planAndItemList) {
             if (item.getItid() == PlanItemTypeEnum.TRANSPORTATION.getIndex()) {
@@ -47,9 +50,15 @@ public class TransportationFeeService {
             }
         }
         if (idList.size() == 0) {
-            return res;
+            return data;
         }
-        return transportationFeeMapper.getTransportationFeeByIds(idList);
+        data = getTransportationFeeDataByIds(idList);
+        return data;
+    }
+
+    public PlanItemData getTransportationFeeDataByIds(List<Long> ids) {
+        List<PlanItem> transportationFeeList = transportationFeeMapper.getTransportationFeeByIds(ids);
+        return TransferUtils.transToPlanItemData(transportationFeeList);
     }
 
     public List<PlanItem> getTransportationFeeListByIds(List<Long> pids) {

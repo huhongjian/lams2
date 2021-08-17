@@ -2,6 +2,7 @@ package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.EquipmentFee;
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.service.EquipmentFeeService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -72,7 +73,7 @@ public class EquipmentFeeController {
             return response;
         }
         try {
-            List<EquipmentFee> data = equipmentService.getEquipmentFeeListByIds(pids);
+            PlanItemData data = equipmentService.getEquipmentFeeDataByIds(pids);
             response.setObj(data);
         } catch (Exception e) {
             logger.error("获取设备费信息失败", e);

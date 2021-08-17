@@ -17,14 +17,6 @@ public interface PlanMapper {
 
     List<Plan> getAllPlans();
 
-    /**
-     * 获取符合条件的资产总数
-     *
-     * @param condition
-     * @return
-     */
-    Long getTotalByCondition(AssetQueryCondition condition);
-
     int insertSelective(Plan plan);
 
     void updatePlan(Plan plan);

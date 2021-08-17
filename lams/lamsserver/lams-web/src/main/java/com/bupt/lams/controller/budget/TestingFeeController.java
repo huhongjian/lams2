@@ -1,5 +1,6 @@
 package com.bupt.lams.controller.budget;
 
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.AcademicFee;
 import com.bupt.lams.model.planItem.TestingFee;
@@ -73,7 +74,7 @@ public class TestingFeeController {
             return response;
         }
         try {
-            List<TestingFee> data = testingFeeService.getTestingFeeListByIds(pids);
+            PlanItemData data = testingFeeService.getTestingFeeDataByIds(pids);
             response.setObj(data);
         } catch (Exception e) {
             logger.error("获取测试化验加工费信息失败", e);

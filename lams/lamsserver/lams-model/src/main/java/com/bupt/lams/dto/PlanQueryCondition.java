@@ -24,7 +24,11 @@ public class PlanQueryCondition {
     /**
      * 科研项目信息
      */
-    private String projectName;
-    private String projectType;
+    private String projectId;
+
+    /**
+     * 预算计划信息
+     */
+    private String planName;
     private String userEmail;
 }

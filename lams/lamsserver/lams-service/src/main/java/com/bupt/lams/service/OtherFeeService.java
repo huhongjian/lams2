@@ -1,10 +1,13 @@
 package com.bupt.lams.service;
 
 import com.bupt.lams.constants.PlanItemTypeEnum;
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.OtherFeeMapper;
 import com.bupt.lams.model.PlanAndItem;
+import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.MeetingFee;
 import com.bupt.lams.model.planItem.OtherFee;
+import com.bupt.lams.utils.TransferUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,11 +38,11 @@ public class OtherFeeService {
         return otherFee.getId();
     }
 
-    public List<OtherFee> getOtherFeeByPlanAndItem(List<PlanAndItem> planAndItemList) {
-        List<OtherFee> res = new ArrayList<>();
+    public PlanItemData getDataByPlanAndItem(List<PlanAndItem> planAndItemList) {
+        PlanItemData data = new PlanItemData();
         List<Long> idList = new ArrayList<>();
         if (planAndItemList == null || planAndItemList.size() == 0) {
-            return res;
+            return data;
         }
         for (PlanAndItem item : planAndItemList) {
             if (item.getItid() == PlanItemTypeEnum.OTHERS.getIndex()) {
@@ -47,9 +50,15 @@ public class OtherFeeService {
             }
         }
         if (idList.size() == 0) {
-            return res;
+            return data;
         }
-        return otherFeeMapper.getOtherFeeByIds(idList);
+        data = getOtherFeeDataByIds(idList);
+        return data;
+    }
+
+    public PlanItemData getOtherFeeDataByIds(List<Long> ids) {
+        List<OtherFee> equipmentFeeList = otherFeeMapper.getOtherFeeByIds(ids);
+        return TransferUtils.transToPlanItemData(new ArrayList<>(equipmentFeeList));
     }
 
     public List<OtherFee> getOtherFeeListByIds(List<Long> pids) {

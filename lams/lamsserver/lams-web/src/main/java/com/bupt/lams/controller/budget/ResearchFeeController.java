@@ -1,5 +1,6 @@
 package com.bupt.lams.controller.budget;
 
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.AcademicFee;
 import com.bupt.lams.model.planItem.ResearchFee;
@@ -66,7 +67,7 @@ public class ResearchFeeController {
             return response;
         }
         try {
-            List<ResearchFee> data = researchFeeService.getResearchFeeListByIds(pids);
+            PlanItemData data = researchFeeService.getResearchFeeDataByIds(pids);
             response.setObj(data);
         } catch (Exception e) {
             logger.error("获取课题调研差旅费信息失败", e);

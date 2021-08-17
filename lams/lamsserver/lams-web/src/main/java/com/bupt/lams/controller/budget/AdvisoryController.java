@@ -1,5 +1,6 @@
 package com.bupt.lams.controller.budget;
 
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.Advisory;
 import com.bupt.lams.service.AdvisoryService;
@@ -65,7 +66,7 @@ public class AdvisoryController {
             return response;
         }
         try {
-            List<Advisory> data = advisoryService.getAdvisoryListByIds(pids);
+            PlanItemData data = advisoryService.getAdvisoryDataByIds(pids);
             response.setObj(data);
         } catch (Exception e) {
             logger.error("获取专家咨询费信息失败", e);

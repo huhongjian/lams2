@@ -1,5 +1,6 @@
 package com.bupt.lams.controller.budget;
 
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.PlanItem;
 import com.bupt.lams.service.TransportationFeeService;
@@ -65,7 +66,7 @@ public class TransportationFeeController {
             return response;
         }
         try {
-            List<PlanItem> data = transportationFeeService.getTransportationFeeListByIds(pids);
+            PlanItemData data = transportationFeeService.getTransportationFeeDataByIds(pids);
             response.setObj(data);
         } catch (Exception e) {
             logger.error("获取北京市内交通费信息失败", e);

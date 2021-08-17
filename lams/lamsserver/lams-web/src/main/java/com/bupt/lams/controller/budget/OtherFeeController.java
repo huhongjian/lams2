@@ -1,5 +1,6 @@
 package com.bupt.lams.controller.budget;
 
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.OtherFee;
 import com.bupt.lams.service.OtherFeeService;
@@ -65,7 +66,7 @@ public class OtherFeeController {
             return response;
         }
         try {
-            List<OtherFee> data = otherFeeService.getOtherFeeListByIds(pids);
+            PlanItemData data = otherFeeService.getOtherFeeDataByIds(pids);
             response.setObj(data);
         } catch (Exception e) {
             logger.error("获取其他支出信息失败", e);

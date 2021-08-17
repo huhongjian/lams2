@@ -78,7 +78,7 @@
           </el-row>
           <el-row>
             <el-form-item label="报警接收人列表:" prop="toUser">
-              <el-select v-model="warningConfig.toUser" multiple placeholder="请选择">
+              <el-select v-model="warningConfig.toUser" multiple filterable placeholder="请选择">
                 <el-option
                     v-for="item in userList"
                     :key="item.username"

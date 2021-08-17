@@ -52,13 +52,13 @@
           </el-row>
           <el-collapse>
             <el-collapse-item title="设备费" name="1">
-              <el-tag>金额: {{ plan.equipmentFeeData.funding }}（万元）</el-tag>
-              <el-tag type="success">未执行额度: {{ plan.equipmentFeeData.unfulfilledQuota }}（万元）</el-tag>
-              <el-tag type="info">执行率: {{ plan.equipmentFeeData.executeRate }}%</el-tag>
+              <el-tag>金额: {{ plan.planItemDataMap.equipmentFeeData.funding }}（万元）</el-tag>
+              <el-tag type="success">未执行额度: {{ plan.planItemDataMap.equipmentFeeData.unfulfilledQuota }}（万元）</el-tag>
+              <el-tag type="info">执行率: {{ plan.planItemDataMap.equipmentFeeData.executeRate }}%</el-tag>
               <el-progress :text-inside="true" :stroke-width="10"
-                           :percentage=plan.equipmentFeeData.executeRate></el-progress>
+                           :percentage=plan.planItemDataMap.equipmentFeeData.executeRate></el-progress>
               <el-table
-                  :data="plan.equipmentFeeData.equipmentFeeList"
+                  :data="plan.planItemDataMap.equipmentFeeData.planItemList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -132,8 +132,13 @@
               </el-table>
             </el-collapse-item>
             <el-collapse-item title="材料费" name="2">
+              <el-tag>金额: {{ plan.planItemDataMap.materialFeeData.funding }}（万元）</el-tag>
+              <el-tag type="success">未执行额度: {{ plan.planItemDataMap.materialFeeData.unfulfilledQuota }}（万元）</el-tag>
+              <el-tag type="info">执行率: {{ plan.planItemDataMap.materialFeeData.executeRate }}%</el-tag>
+              <el-progress :text-inside="true" :stroke-width="10"
+                           :percentage=plan.planItemDataMap.materialFeeData.executeRate></el-progress>
               <el-table
-                  :data="plan.materialFeeList"
+                  :data="plan.planItemDataMap.materialFeeData.planItemList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -195,8 +200,13 @@
               </el-table>
             </el-collapse-item>
             <el-collapse-item title="测试化验加工费" name="3">
+              <el-tag>金额: {{ plan.planItemDataMap.testingFeeData.funding }}（万元）</el-tag>
+              <el-tag type="success">未执行额度: {{ plan.planItemDataMap.testingFeeData.unfulfilledQuota }}（万元）</el-tag>
+              <el-tag type="info">执行率: {{ plan.planItemDataMap.testingFeeData.executeRate }}%</el-tag>
+              <el-progress :text-inside="true" :stroke-width="10"
+                           :percentage=plan.planItemDataMap.testingFeeData.executeRate></el-progress>
               <el-table
-                  :data="plan.testingFeeList"
+                  :data="plan.planItemDataMap.testingFeeData.planItemList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -246,8 +256,13 @@
             </el-collapse-item>
             <el-collapse-item title="差旅/会议/国际合作与交流费" name="4">
               <el-tag>会议费</el-tag>
+              <el-tag>金额: {{ plan.planItemDataMap.meetingFeeData.funding }}（万元）</el-tag>
+              <el-tag type="success">未执行额度: {{ plan.planItemDataMap.meetingFeeData.unfulfilledQuota }}（万元）</el-tag>
+              <el-tag type="info">执行率: {{ plan.planItemDataMap.meetingFeeData.executeRate }}%</el-tag>
+              <el-progress :text-inside="true" :stroke-width="10"
+                           :percentage=plan.planItemDataMap.meetingFeeData.executeRate></el-progress>
               <el-table
-                  :data="plan.meetingFeeList"
+                  :data="plan.planItemDataMap.meetingFeeData.planItemList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -312,8 +327,13 @@
                 </el-table-column>
               </el-table>
               <el-tag>课题调研差旅费</el-tag>
+              <el-tag>金额: {{ plan.planItemDataMap.researchFeeData.funding }}（万元）</el-tag>
+              <el-tag type="success">未执行额度: {{ plan.planItemDataMap.researchFeeData.unfulfilledQuota }}（万元）</el-tag>
+              <el-tag type="info">执行率: {{ plan.planItemDataMap.researchFeeData.executeRate }}%</el-tag>
+              <el-progress :text-inside="true" :stroke-width="10"
+                           :percentage=plan.planItemDataMap.researchFeeData.executeRate></el-progress>
               <el-table
-                  :data="plan.researchFeeList"
+                  :data="plan.planItemDataMap.researchFeeData.planItemList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -381,8 +401,13 @@
                 </el-table-column>
               </el-table>
               <el-tag>国内学术会议差旅费</el-tag>
+              <el-tag>金额: {{ plan.planItemDataMap.academicFeeData.funding }}（万元）</el-tag>
+              <el-tag type="success">未执行额度: {{ plan.planItemDataMap.academicFeeData.unfulfilledQuota }}（万元）</el-tag>
+              <el-tag type="info">执行率: {{ plan.planItemDataMap.academicFeeData.executeRate }}%</el-tag>
+              <el-progress :text-inside="true" :stroke-width="10"
+                           :percentage=plan.planItemDataMap.academicFeeData.executeRate></el-progress>
               <el-table
-                  :data="plan.academicFeeList"
+                  :data="plan.planItemDataMap.academicFeeData.planItemList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -448,8 +473,13 @@
                 </el-table-column>
               </el-table>
               <el-tag>北京市内交通费</el-tag>
+              <el-tag>金额: {{ plan.planItemDataMap.transFeeData.funding }}（万元）</el-tag>
+              <el-tag type="success">未执行额度: {{ plan.planItemDataMap.transFeeData.unfulfilledQuota }}（万元）</el-tag>
+              <el-tag type="info">执行率: {{ plan.planItemDataMap.transFeeData.executeRate }}%</el-tag>
+              <el-progress :text-inside="true" :stroke-width="10"
+                           :percentage=plan.planItemDataMap.transFeeData.executeRate></el-progress>
               <el-table
-                  :data="plan.transportationFeeList"
+                  :data="plan.planItemDataMap.transFeeData.planItemList"
                   @selection-change="handleSelectionChange"
                   stripe
                   border
@@ -485,6 +515,11 @@
               </el-table>
             </el-collapse-item>
             <el-collapse-item title="出版/文献/信息传播/知识产权事务费" name="5">
+              <el-tag>金额: {{ plan.planItemDataMap.equipmentFeeData.funding }}（万元）</el-tag>
+              <el-tag type="success">未执行额度: {{ plan.planItemDataMap.equipmentFeeData.unfulfilledQuota }}（万元）</el-tag>
+              <el-tag type="info">执行率: {{ plan.planItemDataMap.equipmentFeeData.executeRate }}%</el-tag>
+              <el-progress :text-inside="true" :stroke-width="10"
+                           :percentage=plan.planItemDataMap.equipmentFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.publishFeeList"
                   @selection-change="handleSelectionChange"
@@ -530,6 +565,11 @@
               </el-table>
             </el-collapse-item>
             <el-collapse-item title="劳务费" name="6">
+              <el-tag>金额: {{ plan.planItemDataMap.equipmentFeeData.funding }}（万元）</el-tag>
+              <el-tag type="success">未执行额度: {{ plan.planItemDataMap.equipmentFeeData.unfulfilledQuota }}（万元）</el-tag>
+              <el-tag type="info">执行率: {{ plan.planItemDataMap.equipmentFeeData.executeRate }}%</el-tag>
+              <el-progress :text-inside="true" :stroke-width="10"
+                           :percentage=plan.planItemDataMap.equipmentFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.paymentList"
                   @selection-change="handleSelectionChange"
@@ -593,6 +633,11 @@
               </el-table>
             </el-collapse-item>
             <el-collapse-item title="专家咨询费" name="7">
+              <el-tag>金额: {{ plan.planItemDataMap.equipmentFeeData.funding }}（万元）</el-tag>
+              <el-tag type="success">未执行额度: {{ plan.planItemDataMap.equipmentFeeData.unfulfilledQuota }}（万元）</el-tag>
+              <el-tag type="info">执行率: {{ plan.planItemDataMap.equipmentFeeData.executeRate }}%</el-tag>
+              <el-progress :text-inside="true" :stroke-width="10"
+                           :percentage=plan.planItemDataMap.equipmentFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.advisoryList"
                   @selection-change="handleSelectionChange"
@@ -656,6 +701,11 @@
               </el-table>
             </el-collapse-item>
             <el-collapse-item title="其他支出" name="8">
+              <el-tag>金额: {{ plan.planItemDataMap.equipmentFeeData.funding }}（万元）</el-tag>
+              <el-tag type="success">未执行额度: {{ plan.planItemDataMap.equipmentFeeData.unfulfilledQuota }}（万元）</el-tag>
+              <el-tag type="info">执行率: {{ plan.planItemDataMap.equipmentFeeData.executeRate }}%</el-tag>
+              <el-progress :text-inside="true" :stroke-width="10"
+                           :percentage=plan.planItemDataMap.equipmentFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.otherFeeList"
                   @selection-change="handleSelectionChange"
@@ -736,6 +786,7 @@ export default {
         itemType: "",
         itemTypeName: "",
         remark: '',
+        subTotal: 0
       },
       executePlanVisible: false,
       executeDetailVisible: false

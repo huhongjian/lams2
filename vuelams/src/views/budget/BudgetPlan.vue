@@ -36,17 +36,17 @@
              style="border: 1px solid #759ad1;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;">
           <el-row>
             <el-col :span="10">
-              项目名称:
+              计划名称:
               <el-input size="mini" style="width: 220px" clearable prefix-icon="el-icon-edit"
-                        v-model="searchValue.userEmail"></el-input>
+                        v-model="searchValue.planName"></el-input>
             </el-col>
             <el-col :span="10">
-              项目类别:
-              <el-select v-model="searchValue.status" clearable placeholder="状态" size="mini" style="width: 300px;">
+              科研项目:
+              <el-select v-model="searchValue.projectId" clearable placeholder="科研项目" size="mini" style="width: 300px;">
                 <el-option
-                    v-for="item in projectTypes"
+                    v-for="item in projectLists"
                     :key="item.id"
-                    :label="item.name"
+                    :label="item.projectName"
                     :value="item.id">
                 </el-option>
               </el-select>
@@ -74,7 +74,7 @@
             <el-col :span="4">
               <el-button size="mini" @click="clearSearchValue">重置</el-button>
               <el-button size="mini" @click="showAdvanceSearchView = false">取消</el-button>
-              <el-button size="mini" icon="el-icon-search" type="primary" @click="initOrdersAdv">搜索</el-button>
+              <el-button size="mini" icon="el-icon-search" type="primary" @click="initPlansAdv">搜索</el-button>
             </el-col>
           </el-row>
         </div>
@@ -111,13 +111,8 @@
             label="预算计划名称">
         </el-table-column>
         <el-table-column
-            prop="planStatusName"
-            width="120"
-            label="状态">
-        </el-table-column>
-        <el-table-column
-            prop="projectId"
-            width="120"
+            prop="projectName"
+            :show-overflow-tooltip="true"
             label="科研项目">
         </el-table-column>
         <el-table-column
@@ -135,7 +130,7 @@
             prop="executeRate"
             width="95"
             align="left"
-            label="执行率">
+            label="执行率（%）">
         </el-table-column>
         <el-table-column
             prop="createTime"
@@ -178,22 +173,14 @@ export default {
   name: "BudgetProject",
   data() {
     return {
-      headTableData: {
-        total: '',
-        inUse: '',
-        free: '',
-        inRepair: '',
-        money: '',
-        cleaned: ''
-      },
       searchValue: {
-        status: null,
+        planName: null,
+        projectId: null,
         userEmail: null,
         dateScope: null
       },
       title: '',
       showAdvanceSearchView: false,
-      projects: [],
       loading: false,
       newPlanVisible: false,
       // 详情页可见性
@@ -205,13 +192,11 @@ export default {
       plan: {
         id: "",
         planName: "",
-        planStatus: "",
-        planStatusName: "",
         projectId: "",
-        funding: "",
+        funding: 0,
         unfulfilledQuota: "",
         executeRate: "",
-        userEmail: "admin",
+        userEmail: "",
         user: {
           id: "",
           name: "",
@@ -220,22 +205,25 @@ export default {
           enabled: "",
           remark: ""
         },
-        equipmentFeeData: {},
-        materialFeeList: [],
-        testingFeeList: [],
-        meetingFeeList: [],
-        researchFeeList: [],
-        academicFeeList: [],
-        transportationFeeList: [],
-        publishFeeList: [],
-        paymentList: [],
-        advisoryList: [],
-        otherFeeList: [],
+        planItemDataMap:{
+          equipmentFeeData: {},
+          materialFeeData: {},
+          testingFeeData: {},
+          meetingFeeData: {},
+          researchFeeData: {},
+          academicFeeData: {},
+          transFeeData: {},
+          publishFeeData: {},
+          paymentData: {},
+          advisoryData: {},
+          otherFeeData: {},
+        },
         createTime: "",
         updateTime: ""
       },
       projectLists: [],
-      type: ""
+      type: "",
+      planIds: []
     }
   },
   components: {
@@ -250,8 +238,11 @@ export default {
     exportData() {
 
     },
-    handleSelectionChange() {
-
+    handleSelectionChange(val) {
+      this.planIds = [];
+      for (let i = 0; i < val.length; i++) {
+        this.planIds.push(val[i].id);
+      }
     },
     showEditView(data) {
       this.title = '编辑预算计划';
@@ -261,34 +252,42 @@ export default {
     deleteProject() {
 
     },
-    emptyProject() {
-      this.project = {
+    emptyPlan() {
+      this.plan = {
         id: "",
-        name: "",
-        type: "",
-        years: "",
-        funding: "",
+        planName: "",
+        projectId: "",
+        funding: 0,
+        unfulfilledQuota: "",
+        executeRate: "",
         userEmail: "",
         user: {
           id: "",
           name: "",
           phone: "",
           username: "",
+          enabled: "",
+          remark: ""
+        },
+        planItemDataMap:{
+          equipmentFeeData: {},
+          materialFeeData: {},
+          testingFeeData: {},
+          meetingFeeData: {},
+          researchFeeData: {},
+          academicFeeData: {},
+          transFeeData: {},
+          publishFeeData: {},
+          paymentData: {},
+          advisoryData: {},
+          otherFeeData: {},
         },
         createTime: "",
         updateTime: ""
       };
     },
-    initHeadTableData() {
-      let url = '/project/headTable'
-      this.getRequest(url).then(resp => {
-        if (resp) {
-          this.headTableData = resp.obj;
-        }
-      });
-    },
     showAddView() {
-      this.emptyProject();
+      this.emptyPlan();
       this.title = '新增预算计划';
       this.newPlanVisible = true;
     },
@@ -305,13 +304,21 @@ export default {
       this.plan = data;
       this.planDetailVisible = true;
     },
-    sizeChange: function (currentSize) {
+    sizeChange(currentSize) {
       this.size = currentSize;
-      this.initOrders();
+      if (this.type && this.type == 'advanced') {
+        this.initPlansAdv();
+      } else {
+        this.initPlans();
+      }
     },
-    currentChange: function (currentPage) {
+    currentChange(currentPage) {
       this.page = currentPage;
-      this.initOrdersAdv();
+      if (this.type && this.type == 'advanced') {
+        this.initPlansAdv();
+      } else {
+        this.initPlans();
+      }
     },
     initPlans() {
       this.type = '';
@@ -325,12 +332,15 @@ export default {
         }
       });
     },
-    initOrdersAdv() {
+    initPlansAdv() {
       this.type = 'advanced'
       this.loading = true;
-      let url = '/order/project/get/?page=' + this.page + '&size=' + this.size;
-      if (this.searchValue.status) {
-        url += '&status=' + this.searchValue.status;
+      let url = '/plan/get/?page=' + this.page + '&size=' + this.size;
+      if (this.searchValue.planName) {
+        url += '&planName=' + this.searchValue.planName;
+      }
+      if (this.searchValue.projectId) {
+        url += '&projectId=' + this.searchValue.projectId;
       }
       if (this.searchValue.userEmail) {
         url += '&userEmail=' + this.searchValue.userEmail;
@@ -341,16 +351,17 @@ export default {
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
-          this.orders = resp.data;
+          this.plans = resp.data;
           this.total = resp.total;
         }
       });
     },
     clearSearchValue() {
       this.searchValue = {
-        status: null,
+        planName: null,
+        projectId: null,
         userEmail: null,
-        beginDateScope: null
+        dateScope: null
       }
     },
     initProjects() {

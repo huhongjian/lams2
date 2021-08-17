@@ -1,5 +1,6 @@
-package com.bupt.lams.model.planItem;
+package com.bupt.lams.dto;
 
+import com.bupt.lams.model.planItem.PlanItem;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -7,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 设备费信息pojo
+ * 预算明细信息dto
  */
 @Data
-public class EquipmentFeeData implements Serializable {
+public class PlanItemData implements Serializable {
     /**
      * 总额度
      */
@@ -29,12 +30,12 @@ public class EquipmentFeeData implements Serializable {
     /**
      * 预算明细列表
      */
-    List<EquipmentFee> equipmentFeeList;
+    List<PlanItem> planItemList;
 
-    public EquipmentFeeData() {
+    public PlanItemData() {
         this.funding = 0.0;
         this.unfulfilledQuota = 0.0;
         this.executeRate = 0.0;
-        this.equipmentFeeList = new ArrayList<>();
+        this.planItemList = new ArrayList<>();
     }
 }

@@ -1,5 +1,6 @@
 package com.bupt.lams.controller.budget;
 
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.AcademicFee;
 import com.bupt.lams.model.planItem.MeetingFee;
@@ -66,7 +67,7 @@ public class MeetingFeeController {
             return response;
         }
         try {
-            List<MeetingFee> data = meetingFeeService.getMeetingFeeListByIds(pids);
+            PlanItemData data = meetingFeeService.getMeetingFeeDataByIds(pids);
             response.setObj(data);
         } catch (Exception e) {
             logger.error("获取会议费信息失败", e);

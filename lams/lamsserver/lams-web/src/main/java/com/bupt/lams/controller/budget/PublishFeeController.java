@@ -1,5 +1,6 @@
 package com.bupt.lams.controller.budget;
 
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.AcademicFee;
 import com.bupt.lams.model.planItem.PublishFee;
@@ -66,7 +67,7 @@ public class PublishFeeController {
             return response;
         }
         try {
-            List<PublishFee> data = publishFeeService.getPublishFeeListByIds(pids);
+            PlanItemData data = publishFeeService.getPublishFeeDataByIds(pids);
             response.setObj(data);
         } catch (Exception e) {
             logger.error("获取差旅/会议/国际合作与交流费信息失败", e);

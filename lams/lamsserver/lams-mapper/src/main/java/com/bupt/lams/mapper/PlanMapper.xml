@@ -4,8 +4,6 @@
     <resultMap id="BaseResultMap" type="com.bupt.lams.model.Plan">
         <id column="id" property="id"/>
         <result column="planName" property="planName"/>
-        <result column="planStatus" property="planStatus"/>
-        <result column="planStatusName" property="planStatusName"/>
         <result column="projectId" property="projectId"/>
         <result column="projectName" property="projectName"/>
         <result column="userEmail" property="userEmail"/>
@@ -24,164 +22,17 @@
             <result column="enabled" property="enabled"/>
             <result column="remark" property="remark"/>
         </association>
-        <!--        <collection property="academicFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.AcademicFee">-->
-        <!--            <id column="ac_id" property="id"/>-->
-        <!--            <result column="ac_meetingName" property="meetingName"/>-->
-        <!--            <result column="ac_personnelType" property="personnelType"/>-->
-        <!--            <result column="ac_times" property="times"/>-->
-        <!--            <result column="ac_year" property="year"/>-->
-        <!--            <result column="ac_days" property="days"/>-->
-        <!--            <result column="ac_transFee" property="transFee"/>-->
-        <!--            <result column="ac_accommodationFee" property="accommodationFee"/>-->
-        <!--            <result column="ac_itemType" property="itemType"/>-->
-        <!--            <result column="ac_itemTypeName" property="itemTypeName"/>-->
-        <!--            <result column="ac_remark" property="remark"/>-->
-        <!--            <result column="ac_subTotal" property="subTotal"/>-->
-        <!--            <result column="ac_createTime" property="createTime"/>-->
-        <!--            <result column="ac_updateTime" property="updateTime"/>-->
-        <!--        </collection>-->
-        <!--        <collection property="advisoryList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.Advisory">-->
-        <!--            <id column="ad_id" property="id"/>-->
-        <!--            <result column="ad_personnelType" property="personnelType"/>-->
-        <!--            <result column="ad_content" property="content"/>-->
-        <!--            <result column="ad_amount" property="amount"/>-->
-        <!--            <result column="ad_standard" property="standard"/>-->
-        <!--            <result column="ad_days" property="days"/>-->
-        <!--            <result column="ad_itemType" property="itemType"/>-->
-        <!--            <result column="ad_itemTypeName" property="itemTypeName"/>-->
-        <!--            <result column="ad_remark" property="remark"/>-->
-        <!--            <result column="ad_subTotal" property="subTotal"/>-->
-        <!--            <result column="ad_createTime" property="createTime"/>-->
-        <!--            <result column="ad_updateTime" property="updateTime"/>-->
-        <!--        </collection>-->
-        <!--        <collection property="equipmentFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.EquipmentFee">-->
-        <!--            <id column="eq_id" property="id"/>-->
-        <!--            <result column="eq_equipmentName" property="equipmentName"/>-->
-        <!--            <result column="eq_usage" property="usage"/>-->
-        <!--            <result column="eq_amount" property="amount"/>-->
-        <!--            <result column="eq_unitPrice" property="unitPrice"/>-->
-        <!--            <result column="eq_itemType" property="itemType"/>-->
-        <!--            <result column="eq_itemTypeName" property="itemTypeName"/>-->
-        <!--            <result column="eq_remark" property="remark"/>-->
-        <!--            <result column="eq_subTotal" property="subTotal"/>-->
-        <!--            <result column="eq_createTime" property="createTime"/>-->
-        <!--            <result column="eq_updateTime" property="updateTime"/>-->
-        <!--        </collection>-->
-        <!--        <collection property="materialFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.MaterialFee">-->
-        <!--            <id column="ma_id" property="id"/>-->
-        <!--            <result column="ma_materialName" property="materialName"/>-->
-        <!--            <result column="ma_specification" property="specification"/>-->
-        <!--            <result column="ma_usage" property="usage"/>-->
-        <!--            <result column="ma_amount" property="amount"/>-->
-        <!--            <result column="ma_unitPrice" property="unitPrice"/>-->
-        <!--            <result column="ma_itemType" property="itemType"/>-->
-        <!--            <result column="ma_itemTypeName" property="itemTypeName"/>-->
-        <!--            <result column="ma_remark" property="remark"/>-->
-        <!--            <result column="ma_subTotal" property="subTotal"/>-->
-        <!--            <result column="ma_createTime" property="createTime"/>-->
-        <!--            <result column="ma_updateTime" property="updateTime"/>-->
-        <!--        </collection>-->
-        <!--        <collection property="meetingFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.MeetingFee">-->
-        <!--            <id column="me_id" property="id"/>-->
-        <!--            <result column="me_content" property="content"/>-->
-        <!--            <result column="me_relation" property="relation"/>-->
-        <!--            <result column="me_meal" property="meal"/>-->
-        <!--            <result column="me_otherCost" property="otherCost"/>-->
-        <!--            <result column="me_days" property="days"/>-->
-        <!--            <result column="me_amount" property="amount"/>-->
-        <!--            <result column="me_meetingNum" property="meetingNum"/>-->
-        <!--            <result column="me_itemType" property="itemType"/>-->
-        <!--            <result column="me_itemTypeName" property="itemTypeName"/>-->
-        <!--            <result column="me_remark" property="remark"/>-->
-        <!--            <result column="me_subTotal" property="subTotal"/>-->
-        <!--            <result column="me_createTime" property="createTime"/>-->
-        <!--            <result column="me_updateTime" property="updateTime"/>-->
-        <!--        </collection>-->
-        <!--        <collection property="otherFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.OtherFee">-->
-        <!--            <id column="ot_id" property="id"/>-->
-        <!--            <result column="ot_type" property="type"/>-->
-        <!--            <result column="ot_itemType" property="itemType"/>-->
-        <!--            <result column="ot_itemTypeName" property="itemTypeName"/>-->
-        <!--            <result column="ot_remark" property="remark"/>-->
-        <!--            <result column="ot_subTotal" property="subTotal"/>-->
-        <!--            <result column="ot_createTime" property="createTime"/>-->
-        <!--            <result column="ot_updateTime" property="updateTime"/>-->
-        <!--        </collection>-->
-        <!--        <collection property="paymentList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.Payment">-->
-        <!--            <id column="pa_id" property="id"/>-->
-        <!--            <result column="pa_personnelType" property="personnelType"/>-->
-        <!--            <result column="pa_content" property="content"/>-->
-        <!--            <result column="pa_amount" property="amount"/>-->
-        <!--            <result column="pa_standard" property="standard"/>-->
-        <!--            <result column="pa_hours" property="hours"/>-->
-        <!--            <result column="pa_itemType" property="itemType"/>-->
-        <!--            <result column="pa_itemTypeName" property="itemTypeName"/>-->
-        <!--            <result column="pa_remark" property="remark"/>-->
-        <!--            <result column="pa_subTotal" property="subTotal"/>-->
-        <!--            <result column="pa_createTime" property="createTime"/>-->
-        <!--            <result column="pa_updateTime" property="updateTime"/>-->
-        <!--        </collection>-->
-        <!--        <collection property="transFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.PlanItem">-->
-        <!--            <id column="tr_id" property="id"/>-->
-        <!--            <result column="tr_itemType" property="itemType"/>-->
-        <!--            <result column="tr_itemTypeName" property="itemTypeName"/>-->
-        <!--            <result column="tr_remark" property="remark"/>-->
-        <!--            <result column="tr_subTotal" property="subTotal"/>-->
-        <!--            <result column="tr_createTime" property="createTime"/>-->
-        <!--            <result column="tr_updateTime" property="updateTime"/>-->
-        <!--        </collection>-->
-        <!--        <collection property="publishFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.PublishFee">-->
-        <!--            <id column="pu_id" property="id"/>-->
-        <!--            <result column="pu_type" property="type"/>-->
-        <!--            <result column="pu_itemType" property="itemType"/>-->
-        <!--            <result column="pu_itemTypeName" property="itemTypeName"/>-->
-        <!--            <result column="pu_remark" property="remark"/>-->
-        <!--            <result column="pu_subTotal" property="subTotal"/>-->
-        <!--            <result column="pu_createTime" property="createTime"/>-->
-        <!--            <result column="pu_updateTime" property="updateTime"/>-->
-        <!--        </collection>-->
-        <!--        <collection property="researchFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.ResearchFee">-->
-        <!--            <id column="re_id" property="id"/>-->
-        <!--            <result column="re_place" property="place"/>-->
-        <!--            <result column="re_purpose" property="purpose"/>-->
-        <!--            <result column="re_personnelType" property="personnelType"/>-->
-        <!--            <result column="re_times" property="times"/>-->
-        <!--            <result column="re_transFee" property="transFee"/>-->
-        <!--            <result column="re_accommodationFee" property="accommodationFee"/>-->
-        <!--            <result column="re_otherFee" property="otherFee"/>-->
-        <!--            <result column="re_days" property="days"/>-->
-        <!--            <result column="re_itemType" property="itemType"/>-->
-        <!--            <result column="re_itemTypeName" property="itemTypeName"/>-->
-        <!--            <result column="re_remark" property="remark"/>-->
-        <!--            <result column="re_subTotal" property="subTotal"/>-->
-        <!--            <result column="re_createTime" property="createTime"/>-->
-        <!--            <result column="re_updateTime" property="updateTime"/>-->
-        <!--        </collection>-->
-        <!--        <collection property="testingFeeList" javaType="arraylist" ofType="com.bupt.lams.model.planItem.TestingFee">-->
-        <!--            <id column="te_id" property="id"/>-->
-        <!--            <result column="te_content" property="content"/>-->
-        <!--            <result column="te_times" property="times"/>-->
-        <!--            <result column="te_unitPrice" property="unitPrice"/>-->
-        <!--            <result column="te_itemType" property="itemType"/>-->
-        <!--            <result column="te_itemTypeName" property="itemTypeName"/>-->
-        <!--            <result column="te_remark" property="remark"/>-->
-        <!--            <result column="te_subTotal" property="subTotal"/>-->
-        <!--            <result column="te_createTime" property="createTime"/>-->
-        <!--            <result column="te_updateTime" property="updateTime"/>-->
-        <!--        </collection>-->
     </resultMap>
-    <sql id="Base_Column_List">
-    id, projectName, projectType, `years`, funding, executeRate, createTime, updateTime
-  </sql>
+
     <sql id="baseInfoQuery">
         <if test="planId !=null">
             and p.id = #{planId}
         </if>
-        <if test="projectName !=null and projectName!=''">
-            and p.projectName like concat('%',#{projectName},'%')
+        <if test="projectId !=null">
+            and p.projectId = #{projectId}
         </if>
-        <if test="projectType !=null and projectType!=''">
-            and p.projectType like concat('%',#{projectType},'%')
+        <if test="planName !=null and planName!=''">
+            and p.planName like concat('%',#{planName},'%')
         </if>
         <if test="userEmail !=null and userEmail!=''">
             and p.userEmail like concat('%',#{userEmail},'%')
@@ -207,14 +58,6 @@
     <select id="getAllPlans" resultType="com.bupt.lams.model.Plan">
         select *
         from plan;
-    </select>
-    <select id="getTotalByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"
-            resultType="java.lang.Long">
-        select count(*)
-        project p
-        <where>
-            <include refid="baseInfoQuery"/>
-        </where>
     </select>
     <update id="updateAssetStatus" parameterType="com.bupt.lams.model.Asset">
         update asset a

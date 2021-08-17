@@ -1,5 +1,6 @@
 package com.bupt.lams.controller.budget;
 
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.AcademicFee;
 import com.bupt.lams.model.planItem.Payment;
@@ -66,7 +67,7 @@ public class PaymentController {
             return response;
         }
         try {
-            List<Payment> data = paymentService.getPaymentListByIds(pids);
+            PlanItemData data = paymentService.getPaymentFeeDataByIds(pids);
             response.setObj(data);
         } catch (Exception e) {
             logger.error("获取劳务费信息失败", e);

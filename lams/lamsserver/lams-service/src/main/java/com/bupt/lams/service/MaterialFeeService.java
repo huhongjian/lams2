@@ -1,6 +1,7 @@
 package com.bupt.lams.service;
 
 import com.bupt.lams.constants.PlanItemTypeEnum;
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.MaterialFeeMapper;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.Project;
@@ -8,6 +9,7 @@ import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.model.planItem.Advisory;
 import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.MaterialFee;
+import com.bupt.lams.utils.TransferUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,11 +40,11 @@ public class MaterialFeeService {
         return materialFee.getId();
     }
 
-    public List<MaterialFee> getMaterialFeeByPlanAndItem(List<PlanAndItem> planAndItemList) {
-        List<MaterialFee> res = new ArrayList<>();
+    public PlanItemData getDataByPlanAndItem(List<PlanAndItem> planAndItemList) {
+        PlanItemData data = new PlanItemData();
         List<Long> idList = new ArrayList<>();
         if (planAndItemList == null || planAndItemList.size() == 0) {
-            return res;
+            return data;
         }
         for (PlanAndItem item : planAndItemList) {
             if (item.getItid() == PlanItemTypeEnum.MATERIAL.getIndex()) {
@@ -50,9 +52,15 @@ public class MaterialFeeService {
             }
         }
         if (idList.size() == 0) {
-            return res;
+            return data;
         }
-        return materialFeeMapper.getMaterialFeeByIds(idList);
+        data = getMaterialFeeDataByIds(idList);
+        return data;
+    }
+
+    public PlanItemData getMaterialFeeDataByIds(List<Long> ids) {
+        List<MaterialFee> equipmentFeeList = materialFeeMapper.getMaterialFeeByIds(ids);
+        return TransferUtils.transToPlanItemData(new ArrayList<>(equipmentFeeList));
     }
 
     public List<MaterialFee> getMaterialFeeListByIds(List<Long> pids) {

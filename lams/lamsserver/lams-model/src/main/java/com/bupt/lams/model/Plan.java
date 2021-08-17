@@ -1,13 +1,15 @@
 package com.bupt.lams.model;
 
-import com.bupt.lams.constants.PlanStatusEnum;
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.planItem.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 预算计划信息pojo
@@ -16,8 +18,6 @@ import java.util.List;
 public class Plan implements Serializable {
     private Long id;
     private String planName;
-    private Integer planStatus;
-    private String planStatusName;
     private Long projectId;
     private String projectName;
     private String userEmail;
@@ -58,20 +58,9 @@ public class Plan implements Serializable {
     /**
      * 关联的预算明细
      */
-    List<AcademicFee> academicFeeList;
-    List<Advisory> advisoryList;
-    EquipmentFeeData equipmentFeeData;
-    List<MaterialFee> materialFeeList;
-    List<MeetingFee> meetingFeeList;
-    List<OtherFee> otherFeeList;
-    List<Payment> paymentList;
-    List<PlanItem> transFeeList;
-    List<PublishFee> publishFeeList;
-    List<ResearchFee> researchFeeList;
-    List<TestingFee> testingFeeList;
+    Map<String, PlanItemData> planItemDataMap = new HashMap<>();
 
-    public void setStatus(Integer status) {
-        this.planStatus = status;
-        this.planStatusName = PlanStatusEnum.getNameByIndex(status);
+    public void setPlanItem(String key, PlanItemData data) {
+        this.planItemDataMap.put(key, data);
     }
 }

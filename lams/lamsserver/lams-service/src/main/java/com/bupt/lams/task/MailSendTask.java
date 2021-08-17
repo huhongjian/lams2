@@ -2,7 +2,7 @@ package com.bupt.lams.task;
 
 import com.bupt.lams.constants.WarningFreqEnum;
 import com.bupt.lams.model.*;
-import com.bupt.lams.model.planItem.EquipmentFeeData;
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.service.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
@@ -135,18 +135,19 @@ public class MailSendTask {
         content.setItemTypeName(config.getItemTypeName());
         content.setNeedExecuteRate(config.getExecuteRate() + "");
 
+        PlanItemData planItemData = new PlanItemData();
         switch (config.getItemType()) {
             case 1:
-                EquipmentFeeData equipmentFeeData = planInfo.getEquipmentFeeData();
-                if (equipmentFeeData == null || CollectionUtils.isEmpty(equipmentFeeData.getEquipmentFeeList())) {
-                    return null;
-                }
-                if (config.getExecuteRate() <= equipmentFeeData.getExecuteRate()) {
-                    return null;
-                }
-                content.setExecuteRate(equipmentFeeData.getExecuteRate() + "");
+                planItemData = planInfo.getPlanItemDataMap().get("equipmentData");
                 break;
         }
+        if (planItemData == null || CollectionUtils.isEmpty(planItemData.getPlanItemList())) {
+            return null;
+        }
+        if (config.getExecuteRate() <= planItemData.getExecuteRate()) {
+            return null;
+        }
+        content.setExecuteRate(planItemData.getExecuteRate() + "");
         return content;
     }
 

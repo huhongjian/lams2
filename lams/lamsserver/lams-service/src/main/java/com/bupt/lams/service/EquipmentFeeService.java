@@ -3,16 +3,16 @@ package com.bupt.lams.service;
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.mapper.EquipmentFeeMapper;
 import com.bupt.lams.model.PlanAndItem;
-import com.bupt.lams.model.planItem.Advisory;
 import com.bupt.lams.model.planItem.EquipmentFee;
-import com.bupt.lams.model.Project;
-import com.bupt.lams.model.RespPageBean;
-import com.bupt.lams.model.planItem.EquipmentFeeData;
+import com.bupt.lams.dto.PlanItemData;
+import com.bupt.lams.model.planItem.PlanItem;
+import com.bupt.lams.utils.ComputeUtils;
+import com.bupt.lams.utils.TransferUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +31,15 @@ public class EquipmentFeeService {
     @Transactional(rollbackFor = Exception.class)
     public Long addEquipmentFee(EquipmentFee equipmentFee) {
         // 计算合计
-        equipmentFee.setSubTotal(equipmentFee.getUnitPrice() * equipmentFee.getAmount());
+        double subTotal = equipmentFee.getUnitPrice() * equipmentFee.getAmount();
+        equipmentFee.setSubTotal(subTotal);
+        equipmentFee.setUnfulfilledQuota(subTotal);
         equipmentFeeMapper.insertSelective(equipmentFee);
         return equipmentFee.getId();
     }
 
-    public EquipmentFeeData getEquipmentFeeByPlanAndItem(List<PlanAndItem> planAndItemList) {
-        EquipmentFeeData data = new EquipmentFeeData();
+    public PlanItemData getDataByPlanAndItem(List<PlanAndItem> planAndItemList) {
+        PlanItemData data = new PlanItemData();
         List<Long> idList = new ArrayList<>();
         if (planAndItemList == null || planAndItemList.size() == 0) {
             return data;
@@ -50,24 +52,13 @@ public class EquipmentFeeService {
         if (idList.size() == 0) {
             return data;
         }
-        Double total = new Double(0.0);
-        Double unfulfilledQuota = new Double(0.0);
-        DecimalFormat df = new DecimalFormat("#.00");
-        List<EquipmentFee> equipmentFeeList = equipmentFeeMapper.getEquipmentFeeByIds(idList);
-        for (EquipmentFee fee : equipmentFeeList) {
-            total = total + fee.getSubTotal();
-            unfulfilledQuota = unfulfilledQuota + fee.getUnfulfilledQuota();
-        }
-        data.setFunding(total);
-        data.setUnfulfilledQuota(unfulfilledQuota);
-        Double executeRate = (total - unfulfilledQuota) / total * 100;
-        data.setExecuteRate(new Double(df.format(executeRate.doubleValue())));
-        data.setEquipmentFeeList(equipmentFeeList);
+        data = getEquipmentFeeDataByIds(idList);
         return data;
     }
 
-    public List<EquipmentFee> getEquipmentFeeListByIds(List<Long> pids) {
-        return equipmentFeeMapper.getEquipmentFeeByIds(pids);
+    public PlanItemData getEquipmentFeeDataByIds(List<Long> ids) {
+        List<EquipmentFee> equipmentFeeList = equipmentFeeMapper.getEquipmentFeeByIds(ids);
+        return TransferUtils.transToPlanItemData(new ArrayList<>(equipmentFeeList));
     }
 
     public void update(EquipmentFee equipmentFee) {

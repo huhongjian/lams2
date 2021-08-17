@@ -17,11 +17,6 @@ public class Project implements Serializable {
     private String userEmail;
 
     /**
-     * 用户
-     */
-    private LamsUser user;
-
-    /**
      * 项目总体执行年限
      */
     private Integer years;

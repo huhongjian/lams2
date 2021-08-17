@@ -89,6 +89,10 @@ public class PlanService {
         planMapper.updatePlan(plan);
     }
 
+    public List<Plan> getPlansByProjectIds(List<Long> pids){
+        return planMapper.getPlansByProjectIds(pids);
+    }
+
     /**
      * 将结果集转化为展示集合
      *

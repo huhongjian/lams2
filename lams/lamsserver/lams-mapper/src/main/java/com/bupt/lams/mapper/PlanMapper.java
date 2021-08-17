@@ -30,4 +30,8 @@ public interface PlanMapper {
     void updatePlan(Plan plan);
 
     Plan getPlanById(Long id);
+
+    Double getTotal();
+
+    List<Plan> getPlansByProjectIds(List<Long> pids);
 }

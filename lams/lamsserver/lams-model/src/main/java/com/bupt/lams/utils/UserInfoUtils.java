@@ -36,6 +36,22 @@ public class UserInfoUtils {
     }
 
     /**
+     * 当前用户是否有教师权限
+     *
+     * @return
+     */
+    public static boolean isTeacher() {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        List<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            if (role.getName().equals("ROLE_teacher")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * 当前用户是否有财务权限
      *
      * @return

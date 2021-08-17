@@ -375,6 +375,21 @@
         select * from plan
         where id = #{id}
     </select>
+    <select id="getTotal" resultType="java.lang.Double">
+        select sum(p.funding) from plan p
+    </select>
+    <select id="getPlansByProjectIds" parameterType="list" resultType="com.bupt.lams.model.Plan">
+        select *
+        from plan p
+        where 1=1
+        <if test="list != null and list.size>0">
+            and p.projectId in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        order by p.id;
+    </select>
     <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
         select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName
         from asset

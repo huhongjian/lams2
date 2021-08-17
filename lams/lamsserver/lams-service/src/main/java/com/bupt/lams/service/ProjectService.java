@@ -1,10 +1,13 @@
 package com.bupt.lams.service;
 
+import com.bupt.lams.dto.ProjectHeadTableData;
 import com.bupt.lams.dto.ProjectQueryCondition;
+import com.bupt.lams.mapper.PlanMapper;
 import com.bupt.lams.mapper.ProjectMapper;
 import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.Project;
 import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +23,8 @@ import java.util.List;
 public class ProjectService {
     @Resource
     ProjectMapper projectMapper;
+    @Resource
+    PlanMapper planMapper;
 
     public RespPageBean getProjectByCondition(ProjectQueryCondition condition) {
         Integer page = condition.getPage();
@@ -39,6 +44,8 @@ public class ProjectService {
     public Long addProject(Project project) {
         LamsUser user = UserInfoUtils.getLoginedUser();
         project.setUserEmail(user.getUsername());
+        project.setUnfulfilledQuota(project.getFunding());
+        project.setExecuteRate(0.0);
         projectMapper.insertSelective(project);
         return project.getId();
     }
@@ -49,6 +56,22 @@ public class ProjectService {
 
     public Project getProjectById(Long id) {
         return projectMapper.getProjectById(id);
+    }
+
+    public ProjectHeadTableData getHeadTableData() {
+        ProjectHeadTableData data = new ProjectHeadTableData();
+        Double total = projectMapper.getTotal();
+        Double unfulfilledQuota = projectMapper.getUnfulfilledQuota();
+        data.setTotal(total);
+        data.setLeft(unfulfilledQuota);
+        data.setUsed(total - unfulfilledQuota);
+        data.setInPlan(planMapper.getTotal());
+        data.setExecuteRate(ComputeUtils.computeExecuteRate(total, unfulfilledQuota));
+        return data;
+    }
+
+    public void deleteProjects(List<Long> pids) {
+        projectMapper.deleteProjects(pids);
     }
 
     /**

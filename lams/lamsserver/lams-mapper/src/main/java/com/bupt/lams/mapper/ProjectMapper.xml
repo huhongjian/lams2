@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bupt.lams.mapper.ProjectMapper">
-    <resultMap id="BaseResultMap" type="com.bupt.lams.model.Project">
-        <id column="id" property="id"/>
-        <result column="projectName" property="projectName"/>
-        <result column="projectType" property="projectType"/>
-        <result column="years" property="years"/>
-        <result column="funding" property="funding"/>
-        <result column="executeRate" property="executeRate"/>
-        <result column="createTime" property="createTime"/>
-        <result column="updateTime" property="updateTime"/>
-    </resultMap>
-    <resultMap id="AllInfoResultMap" type="com.bupt.lams.model.Project" extends="BaseResultMap">
-        <association property="user" javaType="com.bupt.lams.model.LamsUser">
-            <id column="uid" property="id"/>
-            <result column="name" property="name"/>
-            <result column="phone" property="phone"/>
-            <result column="username" property="username"/>
-            <result column="enabled" property="enabled"/>
-            <result column="remark" property="remark"/>
-        </association>
-    </resultMap>
-    <sql id="Base_Column_List">
-    id, projectName, projectType, `years`, funding, executeRate, createTime, updateTime
-  </sql>
     <sql id="baseInfoQuery">
         <if test="projectId !=null">
             and p.id = #{projectId}
@@ -41,19 +18,16 @@
             and p.createTime between #{startDate} and #{endDate}
         </if>
     </sql>
-    <select id="getProjectByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"
-            resultMap="AllInfoResultMap">
-        select p.*,
-        u.id as uid, u.*
+    <select id="getProjectByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition" resultType="com.bupt.lams.model.Project">
+        select p.*
         from
         project p
-        left join lams_user u on p.userEmail = u.username
         <where>
             <include refid="baseInfoQuery"/>
         </where>
         order by p.id
     </select>
-    <select id="getAllProjects" resultMap="BaseResultMap">
+    <select id="getAllProjects" resultType="com.bupt.lams.model.Project">
         select *
         from
         project p
@@ -121,20 +95,20 @@
             <if test="projectType != null and projectType != ''">
                 projectType,
             </if>
+            <if test="userEmail != null and userEmail != ''">
+                userEmail,
+            </if>
             <if test="years != null">
                 years,
             </if>
             <if test="funding != null">
                 funding,
             </if>
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota,
+            </if>
             <if test="executeRate != null">
                 executeRate,
-            </if>
-            <if test="createTime != null">
-                createTime,
-            </if>
-            <if test="updateTime != null">
-                updateTime,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -144,20 +118,23 @@
             <if test="projectType != null and projectType != ''">
                 #{projectType},
             </if>
+            <if test="userEmail != null and userEmail != ''">
+                #{userEmail},
+            </if>
             <if test="years != null">
                 #{years},
             </if>
             <if test="funding != null">
                 #{funding},
             </if>
+            <if test="funding != null">
+                #{funding},
+            </if>
+            <if test="unfulfilledQuota != null">
+                #{unfulfilledQuota},
+            </if>
             <if test="executeRate != null">
                 #{executeRate},
-            </if>
-            <if test="createTime != null">
-                #{createTime},
-            </if>
-            <if test="updateTime != null">
-                #{updateTime},
             </if>
         </trim>
     </insert>
@@ -192,10 +169,25 @@
             id = #{id}
         </where>
     </update>
-    <select id="getProjectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="getProjectById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.Project">
         select * from project
         where id = #{id}
     </select>
+    <select id="getTotal" resultType="java.lang.Double">
+        select sum(p.funding) from project p
+    </select>
+    <select id="getUnfulfilledQuota" resultType="java.lang.Double">
+        select sum(p.unfulfilledQuota) from project p
+    </select>
+    <delete id="deleteProjects" parameterType="list">
+        delete
+        from `project`
+        where
+        id in
+        <foreach collection="list" close=")" open="(" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
     <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
         select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName
         from asset
@@ -241,7 +233,7 @@
         select id
         from asset
     </select>
-    <select id="getAssetInfoByIds" parameterType="list" resultMap="BaseResultMap">
+    <select id="getAssetInfoByIds" parameterType="list" resultType="com.bupt.lams.model.Project">
         select a.*,
         p.id as pid, p.aid as p_aid, p.name as p_name, p.createTime as p_createTime, p.*
         from

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div width="100%">
-      <el-card class="box-card" style="background-color: #ffffff">
+      <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span class="box-title">项目总额度（万元）</span>
         </div>
@@ -9,40 +9,40 @@
           {{ headTableData.total }}
         </div>
       </el-card>
-      <el-card class="box-card" style="background-color: #ffffff">
+      <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span class="box-title">执行额度（万元）</span>
         </div>
         <div class="box-value">
-          {{ headTableData.inUse }}
+          {{ headTableData.used }}
         </div>
       </el-card>
-      <el-card class="box-card" style="background-color: #ffffff">
+      <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span class="box-title">剩余额度（万元）</span>
         </div>
         <div class="box-value">
-          {{ headTableData.free }}
+          {{ headTableData.left }}
         </div>
       </el-card>
-      <el-card class="box-card" style="background-color: #ffffff">
+      <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span class="box-title">计划中额度（万元）</span>
         </div>
         <div class="box-value">
-          {{ headTableData.inRepair }}
+          {{ headTableData.inPlan }}
         </div>
       </el-card>
-      <el-card class="box-card" style="background-color: #ffffff">
+      <el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span class="box-title">预算执行率</span>
+          <span class="box-title">预算执行率（%）</span>
         </div>
         <div class="box-value">
-          {{ headTableData.money }}
+          {{ headTableData.executeRate }}
         </div>
       </el-card>
     </div>
-    <div>
+    <div style="margin-top: 10px">
       <div style="display: flex;justify-content: space-between; width: 100%">
         <div>
           <el-button type="primary" icon="el-icon-plus" @click="showAddView">
@@ -80,7 +80,8 @@
             </el-col>
             <el-col :span="10">
               项目类别:
-              <el-select v-model="searchValue.projectType" clearable placeholder="项目类别" size="mini" style="width: 300px;">
+              <el-select v-model="searchValue.projectType" clearable placeholder="项目类别" size="mini"
+                         style="width: 300px;">
                 <el-option
                     v-for="item in projectTypes"
                     :key="item.id"
@@ -144,7 +145,6 @@
         </el-table-column>
         <el-table-column
             prop="projectName"
-            align="left"
             :show-overflow-tooltip="true"
             label="项目名称">
         </el-table-column>
@@ -164,13 +164,17 @@
             label="资助额度（万元）">
         </el-table-column>
         <el-table-column
+            prop="unfulfilledQuota"
+            width="150"
+            label="未执行额度（万元）">
+        </el-table-column>
+        <el-table-column
             prop="executeRate"
             width="95"
-            align="left"
             label="执行率%">
         </el-table-column>
         <el-table-column
-            prop="user.name"
+            prop="userEmail"
             width="95"
             align="left"
             label="创建人">
@@ -217,11 +221,10 @@ export default {
     return {
       headTableData: {
         total: '',
-        inUse: '',
-        free: '',
-        inRepair: '',
-        money: '',
-        cleaned: ''
+        used: '',
+        left: '',
+        inPlan: '',
+        executeRate: ''
       },
       searchValue: {
         projectName: null,
@@ -242,22 +245,17 @@ export default {
       size: 10,
       project: {
         id: "",
-        name: "",
-        type: "",
+        projectName: "",
+        projectType: "",
+        userEmail: "",
         years: "",
         funding: "",
-        userEmail: "admin",
-        user: {
-          id: "",
-          name: "",
-          phone: "",
-          username: "",
-          enabled: "",
-          remark: ""
-        },
+        unfulfilledQuota: "",
+        executeRate: "",
         createTime: "",
         updateTime: ""
       },
+      projectIds: [],
       projectTypes: [],
       type: ""
     }
@@ -269,23 +267,25 @@ export default {
   mounted() {
     this.initProjectTypes();
     this.initProjects();
-    // this.initHeadTableData();
+    this.initHeadTableData();
   },
   methods: {
+    handleSelectionChange(val) {
+      this.projectIds = [];
+      for (let i = 0; i < val.length; i++) {
+        this.projectIds.push(val[i].id);
+      }
+    },
     emptyProject() {
       this.project = {
         id: "",
-        name: "",
-        type: "",
+        projectName: "",
+        projectType: "",
+        userEmail: "",
         years: "",
         funding: "",
-        userEmail: "",
-        user: {
-          id: "",
-          name: "",
-          phone: "",
-          username: "",
-        },
+        unfulfilledQuota: "",
+        executeRate: "",
         createTime: "",
         updateTime: ""
       };
@@ -381,6 +381,25 @@ export default {
         }
       });
     },
+    deleteProject() {
+      this.$confirm('此操作将永久删除选中的记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteRequestWithData("/project/delete", this.projectIds).then(resp => {
+          if (resp) {
+            this.projectIds = [];
+            this.initProjects();
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    }
   }
 }
 </script>

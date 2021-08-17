@@ -34,4 +34,10 @@ public interface ProjectMapper {
     void updateProject(Project project);
 
     Project getProjectById(Long id);
+
+    Double getTotal();
+
+    Double getUnfulfilledQuota();
+
+    void deleteProjects(List<Long> pids);
 }

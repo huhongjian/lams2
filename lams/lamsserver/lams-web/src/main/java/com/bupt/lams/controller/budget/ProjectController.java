@@ -1,10 +1,15 @@
 package com.bupt.lams.controller.budget;
 
+import com.bupt.lams.dto.ProjectHeadTableData;
 import com.bupt.lams.dto.ProjectQueryCondition;
+import com.bupt.lams.model.Plan;
 import com.bupt.lams.model.Project;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.service.PlanService;
 import com.bupt.lams.service.ProjectService;
+import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +28,8 @@ public class ProjectController {
 
     @Resource
     ProjectService projectService;
+    @Resource
+    PlanService planService;
 
     @GetMapping("/get")
     public RespPageBean getProjectInfoByPage(ProjectQueryCondition projectQueryCondition, Date[] dateScope) {
@@ -69,5 +76,37 @@ public class ProjectController {
             return RespBean.error("更新失败!");
         }
         return RespBean.ok("更新成功!");
+    }
+
+    @GetMapping("/headTable")
+    public RespBean getHeadTableData() {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        try {
+            ProjectHeadTableData data = projectService.getHeadTableData();
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取科研项目基本统计数据异常！", e);
+            return RespBean.error("获取科研项目基本统计数据失败!");
+        }
+        return response;
+    }
+
+    @DeleteMapping("/delete")
+    public RespBean deleteProjects(@RequestBody List<Long> pids) {
+        // 工单只允许教师删除
+        if (UserInfoUtils.isTeacher() == false) {
+            return RespBean.error("您没有删除权限，请联系管理员!");
+        }
+        try {
+            List<Plan> plans = planService.getPlansByProjectIds(pids);
+            if (CollectionUtils.isNotEmpty(plans)) {
+                return RespBean.error("选中的科研项目有预算计划，请先删除预算计划！");
+            }
+            projectService.deleteProjects(pids);
+        } catch (Exception e) {
+            return RespBean.error("删除失败!");
+        }
+        return RespBean.ok("删除成功!");
     }
 }

@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bupt.lams.mapper.ProjectMapper">
+    <resultMap id="BaseResultMap" type="com.bupt.lams.model.Project">
+        <id column="id" property="id"/>
+        <result column="projectName" property="projectName"/>
+        <result column="projectType" property="projectType"/>
+        <result column="userEmail" property="userEmail"/>
+        <result column="years" property="years"/>
+        <result column="funding" property="funding"/>
+        <result column="unfulfilledQuota" property="unfulfilledQuota"/>
+        <result column="executeRate" property="executeRate"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+    </resultMap>
+    <resultMap id="AllInfoResultMap" type="com.bupt.lams.model.Project" extends="BaseResultMap">
+        <association property="user" javaType="com.bupt.lams.model.LamsUser">
+            <id column="uid" property="id"/>
+            <result column="name" property="name"/>
+            <result column="phone" property="phone"/>
+            <result column="username" property="username"/>
+            <result column="enabled" property="enabled"/>
+            <result column="remark" property="remark"/>
+        </association>
+    </resultMap>
     <sql id="baseInfoQuery">
         <if test="projectId !=null">
             and p.id = #{projectId}
@@ -18,10 +40,13 @@
             and p.createTime between #{startDate} and #{endDate}
         </if>
     </sql>
-    <select id="getProjectByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition" resultType="com.bupt.lams.model.Project">
-        select p.*
+    <select id="getProjectByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"
+            resultMap="AllInfoResultMap">
+        select p.*,
+        u.id as uid, u.*
         from
         project p
+        left join lams_user u on u.username = p.userEmail
         <where>
             <include refid="baseInfoQuery"/>
         </where>

@@ -3,7 +3,7 @@
       :title="title"
       :visible.sync="projectDetailVisible"
       :before-close="handleClose"
-      width="50%">
+      width="80%">
     <div>
       <el-form :model="project">
         <el-row>
@@ -34,9 +34,16 @@
           </el-col>
         </el-row>
         <el-row>
-            <el-form-item label="执行率%:" prop="executeRate">
+          <el-col :span="10">
+            <el-form-item label="未执行额度（万元）:" prop="unfulfilledQuota">
+              {{ project.unfulfilledQuota }}
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="执行率（%）:" prop="executeRate">
               {{ project.executeRate }}
             </el-form-item>
+          </el-col>
         </el-row>
         <el-row>
           <el-col :span="10">
@@ -46,7 +53,7 @@
           </el-col>
           <el-col :span="10">
             <el-form-item label="创建人邮箱:" prop="userEmail">
-              {{ project.user.username }}
+              {{ project.userEmail }}
             </el-form-item>
           </el-col>
         </el-row>

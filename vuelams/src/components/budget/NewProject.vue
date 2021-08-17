@@ -56,40 +56,11 @@ export default {
   props: ['project', 'title', 'newProjectVisible', 'projectTypes'],
   data() {
     return {
-      // 初始化资产信息
-      initData: {
-        // 添加的全部资产id
-        aids: [],
-        page: 1,
-        size: 10
-      },
-      // 选中的资产id
-      assetIds: [],
-      // 资产图片列表，用于编辑页面
-      fileList: [],
-      // 资产图片url列表，用于详情页面
-      urlList: [],
-      dialogVisible: false,
-      dialogVisible2: false,
-      title2: '',
-      loading: false,
-      asset: {
-        id: "",
-        status: "",
-        statusName: "",
-        assetName: "",
-        brand: "",
-        type: "",
-        price: "",
-        fileList: [],
-        adv: {},
-        remark: ""
-      },
-      total: 0,
-      page: 1,
-      size: 10,
       rules: {
-        reason: [{required: true, message: '请输入申请理由', trigger: 'blur'}]
+        projectName: [{required: true, message: '请输入项目名称', trigger: 'blur'}],
+        projectType: [{required: true, message: '请选择项目类型', trigger: 'blur'}],
+        projectYears: [{required: true, message: '请输入年限', trigger: 'blur'}],
+        projectFunding: [{required: true, message: '请输入资助额度', trigger: 'blur'}]
       },
     }
   },

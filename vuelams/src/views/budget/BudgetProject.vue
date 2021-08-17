@@ -164,17 +164,12 @@
             label="资助额度（万元）">
         </el-table-column>
         <el-table-column
-            prop="unfulfilledQuota"
-            width="150"
-            label="未执行额度（万元）">
-        </el-table-column>
-        <el-table-column
             prop="executeRate"
             width="95"
             label="执行率%">
         </el-table-column>
         <el-table-column
-            prop="userEmail"
+            prop="user.name"
             width="95"
             align="left"
             label="创建人">

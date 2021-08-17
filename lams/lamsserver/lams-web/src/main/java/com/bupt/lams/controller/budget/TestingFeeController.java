@@ -46,12 +46,13 @@ public class TestingFeeController {
             logger.error("测试化验加工费不能为空！");
             return RespBean.error("测试化验加工费不能为空！");
         }
-        if (testingFee.getUnitPrice() == null && testingFee.getSubTotal() == null) {
-            logger.error("单价和合计不能同时为空！");
-            return RespBean.error("单价和合计不能同时为空！");
+        if (testingFee.getUnitPrice() == null) {
+            logger.error("单价不能为空！");
+            return RespBean.error("单价不能为空！");
         }
         if (testingFee.getTimes() == null) {
-            testingFee.setTimes(0);
+            logger.error("次数不能为空！");
+            return RespBean.error("次数不能为空！");
         }
         try {
             Long id = testingFeeService.addTestingFee(testingFee);

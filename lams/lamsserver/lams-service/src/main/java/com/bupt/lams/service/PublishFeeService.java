@@ -7,6 +7,7 @@ import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.Payment;
 import com.bupt.lams.model.planItem.PublishFee;
+import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,8 @@ public class PublishFeeService {
         if (publishFee.getSubTotal() == null) {
             publishFee.setSubTotal(0.0);
         }
+        publishFee.setUnfulfilledQuota(publishFee.getSubTotal());
+        publishFee.setExecuteRate(ComputeUtils.computeExecuteRate(publishFee.getSubTotal(), publishFee.getUnfulfilledQuota()));
         publishFeeMapper.insertSelective(publishFee);
         return publishFee.getId();
     }

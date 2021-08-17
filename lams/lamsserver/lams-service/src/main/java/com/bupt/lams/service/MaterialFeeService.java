@@ -9,6 +9,7 @@ import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.model.planItem.Advisory;
 import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.MaterialFee;
+import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,8 @@ public class MaterialFeeService {
         if (materialFee.getSubTotal() == null) {
             materialFee.setSubTotal(materialFee.getUnitPrice() * materialFee.getAmount());
         }
+        materialFee.setUnfulfilledQuota(materialFee.getSubTotal());
+        materialFee.setExecuteRate(ComputeUtils.computeExecuteRate(materialFee.getSubTotal(), materialFee.getUnfulfilledQuota()));
         materialFeeMapper.insertSelective(materialFee);
         return materialFee.getId();
     }
@@ -59,8 +62,8 @@ public class MaterialFeeService {
     }
 
     public PlanItemData getMaterialFeeDataByIds(List<Long> ids) {
-        List<MaterialFee> equipmentFeeList = materialFeeMapper.getMaterialFeeByIds(ids);
-        return TransferUtils.transToPlanItemData(new ArrayList<>(equipmentFeeList));
+        List<MaterialFee> materialFeeList = materialFeeMapper.getMaterialFeeByIds(ids);
+        return TransferUtils.transToPlanItemData(new ArrayList<>(materialFeeList));
     }
 
     public List<MaterialFee> getMaterialFeeListByIds(List<Long> pids) {

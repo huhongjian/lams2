@@ -127,54 +127,50 @@
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
               <el-table-column
-                  type="selection"
-                  width="55">
-              </el-table-column>
-              <el-table-column
                   fixed
+                  prop="id"
                   label="序号"
                   align="left"
-                  width="100">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
-                </template>
+                  width="80">
               </el-table-column>
               <el-table-column
-                  fixed
                   prop="materialName"
                   :show-overflow-tooltip="true"
-                  align="left"
                   label="材料用途">
               </el-table-column>
               <el-table-column
                   prop="specification"
-                  align="left"
                   label="规格"
                   width="200">
               </el-table-column>
               <el-table-column
                   prop="amount"
-                  align="left"
                   label="数量"
-                  width="200">
+                  width="80">
               </el-table-column>
               <el-table-column
                   prop="unitPrice"
-                  align="left"
                   label="单价（万元）"
-                  width="200">
+                  width="100">
               </el-table-column>
               <el-table-column
                   prop="unit"
-                  align="left"
                   label="单位"
-                  width="200">
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="subTotal"
-                  align="left"
                   label="小计（万元）"
-                  width="200">
+                  width="100">
+              </el-table-column>
+              <el-table-column
+                  fixed="right"
+                  width="150"
+                  label="操作">
+                <template slot-scope="scope">
+                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
+                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                </template>
               </el-table-column>
             </el-table>
           </el-collapse-item>
@@ -754,8 +750,10 @@ export default {
       page: 1,
       size: 10,
       planItemTypes: [],
+      sum: 0,
       rules: {
-        reason: [{required: true, message: '请输入申请理由', trigger: 'blur'}]
+        planName: [{required: true, message: '请输入计划名称', trigger: 'blur'}],
+        projectId: [{required: true, message: '请选择项目', trigger: 'blur'}]
       },
     }
   },
@@ -765,68 +763,69 @@ export default {
   methods: {
     initPlanItemList() {
       this.loading = true;
+      this.sum = 0;
       this.postRequest('/planItem/equipmentFee/getByIds', this.equipmentFeeList).then(resp => {
-        if (resp) {
+        if (resp && resp.obj) {
           this.plan.planItemDataMap.equipmentFeeData = resp.obj;
           this.plan.funding += resp.obj.funding;
         }
       });
       this.postRequest('/planItem/materialFee/getByIds', this.materialFeeList).then(resp => {
-        if (resp) {
+        if (resp && resp.obj) {
           this.plan.planItemDataMap.materialFeeData = resp.obj;
           this.plan.funding += resp.obj.funding;
         }
       });
       this.postRequest('/planItem/testingFee/getByIds', this.testingFeeList).then(resp => {
-        if (resp) {
+        if (resp && resp.obj) {
           this.plan.planItemDataMap.testingFeeData = resp.obj;
           this.plan.funding += resp.obj.funding;
         }
       });
       this.postRequest('/planItem/meetingFee/getByIds', this.meetingFeeList).then(resp => {
-        if (resp) {
+        if (resp && resp.obj) {
           this.plan.planItemDataMap.meetingFeeData = resp.obj;
           this.plan.funding += resp.obj.funding;
         }
       });
       this.postRequest('/planItem/researchFee/getByIds', this.researchFeeList).then(resp => {
-        if (resp) {
+        if (resp && resp.obj) {
           this.plan.planItemDataMap.researchFeeData = resp.obj;
           this.plan.funding += resp.obj.funding;
         }
       });
       this.postRequest('/planItem/academicFee/getByIds', this.academicFeeList).then(resp => {
-        if (resp) {
+        if (resp && resp.obj) {
           this.plan.planItemDataMap.academicFeeData = resp.obj;
           this.plan.funding += resp.obj.funding;
         }
       });
       this.postRequest('/planItem/transportationFee/getByIds', this.transportationFeeList).then(resp => {
-        if (resp) {
+        if (resp && resp.obj) {
           this.plan.planItemDataMap.transFeeData = resp.obj;
           this.plan.funding += resp.obj.funding;
         }
       });
       this.postRequest('/planItem/publishFee/getByIds', this.publishFeeList).then(resp => {
-        if (resp) {
+        if (resp && resp.obj) {
           this.plan.planItemDataMap.publishFeeData = resp.obj;
           this.plan.funding += resp.obj.funding;
         }
       });
       this.postRequest('/planItem/payment/getByIds', this.paymentList).then(resp => {
-        if (resp) {
+        if (resp && resp.obj) {
           this.plan.planItemDataMap.paymentData = resp.obj;
           this.plan.funding += resp.obj.funding;
         }
       });
       this.postRequest('/planItem/advisory/getByIds', this.advisoryList).then(resp => {
-        if (resp) {
+        if (resp && resp.obj) {
           this.plan.planItemDataMap.advisoryData = resp.obj;
           this.plan.funding += resp.obj.funding;
         }
       });
       this.postRequest('/planItem/otherFee/getByIds', this.otherFeeList).then(resp => {
-        if (resp) {
+        if (resp && resp.obj) {
           this.plan.planItemDataMap.otherFeeData = resp.obj;
           this.plan.funding += resp.obj.funding;
         }

@@ -10,7 +10,7 @@
                      icon="el-icon-download">
             导出数据
           </el-button>
-          <el-button @click="deleteProject" style="display: inline-flex;margin-left: 8px" type="danger">
+          <el-button @click="deletePlan" style="display: inline-flex;margin-left: 8px" type="danger">
             删除
           </el-button>
         </div>
@@ -106,7 +106,6 @@
         </el-table-column>
         <el-table-column
             prop="planName"
-            align="left"
             :show-overflow-tooltip="true"
             label="预算计划名称">
         </el-table-column>
@@ -123,19 +122,16 @@
         <el-table-column
             prop="unfulfilledQuota"
             width="150"
-            align="left"
             label="未执行额度（万元）">
         </el-table-column>
         <el-table-column
             prop="executeRate"
             width="95"
-            align="left"
             label="执行率（%）">
         </el-table-column>
         <el-table-column
             prop="createTime"
             width="100"
-            align="left"
             label="创建时间">
         </el-table-column>
         <el-table-column
@@ -173,6 +169,7 @@ export default {
   name: "BudgetProject",
   data() {
     return {
+      plans: [],
       searchValue: {
         planName: null,
         projectId: null,
@@ -205,7 +202,7 @@ export default {
           enabled: "",
           remark: ""
         },
-        planItemDataMap:{
+        planItemDataMap: {
           equipmentFeeData: {},
           materialFeeData: {},
           testingFeeData: {},
@@ -258,8 +255,8 @@ export default {
         planName: "",
         projectId: "",
         funding: 0,
-        unfulfilledQuota: "",
-        executeRate: "",
+        unfulfilledQuota: 0,
+        executeRate: 0,
         userEmail: "",
         user: {
           id: "",
@@ -269,7 +266,7 @@ export default {
           enabled: "",
           remark: ""
         },
-        planItemDataMap:{
+        planItemDataMap: {
           equipmentFeeData: {},
           materialFeeData: {},
           testingFeeData: {},

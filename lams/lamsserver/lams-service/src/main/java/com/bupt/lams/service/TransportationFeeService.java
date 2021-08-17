@@ -7,6 +7,7 @@ import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.PlanItem;
 import com.bupt.lams.model.planItem.TestingFee;
+import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,8 @@ public class TransportationFeeService {
         if (transportationFee.getSubTotal() == null) {
             transportationFee.setSubTotal(0.0);
         }
+        transportationFee.setUnfulfilledQuota(transportationFee.getSubTotal());
+        transportationFee.setExecuteRate(ComputeUtils.computeExecuteRate(transportationFee.getSubTotal(), transportationFee.getUnfulfilledQuota()));
         transportationFeeMapper.insertSelective(transportationFee);
         return transportationFee.getId();
     }

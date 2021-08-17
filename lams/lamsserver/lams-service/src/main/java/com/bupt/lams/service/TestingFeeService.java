@@ -9,6 +9,7 @@ import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.MaterialFee;
 import com.bupt.lams.model.planItem.ResearchFee;
 import com.bupt.lams.model.planItem.TestingFee;
+import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,8 @@ public class TestingFeeService {
         if (testingFee.getSubTotal() == null) {
             testingFee.setSubTotal(testingFee.getUnitPrice() * testingFee.getTimes());
         }
+        testingFee.setUnfulfilledQuota(testingFee.getSubTotal());
+        testingFee.setExecuteRate(ComputeUtils.computeExecuteRate(testingFee.getSubTotal(), testingFee.getUnfulfilledQuota()));
         testingFeeMapper.insertSelective(testingFee);
         return testingFee.getId();
     }

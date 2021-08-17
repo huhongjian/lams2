@@ -5,6 +5,7 @@ import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.AdvisoryMapper;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.Advisory;
+import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,8 @@ public class AdvisoryService {
         if (testingFee.getSubTotal() == null) {
             testingFee.setSubTotal(testingFee.getStandard() * testingFee.getDays());
         }
+        testingFee.setUnfulfilledQuota(testingFee.getSubTotal());
+        testingFee.setExecuteRate(ComputeUtils.computeExecuteRate(testingFee.getSubTotal(), testingFee.getUnfulfilledQuota()));
         advisoryMapper.insertSelective(testingFee);
         return testingFee.getId();
     }

@@ -120,11 +120,11 @@
             <if test="subTotal != null">
                 subTotal,
             </if>
-            <if test="createTime != null">
-                createTime,
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota,
             </if>
-            <if test="updateTime != null">
-                updateTime,
+            <if test="executeRate != null">
+                executeRate,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -152,11 +152,11 @@
             <if test="subTotal != null">
                 #{subTotal},
             </if>
-            <if test="createTime != null">
-                #{createTime},
+            <if test="unfulfilledQuota != null">
+                #{unfulfilledQuota},
             </if>
-            <if test="updateTime != null">
-                #{updateTime},
+            <if test="executeRate != null">
+                #{executeRate},
             </if>
         </trim>
     </insert>

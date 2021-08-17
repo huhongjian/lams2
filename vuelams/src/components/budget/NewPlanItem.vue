@@ -136,9 +136,9 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="次数:" prop="amount">
+              <el-form-item label="次数:" prop="times">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                          v-model="planItem.amount"></el-input>
+                          v-model="planItem.times"></el-input>
               </el-form-item>
             </el-col>
           </el-row>

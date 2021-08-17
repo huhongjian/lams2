@@ -5,6 +5,7 @@ import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.AcademicFeeMapper;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.AcademicFee;
+import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,8 @@ public class AcademicFeeService {
         if (academicFee.getSubTotal() == null) {
             academicFee.setSubTotal(0.0);
         }
+        academicFee.setUnfulfilledQuota(academicFee.getSubTotal());
+        academicFee.setExecuteRate(ComputeUtils.computeExecuteRate(academicFee.getSubTotal(), academicFee.getUnfulfilledQuota()));
         academicFeeMapper.insertSelective(academicFee);
         return academicFee.getId();
     }

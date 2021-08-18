@@ -142,6 +142,47 @@
             </if>
         </trim>
     </insert>
+    <update id="update" parameterType="com.bupt.lams.model.planItem.PublishFee">
+        update publish_fee
+        set
+        <trim suffixOverrides=",">
+            <if test="itemType != null">
+                `itemType` = #{itemType},
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                itemTypeName = #{itemTypeName},
+            </if>
+            <if test="type != null and type != ''">
+                #{type},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark},
+            </if>
+            <if test="subTotal != null">
+                subTotal = #{subTotal},
+            </if>
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota = #{unfulfilledQuota},
+            </if>
+            <if test="executeRate != null">
+                executeRate = #{executeRate},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="getById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.PublishFee">
+        select p.*
+        from
+        publish_fee p
+        where
+        p.id = #{id}
+    </select>
     <select id="getPublishFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.PublishFee">
         select p.*
         from

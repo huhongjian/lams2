@@ -1,9 +1,12 @@
 package com.bupt.lams.service;
 
+import com.bupt.lams.constants.BudgetConstant;
 import com.bupt.lams.dto.ExecutionQueryCondition;
 import com.bupt.lams.mapper.BudgetRecordMapper;
 import com.bupt.lams.model.*;
-import com.bupt.lams.model.planItem.EquipmentFee;
+import com.bupt.lams.model.planItem.PlanItem;
+import com.bupt.lams.utils.ComputeUtils;
+import com.bupt.lams.utils.SpringContextUtil;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.text.DecimalFormat;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +32,6 @@ public class BudgetRecordService {
     PlanService planService;
     @Resource
     ProjectService projectService;
-
-    @Resource
-    EquipmentFeeService equipmentFeeService;
 
     public RespPageBean getBudgetRecordByCondition(ExecutionQueryCondition condition) {
         Integer page = condition.getPage();
@@ -79,22 +79,26 @@ public class BudgetRecordService {
     }
 
     private void executePlanItem(BudgetRecord budgetRecord) throws Exception {
-        DecimalFormat df = new DecimalFormat("#.00");
         Double funding = budgetRecord.getFunding();
-        Double executeRate;
-        switch (budgetRecord.getItemType()) {
-            case 1:
-                EquipmentFee equipmentFee = equipmentFeeService.getEquipmentFeeById(budgetRecord.getPlanItemId());
-                if (equipmentFee.getUnfulfilledQuota() < funding) {
-                    logger.error("[executePlanItem]:执行金额过大！");
-                    throw new Exception("[executePlanItem]:执行金额过大！");
-                }
-                equipmentFee.setUnfulfilledQuota(equipmentFee.getUnfulfilledQuota() - funding);
-                executeRate = (equipmentFee.getSubTotal() - equipmentFee.getUnfulfilledQuota()) / equipmentFee.getSubTotal() * 100;
-                equipmentFee.setExecuteRate(new Double(df.format(executeRate.doubleValue())));
-                equipmentFeeService.update(equipmentFee);
-                break;
+
+        Class service = BudgetConstant.ItemTypeMap.get(budgetRecord.getItemType());
+        Class pojo = BudgetConstant.ItemTypePojoMap.get(budgetRecord.getItemType());
+        Method getById = service.getMethod("getById", Long.class);
+        Object data = getById.invoke(SpringContextUtil.getBean(service), budgetRecord.getPlanItemId());
+        PlanItem planItemData = (PlanItem) data;
+        Double unfulfilledQuota = planItemData.getUnfulfilledQuota();
+        if (unfulfilledQuota < funding) {
+            logger.error("[executePlanItem]:执行金额过大！");
+            throw new Exception("[executePlanItem]:执行金额过大！");
         }
+
+        Method setUnfulfilledQuota = pojo.getMethod("setUnfulfilledQuota", Double.class);
+        setUnfulfilledQuota.invoke(data, unfulfilledQuota - funding);
+        Method setExecuteRate = pojo.getMethod("setExecuteRate", Double.class);
+        setExecuteRate.invoke(data, ComputeUtils.computeExecuteRate(planItemData.getSubTotal(), unfulfilledQuota - funding));
+        Method update = service.getMethod("update", pojo);
+        update.invoke(SpringContextUtil.getBean(service), data);
+
         // 更新预算计划信息
         Plan plan = planService.getPlanById(budgetRecord.getPlanId());
         if (plan.getUnfulfilledQuota() < funding) {
@@ -102,8 +106,7 @@ public class BudgetRecordService {
             throw new Exception("[executePlanItem]:执行金额过大！");
         }
         plan.setUnfulfilledQuota(plan.getUnfulfilledQuota() - funding);
-        executeRate = (plan.getFunding() - plan.getUnfulfilledQuota()) / plan.getFunding() * 100;
-        plan.setExecuteRate(new Double(df.format(executeRate.doubleValue())));
+        plan.setExecuteRate(ComputeUtils.computeExecuteRate(plan.getFunding(), plan.getUnfulfilledQuota()));
         planService.updatePlan(plan);
         // 更新科研项目信息
         Project project = projectService.getProjectById(budgetRecord.getProjectId());
@@ -112,8 +115,7 @@ public class BudgetRecordService {
             throw new Exception("[executePlanItem]:执行金额过大！");
         }
         project.setUnfulfilledQuota(project.getUnfulfilledQuota() - funding);
-        executeRate = (project.getFunding() - project.getUnfulfilledQuota()) / project.getFunding() * 100;
-        project.setExecuteRate(new Double(df.format(executeRate.doubleValue())));
+        project.setExecuteRate(ComputeUtils.computeExecuteRate(project.getFunding(), project.getUnfulfilledQuota()));
         projectService.updateProject(project);
     }
 }

@@ -184,6 +184,19 @@
             </if>
         </trim>
     </insert>
+    <select id="getEquipmentFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.EquipmentFee">
+        select e.*
+        from
+        equipment_fee e
+        where 1=1
+        <if test="list != null and list.size>0">
+            and e.id in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        order by e.id
+    </select>
     <update id="update" parameterType="com.bupt.lams.model.planItem.EquipmentFee">
         update equipment_fee
         set
@@ -224,20 +237,7 @@
             id = #{id}
         </where>
     </update>
-    <select id="getEquipmentFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.EquipmentFee">
-        select e.*
-        from
-        equipment_fee e
-        where 1=1
-        <if test="list != null and list.size>0">
-            and e.id in
-            <foreach collection="list" item="item" open="(" close=")" separator=",">
-                #{item}
-            </foreach>
-        </if>
-        order by e.id
-    </select>
-    <select id="getEquipmentFeeById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.EquipmentFee">
+    <select id="getById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.EquipmentFee">
         select e.*
         from
         equipment_fee e

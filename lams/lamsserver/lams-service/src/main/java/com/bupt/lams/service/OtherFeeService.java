@@ -4,8 +4,6 @@ import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.OtherFeeMapper;
 import com.bupt.lams.model.PlanAndItem;
-import com.bupt.lams.model.planItem.EquipmentFee;
-import com.bupt.lams.model.planItem.MeetingFee;
 import com.bupt.lams.model.planItem.OtherFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
@@ -62,5 +60,13 @@ public class OtherFeeService {
 
     public List<OtherFee> getOtherFeeListByIds(List<Long> pids) {
         return otherFeeMapper.getOtherFeeByIds(pids);
+    }
+
+    public void update(OtherFee otherFee) {
+        otherFeeMapper.update(otherFee);
+    }
+
+    public OtherFee getById(Long id) {
+        return otherFeeMapper.getById(id);
     }
 }

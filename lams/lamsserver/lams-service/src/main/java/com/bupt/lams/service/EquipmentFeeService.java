@@ -1,14 +1,11 @@
 package com.bupt.lams.service;
 
 import com.bupt.lams.constants.PlanItemTypeEnum;
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.EquipmentFeeMapper;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.EquipmentFee;
-import com.bupt.lams.dto.PlanItemData;
-import com.bupt.lams.model.planItem.PlanItem;
-import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,7 +62,7 @@ public class EquipmentFeeService {
         equipmentFeeMapper.update(equipmentFee);
     }
 
-    public EquipmentFee getEquipmentFeeById(Long id) {
-        return equipmentFeeMapper.getEquipmentFeeById(id);
+    public EquipmentFee getById(Long id) {
+        return equipmentFeeMapper.getById(id);
     }
 }

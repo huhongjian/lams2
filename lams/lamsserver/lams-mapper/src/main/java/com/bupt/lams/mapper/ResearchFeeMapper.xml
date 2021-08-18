@@ -197,6 +197,68 @@
         </if>
         order by r.id
     </select>
+    <update id="update" parameterType="com.bupt.lams.model.planItem.ResearchFee">
+        update research_fee
+        set
+        <trim suffixOverrides=",">
+            <if test="itemType != null">
+                `itemType` = #{itemType},
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                itemTypeName = #{itemTypeName},
+            </if>
+            <if test="place != null and place != ''">
+                place = #{place},
+            </if>
+            <if test="purpose != null and purpose != ''">
+                purpose = #{purpose},
+            </if>
+            <if test="personnelType != null and personnelType != ''">
+                personnelType = #{personnelType},
+            </if>
+            <if test="times != null">
+                times = #{times},
+            </if>
+            <if test="transFee != null">
+                transFee = #{transFee},
+            </if>
+            <if test="accommodationFee != null">
+                accommodationFee = #{accommodationFee},
+            </if>
+            <if test="otherFee != null">
+                otherFee = #{otherFee},
+            </if>
+            <if test="days != null">
+                days = #{days},
+            </if>
+            <if test="subTotal != null">
+                subTotal = #{subTotal},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota = #{unfulfilledQuota},
+            </if>
+            <if test="executeRate != null">
+                executeRate = #{executeRate},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="getById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.ResearchFee">
+        select r.*
+        from
+        research_fee r
+        where
+        r.id = #{id}
+    </select>
     <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
         select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName
         from asset

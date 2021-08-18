@@ -22,4 +22,8 @@ public interface MaterialFeeMapper {
     int insertSelective(MaterialFee materialFee);
 
     List<MaterialFee> getMaterialFeeByIds(List<Long> ids);
+
+    MaterialFee getById(Long id);
+
+    void update(MaterialFee materialFee);
 }

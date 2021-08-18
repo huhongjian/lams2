@@ -426,6 +426,11 @@
                   width="90">
               </el-table-column>
               <el-table-column
+                  prop="registrationFee"
+                  label="注册费（元）"
+                  width="100">
+              </el-table-column>
+              <el-table-column
                   prop="transFee"
                   label="往返交通费（元）"
                   width="120">
@@ -777,6 +782,19 @@ export default {
     NewPlanItem
   },
   methods: {
+    emptyIdList() {
+      this.equipmentFeeList = [];
+      this.materialFeeList = [];
+      this.testingFeeList = [];
+      this.meetingFeeList = [];
+      this.researchFeeList = [];
+      this.academicFeeList = [];
+      this.transportationFeeList = [];
+      this.publishFeeList = [];
+      this.paymentList = [];
+      this.advisoryList = [];
+      this.otherFeeList = [];
+    },
     initPlanItemList() {
       this.loading = true;
       this.plan.funding = 0;
@@ -866,6 +884,7 @@ export default {
           if (valid) {
             this.putRequest("/plan/edit", this.plan).then(resp => {
               if (resp) {
+                this.emptyIdList();
                 this.$emit('close');
                 this.$parent.initPlans();
               }
@@ -877,6 +896,7 @@ export default {
           if (valid) {
             this.postRequest("/plan/add", this.plan).then(resp => {
               if (resp) {
+                this.emptyIdList();
                 this.$emit('close');
                 this.$parent.initPlans();
               }
@@ -894,6 +914,7 @@ export default {
       this.newPlanItemVisible = true;
     },
     handleClose() {
+      this.emptyIdList();
       this.$emit('close');
     },
     handlePlanItemIds(itemType, subType, id) {

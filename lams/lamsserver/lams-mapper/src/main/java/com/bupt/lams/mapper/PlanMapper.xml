@@ -173,12 +173,6 @@
             <if test="planName != null and planName != ''">
                 `planName` = #{planName},
             </if>
-            <if test="planStatus != null">
-                `planStatus` = #{planStatus},
-            </if>
-            <if test="planStatusName != null and planStatusName != ''">
-                planStatusName = #{planStatusName},
-            </if>
             <if test="projectId != null">
                 projectId = #{projectId},
             </if>

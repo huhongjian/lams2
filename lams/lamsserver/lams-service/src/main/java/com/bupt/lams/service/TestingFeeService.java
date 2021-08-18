@@ -69,4 +69,12 @@ public class TestingFeeService {
     public List<TestingFee> getTestingFeeListByIds(List<Long> pids) {
         return testingFeeMapper.getTestingFeeByIds(pids);
     }
+
+    public void update(TestingFee testingFee) {
+        testingFeeMapper.update(testingFee);
+    }
+
+    public TestingFee getById(Long id) {
+        return testingFeeMapper.getById(id);
+    }
 }

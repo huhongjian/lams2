@@ -4,10 +4,6 @@ import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.MaterialFeeMapper;
 import com.bupt.lams.model.PlanAndItem;
-import com.bupt.lams.model.Project;
-import com.bupt.lams.model.RespPageBean;
-import com.bupt.lams.model.planItem.Advisory;
-import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.MaterialFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
@@ -68,5 +64,13 @@ public class MaterialFeeService {
 
     public List<MaterialFee> getMaterialFeeListByIds(List<Long> pids) {
         return materialFeeMapper.getMaterialFeeByIds(pids);
+    }
+
+    public void update(MaterialFee materialFee) {
+        materialFeeMapper.update(materialFee);
+    }
+
+    public MaterialFee getById(Long id) {
+        return materialFeeMapper.getById(id);
     }
 }

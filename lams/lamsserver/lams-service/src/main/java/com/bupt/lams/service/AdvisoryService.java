@@ -64,4 +64,12 @@ public class AdvisoryService {
     public List<Advisory> getAdvisoryListByIds(List<Long> ids) {
         return advisoryMapper.getAdvisoryByIds(ids);
     }
+
+    public void update(Advisory advisory) {
+        advisoryMapper.update(advisory);
+    }
+
+    public Advisory getById(Long id) {
+        return advisoryMapper.getById(id);
+    }
 }

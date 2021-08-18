@@ -4,6 +4,7 @@ import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.PublishFeeMapper;
 import com.bupt.lams.model.PlanAndItem;
+import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.PublishFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
@@ -60,5 +61,13 @@ public class PublishFeeService {
 
     public List<PublishFee> getPublishFeeListByIds(List<Long> pids) {
         return publishFeeMapper.getPublishFeeByIds(pids);
+    }
+
+    public void update(PublishFee publishFee) {
+        publishFeeMapper.update(publishFee);
+    }
+
+    public PublishFee getById(Long id) {
+        return publishFeeMapper.getById(id);
     }
 }

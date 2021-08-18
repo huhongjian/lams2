@@ -23,7 +23,7 @@ public interface EquipmentFeeMapper {
 
     List<EquipmentFee> getEquipmentFeeByIds(List<Long> ids);
 
-    EquipmentFee getEquipmentFeeById(Long id);
+    EquipmentFee getById(Long id);
 
     void update(EquipmentFee equipmentFee);
 }

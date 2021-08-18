@@ -11,4 +11,8 @@ public interface MeetingFeeMapper {
     int insertSelective(MeetingFee meetingFee);
 
     List<MeetingFee> getMeetingFeeByIds(List<Long> ids);
+
+    MeetingFee getById(Long id);
+
+    void update(MeetingFee meetingFee);
 }

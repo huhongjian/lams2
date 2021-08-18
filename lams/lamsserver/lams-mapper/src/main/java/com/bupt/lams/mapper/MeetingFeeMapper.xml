@@ -178,6 +178,65 @@
             </if>
         </trim>
     </insert>
+    <update id="update" parameterType="com.bupt.lams.model.planItem.MeetingFee">
+        update meeting_fee
+        set
+        <trim suffixOverrides=",">
+            <if test="itemType != null">
+                `itemType` = #{itemType},
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                itemTypeName = #{itemTypeName},
+            </if>
+            <if test="content != null and content != ''">
+                #{content},
+            </if>
+            <if test="relation != null and relation != ''">
+                #{relation},
+            </if>
+            <if test="meal != null">
+                #{meal},
+            </if>
+            <if test="otherCost != null">
+                #{otherCost},
+            </if>
+            <if test="days != null">
+                #{days},
+            </if>
+            <if test="amount != null">
+                #{amount},
+            </if>
+            <if test="meetingNum != null">
+                #{meetingNum},
+            </if>
+            <if test="subTotal != null">
+                #{subTotal},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark},
+            </if>
+            <if test="unfulfilledQuota != null">
+                #{unfulfilledQuota},
+            </if>
+            <if test="executeRate != null">
+                #{executeRate},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="getById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.MeetingFee">
+        select m.*
+        from
+        meeting_fee m
+        where
+        m.id = #{id}
+    </select>
     <select id="getMeetingFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.MeetingFee">
         select m.*
         from

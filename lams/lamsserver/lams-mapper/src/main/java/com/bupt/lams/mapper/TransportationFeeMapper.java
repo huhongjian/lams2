@@ -1,7 +1,6 @@
 package com.bupt.lams.mapper;
 
 import com.bupt.lams.model.planItem.PlanItem;
-import com.bupt.lams.model.planItem.TestingFee;
 
 import java.util.List;
 
@@ -12,4 +11,8 @@ public interface TransportationFeeMapper {
     int insertSelective(PlanItem transportationFee);
 
     List<PlanItem> getTransportationFeeByIds(List<Long> ids);
+
+    PlanItem getById(Long id);
+
+    void update(PlanItem equipmentFee);
 }

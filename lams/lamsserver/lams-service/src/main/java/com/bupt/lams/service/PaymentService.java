@@ -4,8 +4,6 @@ import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.PaymentMapper;
 import com.bupt.lams.model.PlanAndItem;
-import com.bupt.lams.model.planItem.EquipmentFee;
-import com.bupt.lams.model.planItem.OtherFee;
 import com.bupt.lams.model.planItem.Payment;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
@@ -65,5 +63,13 @@ public class PaymentService {
 
     public List<Payment> getPaymentListByIds(List<Long> pids) {
         return paymentMapper.getPaymentByIds(pids);
+    }
+
+    public void update(Payment equipmentFee) {
+        paymentMapper.update(equipmentFee);
+    }
+
+    public Payment getById(Long id) {
+        return paymentMapper.getById(id);
     }
 }

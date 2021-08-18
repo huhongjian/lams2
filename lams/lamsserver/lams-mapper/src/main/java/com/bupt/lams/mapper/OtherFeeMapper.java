@@ -11,4 +11,8 @@ public interface OtherFeeMapper {
     int insertSelective(OtherFee otherFee);
 
     List<OtherFee> getOtherFeeByIds(List<Long> ids);
+
+    OtherFee getById(Long id);
+
+    void update(OtherFee otherFee);
 }

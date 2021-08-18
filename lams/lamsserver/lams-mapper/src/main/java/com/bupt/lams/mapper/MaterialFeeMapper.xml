@@ -180,6 +180,62 @@
             </if>
         </trim>
     </insert>
+    <update id="update" parameterType="com.bupt.lams.model.planItem.MaterialFee">
+        update material_fee
+        set
+        <trim suffixOverrides=",">
+            <if test="itemType != null">
+                `itemType` = #{itemType},
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                itemTypeName = #{itemTypeName},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="usage != null and usage != ''">
+                `usage` = #{usage},
+            </if>
+            <if test="materialName != null and materialName != ''">
+                materialName = #{materialName},
+            </if>
+            <if test="specification != null and specification != ''">
+                specification = #{specification},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit = #{unit},
+            </if>
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+            <if test="unitPrice != null">
+                unitPrice = #{unitPrice},
+            </if>
+            <if test="subTotal != null">
+                subTotal = #{subTotal},
+            </if>
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota = #{unfulfilledQuota},
+            </if>
+            <if test="executeRate != null">
+                executeRate = #{executeRate},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="getById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.MaterialFee">
+        select m.*
+        from
+        material_fee m
+        where
+        m.id = #{id}
+    </select>
     <select id="getMaterialFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.MaterialFee">
         select m.*
         from

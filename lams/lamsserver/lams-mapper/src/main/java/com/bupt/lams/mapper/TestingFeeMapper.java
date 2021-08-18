@@ -11,4 +11,8 @@ public interface TestingFeeMapper {
     int insertSelective(TestingFee testingFee);
 
     List<TestingFee> getTestingFeeByIds(List<Long> ids);
+
+    TestingFee getById(Long id);
+
+    void update(TestingFee equipmentFee);
 }

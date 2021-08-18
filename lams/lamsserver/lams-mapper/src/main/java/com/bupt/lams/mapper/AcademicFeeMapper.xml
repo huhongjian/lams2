@@ -184,6 +184,68 @@
             </if>
         </trim>
     </insert>
+    <update id="update" parameterType="com.bupt.lams.model.planItem.AcademicFee">
+        update academic_fee
+        set
+        <trim suffixOverrides=",">
+            <if test="itemType != null">
+                itemType = #{itemType},
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                itemTypeName = #{itemTypeName},
+            </if>
+            <if test="meetingName != null and meetingName != ''">
+                meetingName = #{meetingName},
+            </if>
+            <if test="personnelType != null and personnelType != ''">
+                personnelType = #{personnelType},
+            </if>
+            <if test="times != null">
+                times = #{times},
+            </if>
+            <if test="year != null">
+                `year` = #{year},
+            </if>
+            <if test="days != null">
+                days = #{days},
+            </if>
+            <if test="transFee != null">
+                transFee = #{transFee},
+            </if>
+            <if test="accommodationFee != null">
+                accommodationFee = #{accommodationFee},
+            </if>
+            <if test="registrationFee != null">
+                registrationFee = #{registrationFee},
+            </if>
+            <if test="subTotal != null">
+                subTotal = #{subTotal},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota = #{unfulfilledQuota},
+            </if>
+            <if test="executeRate != null">
+                executeRate = #{executeRate},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="getById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.AcademicFee">
+        select a.*
+        from
+        academic_fee a
+        where
+        a.id = #{id}
+    </select>
     <select id="getAcademicFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.AcademicFee">
         select a.*
         from

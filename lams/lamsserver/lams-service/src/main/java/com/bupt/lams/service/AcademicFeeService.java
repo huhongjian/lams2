@@ -60,4 +60,12 @@ public class AcademicFeeService {
         List<AcademicFee> academicFeeList = academicFeeMapper.getAcademicFeeByIds(pids);
         return TransferUtils.transToPlanItemData(new ArrayList<>(academicFeeList));
     }
+
+    public void update(AcademicFee academicFee) {
+        academicFeeMapper.update(academicFee);
+    }
+
+    public AcademicFee getById(Long id) {
+        return academicFeeMapper.getById(id);
+    }
 }

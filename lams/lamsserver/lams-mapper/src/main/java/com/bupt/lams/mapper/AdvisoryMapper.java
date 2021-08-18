@@ -11,4 +11,8 @@ public interface AdvisoryMapper {
     int insertSelective(Advisory advisory);
 
     List<Advisory> getAdvisoryByIds(List<Long> ids);
+
+    Advisory getById(Long id);
+
+    void update(Advisory advisory);
 }

@@ -11,4 +11,8 @@ public interface AcademicFeeMapper {
     int insertSelective(AcademicFee academicFee);
 
     List<AcademicFee> getAcademicFeeByIds(List<Long> ids);
+
+    AcademicFee getById(Long id);
+
+    void update(AcademicFee academicFee);
 }

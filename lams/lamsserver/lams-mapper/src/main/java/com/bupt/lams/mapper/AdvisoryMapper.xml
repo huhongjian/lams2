@@ -166,6 +166,59 @@
             </if>
         </trim>
     </insert>
+    <update id="update" parameterType="com.bupt.lams.model.planItem.Advisory">
+        update advisory
+        set
+        <trim suffixOverrides=",">
+            <if test="itemType != null">
+                itemType = #{itemType},
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                itemTypeName = #{itemTypeName},
+            </if>
+            <if test="personnelType != null and personnelType != ''">
+                personnelType = #{personnelType},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+            <if test="standard != null">
+                standard = #{standard},
+            </if>
+            <if test="days != null">
+                days = #{days},
+            </if>
+            <if test="subTotal != null">
+                subTotal = #{subTotal},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota = #{unfulfilledQuota},
+            </if>
+            <if test="executeRate != null">
+                executeRate = #{executeRate},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="getById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.Advisory">
+        select a.*
+        from
+        advisory a
+        where
+        a.id = #{id}
+    </select>
     <select id="getAdvisoryByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.Advisory">
         select a.*
         from

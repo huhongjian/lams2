@@ -166,6 +166,59 @@
             </if>
         </trim>
     </insert>
+    <update id="update" parameterType="com.bupt.lams.model.planItem.Payment">
+        update payment
+        set
+        <trim suffixOverrides=",">
+            <if test="itemType != null">
+                `itemType` = #{itemType},
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                itemTypeName = #{itemTypeName},
+            </if>
+            <if test="personnelType != null and personnelType != ''">
+                personnelType = #{personnelType},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+            <if test="standard != null">
+                standard = #{standard},
+            </if>
+            <if test="hours != null">
+                hours = #{hours},
+            </if>
+            <if test="subTotal != null">
+                subTotal = #{subTotal},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="unfulfilledQuota != null">
+                unfulfilledQuota = #{unfulfilledQuota},
+            </if>
+            <if test="executeRate != null">
+                executeRate = #{executeRate},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="getById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.Payment">
+        select p.*
+        from
+        payment p
+        where
+        p.id = #{id}
+    </select>
     <select id="getPaymentByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.Payment">
         select p.*
         from

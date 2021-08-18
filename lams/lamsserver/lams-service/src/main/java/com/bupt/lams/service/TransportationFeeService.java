@@ -63,4 +63,12 @@ public class TransportationFeeService {
     public List<PlanItem> getTransportationFeeListByIds(List<Long> pids) {
         return transportationFeeMapper.getTransportationFeeByIds(pids);
     }
+
+    public void update(PlanItem planItem) {
+        transportationFeeMapper.update(planItem);
+    }
+
+    public PlanItem getById(Long id) {
+        return transportationFeeMapper.getById(id);
+    }
 }

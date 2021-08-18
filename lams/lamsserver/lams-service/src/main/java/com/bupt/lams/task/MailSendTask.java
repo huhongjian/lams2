@@ -1,5 +1,6 @@
 package com.bupt.lams.task;
 
+import com.bupt.lams.constants.BudgetConstant;
 import com.bupt.lams.constants.WarningFreqEnum;
 import com.bupt.lams.model.*;
 import com.bupt.lams.dto.PlanItemData;
@@ -135,12 +136,8 @@ public class MailSendTask {
         content.setItemTypeName(config.getItemTypeName());
         content.setNeedExecuteRate(config.getExecuteRate() + "");
 
-        PlanItemData planItemData = new PlanItemData();
-        switch (config.getItemType()) {
-            case 1:
-                planItemData = planInfo.getPlanItemDataMap().get("equipmentData");
-                break;
-        }
+        String dataType = BudgetConstant.ItemTypeDataMap.get(config.getItemType());
+        PlanItemData planItemData = planInfo.getPlanItemDataMap().get(dataType);
         if (planItemData == null || CollectionUtils.isEmpty(planItemData.getPlanItemList())) {
             return null;
         }

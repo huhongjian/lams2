@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 测试化验加工费service
+ * 其他支出service
  */
 @Service
 public class OtherFeeService {
@@ -31,10 +31,6 @@ public class OtherFeeService {
     @Transactional(rollbackFor = Exception.class)
     public Long addOtherFee(OtherFee otherFee) {
         otherFee.setItemType(PlanItemTypeEnum.OTHERS.getIndex());
-        // 计算合计
-        if (otherFee.getSubTotal() == null) {
-            otherFee.setSubTotal(0.0);
-        }
         otherFee.setUnfulfilledQuota(otherFee.getSubTotal());
         otherFee.setExecuteRate(ComputeUtils.computeExecuteRate(otherFee.getSubTotal(), otherFee.getUnfulfilledQuota()));
         otherFeeMapper.insertSelective(otherFee);

@@ -113,6 +113,9 @@
             <if test="usage != null and usage != ''">
                 `usage`,
             </if>
+            <if test="remark != null and remark != ''">
+                `remark`,
+            </if>
             <if test="materialName != null and materialName != ''">
                 materialName,
             </if>
@@ -144,6 +147,9 @@
             </if>
             <if test="itemTypeName != null and itemTypeName != ''">
                 #{itemTypeName},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark},
             </if>
             <if test="usage != null and usage != ''">
                 #{usage},

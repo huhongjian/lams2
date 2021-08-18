@@ -122,9 +122,6 @@
             <if test="itemTypeName != null and itemTypeName != ''">
                 #{itemTypeName},
             </if>
-            <if test="itemTypeName != null and itemTypeName != ''">
-                #{itemTypeName},
-            </if>
             <if test="remark != null and remark != ''">
                 #{remark},
             </if>

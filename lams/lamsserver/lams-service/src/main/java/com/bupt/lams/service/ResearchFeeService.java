@@ -32,9 +32,8 @@ public class ResearchFeeService {
     public Long addResearchFee(ResearchFee researchFee) {
         researchFee.setItemType(PlanItemTypeEnum.RESEARCH.getIndex());
         // 计算合计
-        if (researchFee.getSubTotal() == null) {
-            researchFee.setSubTotal(0.0);
-        }
+        Double total = (researchFee.getAccommodationFee() + researchFee.getOtherFee() + researchFee.getTransFee()) * researchFee.getDays() * researchFee.getTimes() / 10000D;
+        researchFee.setSubTotal(total);
         researchFee.setUnfulfilledQuota(researchFee.getSubTotal());
         researchFee.setExecuteRate(ComputeUtils.computeExecuteRate(researchFee.getSubTotal(), researchFee.getUnfulfilledQuota()));
         researchFeeMapper.insertSelective(researchFee);

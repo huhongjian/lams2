@@ -27,16 +27,15 @@ public class AdvisoryService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Long addAdvisory(Advisory testingFee) {
-        testingFee.setItemType(PlanItemTypeEnum.ADVISORY.getIndex());
+    public Long addAdvisory(Advisory advisory) {
+        advisory.setItemType(PlanItemTypeEnum.ADVISORY.getIndex());
         // 计算合计
-        if (testingFee.getSubTotal() == null) {
-            testingFee.setSubTotal(testingFee.getStandard() * testingFee.getDays());
-        }
-        testingFee.setUnfulfilledQuota(testingFee.getSubTotal());
-        testingFee.setExecuteRate(ComputeUtils.computeExecuteRate(testingFee.getSubTotal(), testingFee.getUnfulfilledQuota()));
-        advisoryMapper.insertSelective(testingFee);
-        return testingFee.getId();
+        Double total = advisory.getStandard() * advisory.getAmount() * advisory.getDays() / 10000D;
+        advisory.setSubTotal(total);
+        advisory.setUnfulfilledQuota(advisory.getSubTotal());
+        advisory.setExecuteRate(ComputeUtils.computeExecuteRate(advisory.getSubTotal(), advisory.getUnfulfilledQuota()));
+        advisoryMapper.insertSelective(advisory);
+        return advisory.getId();
     }
 
     public PlanItemData getDataByPlanAndItem(List<PlanAndItem> planAndItemList) {

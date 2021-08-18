@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 差旅/会议/国际合作与交流费相关
+ * 出版/文献/信息传播/知识产权事务费相关
  */
 @RestController
 @RequestMapping("/planItem/publishFee")
@@ -46,6 +46,10 @@ public class PublishFeeController {
             logger.error("出版/文献/信息传播/知识产权事务费不能为空！");
             return RespBean.error("出版/文献/信息传播/知识产权事务费不能为空！");
         }
+        if (publishFee.getSubTotal() == null) {
+            logger.error("合计不能为空！");
+            return RespBean.error("合计不能为空！");
+        }
         try {
             Long id = publishFeeService.addPublishFee(publishFee);
             response.setObj(id);
@@ -70,8 +74,8 @@ public class PublishFeeController {
             PlanItemData data = publishFeeService.getPublishFeeDataByIds(pids);
             response.setObj(data);
         } catch (Exception e) {
-            logger.error("获取差旅/会议/国际合作与交流费信息失败", e);
-            return RespBean.error("获取差旅/会议/国际合作与交流费信息失败！");
+            logger.error("获取出版/文献/信息传播/知识产权事务费信息失败", e);
+            return RespBean.error("获取出版/文献/信息传播/知识产权事务费信息失败！");
         }
         return response;
     }

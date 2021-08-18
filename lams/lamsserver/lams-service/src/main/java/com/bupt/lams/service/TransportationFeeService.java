@@ -31,10 +31,6 @@ public class TransportationFeeService {
     @Transactional(rollbackFor = Exception.class)
     public Long addTransportationFee(PlanItem transportationFee) {
         transportationFee.setItemType(PlanItemTypeEnum.TRANSPORTATION.getIndex());
-        // 计算合计
-        if (transportationFee.getSubTotal() == null) {
-            transportationFee.setSubTotal(0.0);
-        }
         transportationFee.setUnfulfilledQuota(transportationFee.getSubTotal());
         transportationFee.setExecuteRate(ComputeUtils.computeExecuteRate(transportationFee.getSubTotal(), transportationFee.getUnfulfilledQuota()));
         transportationFeeMapper.insertSelective(transportationFee);

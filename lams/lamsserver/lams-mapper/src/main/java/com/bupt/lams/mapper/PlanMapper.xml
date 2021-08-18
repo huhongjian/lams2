@@ -7,6 +7,7 @@
         <result column="projectId" property="projectId"/>
         <result column="projectName" property="projectName"/>
         <result column="userEmail" property="userEmail"/>
+        <result column="remark" property="remark"/>
         <result column="funding" property="funding"/>
         <result column="unfulfilledQuota" property="unfulfilledQuota"/>
         <result column="executeRate" property="executeRate"/>
@@ -110,17 +111,14 @@
             <if test="planName != null and planName != ''">
                 `planName`,
             </if>
-            <if test="planStatus != null">
-                planStatus,
-            </if>
-            <if test="planStatusName != null and planStatusName != ''">
-                planStatusName,
-            </if>
             <if test="projectId != null">
                 projectId,
             </if>
             <if test="userEmail != null and userEmail != ''">
                 userEmail,
+            </if>
+            <if test="remark != null and remark != ''">
+                remark,
             </if>
             <if test="funding != null">
                 funding,
@@ -142,17 +140,14 @@
             <if test="planName != null and planName != ''">
                 #{planName},
             </if>
-            <if test="planStatus != null">
-                #{planStatus},
-            </if>
-            <if test="planStatusName != null and planStatusName != ''">
-                #{planStatusName},
-            </if>
             <if test="projectId != null">
                 #{projectId},
             </if>
             <if test="userEmail != null and userEmail != ''">
                 #{userEmail},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark},
             </if>
             <if test="funding != null">
                 #{funding},

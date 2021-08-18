@@ -71,14 +71,12 @@
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
               <el-table-column
-                  fixed
                   prop="id"
                   label="序号"
                   align="left"
                   width="80">
               </el-table-column>
               <el-table-column
-                  fixed
                   prop="equipmentName"
                   :show-overflow-tooltip="true"
                   label="设备名称">
@@ -104,7 +102,11 @@
                   width="100">
               </el-table-column>
               <el-table-column
-                  fixed="right"
+                  prop="remark"
+                  :show-overflow-tooltip="true"
+                  label="备注">
+              </el-table-column>
+              <el-table-column
                   width="150"
                   label="操作">
                 <template slot-scope="scope">
@@ -127,7 +129,6 @@
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
               <el-table-column
-                  fixed
                   prop="id"
                   label="序号"
                   align="left"
@@ -164,7 +165,11 @@
                   width="100">
               </el-table-column>
               <el-table-column
-                  fixed="right"
+                  prop="remark"
+                  :show-overflow-tooltip="true"
+                  label="备注">
+              </el-table-column>
+              <el-table-column
                   width="150"
                   label="操作">
                 <template slot-scope="scope">
@@ -187,41 +192,45 @@
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
               <el-table-column
-                  type="selection"
-                  width="55">
-              </el-table-column>
-              <el-table-column
-                  fixed
+                  prop="id"
                   label="序号"
-                  align="left"
                   width="100">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
-                </template>
               </el-table-column>
               <el-table-column
                   prop="content"
                   :show-overflow-tooltip="true"
-                  align="left"
                   label="加工内容">
               </el-table-column>
               <el-table-column
                   prop="times"
                   align="left"
                   label="次数"
-                  width="200">
+                  width="100">
               </el-table-column>
               <el-table-column
                   prop="unitPrice"
                   align="left"
                   label="单价（万元）"
-                  width="200">
+                  width="100">
               </el-table-column>
               <el-table-column
                   prop="subTotal"
                   align="left"
                   label="合计（万元）"
-                  width="200">
+                  width="100">
+              </el-table-column>
+              <el-table-column
+                  prop="remark"
+                  :show-overflow-tooltip="true"
+                  label="备注">
+              </el-table-column>
+              <el-table-column
+                  width="150"
+                  label="操作">
+                <template slot-scope="scope">
+                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
+                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                </template>
               </el-table-column>
             </el-table>
           </el-collapse-item>
@@ -239,58 +248,63 @@
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
               <el-table-column
-                  type="selection"
-                  width="55">
-              </el-table-column>
-              <el-table-column
-                  fixed
+                  prop="id"
                   label="序号"
                   align="left"
-                  width="100">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
-                </template>
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="content"
-                  align="left"
+                  :show-overflow-tooltip="true"
                   label="会议内容">
               </el-table-column>
               <el-table-column
                   prop="relation"
-                  align="left"
+                  :show-overflow-tooltip="true"
                   label="与课题相关性">
               </el-table-column>
               <el-table-column
                   prop="meal"
-                  align="left"
-                  label="伙食费（人/天）">
+                  label="伙食费（人/天）"
+                  width="120">
               </el-table-column>
               <el-table-column
                   prop="otherCost"
-                  align="left"
                   label="其他费用（人/天）"
-                  width="150">
+                  width="130">
               </el-table-column>
               <el-table-column
                   prop="days"
-                  align="left"
-                  label="天数">
+                  label="天数"
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="amount"
-                  align="left"
-                  label="参会人数">
+                  label="参会人数"
+                  width="80">
               </el-table-column>
               <el-table-column
                   prop="meetingNum"
-                  align="left"
-                  label="会议次数">
+                  label="会议次数"
+                  width="80">
               </el-table-column>
               <el-table-column
                   prop="subTotal"
-                  align="left"
-                  label="合计（万元）">
+                  label="合计（万元）"
+                  width="100">
+              </el-table-column>
+              <el-table-column
+                  prop="remark"
+                  :show-overflow-tooltip="true"
+                  label="备注">
+              </el-table-column>
+              <el-table-column
+                  width="150"
+                  label="操作">
+                <template slot-scope="scope">
+                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
+                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                </template>
               </el-table-column>
             </el-table>
             <el-tag type="warning">课题调研差旅费</el-tag>
@@ -306,61 +320,67 @@
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
               <el-table-column
-                  type="selection"
-                  width="55">
-              </el-table-column>
-              <el-table-column
-                  fixed
+                  prop="id"
                   label="序号"
-                  align="left">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
-                </template>
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="place"
-                  align="left"
+                  :show-overflow-tooltip="true"
                   label="调研地点">
               </el-table-column>
               <el-table-column
                   prop="purpose"
-                  align="left"
+                  :show-overflow-tooltip="true"
                   label="调研目的">
               </el-table-column>
               <el-table-column
                   prop="personnelType"
-                  align="left"
-                  label="人员类别">
+                  label="人员类别"
+                  width="80">
               </el-table-column>
               <el-table-column
                   prop="times"
-                  align="left"
-                  label="人次">
+                  label="人次"
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="transFee"
-                  align="left"
-                  label="交通费（元）">
+                  label="交通费（元）"
+                  width="100">
               </el-table-column>
               <el-table-column
                   prop="accommodationFee"
-                  align="left"
-                  label="住宿（元）">
+                  label="住宿（元）"
+                  width="90">
               </el-table-column>
               <el-table-column
                   prop="otherFee"
-                  align="left"
-                  label="公杂费（元）">
+                  label="公杂费（元）"
+                  width="100">
               </el-table-column>
               <el-table-column
                   prop="days"
-                  align="left"
-                  label="天数">
+                  label="天数"
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="subTotal"
-                  align="left"
-                  label="合计（万元）">
+                  label="合计（万元）"
+                  width="100">
+              </el-table-column>
+              <el-table-column
+                  prop="remark"
+                  :show-overflow-tooltip="true"
+                  label="备注">
+              </el-table-column>
+              <el-table-column
+                  width="150"
+                  label="操作">
+                <template slot-scope="scope">
+                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
+                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                </template>
               </el-table-column>
             </el-table>
             <el-tag type="warning">国内学术会议差旅费</el-tag>
@@ -376,59 +396,62 @@
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
               <el-table-column
-                  type="selection"
-                  width="55">
-              </el-table-column>
-              <el-table-column
-                  fixed
+                  prop="id"
                   label="序号"
-                  align="left"
-                  width="100">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
-                </template>
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="meetingName"
-                  align="left"
+                  :show-overflow-tooltip="true"
                   label="会议名称">
               </el-table-column>
               <el-table-column
                   prop="personnelType"
-                  align="left"
-                  label="人员类别">
+                  label="人员类别"
+                  width="80">
               </el-table-column>
               <el-table-column
                   prop="times"
-                  align="left"
-                  label="人次">
+                  label="人次"
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="year"
-                  align="left"
-                  label="年度">
+                  label="年度"
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="days"
-                  align="left"
-                  label="会期（天）">
+                  label="会期（天）"
+                  width="90">
               </el-table-column>
               <el-table-column
                   prop="transFee"
-                  align="left"
                   label="往返交通费（元）"
-                  width="150">
+                  width="120">
               </el-table-column>
               <el-table-column
                   prop="accommodationFee"
-                  align="left"
                   label="住宿及补助费（元）"
                   width="150">
               </el-table-column>
               <el-table-column
                   prop="subTotal"
-                  align="left"
-                  label="合计（万元）">
+                  label="合计（万元）"
+                  width="100">
+              </el-table-column>
+              <el-table-column
+                  prop="remark"
+                  :show-overflow-tooltip="true"
+                  label="备注">
+              </el-table-column>
+              <el-table-column
+                  width="150"
+                  label="操作">
+                <template slot-scope="scope">
+                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
+                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                </template>
               </el-table-column>
             </el-table>
             <el-tag type="warning">北京市内交通费</el-tag>
@@ -444,28 +467,32 @@
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
               <el-table-column
-                  type="selection"
-                  width="55">
-              </el-table-column>
-              <el-table-column
-                  fixed
+                  prop="id"
                   label="序号"
-                  align="left"
-                  width="100">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
-                </template>
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="remark"
-                  align="left"
+                  :show-overflow-tooltip="true"
                   label="说明">
               </el-table-column>
               <el-table-column
                   prop="subTotal"
-                  align="left"
                   label="合计（万元）"
-                  width="200">
+                  width="100">
+              </el-table-column>
+              <el-table-column
+                  prop="remark"
+                  :show-overflow-tooltip="true"
+                  label="备注">
+              </el-table-column>
+              <el-table-column
+                  width="150"
+                  label="操作">
+                <template slot-scope="scope">
+                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
+                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                </template>
               </el-table-column>
             </el-table>
           </el-collapse-item>
@@ -482,36 +509,32 @@
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
               <el-table-column
-                  type="selection"
-                  width="55">
-              </el-table-column>
-              <el-table-column
-                  fixed
+                  prop="id"
                   label="序号"
-                  align="left"
-                  width="100">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
-                </template>
+                  width="50">
               </el-table-column>
               <el-table-column
-                  fixed
                   prop="type"
                   :show-overflow-tooltip="true"
-                  align="left"
-                  width="200"
                   label="类别">
               </el-table-column>
               <el-table-column
                   prop="remark"
-                  align="left"
+                  :show-overflow-tooltip="true"
                   label="说明">
               </el-table-column>
               <el-table-column
                   prop="subTotal"
-                  align="left"
                   label="合计（万元）"
-                  width="200">
+                  width="100">
+              </el-table-column>
+              <el-table-column
+                  width="150"
+                  label="操作">
+                <template slot-scope="scope">
+                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
+                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                </template>
               </el-table-column>
             </el-table>
           </el-collapse-item>
@@ -528,54 +551,53 @@
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
               <el-table-column
-                  type="selection"
-                  width="55">
-              </el-table-column>
-              <el-table-column
-                  fixed
+                  prop="id"
                   label="序号"
-                  align="left"
-                  width="100">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
-                </template>
+                  width="50">
               </el-table-column>
               <el-table-column
-                  fixed
                   prop="personnelType"
                   :show-overflow-tooltip="true"
-                  align="left"
-                  label="人员种类">
+                  label="人员种类"
+                  width="100">
               </el-table-column>
               <el-table-column
                   prop="content"
-                  align="left"
-                  label="工作内容"
-                  width="200">
+                  :show-overflow-tooltip="true"
+                  label="工作内容">
               </el-table-column>
               <el-table-column
                   prop="amount"
-                  align="left"
                   label="人数"
-                  width="200">
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="standard"
-                  align="left"
                   label="标准（元）"
-                  width="200">
+                  width="100">
               </el-table-column>
               <el-table-column
                   prop="hours"
-                  align="left"
                   label="工作时间"
-                  width="200">
+                  width="80">
               </el-table-column>
               <el-table-column
                   prop="subTotal"
-                  align="left"
                   label="合计（万元）"
-                  width="200">
+                  width="100">
+              </el-table-column>
+              <el-table-column
+                  prop="remark"
+                  :show-overflow-tooltip="true"
+                  label="备注">
+              </el-table-column>
+              <el-table-column
+                  width="150"
+                  label="操作">
+                <template slot-scope="scope">
+                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
+                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                </template>
               </el-table-column>
             </el-table>
           </el-collapse-item>
@@ -592,54 +614,52 @@
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
               <el-table-column
-                  type="selection"
-                  width="55">
-              </el-table-column>
-              <el-table-column
-                  fixed
+                  prop="id"
                   label="序号"
-                  align="left"
-                  width="100">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
-                </template>
+                  width="50">
               </el-table-column>
               <el-table-column
-                  fixed
                   prop="content"
                   :show-overflow-tooltip="true"
-                  align="left"
                   label="咨询内容">
               </el-table-column>
               <el-table-column
                   prop="personnelType"
-                  align="left"
                   label="人员类型"
-                  width="200">
+                  width="100">
               </el-table-column>
               <el-table-column
                   prop="standard"
-                  align="left"
                   label="标准（元/天）"
-                  width="200">
+                  width="100">
               </el-table-column>
               <el-table-column
                   prop="amount"
-                  align="left"
                   label="人数"
-                  width="200">
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="days"
-                  align="left"
                   label="天数"
-                  width="200">
+                  width="50">
               </el-table-column>
               <el-table-column
                   prop="subTotal"
-                  align="left"
                   label="总计（万元）"
-                  width="200">
+                  width="100">
+              </el-table-column>
+              <el-table-column
+                  prop="remark"
+                  :show-overflow-tooltip="true"
+                  label="备注">
+              </el-table-column>
+              <el-table-column
+                  width="150"
+                  label="操作">
+                <template slot-scope="scope">
+                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
+                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                </template>
               </el-table-column>
             </el-table>
           </el-collapse-item>
@@ -656,36 +676,33 @@
                 element-loading-background="rgba(0, 0, 0, 0.8)"
                 style="width: 100%">
               <el-table-column
-                  type="selection"
-                  width="55">
-              </el-table-column>
-              <el-table-column
-                  fixed
+                  prop="id"
                   label="序号"
-                  align="left"
-                  width="100">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="showDetailView(scope.row)">{{ scope.row.id }}</el-button>
-                </template>
+                  width="50">
               </el-table-column>
               <el-table-column
-                  fixed
                   prop="type"
                   :show-overflow-tooltip="true"
-                  align="left"
-                  label="类别"
-                  width="200">
+                  label="类别">
               </el-table-column>
               <el-table-column
                   prop="remark"
-                  align="left"
+                  :show-overflow-tooltip="true"
                   label="说明">
               </el-table-column>
               <el-table-column
                   prop="subTotal"
                   align="left"
                   label="合计（万元）"
-                  width="200">
+                  width="100">
+              </el-table-column>
+              <el-table-column
+                  width="150"
+                  label="操作">
+                <template slot-scope="scope">
+                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
+                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                </template>
               </el-table-column>
             </el-table>
           </el-collapse-item>
@@ -750,7 +767,6 @@ export default {
       page: 1,
       size: 10,
       planItemTypes: [],
-      sum: 0,
       rules: {
         planName: [{required: true, message: '请输入计划名称', trigger: 'blur'}],
         projectId: [{required: true, message: '请选择项目', trigger: 'blur'}]
@@ -763,7 +779,7 @@ export default {
   methods: {
     initPlanItemList() {
       this.loading = true;
-      this.sum = 0;
+      this.plan.funding = 0;
       this.postRequest('/planItem/equipmentFee/getByIds', this.equipmentFeeList).then(resp => {
         if (resp && resp.obj) {
           this.plan.planItemDataMap.equipmentFeeData = resp.obj;
@@ -973,5 +989,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

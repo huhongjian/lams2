@@ -1,14 +1,12 @@
 package com.bupt.lams.model;
 
 import com.bupt.lams.dto.PlanItemData;
-import com.bupt.lams.model.planItem.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

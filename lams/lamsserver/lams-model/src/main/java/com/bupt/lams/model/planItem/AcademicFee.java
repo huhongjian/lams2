@@ -35,6 +35,11 @@ public class AcademicFee extends PlanItem implements Serializable {
     private Integer days;
 
     /**
+     * 注册费
+     */
+    private Double registrationFee;
+
+    /**
      * 往返交通费（元）
      */
     private Double transFee;

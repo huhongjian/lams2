@@ -45,6 +45,10 @@ public class OtherFeeController {
             logger.error("其他支出不能为空！");
             return RespBean.error("其他支出不能为空！");
         }
+        if (otherFee.getSubTotal() == null) {
+            logger.error("合计不能为空！");
+            return RespBean.error("合计不能为空！");
+        }
         try {
             Long id = otherFeeService.addOtherFee(otherFee);
             response.setObj(id);

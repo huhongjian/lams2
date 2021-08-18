@@ -123,8 +123,14 @@
             <if test="accommodationFee != null">
                 accommodationFee,
             </if>
+            <if test="registrationFee != null">
+                registrationFee,
+            </if>
             <if test="subTotal != null">
                 subTotal,
+            </if>
+            <if test="remark != null and remark != ''">
+                remark,
             </if>
             <if test="unfulfilledQuota != null">
                 unfulfilledQuota,
@@ -161,8 +167,14 @@
             <if test="accommodationFee != null">
                 #{accommodationFee},
             </if>
+            <if test="registrationFee != null">
+                #{registrationFee},
+            </if>
             <if test="subTotal != null">
                 #{subTotal},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark},
             </if>
             <if test="unfulfilledQuota != null">
                 #{unfulfilledQuota},

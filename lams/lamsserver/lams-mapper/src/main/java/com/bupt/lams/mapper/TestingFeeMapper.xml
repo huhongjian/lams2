@@ -114,6 +114,9 @@
             <if test="subTotal != null">
                 subTotal,
             </if>
+            <if test="remark != null and remark != ''">
+                remark,
+            </if>
             <if test="unfulfilledQuota != null">
                 unfulfilledQuota,
             </if>
@@ -139,6 +142,9 @@
             </if>
             <if test="subTotal != null">
                 #{subTotal},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark},
             </if>
             <if test="unfulfilledQuota != null">
                 #{unfulfilledQuota},

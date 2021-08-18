@@ -45,6 +45,10 @@ public class AdvisoryController {
             logger.error("专家咨询费不能为空！");
             return RespBean.error("专家咨询费不能为空！");
         }
+        if (advisory.getStandard() == null || advisory.getAmount() == null || advisory.getDays() == null) {
+            logger.error("专家咨询费标准、人数、天数等信息不能为空！");
+            return RespBean.error("专家咨询费标准、人数、天数等信息不能为空！");
+        }
         try {
             Long id = advisoryService.addAdvisory(advisory);
             response.setObj(id);

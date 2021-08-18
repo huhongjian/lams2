@@ -32,9 +32,8 @@ public class MeetingFeeService {
     public Long addMeetingFee(MeetingFee meetingFee) {
         meetingFee.setItemType(PlanItemTypeEnum.MEETING.getIndex());
         // 计算合计
-        if (meetingFee.getSubTotal() == null) {
-            meetingFee.setSubTotal(0.0);
-        }
+        Double total = (meetingFee.getMeal() + meetingFee.getOtherCost()) * meetingFee.getDays() * meetingFee.getAmount() * meetingFee.getMeetingNum() / 10000D;
+        meetingFee.setSubTotal(total);
         meetingFee.setUnfulfilledQuota(meetingFee.getSubTotal());
         meetingFee.setExecuteRate(ComputeUtils.computeExecuteRate(meetingFee.getSubTotal(), meetingFee.getUnfulfilledQuota()));
         meetingFeeMapper.insertSelective(meetingFee);

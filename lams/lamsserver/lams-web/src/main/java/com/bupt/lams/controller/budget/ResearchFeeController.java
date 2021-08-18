@@ -46,6 +46,10 @@ public class ResearchFeeController {
             logger.error("课题调研差旅费不能为空！");
             return RespBean.error("课题调研差旅费不能为空！");
         }
+        if (researchFee.getTimes() == null || researchFee.getAccommodationFee() == null || researchFee.getTransFee() == null || researchFee.getOtherFee() == null || researchFee.getDays() == null) {
+            logger.error("费用、天数、人次等信息不能为空！");
+            return RespBean.error("费用、天数、人次等信息不能为空！");
+        }
         try {
             Long id = researchFeeService.addResearchFee(researchFee);
             response.setObj(id);

@@ -28,11 +28,10 @@ public class AcademicFeeService {
 
     @Transactional(rollbackFor = Exception.class)
     public Long addAcademicFee(AcademicFee academicFee) {
-        academicFee.setItemType(PlanItemTypeEnum.MEETING.getIndex());
+        academicFee.setItemType(PlanItemTypeEnum.ACADEMIC.getIndex());
         // 计算合计
-        if (academicFee.getSubTotal() == null) {
-            academicFee.setSubTotal(0.0);
-        }
+        Double total = (academicFee.getRegistrationFee() * academicFee.getTimes() + (academicFee.getTransFee() + academicFee.getAccommodationFee()) * academicFee.getDays() * academicFee.getTimes()) / 10000D;
+        academicFee.setSubTotal(total);
         academicFee.setUnfulfilledQuota(academicFee.getSubTotal());
         academicFee.setExecuteRate(ComputeUtils.computeExecuteRate(academicFee.getSubTotal(), academicFee.getUnfulfilledQuota()));
         academicFeeMapper.insertSelective(academicFee);

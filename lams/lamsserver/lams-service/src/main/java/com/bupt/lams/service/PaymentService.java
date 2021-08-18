@@ -32,9 +32,8 @@ public class PaymentService {
     public Long addPayment(Payment payment) {
         payment.setItemType(PlanItemTypeEnum.PAYMENT.getIndex());
         // 计算合计
-        if (payment.getSubTotal() == null) {
-            payment.setSubTotal(payment.getStandard() * payment.getHours());
-        }
+        Double total = payment.getStandard() * payment.getAmount() * payment.getHours() / 10000D;
+        payment.setSubTotal(total);
         payment.setUnfulfilledQuota(payment.getSubTotal());
         payment.setExecuteRate(ComputeUtils.computeExecuteRate(payment.getSubTotal(), payment.getUnfulfilledQuota()));
         paymentMapper.insertSelective(payment);

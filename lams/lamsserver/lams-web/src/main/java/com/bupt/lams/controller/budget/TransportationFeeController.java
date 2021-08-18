@@ -42,8 +42,12 @@ public class TransportationFeeController {
         RespBean response = new RespBean();
         response.setStatus(200);
         if (transportationFee == null) {
-            logger.error("差旅/会议/国际合作与交流费不能为空！");
-            return RespBean.error("差旅/会议/国际合作与交流费不能为空！");
+            logger.error("北京市内交通费不能为空！");
+            return RespBean.error("北京市内交通费不能为空！");
+        }
+        if (transportationFee.getSubTotal() == null) {
+            logger.error("北京市内交通费合计不能为空！");
+            return RespBean.error("北京市内交通费合计不能为空！");
         }
         try {
             Long id = transportationFeeService.addTransportationFee(transportationFee);

@@ -4,8 +4,6 @@ import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.PublishFeeMapper;
 import com.bupt.lams.model.PlanAndItem;
-import com.bupt.lams.model.planItem.EquipmentFee;
-import com.bupt.lams.model.planItem.Payment;
 import com.bupt.lams.model.planItem.PublishFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
@@ -17,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 测试化验加工费service
+ * 出版/文献/信息传播/知识产权事务费service
  */
 @Service
 public class PublishFeeService {
@@ -31,10 +29,6 @@ public class PublishFeeService {
     @Transactional(rollbackFor = Exception.class)
     public Long addPublishFee(PublishFee publishFee) {
         publishFee.setItemType(PlanItemTypeEnum.PUBLISH.getIndex());
-        // 计算合计
-        if (publishFee.getSubTotal() == null) {
-            publishFee.setSubTotal(0.0);
-        }
         publishFee.setUnfulfilledQuota(publishFee.getSubTotal());
         publishFee.setExecuteRate(ComputeUtils.computeExecuteRate(publishFee.getSubTotal(), publishFee.getUnfulfilledQuota()));
         publishFeeMapper.insertSelective(publishFee);

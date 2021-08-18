@@ -10,7 +10,7 @@
           <el-row>
             <el-col :span="15">
               <el-form-item label="预算科目:" prop="itemType">
-                <el-select style="width: 200px" v-model="planItem.itemType" clearable placeholder="请选择">
+                <el-select style="width: 300px" v-model="planItem.itemType" clearable placeholder="请选择">
                   <el-option
                       v-for="item in planItemTypes"
                       :key="item.id"
@@ -170,33 +170,33 @@
               </el-form-item>
             </el-row>
             <el-row>
-              <el-col :span="6">
-                <el-form-item label="伙食费（人/天）:" prop="meal">
+              <el-col :span="8">
+                <el-form-item label="伙食费（元/人/天）:" prop="meal">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="planItem.meal"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="6">
-                <el-form-item label="其他费用（人/天）:" prop="otherCost">
+              <el-col :span="8">
+                <el-form-item label="其他费用（元/人/天）:" prop="otherCost">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="planItem.otherCost"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="6">
+              <el-col :span="8">
                 <el-form-item label="天数:" prop="days">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="planItem.days"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="6">
+              <el-col :span="8">
                 <el-form-item label="参会人数:" prop="amount">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="planItem.amount"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="6">
+              <el-col :span="8">
                 <el-form-item label="会议次数:" prop="meetingNum">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="planItem.meetingNum"></el-input>
@@ -207,7 +207,7 @@
           <el-form v-show="planItem.subType==2" :model="planItem">
             <el-row>
               <el-form-item label="调研地点:" prop="place">
-                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                <el-input size="mini" prefix-icon="el-icon-edit"
                           v-model="planItem.place"></el-input>
               </el-form-item>
             </el-row>
@@ -239,13 +239,13 @@
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="住宿（元）:" prop="accFee">
+                <el-form-item label="住宿（元）:" prop="accommodationFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                            v-model="planItem.accFee"></el-input>
+                            v-model="planItem.accommodationFee"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="公杂费:" prop="otherFee">
+                <el-form-item label="公杂费（元）:" prop="otherFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="planItem.otherFee"></el-input>
                 </el-form-item>
@@ -292,20 +292,20 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="6">
+              <el-col :span="8">
                 <el-form-item label="注册费（元/人）:" prop="registrationFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="planItem.registrationFee"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="6">
-                <el-form-item label="往返交通费（元）:" prop="transFee">
+              <el-col :span="8">
+                <el-form-item label="往返交通费（元/人/天）:" prop="transFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="planItem.transFee"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="6">
-                <el-form-item label="住宿及补助费（元）:" prop="accommodationFee">
+              <el-col :span="8">
+                <el-form-item label="住宿及补助费（元/人/天）:" prop="accommodationFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="planItem.accommodationFee"></el-input>
                 </el-form-item>
@@ -349,19 +349,19 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-col :span="6">
+            <el-col :span="8">
               <el-form-item label="人数:" prop="amount">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                           v-model="planItem.amount"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="6">
-              <el-form-item label="标准（元/人月）:" prop="standard">
+            <el-col :span="8">
+              <el-form-item label="标准（元/人/月）:" prop="standard">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                           v-model="planItem.standard"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="8">
               <el-form-item label="工作时间（月）:" prop="hours">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                           v-model="planItem.hours"></el-input>
@@ -520,7 +520,7 @@ export default {
       size: 10,
       itemUrl: "",
       rules: {
-        remark: [{required: true, message: '请输入申请理由', trigger: 'blur'}]
+        itemType: [{required: true, message: '请选择预算科目', trigger: 'blur'}]
       },
     }
   },
@@ -587,5 +587,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

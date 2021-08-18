@@ -46,6 +46,10 @@ public class PaymentController {
             logger.error("劳务费不能为空！");
             return RespBean.error("劳务费不能为空！");
         }
+        if (payment.getHours() == null || payment.getAmount() == null || payment.getStandard() == null) {
+            logger.error("人数、工时等信息不能为空！");
+            return RespBean.error("人数、工时等信息不能为空！");
+        }
         try {
             Long id = paymentService.addPayment(payment);
             response.setObj(id);

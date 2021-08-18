@@ -116,7 +116,7 @@
         </el-table-column>
         <el-table-column
             prop="funding"
-            width="120"
+            width="150"
             label="预算额度（万元）">
         </el-table-column>
         <el-table-column
@@ -246,8 +246,24 @@ export default {
       this.plan = data;
       this.newPlanVisible = true;
     },
-    deleteProject() {
-
+    deletePlan() {
+      this.$confirm('此操作将永久删除选中的记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteRequestWithData("/plan/delete", this.planIds).then(resp => {
+          if (resp) {
+            this.planIds = [];
+            this.initPlans();
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     },
     emptyPlan() {
       this.plan = {

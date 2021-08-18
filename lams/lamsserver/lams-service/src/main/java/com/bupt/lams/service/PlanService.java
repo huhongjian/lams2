@@ -129,4 +129,8 @@ public class PlanService {
     public List<Plan> getAllPlans() {
         return planMapper.getAllPlans();
     }
+
+    public void deletePlans(List<Long> ids) {
+        planMapper.deletePlans(ids);
+    }
 }

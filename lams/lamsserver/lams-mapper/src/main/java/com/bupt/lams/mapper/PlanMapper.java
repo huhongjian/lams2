@@ -1,6 +1,5 @@
 package com.bupt.lams.mapper;
 
-import com.bupt.lams.dto.AssetQueryCondition;
 import com.bupt.lams.dto.PlanQueryCondition;
 import com.bupt.lams.model.Plan;
 
@@ -26,4 +25,6 @@ public interface PlanMapper {
     Double getTotal();
 
     List<Plan> getPlansByProjectIds(List<Long> pids);
+
+    void deletePlans(List<Long> ids);
 }

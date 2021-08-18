@@ -5,6 +5,7 @@ import com.bupt.lams.model.Plan;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.PlanService;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -69,5 +70,19 @@ public class PlanController {
             return RespBean.error("更新失败!");
         }
         return RespBean.ok("更新成功!");
+    }
+
+    @DeleteMapping("/delete")
+    public RespBean deletePlans(@RequestBody List<Long> pids) {
+        // 只允许教师删除
+        if (UserInfoUtils.isTeacher() == false) {
+            return RespBean.error("您没有删除权限，请联系管理员!");
+        }
+        try {
+            planService.deletePlans(pids);
+        } catch (Exception e) {
+            return RespBean.error("删除失败!");
+        }
+        return RespBean.ok("删除成功!");
     }
 }

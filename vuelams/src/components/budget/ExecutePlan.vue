@@ -121,6 +121,7 @@ export default {
           this.postRequest(url, this.budgetRecord).then(resp => {
             if (resp) {
               this.$emit('close');
+              this.emptyBudgetRecord();
               this.$emit('freshPlan', this.plan.id);
             }
           });

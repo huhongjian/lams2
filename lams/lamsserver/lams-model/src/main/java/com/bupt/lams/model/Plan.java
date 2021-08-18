@@ -15,6 +15,7 @@ import java.util.Map;
 @Data
 public class Plan implements Serializable {
     private Long id;
+    private Integer isDeleted;
     private String planName;
     private Long projectId;
     private String projectName;

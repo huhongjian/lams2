@@ -52,13 +52,16 @@
         left join lams_user u on p.userEmail = u.username
         left join project pr on p.projectId = pr.id
         <where>
+            p.isDeleted = 0
             <include refid="baseInfoQuery"/>
         </where>
         order by p.id
     </select>
     <select id="getAllPlans" resultType="com.bupt.lams.model.Plan">
         select *
-        from plan;
+        from plan
+        where
+        isDelected = 0;
     </select>
     <update id="updateAssetStatus" parameterType="com.bupt.lams.model.Asset">
         update asset a
@@ -208,12 +211,12 @@
         where id = #{id}
     </select>
     <select id="getTotal" resultType="java.lang.Double">
-        select sum(p.funding) from plan p
+        select sum(p.funding) from plan p where p.isDeleted = 0;
     </select>
     <select id="getPlansByProjectIds" parameterType="list" resultType="com.bupt.lams.model.Plan">
         select *
         from plan p
-        where 1=1
+        where p.isDeleted = 0
         <if test="list != null and list.size>0">
             and p.projectId in
             <foreach collection="list" item="item" open="(" close=")" separator=",">
@@ -222,6 +225,19 @@
         </if>
         order by p.id;
     </select>
+    <update id="deletePlans" parameterType="java.lang.Long">
+        update plan
+        set
+        isDeleted = 1
+        <where>
+            <if test="list != null and list.size>0">
+                and id in
+                <foreach collection="list" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </update>
     <select id="getAssetStatusCount" parameterType="list" resultType="com.bupt.lams.dto.AssetStatusCount">
         select count(id) as count, cast(sum(price) as decimal (19,2)) as money, status, statusName
         from asset

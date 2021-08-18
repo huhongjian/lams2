@@ -3,6 +3,8 @@ package com.bupt.lams.service;
 import com.bupt.lams.constants.BudgetConstant;
 import com.bupt.lams.dto.ExecutionQueryCondition;
 import com.bupt.lams.mapper.BudgetRecordMapper;
+import com.bupt.lams.mapper.PlanMapper;
+import com.bupt.lams.mapper.ProjectMapper;
 import com.bupt.lams.model.*;
 import com.bupt.lams.model.planItem.PlanItem;
 import com.bupt.lams.utils.ComputeUtils;
@@ -29,9 +31,9 @@ public class BudgetRecordService {
     BudgetRecordMapper budgetRecordMapper;
 
     @Resource
-    PlanService planService;
+    PlanMapper planMapper;
     @Resource
-    ProjectService projectService;
+    ProjectMapper projectMapper;
 
     public RespPageBean getBudgetRecordByCondition(ExecutionQueryCondition condition) {
         Integer page = condition.getPage();
@@ -100,22 +102,22 @@ public class BudgetRecordService {
         update.invoke(SpringContextUtil.getBean(service), data);
 
         // 更新预算计划信息
-        Plan plan = planService.getPlanById(budgetRecord.getPlanId());
+        Plan plan = planMapper.getPlanById(budgetRecord.getPlanId());
         if (plan.getUnfulfilledQuota() < funding) {
             logger.error("[executePlanItem]:执行金额过大！");
             throw new Exception("[executePlanItem]:执行金额过大！");
         }
         plan.setUnfulfilledQuota(plan.getUnfulfilledQuota() - funding);
         plan.setExecuteRate(ComputeUtils.computeExecuteRate(plan.getFunding(), plan.getUnfulfilledQuota()));
-        planService.updatePlan(plan);
+        planMapper.updatePlan(plan);
         // 更新科研项目信息
-        Project project = projectService.getProjectById(budgetRecord.getProjectId());
+        Project project = projectMapper.getProjectById(budgetRecord.getProjectId());
         if (project.getUnfulfilledQuota() < funding) {
             logger.error("[executePlanItem]:执行金额过大！");
             throw new Exception("[executePlanItem]:执行金额过大！");
         }
         project.setUnfulfilledQuota(project.getUnfulfilledQuota() - funding);
         project.setExecuteRate(ComputeUtils.computeExecuteRate(project.getFunding(), project.getUnfulfilledQuota()));
-        projectService.updateProject(project);
+        projectMapper.updateProject(project);
     }
 }

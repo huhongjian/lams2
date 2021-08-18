@@ -86,12 +86,6 @@
             <if test="executeRate != null">
                 executeRate,
             </if>
-            <if test="createTime != null">
-                createTime,
-            </if>
-            <if test="updateTime != null">
-                updateTime,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="planName != null and planName != ''">
@@ -115,12 +109,6 @@
             <if test="executeRate != null">
                 #{executeRate},
             </if>
-            <if test="createTime != null">
-                #{createTime},
-            </if>
-            <if test="updateTime != null">
-                #{updateTime},
-            </if>
         </trim>
     </insert>
     <update id="updatePlan" parameterType="com.bupt.lams.model.Plan">
@@ -132,9 +120,6 @@
             </if>
             <if test="projectId != null">
                 projectId = #{projectId},
-            </if>
-            <if test="projectName != null and projectName != ''">
-                projectName = #{projectName},
             </if>
             <if test="userEmail != null and userEmail != ''">
                 userEmail = #{userEmail},

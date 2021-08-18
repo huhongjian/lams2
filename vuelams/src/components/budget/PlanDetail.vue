@@ -551,7 +551,6 @@
                            :percentage=plan.planItemDataMap.publishFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.planItemDataMap.publishFeeData.planItemList"
-                  @selection-change="handleSelectionChange"
                   stripe
                   border
                   v-loading="loading"

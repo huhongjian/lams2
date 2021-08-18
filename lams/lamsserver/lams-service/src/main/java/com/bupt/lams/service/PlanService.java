@@ -4,10 +4,8 @@ import com.bupt.lams.constants.BudgetConstant;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.dto.PlanQueryCondition;
 import com.bupt.lams.mapper.PlanMapper;
-import com.bupt.lams.model.LamsUser;
-import com.bupt.lams.model.Plan;
-import com.bupt.lams.model.PlanAndItem;
-import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.model.*;
+import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.SpringContextUtil;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -76,8 +74,19 @@ public class PlanService {
         return plan.getId();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void updatePlan(Plan plan) {
+        Plan oldPlan = planMapper.getPlanById(plan.getId());
+        // 如果总额有更新, 则更新相关数据
+        if (oldPlan.getFunding() != plan.getFunding()) {
+            Double change = plan.getFunding() - oldPlan.getFunding();
+            double quota = plan.getUnfulfilledQuota() + change;
+            plan.setUnfulfilledQuota(quota);
+            plan.setExecuteRate(ComputeUtils.computeExecuteRate(plan.getFunding(), quota));
+        }
         planMapper.updatePlan(plan);
+        // 更新和预算明细的关联关系
+        planAndPlanItemService.updatePlanAndItemRelationByPlan(plan);
     }
 
     public List<Plan> getPlansByProjectIds(List<Long> pids) {

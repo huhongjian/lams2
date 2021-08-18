@@ -24,12 +24,6 @@ public class PlanAndPlanItemService {
         return planAndItemMapper.getPlanAndItemListByPid(pid);
     }
 
-    /**
-     * 更新工单和资产之前的关联关系
-     * 删除旧绑定关系，添加新关系
-     *
-     * @param plan
-     */
     @Transactional(rollbackFor = Exception.class)
     public void addPlanAndItemRelationByPlan(Plan plan) {
         List<PlanAndItem> planAndItemList = buildPlanAndItemRelation(plan);
@@ -38,6 +32,17 @@ public class PlanAndPlanItemService {
         }
         planAndItemMapper.insertMany(planAndItemList);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updatePlanAndItemRelationByPlan(Plan plan) {
+        // 删除旧的
+        List<Long> pids = new ArrayList<>();
+        pids.add(plan.getId());
+        planAndItemMapper.deleteManyByPids(pids);
+        // 插入新的
+        addPlanAndItemRelationByPlan(plan);
+    }
+
 
     public List<PlanAndItem> buildPlanAndItemRelation(Plan plan) {
         List<PlanAndItem> planAndItemList = new ArrayList<>();

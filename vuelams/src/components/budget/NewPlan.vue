@@ -853,8 +853,7 @@ export default {
           if (valid) {
             this.putRequest("/plan/edit", this.plan).then(resp => {
               if (resp) {
-                this.emptyIdList();
-                this.$emit('close');
+                this.handleClose();
                 this.$parent.initPlans();
               }
             })
@@ -865,8 +864,7 @@ export default {
           if (valid) {
             this.postRequest("/plan/add", this.plan).then(resp => {
               if (resp) {
-                this.emptyIdList();
-                this.$emit('close');
+                this.handleClose();
                 this.$parent.initPlans();
               }
             })
@@ -896,6 +894,7 @@ export default {
       this.deleteRequest("/planItem/researchFee/clear");
       this.deleteRequest("/planItem/testingFee/clear");
       this.deleteRequest("/planItem/transportationFee/clear");
+      this.$parent.initPlans();
     },
     handlePlanItemIds(itemType, subType, id) {
       this.freshPids();
@@ -926,66 +925,67 @@ export default {
       this.newPlanItemVisible = false;
     },
     freshPids() {
-      if (this.plan == null) {
+      if (this.plan == null || this.plan.planItemDataMap == null) {
         return
       }
-      if (this.plan.equipmentFeeList != null) {
-        for (var i = 0; i < this.plan.equipmentFeeList.length; i++) {
-          this.equipmentFeeList.push(this.plan.equipmentFeeList[i].id);
+      if (this.plan.planItemDataMap.equipmentFeeData != null && this.plan.planItemDataMap.equipmentFeeData.planItemList != null) {
+        for (var i = 0; i < this.plan.planItemDataMap.equipmentFeeData.planItemList.length; i++) {
+          this.equipmentFeeList.push(this.plan.planItemDataMap.equipmentFeeData.planItemList[i].id);
         }
       }
-      if (this.plan.materialFeeList != null) {
-        for (var i = 0; i < this.plan.materialFeeList.length; i++) {
-          this.materialFeeList.push(this.plan.materialFeeList[i].id);
+      if (this.plan.planItemDataMap.materialFeeData != null && this.plan.planItemDataMap.materialFeeData.planItemList != null) {
+        for (var i = 0; i < this.plan.planItemDataMap.materialFeeData.planItemList.length; i++) {
+          this.materialFeeList.push(this.plan.planItemDataMap.materialFeeData.planItemList[i].id);
         }
       }
-      if (this.plan.testingFeeList != null) {
-        for (var i = 0; i < this.plan.testingFeeList.length; i++) {
-          this.testingFeeList.push(this.plan.testingFeeList[i].id);
+      if (this.plan.planItemDataMap.testingFeeData != null && this.plan.planItemDataMap.testingFeeData.planItemList != null) {
+        for (var i = 0; i < this.plan.planItemDataMap.testingFeeData.planItemList.length; i++) {
+          this.testingFeeList.push(this.plan.planItemDataMap.testingFeeData.planItemList[i].id);
         }
       }
-      if (this.plan.meetingFeeList != null) {
-        for (var i = 0; i < this.plan.meetingFeeList.length; i++) {
-          this.meetingFeeList.push(this.plan.meetingFeeList[i].id);
+      if (this.plan.planItemDataMap.meetingFeeData != null && this.plan.planItemDataMap.meetingFeeData.planItemList != null) {
+        for (var i = 0; i < this.plan.planItemDataMap.meetingFeeData.planItemList.length; i++) {
+          this.meetingFeeList.push(this.plan.planItemDataMap.meetingFeeData.planItemList[i].id);
         }
       }
-      if (this.plan.researchFeeList != null) {
-        for (var i = 0; i < this.plan.researchFeeList.length; i++) {
-          this.researchFeeList.push(this.plan.researchFeeList[i].id);
+      if (this.plan.planItemDataMap.researchFeeData != null && this.plan.planItemDataMap.researchFeeData.planItemList != null) {
+        for (var i = 0; i < this.plan.planItemDataMap.researchFeeData.planItemList.length; i++) {
+          this.researchFeeList.push(this.plan.planItemDataMap.researchFeeData.planItemList[i].id);
         }
       }
-      if (this.plan.academicFeeList != null) {
-        for (var i = 0; i < this.plan.academicFeeList.length; i++) {
-          this.academicFeeList.push(this.plan.academicFeeList[i].id);
+      if (this.plan.planItemDataMap.academicFeeData != null && this.plan.planItemDataMap.academicFeeData.planItemList != null) {
+        for (var i = 0; i < this.plan.planItemDataMap.academicFeeData.planItemList.length; i++) {
+          this.academicFeeList.push(this.plan.planItemDataMap.academicFeeData.planItemList[i].id);
         }
       }
-      if (this.plan.transportationFeeList != null) {
-        for (var i = 0; i < this.plan.transportationFeeList.length; i++) {
-          this.transportationFeeList.push(this.plan.transportationFeeList[i].id);
+      if (this.plan.planItemDataMap.transFeeData != null && this.plan.planItemDataMap.transFeeData.planItemList != null) {
+        for (var i = 0; i < this.plan.planItemDataMap.transFeeData.planItemList.length; i++) {
+          this.transportationFeeList.push(this.plan.planItemDataMap.transFeeData.planItemList[i].id);
         }
       }
-      if (this.plan.publishFeeList != null) {
-        for (var i = 0; i < this.plan.publishFeeList.length; i++) {
-          this.publishFeeList.push(this.plan.publishFeeList[i].id);
+      if (this.plan.planItemDataMap.publishFeeData != null && this.plan.planItemDataMap.publishFeeData.planItemList != null) {
+        for (var i = 0; i < this.plan.planItemDataMap.publishFeeData.planItemList.length; i++) {
+          this.publishFeeList.push(this.plan.planItemDataMap.publishFeeData.planItemList[i].id);
         }
       }
-      if (this.plan.paymentList != null) {
-        for (var i = 0; i < this.plan.paymentList.length; i++) {
-          this.paymentList.push(this.plan.paymentList[i].id);
+      if (this.plan.planItemDataMap.paymentData != null && this.plan.planItemDataMap.paymentData.planItemList != null) {
+        for (var i = 0; i < this.plan.planItemDataMap.paymentData.planItemList.length; i++) {
+          this.paymentList.push(this.plan.planItemDataMap.paymentData.planItemList[i].id);
         }
       }
-      if (this.plan.advisoryList != null) {
-        for (var i = 0; i < this.plan.advisoryList.length; i++) {
-          this.advisoryList.push(this.plan.advisoryList[i].id);
+      if (this.plan.planItemDataMap.advisoryData != null && this.plan.planItemDataMap.advisoryData.planItemList != null) {
+        for (var i = 0; i < this.plan.planItemDataMap.advisoryData.planItemList.length; i++) {
+          this.advisoryList.push(this.plan.planItemDataMap.advisoryData.planItemList[i].id);
         }
       }
-      if (this.plan.otherFeeList != null) {
-        for (var i = 0; i < this.plan.otherFeeList.length; i++) {
-          this.otherFeeList.push(this.plan.otherFeeList[i].id);
+      if (this.plan.planItemDataMap.otherFeeData != null && this.plan.planItemDataMap.otherFeeData.planItemList != null) {
+        for (var i = 0; i < this.plan.planItemDataMap.otherFeeData.planItemList.length; i++) {
+          this.otherFeeList.push(this.plan.planItemDataMap.otherFeeData.planItemList[i].id);
         }
       }
     },
     deleteEquipmentFee(id) {
+      this.freshPids();
       let newArr = [];
       for (var i = 0; i < this.equipmentFeeList.length; i++) {
         if (this.equipmentFeeList[i] != id) {
@@ -996,6 +996,7 @@ export default {
       this.initPlanItemList();
     },
     deleteMaterialFee(id) {
+      this.freshPids();
       let newArr = [];
       for (var i = 0; i < this.materialFeeList.length; i++) {
         if (this.materialFeeList[i] != id) {
@@ -1006,6 +1007,7 @@ export default {
       this.initPlanItemList();
     },
     deleteTestingFee(id) {
+      this.freshPids();
       let newArr = [];
       for (var i = 0; i < this.testingFeeList.length; i++) {
         if (this.testingFeeList[i] != id) {
@@ -1016,6 +1018,7 @@ export default {
       this.initPlanItemList();
     },
     deleteMeetingFee(id) {
+      this.freshPids();
       let newArr = [];
       for (var i = 0; i < this.meetingFeeList.length; i++) {
         if (this.meetingFeeList[i] != id) {
@@ -1026,6 +1029,7 @@ export default {
       this.initPlanItemList();
     },
     deleteResearchFee(id) {
+      this.freshPids();
       let newArr = [];
       for (var i = 0; i < this.researchFeeList.length; i++) {
         if (this.equipmentFeeList[i] != id) {
@@ -1036,6 +1040,7 @@ export default {
       this.initPlanItemList();
     },
     deleteAcademicFee(id) {
+      this.freshPids();
       let newArr = [];
       for (var i = 0; i < this.academicFeeList.length; i++) {
         if (this.academicFeeList[i] != id) {
@@ -1046,6 +1051,7 @@ export default {
       this.initPlanItemList();
     },
     deleteTransportationFee(id) {
+      this.freshPids();
       let newArr = [];
       for (var i = 0; i < this.transportationFeeList.length; i++) {
         if (this.transportationFeeList[i] != id) {
@@ -1056,6 +1062,7 @@ export default {
       this.initPlanItemList();
     },
     deletePublishFee(id) {
+      this.freshPids();
       let newArr = [];
       for (var i = 0; i < this.publishFeeList.length; i++) {
         if (this.publishFeeList[i] != id) {
@@ -1066,6 +1073,7 @@ export default {
       this.initPlanItemList();
     },
     deletePayment(id) {
+      this.freshPids();
       let newArr = [];
       for (var i = 0; i < this.paymentList.length; i++) {
         if (this.paymentList[i] != id) {
@@ -1076,6 +1084,7 @@ export default {
       this.initPlanItemList();
     },
     deleteAdvisory(id) {
+      this.freshPids();
       let newArr = [];
       for (var i = 0; i < this.advisoryList.length; i++) {
         if (this.advisoryList[i] != id) {
@@ -1086,6 +1095,7 @@ export default {
       this.initPlanItemList();
     },
     deleteOtherFee(id) {
+      this.freshPids();
       let newArr = [];
       for (var i = 0; i < this.otherFeeList.length; i++) {
         if (this.otherFeeList[i] != id) {

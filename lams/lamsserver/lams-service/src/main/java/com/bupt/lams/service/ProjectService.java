@@ -50,13 +50,12 @@ public class ProjectService {
         return project.getId();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void updateProject(Project project) {
-        LamsUser user = UserInfoUtils.getLoginedUser();
-        project.setUserEmail(user.getUsername());
         Project oldProject = projectMapper.getProjectById(project.getId());
         // 如果总额有更新, 则更新相关数据
         if (oldProject.getFunding() != project.getFunding()) {
-            Double change = oldProject.getFunding() - project.getFunding();
+            Double change = project.getFunding() - oldProject.getFunding();
             double quota = project.getUnfulfilledQuota() + change;
             project.setUnfulfilledQuota(quota);
             project.setExecuteRate(ComputeUtils.computeExecuteRate(project.getFunding(), quota));

@@ -12,7 +12,5 @@ public interface PlanAndItemMapper {
 
     List<PlanAndItem> getPlanAndItemListByPid(Long pid);
 
-    void deleteManyByOids(List<Long> oids);
-
-    void deleteManyByAids(@Param("aids") List<Long> aids, @Param("oid") Long oid);
+    void deleteManyByPids(List<Long> pids);
 }

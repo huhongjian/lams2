@@ -551,32 +551,17 @@ export default {
       }
     },
     doAddPlanItem() {
-      if (this.planItem.id) {
-        this.$refs['planItemForm'].validate(valid => {
-          if (valid) {
-            this.getItemUrl();
-            let url = "/planItem/" + this.itemUrl + "/edit/";
-            this.putRequest(url, this.planItem).then(resp => {
-              if (resp) {
-                this.$emit('close');
-                this.$parent.initProjects();
-              }
-            })
-          }
-        });
-      } else {
-        this.$refs['planItemForm'].validate(valid => {
-          if (valid) {
-            this.getItemUrl();
-            let url = "/planItem/" + this.itemUrl + "/add/";
-            this.postRequest(url, this.planItem).then(resp => {
-              if (resp) {
-                this.$emit('handlePlanItemIds', this.planItem.itemType, this.planItem.subType, resp.obj);
-              }
-            })
-          }
-        });
-      }
+      this.$refs['planItemForm'].validate(valid => {
+        if (valid) {
+          this.getItemUrl();
+          let url = "/planItem/" + this.itemUrl + "/add/";
+          this.postRequest(url, this.planItem).then(resp => {
+            if (resp) {
+              this.$emit('handlePlanItemIds', this.planItem.itemType, this.planItem.subType, resp.obj);
+            }
+          })
+        }
+      });
     },
     handleClose() {
       this.countType = null;

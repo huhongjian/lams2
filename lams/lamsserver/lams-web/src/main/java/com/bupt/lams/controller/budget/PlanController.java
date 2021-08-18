@@ -2,6 +2,7 @@ package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanQueryCondition;
 import com.bupt.lams.model.Plan;
+import com.bupt.lams.model.Project;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.PlanService;
@@ -65,6 +66,11 @@ public class PlanController {
     @PutMapping("/edit")
     public RespBean updateProject(@RequestBody Plan plan) {
         try {
+            Plan oldProject = planService.getPlanById(plan.getId());
+            Double used = oldProject.getFunding() - oldProject.getUnfulfilledQuota();
+            if (plan.getFunding() < used) {
+                return RespBean.error("更新失败!总额度小于已执行额度！");
+            }
             planService.updatePlan(plan);
         } catch (Exception e) {
             return RespBean.error("更新失败!");

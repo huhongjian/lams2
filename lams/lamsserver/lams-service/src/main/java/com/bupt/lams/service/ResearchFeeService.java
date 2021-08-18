@@ -3,10 +3,12 @@ package com.bupt.lams.service;
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.ResearchFeeMapper;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.ResearchFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +24,10 @@ public class ResearchFeeService {
     @Resource
     ResearchFeeMapper researchFeeMapper;
 
-    public List<ResearchFee> getResearchFeeList() {
-        return researchFeeMapper.getResearchFeeList();
-    }
-
     @Transactional(rollbackFor = Exception.class)
     public Long addResearchFee(ResearchFee researchFee) {
         researchFee.setItemType(PlanItemTypeEnum.RESEARCH.getIndex());
+        researchFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
         Double total = (researchFee.getAccommodationFee() + researchFee.getOtherFee() + researchFee.getTransFee()) * researchFee.getDays() * researchFee.getTimes() / 10000D;
         researchFee.setSubTotal(total);
@@ -71,5 +70,13 @@ public class ResearchFeeService {
 
     public ResearchFee getById(Long id) {
         return researchFeeMapper.getById(id);
+    }
+
+    /**
+     * 清空本人创建的、多余的预算明细信息，即，没有和预算计划关联的预算明细信息
+     */
+    public void clear() {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        researchFeeMapper.clear(user.getUsername());
     }
 }

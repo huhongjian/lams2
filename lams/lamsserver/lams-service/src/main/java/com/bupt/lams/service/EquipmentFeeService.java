@@ -3,9 +3,11 @@ package com.bupt.lams.service;
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.EquipmentFeeMapper;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.utils.TransferUtils;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +23,10 @@ public class EquipmentFeeService {
     @Resource
     EquipmentFeeMapper equipmentFeeMapper;
 
-    public List<EquipmentFee> getEquipmentFeeList() {
-        return equipmentFeeMapper.getEquipmentFeeList();
-    }
-
     @Transactional(rollbackFor = Exception.class)
     public Long addEquipmentFee(EquipmentFee equipmentFee) {
+        equipmentFee.setItemType(PlanItemTypeEnum.EQUIPMENT.getIndex());
+        equipmentFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
         double subTotal = equipmentFee.getUnitPrice() * equipmentFee.getAmount();
         equipmentFee.setSubTotal(subTotal);
@@ -64,5 +64,13 @@ public class EquipmentFeeService {
 
     public EquipmentFee getById(Long id) {
         return equipmentFeeMapper.getById(id);
+    }
+
+    /**
+     * 清空本人创建的、多余的预算明细信息，即，没有和预算计划关联的预算明细信息
+     */
+    public void clear() {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        equipmentFeeMapper.clear(user.getUsername());
     }
 }

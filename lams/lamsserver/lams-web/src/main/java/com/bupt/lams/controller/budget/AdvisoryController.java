@@ -1,9 +1,11 @@
 package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanItemData;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.Advisory;
 import com.bupt.lams.service.AdvisoryService;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,20 +24,6 @@ public class AdvisoryController {
 
     @Resource
     AdvisoryService advisoryService;
-
-    @GetMapping("/get")
-    public RespBean getAdvisoryList() {
-        RespBean response = new RespBean();
-        response.setStatus(200);
-        try {
-            List<Advisory> data = advisoryService.getAdvisoryList();
-            response.setObj(data);
-        } catch (Exception e) {
-            logger.error("获取专家咨询费失败", e);
-            return RespBean.error("获取专家咨询费失败！");
-        }
-        return response;
-    }
 
     @PostMapping("/add")
     public RespBean addAdvisory(@RequestBody Advisory advisory) {
@@ -67,6 +55,7 @@ public class AdvisoryController {
         RespBean response = new RespBean();
         response.setStatus(200);
         if (CollectionUtils.isEmpty(pids)) {
+            response.setObj(new PlanItemData());
             return response;
         }
         try {
@@ -77,5 +66,15 @@ public class AdvisoryController {
             return RespBean.error("获取专家咨询费信息失败！");
         }
         return response;
+    }
+
+    @DeleteMapping("/clear")
+    public RespBean clear() {
+        try {
+            advisoryService.clear();
+        } catch (Exception e) {
+            return RespBean.error("清空无效预算明细失败!");
+        }
+        return RespBean.ok(null);
     }
 }

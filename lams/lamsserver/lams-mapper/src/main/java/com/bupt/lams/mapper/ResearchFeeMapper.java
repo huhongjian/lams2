@@ -5,9 +5,6 @@ import com.bupt.lams.model.planItem.ResearchFee;
 import java.util.List;
 
 public interface ResearchFeeMapper {
-
-    List<ResearchFee> getResearchFeeList();
-
     int insertSelective(ResearchFee researchFee);
 
     List<ResearchFee> getResearchFeeByIds(List<Long> ids);
@@ -15,4 +12,6 @@ public interface ResearchFeeMapper {
     ResearchFee getById(Long id);
 
     void update(ResearchFee researchFee);
+
+    void clear(String userEmail);
 }

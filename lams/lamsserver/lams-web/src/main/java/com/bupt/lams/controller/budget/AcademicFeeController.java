@@ -23,20 +23,6 @@ public class AcademicFeeController {
     @Resource
     AcademicFeeService academicFeeService;
 
-    @GetMapping("/get")
-    public RespBean getAcademicFeeList() {
-        RespBean response = new RespBean();
-        response.setStatus(200);
-        try {
-            List<AcademicFee> data = academicFeeService.getAcademicFeeList();
-            response.setObj(data);
-        } catch (Exception e) {
-            logger.error("获取国内学术会议差旅费失败", e);
-            return RespBean.error("获取国内学术会议差旅费失败！");
-        }
-        return response;
-    }
-
     @PostMapping("/add")
     public RespBean addAcademicFee(@RequestBody AcademicFee academicFee) {
         RespBean response = new RespBean();
@@ -45,7 +31,7 @@ public class AcademicFeeController {
             logger.error("国内学术会议差旅费不能为空！");
             return RespBean.error("国内学术会议差旅费不能为空！");
         }
-        if (academicFee.getTimes() == null || academicFee.getDays() == null|| academicFee.getAccommodationFee() == null|| academicFee.getTimes() == null|| academicFee.getTimes() == null) {
+        if (academicFee.getTimes() == null || academicFee.getDays() == null || academicFee.getAccommodationFee() == null || academicFee.getTimes() == null || academicFee.getTimes() == null) {
             logger.error("国内学术会议差旅费不能为空！");
             return RespBean.error("国内学术会议差旅费不能为空！");
         }
@@ -67,6 +53,7 @@ public class AcademicFeeController {
         RespBean response = new RespBean();
         response.setStatus(200);
         if (CollectionUtils.isEmpty(pids)) {
+            response.setObj(new PlanItemData());
             return response;
         }
         try {
@@ -77,5 +64,15 @@ public class AcademicFeeController {
             return RespBean.error("获取国内学术会议差旅费信息失败！");
         }
         return response;
+    }
+
+    @DeleteMapping("/clear")
+    public RespBean clear() {
+        try {
+            academicFeeService.clear();
+        } catch (Exception e) {
+            return RespBean.error("清空无效预算明细失败!");
+        }
+        return RespBean.ok(null);
     }
 }

@@ -5,9 +5,6 @@ import com.bupt.lams.model.planItem.PublishFee;
 import java.util.List;
 
 public interface PublishFeeMapper {
-
-    List<PublishFee> getPublishFeeList();
-
     int insertSelective(PublishFee publishFee);
 
     List<PublishFee> getPublishFeeByIds(List<Long> ids);
@@ -15,4 +12,6 @@ public interface PublishFeeMapper {
     PublishFee getById(Long id);
 
     void update(PublishFee equipmentFee);
+
+    void clear(String userEmail);
 }

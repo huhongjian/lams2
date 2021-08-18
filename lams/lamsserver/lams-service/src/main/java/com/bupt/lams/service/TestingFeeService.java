@@ -3,6 +3,7 @@ package com.bupt.lams.service;
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.TestingFeeMapper;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.Project;
 import com.bupt.lams.model.planItem.EquipmentFee;
@@ -11,6 +12,7 @@ import com.bupt.lams.model.planItem.ResearchFee;
 import com.bupt.lams.model.planItem.TestingFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,13 +28,10 @@ public class TestingFeeService {
     @Resource
     TestingFeeMapper testingFeeMapper;
 
-    public List<TestingFee> getTestingFeeList() {
-        return testingFeeMapper.getTestingFeeList();
-    }
-
     @Transactional(rollbackFor = Exception.class)
     public Long addTestingFee(TestingFee testingFee) {
         testingFee.setItemType(PlanItemTypeEnum.TESTING.getIndex());
+        testingFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
         if (testingFee.getSubTotal() == null) {
             testingFee.setSubTotal(testingFee.getUnitPrice() * testingFee.getTimes());
@@ -76,5 +75,13 @@ public class TestingFeeService {
 
     public TestingFee getById(Long id) {
         return testingFeeMapper.getById(id);
+    }
+
+    /**
+     * 清空本人创建的、多余的预算明细信息，即，没有和预算计划关联的预算明细信息
+     */
+    public void clear() {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        testingFeeMapper.clear(user.getUsername());
     }
 }

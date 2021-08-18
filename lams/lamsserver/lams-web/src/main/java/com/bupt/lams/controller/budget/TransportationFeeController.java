@@ -23,20 +23,6 @@ public class TransportationFeeController {
     @Resource
     TransportationFeeService transportationFeeService;
 
-    @GetMapping("/get")
-    public RespBean getTransportationFeeList() {
-        RespBean response = new RespBean();
-        response.setStatus(200);
-        try {
-            List<PlanItem> data = transportationFeeService.getTransportationFeeList();
-            response.setObj(data);
-        } catch (Exception e) {
-            logger.error("获取差旅/会议/国际合作与交流费失败", e);
-            return RespBean.error("获取差旅/会议/国际合作与交流费失败！");
-        }
-        return response;
-    }
-
     @PostMapping("/add")
     public RespBean addTransportationFee(@RequestBody PlanItem transportationFee) {
         RespBean response = new RespBean();
@@ -67,6 +53,7 @@ public class TransportationFeeController {
         RespBean response = new RespBean();
         response.setStatus(200);
         if (CollectionUtils.isEmpty(pids)) {
+            response.setObj(new PlanItemData());
             return response;
         }
         try {
@@ -77,5 +64,15 @@ public class TransportationFeeController {
             return RespBean.error("获取北京市内交通费信息失败！");
         }
         return response;
+    }
+
+    @DeleteMapping("/clear")
+    public RespBean clear() {
+        try {
+            transportationFeeService.clear();
+        } catch (Exception e) {
+            return RespBean.error("清空无效预算明细失败!");
+        }
+        return RespBean.ok(null);
     }
 }

@@ -5,9 +5,6 @@ import com.bupt.lams.model.planItem.PlanItem;
 import java.util.List;
 
 public interface TransportationFeeMapper {
-
-    List<PlanItem> getTransportationFeeList();
-
     int insertSelective(PlanItem transportationFee);
 
     List<PlanItem> getTransportationFeeByIds(List<Long> ids);
@@ -15,4 +12,6 @@ public interface TransportationFeeMapper {
     PlanItem getById(Long id);
 
     void update(PlanItem equipmentFee);
+
+    void clear(String userEmail);
 }

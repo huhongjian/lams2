@@ -5,9 +5,6 @@ import com.bupt.lams.model.planItem.TestingFee;
 import java.util.List;
 
 public interface TestingFeeMapper {
-
-    List<TestingFee> getTestingFeeList();
-
     int insertSelective(TestingFee testingFee);
 
     List<TestingFee> getTestingFeeByIds(List<Long> ids);
@@ -15,4 +12,6 @@ public interface TestingFeeMapper {
     TestingFee getById(Long id);
 
     void update(TestingFee equipmentFee);
+
+    void clear(String userEmail);
 }

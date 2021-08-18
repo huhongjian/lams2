@@ -3,10 +3,12 @@ package com.bupt.lams.service;
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.OtherFeeMapper;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.OtherFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +24,10 @@ public class OtherFeeService {
     @Resource
     OtherFeeMapper otherFeeMapper;
 
-    public List<OtherFee> getOtherFeeList() {
-        return otherFeeMapper.getOtherFeeList();
-    }
-
     @Transactional(rollbackFor = Exception.class)
     public Long addOtherFee(OtherFee otherFee) {
         otherFee.setItemType(PlanItemTypeEnum.OTHERS.getIndex());
+        otherFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         otherFee.setUnfulfilledQuota(otherFee.getSubTotal());
         otherFee.setExecuteRate(ComputeUtils.computeExecuteRate(otherFee.getSubTotal(), otherFee.getUnfulfilledQuota()));
         otherFeeMapper.insertSelective(otherFee);
@@ -68,5 +67,13 @@ public class OtherFeeService {
 
     public OtherFee getById(Long id) {
         return otherFeeMapper.getById(id);
+    }
+
+    /**
+     * 清空本人创建的、多余的预算明细信息，即，没有和预算计划关联的预算明细信息
+     */
+    public void clear() {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        otherFeeMapper.clear(user.getUsername());
     }
 }

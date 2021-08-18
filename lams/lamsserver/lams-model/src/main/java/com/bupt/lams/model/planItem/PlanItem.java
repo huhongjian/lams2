@@ -8,11 +8,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 设备费信息pojo
+ * 预算明细信息pojo
  */
 @Data
 public class PlanItem implements Serializable {
     private Long id;
+    private String userEmail;
     /**
      * 预算明细类型
      */

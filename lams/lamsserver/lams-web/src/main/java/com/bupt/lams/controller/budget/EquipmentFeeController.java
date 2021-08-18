@@ -1,8 +1,8 @@
 package com.bupt.lams.controller.budget;
 
+import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.EquipmentFee;
-import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.service.EquipmentFeeService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -22,20 +22,6 @@ public class EquipmentFeeController {
 
     @Resource
     EquipmentFeeService equipmentService;
-
-    @GetMapping("/get")
-    public RespBean getEquipmentFeeList() {
-        RespBean response = new RespBean();
-        response.setStatus(200);
-        try {
-            List<EquipmentFee> data = equipmentService.getEquipmentFeeList();
-            response.setObj(data);
-        } catch (Exception e) {
-            logger.error("获取设备费失败", e);
-            return RespBean.error("获取设备费失败！");
-        }
-        return response;
-    }
 
     @PostMapping("/add")
     public RespBean addEquipmentFee(@RequestBody EquipmentFee equipmentFee) {
@@ -70,6 +56,7 @@ public class EquipmentFeeController {
         RespBean response = new RespBean();
         response.setStatus(200);
         if (CollectionUtils.isEmpty(pids)) {
+            response.setObj(new PlanItemData());
             return response;
         }
         try {
@@ -80,5 +67,15 @@ public class EquipmentFeeController {
             return RespBean.error("获取设备费信息失败！");
         }
         return response;
+    }
+
+    @DeleteMapping("/clear")
+    public RespBean clear() {
+        try {
+            equipmentService.clear();
+        } catch (Exception e) {
+            return RespBean.error("清空无效预算明细失败!");
+        }
+        return RespBean.ok(null);
     }
 }

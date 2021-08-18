@@ -3,10 +3,12 @@ package com.bupt.lams.service;
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.MaterialFeeMapper;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.MaterialFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +24,10 @@ public class MaterialFeeService {
     @Resource
     MaterialFeeMapper materialFeeMapper;
 
-    public List<MaterialFee> getMaterialFeeList() {
-        return materialFeeMapper.getMaterialFeeList();
-    }
-
     @Transactional(rollbackFor = Exception.class)
     public Long addMaterialFee(MaterialFee materialFee) {
         materialFee.setItemType(PlanItemTypeEnum.MATERIAL.getIndex());
+        materialFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
         if (materialFee.getSubTotal() == null) {
             materialFee.setSubTotal(materialFee.getUnitPrice() * materialFee.getAmount());
@@ -72,5 +71,13 @@ public class MaterialFeeService {
 
     public MaterialFee getById(Long id) {
         return materialFeeMapper.getById(id);
+    }
+
+    /**
+     * 清空本人创建的、多余的预算明细信息，即，没有和预算计划关联的预算明细信息
+     */
+    public void clear() {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        materialFeeMapper.clear(user.getUsername());
     }
 }

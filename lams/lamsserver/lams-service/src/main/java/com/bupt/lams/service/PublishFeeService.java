@@ -3,11 +3,13 @@ package com.bupt.lams.service;
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.PublishFeeMapper;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.PublishFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,13 +25,10 @@ public class PublishFeeService {
     @Resource
     PublishFeeMapper publishFeeMapper;
 
-    public List<PublishFee> getPublishFeeList() {
-        return publishFeeMapper.getPublishFeeList();
-    }
-
     @Transactional(rollbackFor = Exception.class)
     public Long addPublishFee(PublishFee publishFee) {
         publishFee.setItemType(PlanItemTypeEnum.PUBLISH.getIndex());
+        publishFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         publishFee.setUnfulfilledQuota(publishFee.getSubTotal());
         publishFee.setExecuteRate(ComputeUtils.computeExecuteRate(publishFee.getSubTotal(), publishFee.getUnfulfilledQuota()));
         publishFeeMapper.insertSelective(publishFee);
@@ -69,5 +68,13 @@ public class PublishFeeService {
 
     public PublishFee getById(Long id) {
         return publishFeeMapper.getById(id);
+    }
+
+    /**
+     * 清空本人创建的、多余的预算明细信息，即，没有和预算计划关联的预算明细信息
+     */
+    public void clear() {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        publishFeeMapper.clear(user.getUsername());
     }
 }

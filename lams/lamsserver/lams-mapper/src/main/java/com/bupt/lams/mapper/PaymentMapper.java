@@ -5,9 +5,6 @@ import com.bupt.lams.model.planItem.Payment;
 import java.util.List;
 
 public interface PaymentMapper {
-
-    List<Payment> getPaymentList();
-
     int insertSelective(Payment payment);
 
     List<Payment> getPaymentByIds(List<Long> ids);
@@ -15,4 +12,6 @@ public interface PaymentMapper {
     Payment getById(Long id);
 
     void update(Payment payment);
+
+    void clear(String userEmail);
 }

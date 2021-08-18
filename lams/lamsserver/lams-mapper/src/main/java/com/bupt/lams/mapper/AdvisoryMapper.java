@@ -5,9 +5,6 @@ import com.bupt.lams.model.planItem.Advisory;
 import java.util.List;
 
 public interface AdvisoryMapper {
-
-    List<Advisory> getAdvisoryList();
-
     int insertSelective(Advisory advisory);
 
     List<Advisory> getAdvisoryByIds(List<Long> ids);
@@ -15,4 +12,6 @@ public interface AdvisoryMapper {
     Advisory getById(Long id);
 
     void update(Advisory advisory);
+
+    void clear(String userEmail);
 }

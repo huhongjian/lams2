@@ -5,9 +5,6 @@ import com.bupt.lams.model.planItem.OtherFee;
 import java.util.List;
 
 public interface OtherFeeMapper {
-
-    List<OtherFee> getOtherFeeList();
-
     int insertSelective(OtherFee otherFee);
 
     List<OtherFee> getOtherFeeByIds(List<Long> ids);
@@ -15,4 +12,6 @@ public interface OtherFeeMapper {
     OtherFee getById(Long id);
 
     void update(OtherFee otherFee);
+
+    void clear(String userEmail);
 }

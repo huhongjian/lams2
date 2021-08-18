@@ -1,10 +1,12 @@
 package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanItemData;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.AcademicFee;
 import com.bupt.lams.model.planItem.ResearchFee;
 import com.bupt.lams.service.ResearchFeeService;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,20 +25,6 @@ public class ResearchFeeController {
 
     @Resource
     ResearchFeeService researchFeeService;
-
-    @GetMapping("/get")
-    public RespBean getResearchFeeList() {
-        RespBean response = new RespBean();
-        response.setStatus(200);
-        try {
-            List<ResearchFee> data = researchFeeService.getResearchFeeList();
-            response.setObj(data);
-        } catch (Exception e) {
-            logger.error("获取课题调研差旅费失败", e);
-            return RespBean.error("获取课题调研差旅费失败！");
-        }
-        return response;
-    }
 
     @PostMapping("/add")
     public RespBean addResearchFee(@RequestBody ResearchFee researchFee) {
@@ -68,6 +56,7 @@ public class ResearchFeeController {
         RespBean response = new RespBean();
         response.setStatus(200);
         if (CollectionUtils.isEmpty(pids)) {
+            response.setObj(new PlanItemData());
             return response;
         }
         try {
@@ -78,5 +67,15 @@ public class ResearchFeeController {
             return RespBean.error("获取课题调研差旅费信息失败！");
         }
         return response;
+    }
+
+    @DeleteMapping("/clear")
+    public RespBean clear() {
+        try {
+            researchFeeService.clear();
+        } catch (Exception e) {
+            return RespBean.error("清空无效预算明细失败!");
+        }
+        return RespBean.ok(null);
     }
 }

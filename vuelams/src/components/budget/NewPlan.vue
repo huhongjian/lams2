@@ -62,7 +62,6 @@
             <el-tag>金额: {{ plan.planItemDataMap.equipmentFeeData.funding }}（万元）</el-tag>
             <el-table
                 :data="plan.planItemDataMap.equipmentFeeData.planItemList"
-                @selection-change="handleSelectionChange"
                 stripe
                 border
                 v-loading="loading"
@@ -107,11 +106,10 @@
                   label="备注">
               </el-table-column>
               <el-table-column
-                  width="150"
+                  width="80"
                   label="操作">
                 <template slot-scope="scope">
-                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
-                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                  <el-button type="danger" plain @click="deleteEquipmentFee(scope.row.id)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -120,7 +118,6 @@
             <el-tag>金额: {{ plan.planItemDataMap.materialFeeData.funding }}（万元）</el-tag>
             <el-table
                 :data="plan.planItemDataMap.materialFeeData.planItemList"
-                @selection-change="handleSelectionChange"
                 stripe
                 border
                 v-loading="loading"
@@ -170,11 +167,10 @@
                   label="备注">
               </el-table-column>
               <el-table-column
-                  width="150"
+                  width="80"
                   label="操作">
                 <template slot-scope="scope">
-                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
-                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                  <el-button type="danger" plain @click="deleteMaterialFee(scope.row.id)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -183,7 +179,6 @@
             <el-tag>金额: {{ plan.planItemDataMap.testingFeeData.funding }}（万元）</el-tag>
             <el-table
                 :data="plan.planItemDataMap.testingFeeData.planItemList"
-                @selection-change="handleSelectionChange"
                 stripe
                 border
                 v-loading="loading"
@@ -225,11 +220,10 @@
                   label="备注">
               </el-table-column>
               <el-table-column
-                  width="150"
+                  width="80"
                   label="操作">
                 <template slot-scope="scope">
-                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
-                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                  <el-button type="danger" plain @click="deleteTestingFee(scope.row.id)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -239,7 +233,6 @@
             <el-tag>金额: {{ plan.planItemDataMap.meetingFeeData.funding }}（万元）</el-tag>
             <el-table
                 :data="plan.planItemDataMap.meetingFeeData.planItemList"
-                @selection-change="handleSelectionChange"
                 stripe
                 border
                 v-loading="loading"
@@ -299,11 +292,10 @@
                   label="备注">
               </el-table-column>
               <el-table-column
-                  width="150"
+                  width="80"
                   label="操作">
                 <template slot-scope="scope">
-                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
-                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                  <el-button type="danger" plain @click="deleteMeetingFee(scope.row.id)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -311,7 +303,6 @@
             <el-tag>金额: {{ plan.planItemDataMap.researchFeeData.funding }}（万元）</el-tag>
             <el-table
                 :data="plan.planItemDataMap.researchFeeData.planItemList"
-                @selection-change="handleSelectionChange"
                 stripe
                 border
                 v-loading="loading"
@@ -375,11 +366,10 @@
                   label="备注">
               </el-table-column>
               <el-table-column
-                  width="150"
+                  width="80"
                   label="操作">
                 <template slot-scope="scope">
-                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
-                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                  <el-button type="danger" plain @click="deleteResearchFee(scope.row.id)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -387,7 +377,6 @@
             <el-tag>金额: {{ plan.planItemDataMap.academicFeeData.funding }}（万元）</el-tag>
             <el-table
                 :data="plan.planItemDataMap.academicFeeData.planItemList"
-                @selection-change="handleSelectionChange"
                 stripe
                 border
                 v-loading="loading"
@@ -451,11 +440,10 @@
                   label="备注">
               </el-table-column>
               <el-table-column
-                  width="150"
+                  width="80"
                   label="操作">
                 <template slot-scope="scope">
-                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
-                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                  <el-button type="danger" plain @click="deleteAcademicFee(scope.row.id)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -463,7 +451,6 @@
             <el-tag>金额: {{ plan.planItemDataMap.transFeeData.funding }}（万元）</el-tag>
             <el-table
                 :data="plan.planItemDataMap.transFeeData.planItemList"
-                @selection-change="handleSelectionChange"
                 stripe
                 border
                 v-loading="loading"
@@ -492,11 +479,10 @@
                   label="备注">
               </el-table-column>
               <el-table-column
-                  width="150"
+                  width="80"
                   label="操作">
                 <template slot-scope="scope">
-                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
-                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                  <el-button type="danger" plain @click="deleteTransportationFee(scope.row.id)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -505,7 +491,6 @@
             <el-tag>金额: {{ plan.planItemDataMap.publishFeeData.funding }}（万元）</el-tag>
             <el-table
                 :data="plan.planItemDataMap.publishFeeData.planItemList"
-                @selection-change="handleSelectionChange"
                 stripe
                 border
                 v-loading="loading"
@@ -534,11 +519,10 @@
                   width="100">
               </el-table-column>
               <el-table-column
-                  width="150"
+                  width="80"
                   label="操作">
                 <template slot-scope="scope">
-                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
-                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                  <el-button type="danger" plain @click="deletePublishFee(scope.row.id)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -547,7 +531,6 @@
             <el-tag>金额: {{ plan.planItemDataMap.paymentData.funding }}（万元）</el-tag>
             <el-table
                 :data="plan.planItemDataMap.paymentData.planItemList"
-                @selection-change="handleSelectionChange"
                 stripe
                 border
                 v-loading="loading"
@@ -597,11 +580,10 @@
                   label="备注">
               </el-table-column>
               <el-table-column
-                  width="150"
+                  width="80"
                   label="操作">
                 <template slot-scope="scope">
-                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
-                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                  <el-button type="danger" plain @click="deletePublishFee(scope.row)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -610,7 +592,6 @@
             <el-tag>金额: {{ plan.planItemDataMap.advisoryData.funding }}（万元）</el-tag>
             <el-table
                 :data="plan.planItemDataMap.advisoryData.planItemList"
-                @selection-change="handleSelectionChange"
                 stripe
                 border
                 v-loading="loading"
@@ -659,11 +640,10 @@
                   label="备注">
               </el-table-column>
               <el-table-column
-                  width="150"
+                  width="80"
                   label="操作">
                 <template slot-scope="scope">
-                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
-                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                  <el-button type="danger" plain @click="deleteAdvisory(scope.row.id)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -672,7 +652,6 @@
             <el-tag>金额: {{ plan.planItemDataMap.otherFeeData.funding }}（万元）</el-tag>
             <el-table
                 :data="plan.planItemDataMap.otherFeeData.planItemList"
-                @selection-change="handleSelectionChange"
                 stripe
                 border
                 v-loading="loading"
@@ -702,11 +681,10 @@
                   width="100">
               </el-table-column>
               <el-table-column
-                  width="150"
+                  width="80"
                   label="操作">
                 <template slot-scope="scope">
-                  <el-button @click="showExecuteDetailView(scope.row)">编辑</el-button>
-                  <el-button type="danger" plain @click="showExecuteView(scope.row)">删除</el-button>
+                  <el-button type="danger" plain @click="deleteOtherFee(scope.row.id)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -714,7 +692,7 @@
         </el-collapse>
       </div>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="$emit('close')">取 消</el-button>
+    <el-button @click="handleClose">取 消</el-button>
     <el-button type="primary" @click="doAddPlan">确 定</el-button>
   </span>
     </el-dialog>
@@ -869,15 +847,6 @@ export default {
     exportData() {
 
     },
-    deleteAsset() {
-
-    },
-    handleSelectionChange() {
-
-    },
-    showDetailView() {
-
-    },
     doAddPlan() {
       if (this.plan.id) {
         this.$refs['planForm'].validate(valid => {
@@ -916,6 +885,17 @@ export default {
     handleClose() {
       this.emptyIdList();
       this.$emit('close');
+      this.deleteRequest("/planItem/academicFee/clear");
+      this.deleteRequest("/planItem/advisory/clear");
+      this.deleteRequest("/planItem/equipmentFee/clear");
+      this.deleteRequest("/planItem/materialFee/clear");
+      this.deleteRequest("/planItem/meetingFee/clear");
+      this.deleteRequest("/planItem/otherFee/clear");
+      this.deleteRequest("/planItem/payment/clear");
+      this.deleteRequest("/planItem/publishFee/clear");
+      this.deleteRequest("/planItem/researchFee/clear");
+      this.deleteRequest("/planItem/testingFee/clear");
+      this.deleteRequest("/planItem/transportationFee/clear");
     },
     handlePlanItemIds(itemType, subType, id) {
       this.freshPids();
@@ -1004,6 +984,116 @@ export default {
           this.otherFeeList.push(this.plan.otherFeeList[i].id);
         }
       }
+    },
+    deleteEquipmentFee(id) {
+      let newArr = [];
+      for (var i = 0; i < this.equipmentFeeList.length; i++) {
+        if (this.equipmentFeeList[i] != id) {
+          newArr.push(this.equipmentFeeList[i]);
+        }
+      }
+      this.equipmentFeeList = newArr;
+      this.initPlanItemList();
+    },
+    deleteMaterialFee(id) {
+      let newArr = [];
+      for (var i = 0; i < this.materialFeeList.length; i++) {
+        if (this.materialFeeList[i] != id) {
+          newArr.push(this.materialFeeList[i]);
+        }
+      }
+      this.materialFeeList = newArr;
+      this.initPlanItemList();
+    },
+    deleteTestingFee(id) {
+      let newArr = [];
+      for (var i = 0; i < this.testingFeeList.length; i++) {
+        if (this.testingFeeList[i] != id) {
+          newArr.push(this.testingFeeList[i]);
+        }
+      }
+      this.testingFeeList = newArr;
+      this.initPlanItemList();
+    },
+    deleteMeetingFee(id) {
+      let newArr = [];
+      for (var i = 0; i < this.meetingFeeList.length; i++) {
+        if (this.meetingFeeList[i] != id) {
+          newArr.push(this.meetingFeeList[i]);
+        }
+      }
+      this.meetingFeeList = newArr;
+      this.initPlanItemList();
+    },
+    deleteResearchFee(id) {
+      let newArr = [];
+      for (var i = 0; i < this.researchFeeList.length; i++) {
+        if (this.equipmentFeeList[i] != id) {
+          newArr.push(this.researchFeeList[i]);
+        }
+      }
+      this.researchFeeList = newArr;
+      this.initPlanItemList();
+    },
+    deleteAcademicFee(id) {
+      let newArr = [];
+      for (var i = 0; i < this.academicFeeList.length; i++) {
+        if (this.academicFeeList[i] != id) {
+          newArr.push(this.academicFeeList[i]);
+        }
+      }
+      this.academicFeeList = newArr;
+      this.initPlanItemList();
+    },
+    deleteTransportationFee(id) {
+      let newArr = [];
+      for (var i = 0; i < this.transportationFeeList.length; i++) {
+        if (this.transportationFeeList[i] != id) {
+          newArr.push(this.transportationFeeList[i]);
+        }
+      }
+      this.transportationFeeList = newArr;
+      this.initPlanItemList();
+    },
+    deletePublishFee(id) {
+      let newArr = [];
+      for (var i = 0; i < this.publishFeeList.length; i++) {
+        if (this.publishFeeList[i] != id) {
+          newArr.push(this.publishFeeList[i]);
+        }
+      }
+      this.publishFeeList = newArr;
+      this.initPlanItemList();
+    },
+    deletePayment(id) {
+      let newArr = [];
+      for (var i = 0; i < this.paymentList.length; i++) {
+        if (this.paymentList[i] != id) {
+          newArr.push(this.paymentList[i]);
+        }
+      }
+      this.paymentList = newArr;
+      this.initPlanItemList();
+    },
+    deleteAdvisory(id) {
+      let newArr = [];
+      for (var i = 0; i < this.advisoryList.length; i++) {
+        if (this.advisoryList[i] != id) {
+          newArr.push(this.advisoryList[i]);
+        }
+      }
+      this.advisoryList = newArr;
+      this.initPlanItemList();
+    },
+    deleteOtherFee(id) {
+      let newArr = [];
+      for (var i = 0; i < this.otherFeeList.length; i++) {
+        if (this.otherFeeList[i] != id) {
+          newArr.push(this.otherFeeList[i]);
+        }
+      }
+      this.otherFeeList = newArr;
+      this.initPlanItemList();
     }
   }
 }

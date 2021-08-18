@@ -3,10 +3,12 @@ package com.bupt.lams.service;
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.AdvisoryMapper;
+import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.Advisory;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
+import com.bupt.lams.utils.UserInfoUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +24,10 @@ public class AdvisoryService {
     @Resource
     AdvisoryMapper advisoryMapper;
 
-    public List<Advisory> getAdvisoryList() {
-        return advisoryMapper.getAdvisoryList();
-    }
-
     @Transactional(rollbackFor = Exception.class)
     public Long addAdvisory(Advisory advisory) {
         advisory.setItemType(PlanItemTypeEnum.ADVISORY.getIndex());
+        advisory.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
         Double total = advisory.getStandard() * advisory.getAmount() * advisory.getDays() / 10000D;
         advisory.setSubTotal(total);
@@ -71,5 +70,13 @@ public class AdvisoryService {
 
     public Advisory getById(Long id) {
         return advisoryMapper.getById(id);
+    }
+
+    /**
+     * 清空本人创建的、多余的预算明细信息，即，没有和预算计划关联的预算明细信息
+     */
+    public void clear() {
+        LamsUser user = UserInfoUtils.getLoginedUser();
+        advisoryMapper.clear(user.getUsername());
     }
 }

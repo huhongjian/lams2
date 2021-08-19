@@ -6,20 +6,20 @@
           <el-button type="primary" icon="el-icon-plus" @click="showAddWarningView">
             新增
           </el-button>
-          <el-button type="info" @click="showAddView">
+          <el-button type="info" @click="pauseConfig">
             暂停
           </el-button>
-          <el-button @click="deleteProject" style="display: inline-flex;margin-left: 8px" type="danger">
+          <el-button @click="deleteConfig" style="display: inline-flex;margin-left: 8px" type="danger">
             删除
           </el-button>
         </div>
         <div>
           <el-input placeholder="请输入项目序号进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
                     clearable
-                    @clear="initProjects"
+                    @clear="initConfigs"
                     style="width: 350px;margin-right: 10px" v-model="keyword"
-                    @keydown.enter.native="initProjects" :disabled="showAdvanceSearchView"></el-input>
-          <el-button icon="el-icon-search" type="primary" @click="initProjects"
+                    @keydown.enter.native="initConfigs" :disabled="showAdvanceSearchView"></el-input>
+          <el-button icon="el-icon-search" type="primary" @click="initConfigs"
                      :disabled="showAdvanceSearchView">
             搜索
           </el-button>
@@ -34,20 +34,39 @@
         <div v-show="showAdvanceSearchView"
              style="border: 1px solid #759ad1;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;">
           <el-row>
-            <el-col :span="10">
-              项目名称:
-              <el-input size="mini" style="width: 220px" clearable prefix-icon="el-icon-edit"
-                        v-model="searchValue.projectName"></el-input>
-            </el-col>
-            <el-col :span="10">
-              项目类别:
-              <el-select v-model="searchValue.projectType" clearable placeholder="项目类别" size="mini"
+            <el-col :span="8">
+              预算计划:
+              <el-select v-model="searchValue.planId" clearable placeholder="预算计划" size="mini"
                          style="width: 300px;">
                 <el-option
-                    v-for="item in projectTypes"
+                    v-for="item in planList"
+                    :key="item.id"
+                    :label="item.planName"
+                    :value="item.id">
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="8">
+              科研项目:
+              <el-select v-model="searchValue.projectId" clearable placeholder="科研项目" size="mini"
+                         style="width: 300px;">
+                <el-option
+                    v-for="item in projectList"
+                    :key="item.id"
+                    :label="item.projectName"
+                    :value="item.id">
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="8">
+              预算科目:
+              <el-select v-model="searchValue.itemType" clearable placeholder="预算科目" size="mini"
+                         style="width: 300px;">
+                <el-option
+                    v-for="item in planItemTypes"
                     :key="item.id"
                     :label="item.name"
-                    :value="item.name">
+                    :value="item.id">
                 </el-option>
               </el-select>
             </el-col>
@@ -74,7 +93,7 @@
             <el-col :span="4">
               <el-button size="mini" @click="clearSearchValue">重置</el-button>
               <el-button size="mini" @click="showAdvanceSearchView = false">取消</el-button>
-              <el-button size="mini" icon="el-icon-search" type="primary" @click="initProjectsAdv">搜索</el-button>
+              <el-button size="mini" icon="el-icon-search" type="primary" @click="initConfigsAdv">搜索</el-button>
             </el-col>
           </el-row>
         </div>
@@ -93,7 +112,7 @@
           style="width: 100%">
         <el-table-column
             type="selection"
-            width="55">
+            width="50">
         </el-table-column>
         <el-table-column
             fixed
@@ -101,7 +120,19 @@
             align="left"
             width="80">
           <template slot-scope="scope">
-            <el-button size="mini" @click="getOperateList(scope.row)">{{ scope.row.id }}</el-button>
+            <el-button size="mini" @click="showConfigDetail(scope.row)">{{ scope.row.id }}</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column
+            prop="configStatusName"
+            label="状态"
+            width="70">
+          <template slot-scope="scope">
+            <span style="color: #00e079; font-weight: bold"
+                  v-if="scope.row.configStatus=='1'">{{ scope.row.configStatusName }}</span>
+            <span style="color: #c0c0c0;"
+                  v-else-if="scope.row.configStatus=='2'">{{ scope.row.configStatusName }}</span>
+            <span v-else>{{ scope.row.configStatusName }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -117,30 +148,19 @@
         </el-table-column>
         <el-table-column
             prop="itemTypeName"
+            :show-overflow-tooltip="true"
             width="120"
             label="预算科目">
         </el-table-column>
         <el-table-column
             prop="executeRate"
-            width="90"
-            label="报警执行率">
-        </el-table-column>
-        <el-table-column
-            prop="freqName"
-            width="80"
-            align="left"
-            label="报警频率">
-        </el-table-column>
-        <el-table-column
-            prop="toUserString"
-            width="200"
-            align="left"
-            label="接收人">
+            width="120"
+            label="预期执行率（%）">
         </el-table-column>
         <el-table-column
             prop="userEmail"
-            width="150"
-            align="left"
+            width="100"
+            :show-overflow-tooltip="true"
             label="创建人">
         </el-table-column>
         <el-table-column
@@ -171,37 +191,79 @@
     <NewWarning v-on:close="newWarningVisible = false" :newWarningVisible="newWarningVisible"
                 :warningConfig="warningConfig"
                 :title="title"></NewWarning>
-    <ProjectDetail v-on:close="projectDetailVisible = false" :projectDetailVisible="projectDetailVisible"
-                   :project="project" :title="title"></ProjectDetail>
+    <WarningDetail v-on:close="warningDetailVisible = false" :warningDetailVisible="warningDetailVisible"
+                   :warningConfig="warningConfig"
+                   :title="title"></WarningDetail>
   </div>
 </template>
 
 <script>
-import PlanDetail from "@/components/budget/PlanDetail";
 import NewWarning from "@/components/budget/NewWarning";
+import WarningDetail from "@/components/budget/WarningDetail";
 
 export default {
   name: "BudgetConf",
   components: {
     NewWarning,
-    PlanDetail
+    WarningDetail
   },
   mounted() {
     this.initConfigs();
+    this.initPlans();
+    this.initProjects();
   },
   data() {
     return {
-      headTableData: {
-        total: '',
-        inUse: '',
-        free: '',
-        inRepair: '',
-        money: '',
-        cleaned: ''
-      },
+      planItemTypes: [
+        {
+          id: 1,
+          name: '设备费'
+        },
+        {
+          id: 2,
+          name: '材料费'
+        },
+        {
+          id: 3,
+          name: '测试化验加工费'
+        },
+        {
+          id: 4,
+          name: '会议费'
+        },
+        {
+          id: 5,
+          name: '课题调研差旅费'
+        },
+        {
+          id: 6,
+          name: '国内学术会议差旅费'
+        },
+        {
+          id: 7,
+          name: '北京市内交通费'
+        },
+        {
+          id: 8,
+          name: '出版/文献/信息传播/知识产权事务费'
+        },
+        {
+          id: 9,
+          name: '劳务费'
+        },
+        {
+          id: 10,
+          name: '专家咨询费'
+        },
+        {
+          id: 11,
+          name: '其他支出'
+        },
+      ],
       searchValue: {
-        projectName: null,
-        projectType: null,
+        planId: null,
+        projectId: null,
+        itemType: null,
         userEmail: null,
         dateScope: null
       },
@@ -211,7 +273,7 @@ export default {
       loading: false,
       newWarningVisible: false,
       // 详情页可见性
-      projectDetailVisible: false,
+      warningDetailVisible: false,
       total: 0,
       page: 1,
       keyword: '',
@@ -224,16 +286,89 @@ export default {
         executeRate: "",
         userEmail: "",
         toUser: [],
-        dateScope: "",
+        dateScope: [],
         createTime: "",
         updateTime: ""
       },
       projectTypes: [],
+      planList: [],
+      projectList: [],
+      configIds: [],
       type: ""
     }
   },
   methods: {
-    initConfigs(){
+    initPlans() {
+      let url = '/plan/get/all';
+      this.getRequest(url).then(resp => {
+        if (resp) {
+          this.planList = resp.obj;
+        }
+      });
+    },
+    initProjects() {
+      let url = '/project/get/all';
+      this.getRequest(url).then(resp => {
+        if (resp) {
+          this.projectList = resp.obj;
+        }
+      });
+    },
+    showConfigDetail(data) {
+      this.title = '预算报警配置详情';
+      this.warningConfig = data;
+      this.warningDetailVisible = true;
+    },
+    sizeChange(currentSize) {
+      this.size = currentSize;
+      if (this.type && this.type == 'advanced') {
+        this.initConfigsAdv();
+      } else {
+        this.initConfigs();
+      }
+    },
+    currentChange(currentPage) {
+      this.page = currentPage;
+      if (this.type && this.type == 'advanced') {
+        this.initConfigsAdv();
+      } else {
+        this.initConfigs();
+      }
+    },
+    handleSelectionChange(val) {
+      this.configIds = [];
+      for (let i = 0; i < val.length; i++) {
+        this.configIds.push(val[i].id);
+      }
+    },
+    pauseConfig() {
+      this.putRequest("/warning/config/pause", this.configIds).then(resp => {
+        if (resp) {
+          this.configIds = [];
+          this.initConfigs();
+        }
+      })
+    },
+    deleteConfig() {
+      this.$confirm('此操作将永久删除选中的记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteRequestWithData("/warning/config/delete", this.configIds).then(resp => {
+          if (resp) {
+            this.configIds = [];
+            this.initConfigs();
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
+    initConfigs() {
       this.type = '';
       this.loading = true;
       let url = '/warning/config/get/?page=' + this.page + '&size=' + this.size + "&projectId=" + this.keyword;
@@ -264,9 +399,52 @@ export default {
       this.title = '新增预算报警';
       this.newWarningVisible = true;
     },
+    showEditView(data) {
+      this.title = '编辑预算报警';
+      this.warningConfig = data;
+      this.warningConfig.dateScope = [];
+      this.warningConfig.dateScope.push(data.startTime);
+      this.warningConfig.dateScope.push(data.endTime);
+      this.newWarningVisible = true;
+    },
     handleClose() {
-      this.countType = null;
       this.$emit('close');
+    },
+    initConfigsAdv() {
+      this.type = 'advanced'
+      this.loading = true;
+      let url = '/warning/config/get?page=' + this.page + '&size=' + this.size;
+      if (this.searchValue.planId) {
+        url += '&planId=' + this.searchValue.planId;
+      }
+      if (this.searchValue.projectId) {
+        url += '&projectId=' + this.searchValue.projectId;
+      }
+      if (this.searchValue.itemType) {
+        url += '&itemType=' + this.searchValue.itemType;
+      }
+      if (this.searchValue.userEmail) {
+        url += '&userEmail=' + this.searchValue.userEmail;
+      }
+      if (this.searchValue.dateScope) {
+        url += '&dateScope=' + this.searchValue.dateScope;
+      }
+      this.getRequest(url).then(resp => {
+        this.loading = false;
+        if (resp) {
+          this.configs = resp.data;
+          this.total = resp.total;
+        }
+      });
+    },
+    clearSearchValue() {
+      this.searchValue = {
+        planId: null,
+        projectId: null,
+        itemType: null,
+        userEmail: null,
+        dateScope: null
+      }
     },
   }
 }

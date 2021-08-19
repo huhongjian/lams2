@@ -15,4 +15,8 @@ public interface WarningConfigMapper {
     List<WarningConfig> getWarningConfigByCondition(WarningConfigQueryCondition condition);
 
     int insertSelective(WarningConfig warningConfig);
+
+    void update(WarningConfig warningConfig);
+
+    void deleteConfigs(List<Long> ids);
 }

@@ -29,4 +29,7 @@ public class WarningConfigQueryCondition {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date currentDate;
     private String userEmail;
+    private Long planId;
+    private Long projectId;
+    private Integer itemType;
 }

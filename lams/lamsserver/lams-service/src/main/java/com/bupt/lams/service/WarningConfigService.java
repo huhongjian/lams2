@@ -9,10 +9,12 @@ import com.bupt.lams.model.Project;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.model.WarningConfig;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -75,5 +77,26 @@ public class WarningConfigService {
         bean.setData(res);
         bean.setTotal(total);
         return bean;
+    }
+
+    public void deleteConfigs(List<Long> ids) {
+        warningConfigMapper.deleteConfigs(ids);
+    }
+
+    public void update(WarningConfig config) {
+        warningConfigMapper.update(config);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void pauseConfig(List<Long> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return;
+        }
+        for (Long id : ids) {
+            WarningConfig config = new WarningConfig();
+            config.setId(id);
+            config.setConfigStatus(ConfigStatusEnum.STOP.getIndex());
+            warningConfigMapper.update(config);
+        }
     }
 }

@@ -211,10 +211,10 @@ export default {
       if (this.warningConfig.id) {
         this.$refs['configForm'].validate(valid => {
           if (valid) {
-            this.putRequest("/plan/edit", this.warningConfig).then(resp => {
+            this.putRequest("/warning/config/edit", this.warningConfig).then(resp => {
               if (resp) {
                 this.$emit('close');
-                this.$parent.initPlans();
+                this.$parent.initConfigs();
               }
             })
           }

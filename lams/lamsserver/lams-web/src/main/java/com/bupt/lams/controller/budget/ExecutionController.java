@@ -2,10 +2,13 @@ package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.ExecutionQueryCondition;
 import com.bupt.lams.model.BudgetRecord;
+import com.bupt.lams.model.Plan;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.model.planItem.PlanItem;
 import com.bupt.lams.service.BudgetRecordService;
+import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -60,5 +63,19 @@ public class ExecutionController {
             return RespBean.error("新增项目失败！");
         }
         return response;
+    }
+
+    @DeleteMapping("/delete")
+    public RespBean deleteExecution(@RequestBody List<Long> rids) {
+        // 只允许教师删除
+        if (UserInfoUtils.isTeacher() == false) {
+            return RespBean.error("您没有撤销权限，请联系管理员!");
+        }
+        try {
+            budgetRecordService.deleteExecution(rids);
+        } catch (Exception e) {
+            return RespBean.error("撤销失败!");
+        }
+        return RespBean.ok("撤销成功!");
     }
 }

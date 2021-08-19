@@ -99,7 +99,7 @@ public class ProjectController {
 
     @DeleteMapping("/delete")
     public RespBean deleteProjects(@RequestBody List<Long> pids) {
-        // 工单只允许教师删除
+        // 只允许教师删除
         if (UserInfoUtils.isTeacher() == false) {
             return RespBean.error("您没有删除权限，请联系管理员!");
         }

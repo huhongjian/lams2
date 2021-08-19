@@ -811,6 +811,8 @@
                  :executePlanVisible="executePlanVisible"
                  :title="title"></ExecutePlan>
     <ExecuteDetail v-on:close="executeDetailVisible = false"
+                   v-on:freshPlan="freshPlan"
+                   :planId="plan.id"
                    :executeDetailVisible="executeDetailVisible"
                    :budgetRecordList="budgetRecordList"
                    :title="title"></ExecuteDetail>

@@ -10,6 +10,7 @@ import com.bupt.lams.model.planItem.PlanItem;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.SpringContextUtil;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -45,16 +46,12 @@ public class BudgetRecordService {
         return transToRespPageBean(page, size, data);
     }
 
-    public List<Project> getAllProjects() {
-        return budgetRecordMapper.getAllProjects();
-    }
-
     @Transactional(rollbackFor = Exception.class)
     public Long addBudgetRecord(BudgetRecord budgetRecord) throws Exception {
         LamsUser user = UserInfoUtils.getLoginedUser();
         budgetRecord.setUserEmail(user.getUsername());
         budgetRecordMapper.insertSelective(budgetRecord);
-        executePlanItem(budgetRecord);
+        executePlanItem(budgetRecord, false);
         return budgetRecord.getId();
     }
 
@@ -80,8 +77,11 @@ public class BudgetRecordService {
         return bean;
     }
 
-    private void executePlanItem(BudgetRecord budgetRecord) throws Exception {
+    private void executePlanItem(BudgetRecord budgetRecord, Boolean isRevert) throws Exception {
         Double funding = budgetRecord.getFunding();
+        if (isRevert) {
+            funding = -funding;
+        }
 
         Class service = BudgetConstant.ItemTypeMap.get(budgetRecord.getItemType());
         Class pojo = BudgetConstant.ItemTypePojoMap.get(budgetRecord.getItemType());
@@ -126,5 +126,17 @@ public class BudgetRecordService {
         condition.setItemType(item.getItemType());
         condition.setPlanItemId(item.getId());
         return budgetRecordMapper.getBudgetRecordByCondition(condition);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteExecution(List<Long> rids) throws Exception {
+        List<BudgetRecord> recordList = budgetRecordMapper.getByIds(rids);
+        if (CollectionUtils.isEmpty(recordList)) {
+            return;
+        }
+        for (BudgetRecord record : recordList) {
+            executePlanItem(record, true);
+        }
+        budgetRecordMapper.deleteManyByIds(rids);
     }
 }

@@ -5,7 +5,7 @@
         :visible.sync="executeDetailVisible"
         :before-close="handleClose"
         width="80%">
-      <el-button @click="deleteProject" style="display: inline-flex;margin-left: 8px" type="danger">
+      <el-button @click="revertExecution" style="display: inline-flex;margin-left: 8px" type="danger">
         撤销执行
       </el-button>
       <div style="margin-top: 10px">
@@ -24,48 +24,55 @@
               width="55">
           </el-table-column>
           <el-table-column
-              fixed
               prop="id"
               label="流水编号"
-              align="left"
               width="80">
           </el-table-column>
           <el-table-column
-              prop="projectName"
-              align="left"
+              prop="funding"
               width="100"
               label="金额（万元）">
           </el-table-column>
           <el-table-column
-              prop="projectType"
+              prop="projectName"
               :show-overflow-tooltip="true"
               label="科研项目">
           </el-table-column>
           <el-table-column
-              prop="years"
+              prop="planName"
+              :show-overflow-tooltip="true"
               label="预算计划">
           </el-table-column>
           <el-table-column
-              prop="funding"
+              prop="itemTypeName"
+              :show-overflow-tooltip="true"
+              width="150"
               label="预算科目">
           </el-table-column>
           <el-table-column
-              prop="executeRate"
-              width="95"
-              align="left"
+              prop="planItemId"
+              width="100"
+              label="预算明细序号">
+          </el-table-column>
+          <el-table-column
+              prop="remark"
+              :show-overflow-tooltip="true"
               label="备注">
           </el-table-column>
           <el-table-column
+              prop="user.name"
+              width="100"
+              label="执行人">
+          </el-table-column>
+          <el-table-column
               prop="createTime"
-              width="150"
-              align="left" v
-              label="申请时间">
+              width="100"
+              label="执行时间">
           </el-table-column>
         </el-table>
       </div>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="$emit('close')">取 消</el-button>
-    <el-button type="primary" @click="$emit('close')">确 定</el-button>
+    <el-button @click="$emit('close')">关 闭</el-button>
   </span>
     </el-dialog>
   </div>
@@ -75,10 +82,9 @@
 
 export default {
   name: "ExecuteDetail",
-  props: ['title', 'executeDetailVisible', 'budgetRecordList'],
+  props: ['title', 'executeDetailVisible', 'budgetRecordList', 'planId'],
   data() {
     return {
-      budgetRecordList: [],
       recordIds: [],
       loading: false,
       execution: {}
@@ -93,6 +99,26 @@ export default {
     },
     handleClose() {
       this.$emit('close');
+    },
+    revertExecution() {
+      this.$confirm('此操作将永久删除选中的记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteRequestWithData("/execution/delete", this.recordIds).then(resp => {
+          if (resp) {
+            this.recordIds = [];
+            this.$parent.initBudgetRecordList();
+            this.$emit('freshPlan', this.planId);
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     }
   }
 }

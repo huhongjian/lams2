@@ -24,9 +24,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/BudgetRecordMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/BudgetRecordMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/ExecutionQueryCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/ExecutionQueryCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/budget/PlanDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/budget/PlanDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/MessageContentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/MessageContentMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/WarningRecordQueryCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/dto/WarningRecordQueryCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/views/budget/BudgetWarn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/views/budget/BudgetWarn.vue" afterDir="false" />
     </list>
     <list id="d9c6d090-d8d0-42d6-8b8c-ce0025f2f90f" name="不提交" comment="">
       <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/target/classes/application.yml" afterDir="false" />
@@ -233,14 +233,7 @@
       <workItem from="1609335106759" duration="17679000" />
       <workItem from="1627996831881" duration="10069000" />
       <workItem from="1628301805541" duration="203518000" />
-      <workItem from="1629268569796" duration="42290000" />
-    </task>
-    <task id="LOCAL-00119" summary="取消时删除无效资产信息">
-      <created>1608567698831</created>
-      <option name="number" value="00119" />
-      <option name="presentableId" value="LOCAL-00119" />
-      <option name="project" value="LOCAL" />
-      <updated>1608567698831</updated>
+      <workItem from="1629268569796" duration="44133000" />
     </task>
     <task id="LOCAL-00120" summary="修改新增入库单逻辑">
       <created>1608575676381</created>
@@ -578,7 +571,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629360521398</updated>
     </task>
-    <option name="localTasksCounter" value="168" />
+    <task id="LOCAL-00168" summary="预算计划">
+      <created>1629363715913</created>
+      <option name="number" value="00168" />
+      <option name="presentableId" value="LOCAL-00168" />
+      <option name="project" value="LOCAL" />
+      <updated>1629363715913</updated>
+    </task>
+    <option name="localTasksCounter" value="169" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -645,10 +645,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="524" y="114" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1629208605051" />
-    <state x="350" y="0" key="CommitChangelistDialog2" timestamp="1629360513914">
+    <state x="350" y="0" key="CommitChangelistDialog2" timestamp="1629363705839">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="350" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1629360513914" />
+    <state x="350" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1629363705839" />
     <state width="699" height="466" key="DebuggerActiveHint" timestamp="1629209073590">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -661,54 +661,54 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1628924564362" />
-    <state width="1493" height="377" key="GridCell.Tab.0.bottom" timestamp="1629363586108">
+    <state width="1493" height="377" key="GridCell.Tab.0.bottom" timestamp="1629365455287">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="377" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1629363586108" />
-    <state width="1493" height="377" key="GridCell.Tab.0.center" timestamp="1629363586107">
+    <state width="1493" height="377" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1629365455287" />
+    <state width="1493" height="377" key="GridCell.Tab.0.center" timestamp="1629365455287">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="377" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1629363586107" />
-    <state width="1493" height="377" key="GridCell.Tab.0.left" timestamp="1629363586107">
+    <state width="1493" height="377" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1629365455287" />
+    <state width="1493" height="377" key="GridCell.Tab.0.left" timestamp="1629365455287">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="377" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1629363586107" />
-    <state width="1493" height="377" key="GridCell.Tab.0.right" timestamp="1629363586108">
+    <state width="1493" height="377" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1629365455287" />
+    <state width="1493" height="377" key="GridCell.Tab.0.right" timestamp="1629365455287">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="377" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1629363586108" />
-    <state width="1493" height="377" key="GridCell.Tab.1.bottom" timestamp="1629363585877">
+    <state width="1493" height="377" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1629365455287" />
+    <state width="1493" height="377" key="GridCell.Tab.1.bottom" timestamp="1629365455287">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="377" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1629363585877" />
-    <state width="1493" height="377" key="GridCell.Tab.1.center" timestamp="1629363585876">
+    <state width="1493" height="377" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1629365455287" />
+    <state width="1493" height="377" key="GridCell.Tab.1.center" timestamp="1629365455287">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="377" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1629363585876" />
-    <state width="1493" height="377" key="GridCell.Tab.1.left" timestamp="1629363585876">
+    <state width="1493" height="377" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1629365455287" />
+    <state width="1493" height="377" key="GridCell.Tab.1.left" timestamp="1629365455287">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="377" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1629363585876" />
-    <state width="1493" height="377" key="GridCell.Tab.1.right" timestamp="1629363585876">
+    <state width="1493" height="377" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1629365455287" />
+    <state width="1493" height="377" key="GridCell.Tab.1.right" timestamp="1629365455287">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="377" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1629363585876" />
-    <state width="1493" height="377" key="GridCell.Tab.2.bottom" timestamp="1629363585877">
+    <state width="1493" height="377" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1629365455287" />
+    <state width="1493" height="377" key="GridCell.Tab.2.bottom" timestamp="1629365455287">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="377" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1629363585877" />
-    <state width="1493" height="377" key="GridCell.Tab.2.center" timestamp="1629363585877">
+    <state width="1493" height="377" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1629365455287" />
+    <state width="1493" height="377" key="GridCell.Tab.2.center" timestamp="1629365455287">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="377" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1629363585877" />
-    <state width="1493" height="377" key="GridCell.Tab.2.left" timestamp="1629363585877">
+    <state width="1493" height="377" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1629365455287" />
+    <state width="1493" height="377" key="GridCell.Tab.2.left" timestamp="1629365455287">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="377" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1629363585877" />
-    <state width="1493" height="377" key="GridCell.Tab.2.right" timestamp="1629363585877">
+    <state width="1493" height="377" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1629365455287" />
+    <state width="1493" height="377" key="GridCell.Tab.2.right" timestamp="1629365455287">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="377" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1629363585877" />
+    <state width="1493" height="377" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1629365455287" />
     <state x="502" y="114" key="RollbackChangesDialog" timestamp="1625923759795">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -762,9 +762,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/ExecutionController.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="17" />
+          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/WarningController.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

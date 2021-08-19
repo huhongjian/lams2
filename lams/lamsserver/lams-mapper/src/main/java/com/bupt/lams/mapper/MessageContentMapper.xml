@@ -5,19 +5,22 @@
 <mapper namespace="com.bupt.lams.mapper.MessageContentMapper">
     <sql id="baseInfoQuery">
         <if test="id !=null">
-            and p.id = #{id}
+            and m.id = #{id}
         </if>
         <if test="projectName !=null and projectName!=''">
-            and p.projectName like concat('%',#{projectName},'%')
+            and m.projectName like concat('%',#{projectName},'%')
         </if>
-        <if test="projectType !=null and projectType!=''">
-            and p.projectType like concat('%',#{projectType},'%')
+        <if test="planName !=null and planName!=''">
+            and m.planName like concat('%',#{planName},'%')
+        </if>
+        <if test="itemTypeName !=null and itemTypeName!=''">
+            and m.itemTypeName like concat('%',#{itemTypeName},'%')
         </if>
         <if test="userEmail !=null and userEmail!=''">
-            and p.userEmail like concat('%',#{userEmail},'%')
+            and m.toEmail like concat('%',#{userEmail},'%')
         </if>
         <if test="startDate !=null and endDate !=null">
-            and p.createTime between #{startDate} and #{endDate}
+            and m.createTime between #{startDate} and #{endDate}
         </if>
     </sql>
     <select id="getByCondition" parameterType="com.bupt.lams.dto.WarningRecordQueryCondition"

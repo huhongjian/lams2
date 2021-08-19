@@ -21,10 +21,8 @@ public class WarningRecordQueryCondition {
     private Date startDate;
     private Date endDate;
 
-    /**
-     * 科研项目信息
-     */
+    private String planName;
     private String projectName;
-    private String projectType;
+    private String itemTypeName;
     private String userEmail;
 }

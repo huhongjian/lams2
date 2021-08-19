@@ -59,7 +59,6 @@
                            :percentage=plan.planItemDataMap.equipmentFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.planItemDataMap.equipmentFeeData.planItemList"
-                  @selection-change="handleSelectionChange"
                   stripe
                   border
                   v-loading="loading"
@@ -124,7 +123,6 @@
                            :percentage=plan.planItemDataMap.materialFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.planItemDataMap.materialFeeData.planItemList"
-                  @selection-change="handleSelectionChange"
                   stripe
                   border
                   v-loading="loading"
@@ -196,7 +194,6 @@
                            :percentage=plan.planItemDataMap.testingFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.planItemDataMap.testingFeeData.planItemList"
-                  @selection-change="handleSelectionChange"
                   stripe
                   border
                   v-loading="loading"
@@ -258,7 +255,6 @@
                            :percentage=plan.planItemDataMap.meetingFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.planItemDataMap.meetingFeeData.planItemList"
-                  @selection-change="handleSelectionChange"
                   stripe
                   border
                   v-loading="loading"
@@ -336,7 +332,6 @@
                            :percentage=plan.planItemDataMap.researchFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.planItemDataMap.researchFeeData.planItemList"
-                  @selection-change="handleSelectionChange"
                   stripe
                   border
                   v-loading="loading"
@@ -421,7 +416,6 @@
                            :percentage=plan.planItemDataMap.academicFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.planItemDataMap.academicFeeData.planItemList"
-                  @selection-change="handleSelectionChange"
                   stripe
                   border
                   v-loading="loading"
@@ -500,7 +494,6 @@
                            :percentage=plan.planItemDataMap.transFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.planItemDataMap.transFeeData.planItemList"
-                  @selection-change="handleSelectionChange"
                   stripe
                   border
                   v-loading="loading"
@@ -606,7 +599,6 @@
                            :percentage=plan.planItemDataMap.paymentData.executeRate></el-progress>
               <el-table
                   :data="plan.planItemDataMap.paymentData.planItemList"
-                  @selection-change="handleSelectionChange"
                   stripe
                   border
                   v-loading="loading"
@@ -678,7 +670,6 @@
                            :percentage=plan.planItemDataMap.advisoryData.executeRate></el-progress>
               <el-table
                   :data="plan.planItemDataMap.advisoryData.planItemList"
-                  @selection-change="handleSelectionChange"
                   stripe
                   border
                   v-loading="loading"
@@ -750,7 +741,6 @@
                            :percentage=plan.planItemDataMap.otherFeeData.executeRate></el-progress>
               <el-table
                   :data="plan.planItemDataMap.otherFeeData.planItemList"
-                  @selection-change="handleSelectionChange"
                   stripe
                   border
                   v-loading="loading"

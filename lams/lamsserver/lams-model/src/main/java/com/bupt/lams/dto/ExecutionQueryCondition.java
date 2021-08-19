@@ -21,6 +21,9 @@ public class ExecutionQueryCondition {
     private Date startDate;
     private Date endDate;
 
+    private String planName;
+    private Long projectId;
+    private String userEmail;
     private Long planItemId;
     private Integer itemType;
 }

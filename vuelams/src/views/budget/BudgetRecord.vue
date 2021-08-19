@@ -3,21 +3,17 @@
     <div>
       <div style="display: flex;justify-content: space-between; width: 100%">
         <div>
-          <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
-                     icon="el-icon-download">
-            导出数据
-          </el-button>
-          <el-button @click="deleteProject" style="display: inline-flex;margin-left: 8px" type="danger">
+          <el-button @click="revertExecution" style="display: inline-flex;margin-left: 8px" type="danger">
             撤销执行
           </el-button>
         </div>
         <div>
           <el-input placeholder="请输入项目序号进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
                     clearable
-                    @clear="initProjects"
+                    @clear="initExecutions"
                     style="width: 350px;margin-right: 10px" v-model="keyword"
-                    @keydown.enter.native="initProjects" :disabled="showAdvanceSearchView"></el-input>
-          <el-button icon="el-icon-search" type="primary" @click="initProjects"
+                    @keydown.enter.native="initExecutions" :disabled="showAdvanceSearchView"></el-input>
+          <el-button icon="el-icon-search" type="primary" @click="initExecutions"
                      :disabled="showAdvanceSearchView">
             搜索
           </el-button>
@@ -33,17 +29,17 @@
              style="border: 1px solid #759ad1;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;">
           <el-row>
             <el-col :span="10">
-              项目名称:
+              计划名称:
               <el-input size="mini" style="width: 220px" clearable prefix-icon="el-icon-edit"
-                        v-model="searchValue.userEmail"></el-input>
+                        v-model="searchValue.planName"></el-input>
             </el-col>
             <el-col :span="10">
-              项目类别:
-              <el-select v-model="searchValue.status" clearable placeholder="状态" size="mini" style="width: 300px;">
+              科研项目:
+              <el-select v-model="searchValue.projectId" clearable placeholder="科研项目" size="mini" style="width: 300px;">
                 <el-option
-                    v-for="item in projectTypes"
+                    v-for="item in projectLists"
                     :key="item.id"
-                    :label="item.name"
+                    :label="item.projectName"
                     :value="item.id">
                 </el-option>
               </el-select>
@@ -56,7 +52,7 @@
                         v-model="searchValue.userEmail"></el-input>
             </el-col>
             <el-col :span="10">
-              创建时间:
+              执行时间:
               <el-date-picker
                   v-model="searchValue.dateScope"
                   type="daterange"
@@ -71,7 +67,7 @@
             <el-col :span="4">
               <el-button size="mini" @click="clearSearchValue">重置</el-button>
               <el-button size="mini" @click="showAdvanceSearchView = false">取消</el-button>
-              <el-button size="mini" icon="el-icon-search" type="primary" @click="initOrdersAdv">搜索</el-button>
+              <el-button size="mini" icon="el-icon-search" type="primary" @click="initExecutionsAdv">搜索</el-button>
             </el-col>
           </el-row>
         </div>
@@ -93,10 +89,8 @@
             width="55">
         </el-table-column>
         <el-table-column
-            fixed
             prop="id"
             label="流水编号"
-            align="left"
             width="80">
         </el-table-column>
         <el-table-column
@@ -122,12 +116,17 @@
             label="预算科目">
         </el-table-column>
         <el-table-column
+            prop="planItemId"
+            width="100"
+            label="预算明细序号">
+        </el-table-column>
+        <el-table-column
             prop="remark"
             align="left"
             label="备注">
         </el-table-column>
         <el-table-column
-            prop="userEmail"
+            prop="user.name"
             width="150"
             align="left"
             label="执行用户">
@@ -149,137 +148,69 @@
         </el-pagination>
       </div>
     </div>
-    <NewProject v-on:close="newProjectVisible = false" :newProjectVisible="newProjectVisible" :project="project"
-                :title="title" :projectTypes="projectTypes"></NewProject>
-    <ProjectDetail v-on:close="projectDetailVisible = false" :projectDetailVisible="projectDetailVisible"
-                   :project="project" :title="title"></ProjectDetail>
   </div>
 </template>
 
 <script>
-import ProjectDetail from "@/components/budget/ProjectDetail";
-import NewProject from "@/components/budget/NewProject";
 
 export default {
   name: "BudgetProject",
   data() {
     return {
-      headTableData: {
-        total: '',
-        inUse: '',
-        free: '',
-        inRepair: '',
-        money: '',
-        cleaned: ''
-      },
       searchValue: {
-        status: null,
+        planName: null,
+        projectId: null,
         userEmail: null,
         dateScope: null
       },
-      title: '',
       showAdvanceSearchView: false,
       executions: [],
+      recordIds: [],
       loading: false,
-      newProjectVisible: false,
-      // 详情页可见性
-      projectDetailVisible: false,
       total: 0,
       page: 1,
       keyword: '',
       size: 10,
-      project: {
-        id: "",
-        name: "",
-        type: "",
-        years: "",
-        funding: "",
-        userEmail: "admin",
-        user: {
-          id: "",
-          name: "",
-          phone: "",
-          username: "",
-          enabled: "",
-          remark: ""
-        },
-        createTime: "",
-        updateTime: ""
-      },
-      projectTypes: [],
+      projectLists: [],
       type: ""
     }
   },
-  components: {
-    NewProject,
-    ProjectDetail
-  },
   mounted() {
     this.initExecutions();
+    this.initProjects();
   },
   methods: {
-    emptyProject() {
-      this.project = {
-        id: "",
-        name: "",
-        type: "",
-        years: "",
-        funding: "",
-        userEmail: "",
-        user: {
-          id: "",
-          name: "",
-          phone: "",
-          username: "",
-        },
-        createTime: "",
-        updateTime: ""
-      };
+    handleSelectionChange(val) {
+      this.recordIds = [];
+      for (let i = 0; i < val.length; i++) {
+        this.recordIds.push(val[i].id);
+      }
     },
-    initHeadTableData() {
-      let url = '/project/headTable'
-      this.getRequest(url).then(resp => {
-        if (resp) {
-          this.headTableData = resp.obj;
-        }
-      });
-    },
-    showAddView() {
-      this.emptyProject();
-      this.title = '新增科研项目';
-      this.newProjectVisible = true;
-    },
-    showDetailView(data) {
-      this.title = '科研项目详情';
-      this.project = data;
-      this.projectDetailVisible = true;
-    },
-    sizeChange: function (currentSize) {
+    sizeChange(currentSize) {
       this.size = currentSize;
-      this.initOrders();
+      if (this.type && this.type == 'advanced') {
+        this.initExecutionsAdv();
+      } else {
+        this.initExecutions();
+      }
     },
-    currentChange: function (currentPage) {
+    currentChange(currentPage) {
       this.page = currentPage;
-      this.initOrdersAdv();
+      if (this.type && this.type == 'advanced') {
+        this.initExecutionsAdv();
+      } else {
+        this.initExecutions();
+      }
     },
-    initExecutions() {
-      this.type = '';
-      this.loading = true;
-      let url = '/execution/get/?page=' + this.page + '&size=' + this.size + "&executionId=" + this.keyword;
-      this.getRequest(url).then(resp => {
-        this.loading = false;
-        if (resp) {
-          this.executions = resp.data;
-          this.total = resp.total;
-        }
-      });
-    },
-    initOrdersAdv() {
+    initExecutionsAdv() {
       this.type = 'advanced'
       this.loading = true;
-      let url = '/order/project/get/?page=' + this.page + '&size=' + this.size;
-      if (this.searchValue.status) {
-        url += '&status=' + this.searchValue.status;
+      let url = '/execution/get/?page=' + this.page + '&size=' + this.size;
+      if (this.searchValue.planName) {
+        url += '&planName=' + this.searchValue.planName;
+      }
+      if (this.searchValue.projectId) {
+        url += '&projectId=' + this.searchValue.projectId;
       }
       if (this.searchValue.userEmail) {
         url += '&userEmail=' + this.searchValue.userEmail;
@@ -290,23 +221,55 @@ export default {
       this.getRequest(url).then(resp => {
         this.loading = false;
         if (resp) {
-          this.orders = resp.data;
+          this.executions = resp.data;
+          this.total = resp.total;
+        }
+      });
+    },
+    initExecutions() {
+      this.type = '';
+      this.loading = true;
+      let url = '/execution/get/?page=' + this.page + '&size=' + this.size + "&id=" + this.keyword;
+      this.getRequest(url).then(resp => {
+        this.loading = false;
+        if (resp) {
+          this.executions = resp.data;
           this.total = resp.total;
         }
       });
     },
     clearSearchValue() {
       this.searchValue = {
-        status: null,
+        planName: null,
+        projectId: null,
         userEmail: null,
-        beginDateScope: null
+        dateScope: null
       }
     },
-    initProjectTypes() {
-      let url = '/project/types/get';
+    revertExecution() {
+      this.$confirm('此操作将永久删除选中的记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteRequestWithData("/execution/delete", this.recordIds).then(resp => {
+          if (resp) {
+            this.recordIds = [];
+            this.initExecutions();
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
+    initProjects() {
+      let url = '/project/get/all';
       this.getRequest(url).then(resp => {
         if (resp) {
-          this.projectTypes = resp.obj;
+          this.projectLists = resp.obj;
         }
       });
     },
@@ -315,31 +278,4 @@ export default {
 </script>
 
 <style scoped>
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both
-}
-
-.box-card {
-  width: 19.8%;
-  float: left;
-}
-
-.box-title {
-  font-size: 14px;
-  font-family: 微软雅黑;
-  font-weight: bold;
-}
-
-.box-value {
-  font-size: 14px;
-  font-family: 微软雅黑;
-  font-weight: bold;
-}
 </style>

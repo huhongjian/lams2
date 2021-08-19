@@ -37,8 +37,17 @@
         <if test="planItemId !=null">
             and b.planItemId = #{planItemId}
         </if>
+        <if test="userEmail !=null and userEmail!=''">
+            and b.userEmail like concat('%',#{userEmail},'%')
+        </if>
+        <if test="planName !=null and planName!=''">
+            and b.planName like concat('%',#{planName},'%')
+        </if>
+        <if test="projectId !=null">
+            and b.projectId = #{projectId}
+        </if>
         <if test="startDate !=null and endDate !=null">
-            and b.createTime between #{startDate} and #{endDate}
+            and b.executeDate between #{startDate} and #{endDate}
         </if>
     </sql>
     <select id="getBudgetRecordByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"

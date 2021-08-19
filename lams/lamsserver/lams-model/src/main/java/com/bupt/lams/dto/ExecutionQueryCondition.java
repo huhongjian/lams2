@@ -21,10 +21,6 @@ public class ExecutionQueryCondition {
     private Date startDate;
     private Date endDate;
 
-    /**
-     * 科研项目信息
-     */
-    private String projectName;
-    private String projectType;
-    private String userEmail;
+    private Long planItemId;
+    private Integer itemType;
 }

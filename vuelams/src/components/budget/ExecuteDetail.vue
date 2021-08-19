@@ -78,6 +78,7 @@ export default {
   props: ['title', 'executeDetailVisible', 'budgetRecordList'],
   data() {
     return {
+      budgetRecordList: [],
       recordIds: [],
       loading: false,
       execution: {}

@@ -4,6 +4,7 @@ import com.bupt.lams.dto.ExecutionQueryCondition;
 import com.bupt.lams.model.BudgetRecord;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.model.planItem.PlanItem;
 import com.bupt.lams.service.BudgetRecordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 预算执行流水相关
@@ -30,6 +32,20 @@ public class ExecutionController {
             executionQueryCondition.setEndDate(dateScope[1]);
         }
         return budgetRecordService.getBudgetRecordByCondition(executionQueryCondition);
+    }
+
+    @PostMapping("/item/get")
+    public RespBean getBudgetRecordByPlanItem(@RequestBody PlanItem item) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        try {
+            List<BudgetRecord> data = budgetRecordService.getBudgetRecordByPlanItem(item);
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取执行记录失败", e);
+            return RespBean.error("获取执行记录失败！");
+        }
+        return response;
     }
 
     @PostMapping("/add")

@@ -32,19 +32,16 @@
   </sql>
     <sql id="baseInfoQuery">
         <if test="id !=null">
-            and p.id = #{projectId}
+            and b.id = #{id}
         </if>
-        <if test="projectName !=null and projectName!=''">
-            and p.projectName like concat('%',#{projectName},'%')
+        <if test="itemType !=null">
+            and b.itemType = #{itemType}
         </if>
-        <if test="projectType !=null and projectType!=''">
-            and p.projectType like concat('%',#{projectType},'%')
-        </if>
-        <if test="userEmail !=null and userEmail!=''">
-            and p.userEmail like concat('%',#{userEmail},'%')
+        <if test="planItemId !=null">
+            and b.planItemId = #{planItemId}
         </if>
         <if test="startDate !=null and endDate !=null">
-            and p.createTime between #{startDate} and #{endDate}
+            and b.createTime between #{startDate} and #{endDate}
         </if>
     </sql>
     <select id="getBudgetRecordByCondition" parameterType="com.bupt.lams.dto.ProjectQueryCondition"
@@ -137,6 +134,9 @@
             <if test="planName != null and planName != ''">
                 `planName`,
             </if>
+            <if test="planItemId != null">
+                planItemId,
+            </if>
             <if test="itemType != null">
                 itemType,
             </if>
@@ -174,6 +174,9 @@
             </if>
             <if test="planName != null and planName != ''">
                 #{planName},
+            </if>
+            <if test="planItemId != null">
+                #{planItemId},
             </if>
             <if test="itemType != null">
                 #{itemType},

@@ -441,7 +441,7 @@
                 <el-table-column
                     prop="personnelType"
                     label="人员类别"
-                width="100">
+                    width="100">
                 </el-table-column>
                 <el-table-column
                     prop="times"
@@ -806,10 +806,13 @@
     </el-dialog>
     <ExecutePlan v-on:close="executePlanVisible = false"
                  v-on:freshPlan="freshPlan"
-                 :plan="plan" :planItem="planItem"
+                 :plan="plan"
+                 :planItem="planItem"
                  :executePlanVisible="executePlanVisible"
                  :title="title"></ExecutePlan>
-    <ExecuteDetail v-on:close="executeDetailVisible = false" :executeDetailVisible="executeDetailVisible"
+    <ExecuteDetail v-on:close="executeDetailVisible = false"
+                   :executeDetailVisible="executeDetailVisible"
+                   :budgetRecordList="budgetRecordList"
                    :title="title"></ExecuteDetail>
   </div>
 </template>
@@ -826,6 +829,7 @@ export default {
   },
   data() {
     return {
+      budgetRecordList: [],
       loading: false,
       title: '',
       planItem: {
@@ -840,12 +844,24 @@ export default {
     }
   },
   methods: {
+    initBudgetRecordList() {
+      this.loading = true;
+      let url = '/execution/item/get';
+      this.postRequest(url, this.planItem).then(resp => {
+        this.loading = false;
+        if (resp) {
+          this.budgetRecordList = resp.obj;
+        }
+      });
+    },
     showExecuteView(data) {
       this.title = '预算执行信息';
       this.planItem = data;
       this.executePlanVisible = true;
     },
-    showExecuteDetailView() {
+    showExecuteDetailView(data) {
+      this.planItem = data;
+      this.initBudgetRecordList();
       this.title = '预算执行记录';
       this.executeDetailVisible = true;
     },

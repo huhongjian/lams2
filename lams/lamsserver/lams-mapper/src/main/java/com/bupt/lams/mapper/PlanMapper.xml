@@ -60,7 +60,7 @@
         select *
         from plan
         where
-        isDelected = 0;
+        isDeleted = 0;
     </select>
     <insert id="insertSelective" parameterType="com.bupt.lams.model.Plan" useGeneratedKeys="true" keyProperty="id">
         insert into plan

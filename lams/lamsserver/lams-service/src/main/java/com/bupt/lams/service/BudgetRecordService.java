@@ -120,4 +120,11 @@ public class BudgetRecordService {
         project.setExecuteRate(ComputeUtils.computeExecuteRate(project.getFunding(), project.getUnfulfilledQuota()));
         projectMapper.updateProject(project);
     }
+
+    public List<BudgetRecord> getBudgetRecordByPlanItem(PlanItem item) {
+        ExecutionQueryCondition condition = new ExecutionQueryCondition();
+        condition.setItemType(item.getItemType());
+        condition.setPlanItemId(item.getId());
+        return budgetRecordMapper.getBudgetRecordByCondition(condition);
+    }
 }

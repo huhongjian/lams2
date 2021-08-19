@@ -1,17 +1,23 @@
 package com.bupt.lams.controller.budget;
 
+import com.bupt.lams.dto.OrderQueryCondition;
 import com.bupt.lams.dto.PlanQueryCondition;
+import com.bupt.lams.model.Order;
 import com.bupt.lams.model.Plan;
-import com.bupt.lams.model.Project;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.PlanService;
+import com.bupt.lams.utils.POIUtils;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -90,5 +96,36 @@ public class PlanController {
             return RespBean.error("删除失败!");
         }
         return RespBean.ok("删除成功!");
+    }
+
+    @PostMapping("/import")
+    public RespBean importData(MultipartFile file) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        response.setMsg("上传成功!");
+        try {
+            Plan plan = planService.excel2Plan(file);
+            planService.addPlan(plan);
+        } catch (Exception e) {
+            logger.error("上传失败", e);
+            return RespBean.error("上传失败！");
+        }
+        return response;
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportData(Long id) throws Exception {
+        PlanQueryCondition condition = new PlanQueryCondition();
+        condition.setPlanId(id);
+        List<Plan> planList = planService.getFullPlanInfo(condition);
+        if (planList.size() != 1) {
+            return null;
+        }
+        return POIUtils.planIn2Excel(planList.get(0));
+    }
+
+    @GetMapping("/template")
+    public ResponseEntity<byte[]> getTemplate() {
+        return POIUtils.planExcelTemplate();
     }
 }

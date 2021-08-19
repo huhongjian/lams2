@@ -290,7 +290,6 @@ export default {
         createTime: "",
         updateTime: ""
       },
-      projectTypes: [],
       planList: [],
       projectList: [],
       configIds: [],

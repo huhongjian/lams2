@@ -2,7 +2,11 @@ package com.bupt.lams.utils;
 
 import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.Order;
+import com.bupt.lams.model.Plan;
 import com.bupt.lams.model.PurchaseOrder;
+import com.bupt.lams.model.planItem.EquipmentFee;
+import com.bupt.lams.model.planItem.PlanItem;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.hpsf.DocumentSummaryInformation;
 import org.apache.poi.hpsf.SummaryInformation;
 import org.apache.poi.hssf.usermodel.*;
@@ -279,7 +283,7 @@ public class POIUtils {
      * 出库记录转excel
      *
      * @param list
-     * @return
+     * @return_
      */
     public static ResponseEntity<byte[]> assetReturn2Excel(List<Order> list) {
         //1. 创建一个 Excel 文档
@@ -618,5 +622,272 @@ public class POIUtils {
             e.printStackTrace();
         }
         return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.CREATED);
+    }
+
+    public static ResponseEntity<byte[]> planExcelTemplate() {
+        //1. 创建一个 Excel 文档
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        //2. 创建文档摘要
+        workbook.createInformationProperties();
+        //3. 获取并配置文档信息
+        DocumentSummaryInformation docInfo = workbook.getDocumentSummaryInformation();
+        //文档类别
+        docInfo.setCategory("预算计划");
+        //文档管理员
+        docInfo.setManager("admin");
+        //设置公司信息
+        docInfo.setCompany("bupt");
+        //4. 获取文档摘要信息
+        SummaryInformation summInfo = workbook.getSummaryInformation();
+        //文档标题
+        summInfo.setTitle("预算计划表");
+        //文档作者
+        summInfo.setAuthor("lams");
+        // 文档备注
+        summInfo.setComments("本文档由 lams 提供");
+
+        // 预算计划信息
+        workbook = planTemplate(workbook);
+        workbook = equipmentFeeTemplate(workbook);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        HttpHeaders headers = new HttpHeaders();
+        try {
+            headers.setContentDispositionFormData("attachment", new String("预算计划信息表.xls".getBytes("UTF-8"), "ISO-8859-1"));
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            workbook.write(baos);
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.CREATED);
+    }
+
+    private static HSSFWorkbook planTemplate(HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("预算计划");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 15 * 256);
+        sheet.setColumnWidth(2, 10 * 256);
+        sheet.setColumnWidth(3, 80 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellValue("预算计划名称");
+        c0.setCellStyle(headerStyle);
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("科研项目编号");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("科研项目名称");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("备注");
+
+        return workbook;
+    }
+
+    private static HSSFWorkbook equipmentFeeTemplate(HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("设备费");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 15 * 256);
+        sheet.setColumnWidth(2, 10 * 256);
+        sheet.setColumnWidth(3, 80 * 256);
+        sheet.setColumnWidth(4, 10 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellValue("设备名称");
+        c0.setCellStyle(headerStyle);
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("用途");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("数量");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("单价");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("备注");
+
+        return workbook;
+    }
+
+    public static ResponseEntity<byte[]> planIn2Excel(Plan plan) {
+        //1. 创建一个 Excel 文档
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        //2. 创建文档摘要
+        workbook.createInformationProperties();
+        //3. 获取并配置文档信息
+        DocumentSummaryInformation docInfo = workbook.getDocumentSummaryInformation();
+        //文档类别
+        docInfo.setCategory("预算计划");
+        //文档管理员
+        docInfo.setManager("admin");
+        //设置公司信息
+        docInfo.setCompany("bupt");
+        //4. 获取文档摘要信息
+        SummaryInformation summInfo = workbook.getSummaryInformation();
+        //文档标题
+        summInfo.setTitle("预算计划表");
+        //文档作者
+        summInfo.setAuthor("lams");
+        // 文档备注
+        summInfo.setComments("本文档由 lams 提供");
+
+        // 预算计划信息
+        workbook = fillPlanInfo(plan, workbook);
+
+        if (plan.getPlanItemDataMap() != null) {
+            // 设备费信息
+            if (plan.getPlanItemDataMap().get("equipmentFeeData") != null && CollectionUtils.isNotEmpty(plan.getPlanItemDataMap().get("equipmentFeeData").getPlanItemList())) {
+                List<PlanItem> equipmentFeeList = plan.getPlanItemDataMap().get("equipmentFeeData").getPlanItemList();
+                workbook = fillEquipmentFee((List) equipmentFeeList, workbook);
+            }
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        HttpHeaders headers = new HttpHeaders();
+        try {
+            headers.setContentDispositionFormData("attachment", new String("预算计划信息表.xls".getBytes("UTF-8"), "ISO-8859-1"));
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            workbook.write(baos);
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.CREATED);
+    }
+
+    private static HSSFWorkbook fillPlanInfo(Plan plan, HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("预算计划");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 15 * 256);
+        sheet.setColumnWidth(2, 10 * 256);
+        sheet.setColumnWidth(3, 80 * 256);
+        sheet.setColumnWidth(4, 10 * 256);
+        sheet.setColumnWidth(5, 15 * 256);
+        sheet.setColumnWidth(6, 10 * 256);
+        sheet.setColumnWidth(7, 13 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellValue("预算计划编号");
+        c0.setCellStyle(headerStyle);
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("预算计划名称");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("科研项目编号");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("科研项目名称");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("资助额度（万元）");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("未执行额度（万元）");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("执行率（%）");
+        HSSFCell c7 = r0.createCell(7);
+        c7.setCellStyle(headerStyle);
+        c7.setCellValue("备注");
+
+        HSSFRow row = sheet.createRow(1);
+        row.createCell(0).setCellValue(plan.getId());
+        row.createCell(1).setCellValue(plan.getPlanName());
+        row.createCell(2).setCellValue(plan.getProjectId());
+        row.createCell(3).setCellValue(plan.getProjectName());
+        row.createCell(4).setCellValue(plan.getFunding());
+        row.createCell(5).setCellValue(plan.getUnfulfilledQuota());
+        row.createCell(6).setCellValue(plan.getExecuteRate());
+        row.createCell(7).setCellValue(plan.getRemark());
+
+        return workbook;
+    }
+
+    private static HSSFWorkbook fillEquipmentFee(List<EquipmentFee> list, HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("设备费");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 15 * 256);
+        sheet.setColumnWidth(2, 10 * 256);
+        sheet.setColumnWidth(3, 80 * 256);
+        sheet.setColumnWidth(4, 10 * 256);
+        sheet.setColumnWidth(5, 15 * 256);
+        sheet.setColumnWidth(6, 10 * 256);
+        sheet.setColumnWidth(7, 13 * 256);
+        sheet.setColumnWidth(8, 13 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellValue("编号");
+        c0.setCellStyle(headerStyle);
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("设备名称");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("用途");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("数量");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("单价");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("合计（万元）");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("未执行额度（万元）");
+        HSSFCell c7 = r0.createCell(7);
+        c7.setCellStyle(headerStyle);
+        c7.setCellValue("执行率（%）");
+        HSSFCell c8 = r0.createCell(8);
+        c8.setCellStyle(headerStyle);
+        c8.setCellValue("备注");
+        int cnt = 0;
+        for (int i = 0; i < list.size(); i++) {
+            EquipmentFee equipmentFee = list.get(i);
+            HSSFRow row = sheet.createRow(++cnt);
+            row.createCell(0).setCellValue(equipmentFee.getId());
+            row.createCell(1).setCellValue(equipmentFee.getEquipmentName());
+            row.createCell(2).setCellValue(equipmentFee.getUsage());
+            row.createCell(3).setCellValue(equipmentFee.getAmount());
+            row.createCell(4).setCellValue(equipmentFee.getUnitPrice());
+            row.createCell(5).setCellValue(equipmentFee.getSubTotal());
+            row.createCell(6).setCellValue(equipmentFee.getUnfulfilledQuota());
+            row.createCell(7).setCellValue(equipmentFee.getExecuteRate());
+            row.createCell(8).setCellValue(equipmentFee.getRemark());
+        }
+        return workbook;
     }
 }

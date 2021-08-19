@@ -6,6 +6,22 @@
           <el-button type="primary" icon="el-icon-plus" @click="showAddView">
             添加计划
           </el-button>
+          <el-upload
+              :show-file-list="false"
+              :before-upload="beforeUpload"
+              :on-success="onSuccess"
+              :on-error="onError"
+              :disabled="importDataDisabled"
+              style="display: inline-flex;margin-left: 8px"
+              action="/plan/import">
+            <el-button :disabled="importDataDisabled" type="success" :icon="importDataBtnIcon">
+              {{ importDataBtnText }}
+            </el-button>
+          </el-upload>
+          <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="getTemplate"
+                     icon="el-icon-download">
+            下载模板
+          </el-button>
           <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
                      icon="el-icon-download">
             导出数据
@@ -164,11 +180,15 @@
 <script>
 import NewPlan from "@/components/budget/NewPlan";
 import PlanDetail from "@/components/budget/PlanDetail";
+import {Message} from "element-ui";
 
 export default {
   name: "BudgetProject",
   data() {
     return {
+      importDataBtnText: '导入数据',
+      importDataBtnIcon: 'el-icon-upload2',
+      importDataDisabled: false,
       plans: [],
       searchValue: {
         planName: null,
@@ -232,8 +252,34 @@ export default {
     this.initPlans();
   },
   methods: {
+    onError(err, file, fileList) {
+      this.importDataBtnText = '导入数据';
+      this.importDataBtnIcon = 'el-icon-upload2';
+      this.importDataDisabled = false;
+    },
+    onSuccess(response, file, fileList) {
+      this.importDataBtnText = '导入数据';
+      this.importDataBtnIcon = 'el-icon-upload2';
+      this.importDataDisabled = false;
+      this.initPlans();
+    },
+    beforeUpload() {
+      this.importDataBtnText = '正在导入';
+      this.importDataBtnIcon = 'el-icon-loading';
+      this.importDataDisabled = true;
+    },
+    getTemplate() {
+      let url = '/plan/template';
+      window.open(url, '_parent');
+    },
     exportData() {
-
+      if (this.planIds == null || this.planIds.length != 1) {
+        Message.info({message: '一次只能导出一个预算计划哦！'});
+        return;
+      }
+      let url = '/plan/export';
+      url += "?id=" + this.planIds[0];
+      window.open(url, '_parent');
     },
     handleSelectionChange(val) {
       this.planIds = [];

@@ -13,7 +13,6 @@ import java.util.Date;
 @Data
 public class PlanItem implements Serializable {
     private Long id;
-    private String userEmail;
     /**
      * 预算明细类型
      */
@@ -39,6 +38,8 @@ public class PlanItem implements Serializable {
      * 执行率
      */
     private Double executeRate;
+
+    private String userEmail;
 
     /**
      * 创建时间

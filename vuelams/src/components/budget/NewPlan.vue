@@ -47,14 +47,6 @@
             <el-button type="primary" icon="el-icon-plus" @click="showAddView">
               新增预算明细
             </el-button>
-            <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
-                       icon="el-icon-download">
-              导入数据
-            </el-button>
-            <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
-                       icon="el-icon-download">
-              下载模板
-            </el-button>
           </el-row>
         </el-form>
         <el-collapse>
@@ -843,9 +835,6 @@ export default {
         }
       });
       this.loading = false;
-    },
-    exportData() {
-
     },
     doAddPlan() {
       if (this.plan.id) {

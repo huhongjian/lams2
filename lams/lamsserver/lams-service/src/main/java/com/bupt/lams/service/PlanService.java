@@ -181,6 +181,7 @@ public class PlanService {
     /**
      * excel转预算计划信息
      */
+    @Transactional(rollbackFor = Exception.class)
     public Plan excel2Plan(MultipartFile file) {
         Plan plan = new Plan();
         Double total = 0.0D;
@@ -261,10 +262,12 @@ public class PlanService {
         HSSFSheet sheet = workbook.getSheetAt(0);
         // 获取行
         HSSFRow row = sheet.getRow(1);
-        // 获取列数
-        int physicalNumberOfCells = row.getPhysicalNumberOfCells();
-        for (int k = 0; k < physicalNumberOfCells; k++) {
+
+        for (int k = 0; k < 4; k++) {
             HSSFCell cell = row.getCell(k);
+            if (cell == null) {
+                continue;
+            }
             switch (cell.getCellType()) {
                 case STRING:
                     String cellValue = cell.getStringCellValue();
@@ -311,11 +314,13 @@ public class PlanService {
             if (row == null) {
                 continue;//防止数据中间有空行
             }
-            //7. 获取列数
-            int physicalNumberOfCells = row.getPhysicalNumberOfCells();
+
             equipmentFee = new EquipmentFee();
-            for (int k = 0; k < physicalNumberOfCells; k++) {
+            for (int k = 0; k < 5; k++) {
                 HSSFCell cell = row.getCell(k);
+                if (cell == null) {
+                    continue;
+                }
                 switch (cell.getCellType()) {
                     case STRING:
                         String cellValue = cell.getStringCellValue();
@@ -371,11 +376,13 @@ public class PlanService {
             if (row == null) {
                 continue;//防止数据中间有空行
             }
-            //7. 获取列数
-            int physicalNumberOfCells = row.getPhysicalNumberOfCells();
+
             materialFee = new MaterialFee();
-            for (int k = 0; k < physicalNumberOfCells; k++) {
+            for (int k = 0; k < 8; k++) {
                 HSSFCell cell = row.getCell(k);
+                if (cell == null) {
+                    continue;
+                }
                 switch (cell.getCellType()) {
                     case STRING:
                         String cellValue = cell.getStringCellValue();
@@ -392,7 +399,7 @@ public class PlanService {
                             case 5:
                                 materialFee.setUnit(cellValue);
                                 break;
-                            case 6:
+                            case 7:
                                 materialFee.setRemark(cellValue);
                                 break;
                         }
@@ -404,6 +411,9 @@ public class PlanService {
                                 break;
                             case 4:
                                 materialFee.setUnitPrice(cell.getNumericCellValue());
+                                break;
+                            case 6:
+                                materialFee.setSubTotal(cell.getNumericCellValue());
                                 break;
                         }
                     }
@@ -437,11 +447,13 @@ public class PlanService {
             if (row == null) {
                 continue;//防止数据中间有空行
             }
-            //7. 获取列数
-            int physicalNumberOfCells = row.getPhysicalNumberOfCells();
+
             testingFee = new TestingFee();
-            for (int k = 0; k < physicalNumberOfCells; k++) {
+            for (int k = 0; k < 4; k++) {
                 HSSFCell cell = row.getCell(k);
+                if (cell == null) {
+                    continue;
+                }
                 switch (cell.getCellType()) {
                     case STRING:
                         String cellValue = cell.getStringCellValue();
@@ -494,11 +506,13 @@ public class PlanService {
             if (row == null) {
                 continue;//防止数据中间有空行
             }
-            //7. 获取列数
-            int physicalNumberOfCells = row.getPhysicalNumberOfCells();
+
             meetingFee = new MeetingFee();
-            for (int k = 0; k < physicalNumberOfCells; k++) {
+            for (int k = 0; k < 8; k++) {
                 HSSFCell cell = row.getCell(k);
+                if (cell == null) {
+                    continue;
+                }
                 switch (cell.getCellType()) {
                     case STRING:
                         String cellValue = cell.getStringCellValue();
@@ -523,13 +537,13 @@ public class PlanService {
                                 meetingFee.setOtherCost(cell.getNumericCellValue());
                                 break;
                             case 4:
-                                meetingFee.setDays((int)cell.getNumericCellValue());
+                                meetingFee.setDays((int) cell.getNumericCellValue());
                                 break;
                             case 5:
-                                meetingFee.setAmount((int)cell.getNumericCellValue());
+                                meetingFee.setAmount((int) cell.getNumericCellValue());
                                 break;
                             case 6:
-                                meetingFee.setMeetingNum((int)cell.getNumericCellValue());
+                                meetingFee.setMeetingNum((int) cell.getNumericCellValue());
                                 break;
                         }
                     }
@@ -563,11 +577,13 @@ public class PlanService {
             if (row == null) {
                 continue;//防止数据中间有空行
             }
-            //7. 获取列数
-            int physicalNumberOfCells = row.getPhysicalNumberOfCells();
+
             researchFee = new ResearchFee();
-            for (int k = 0; k < physicalNumberOfCells; k++) {
+            for (int k = 0; k < 9; k++) {
                 HSSFCell cell = row.getCell(k);
+                if (cell == null) {
+                    continue;
+                }
                 switch (cell.getCellType()) {
                     case STRING:
                         String cellValue = cell.getStringCellValue();
@@ -635,11 +651,13 @@ public class PlanService {
             if (row == null) {
                 continue;//防止数据中间有空行
             }
-            //7. 获取列数
-            int physicalNumberOfCells = row.getPhysicalNumberOfCells();
+
             academicFee = new AcademicFee();
-            for (int k = 0; k < physicalNumberOfCells; k++) {
+            for (int k = 0; k < 10; k++) {
                 HSSFCell cell = row.getCell(k);
+                if (cell == null) {
+                    continue;
+                }
                 switch (cell.getCellType()) {
                     case STRING:
                         String cellValue = cell.getStringCellValue();
@@ -650,7 +668,7 @@ public class PlanService {
                             case 1:
                                 academicFee.setPersonnelType(cellValue);
                                 break;
-                            case 8:
+                            case 9:
                                 academicFee.setRemark(cellValue);
                                 break;
                         }
@@ -675,7 +693,9 @@ public class PlanService {
                             case 7:
                                 academicFee.setAccommodationFee(cell.getNumericCellValue());
                                 break;
-
+                            case 8:
+                                academicFee.setSubTotal(cell.getNumericCellValue());
+                                break;
                         }
                     }
                     break;
@@ -708,11 +728,13 @@ public class PlanService {
             if (row == null) {
                 continue;//防止数据中间有空行
             }
-            //7. 获取列数
-            int physicalNumberOfCells = row.getPhysicalNumberOfCells();
+
             transFee = new PlanItem();
-            for (int k = 0; k < physicalNumberOfCells; k++) {
+            for (int k = 0; k < 2; k++) {
                 HSSFCell cell = row.getCell(k);
+                if (cell == null) {
+                    continue;
+                }
                 switch (cell.getCellType()) {
                     case STRING:
                         String cellValue = cell.getStringCellValue();
@@ -759,11 +781,13 @@ public class PlanService {
             if (row == null) {
                 continue;//防止数据中间有空行
             }
-            //7. 获取列数
-            int physicalNumberOfCells = row.getPhysicalNumberOfCells();
+
             publishFee = new PublishFee();
-            for (int k = 0; k < physicalNumberOfCells; k++) {
+            for (int k = 0; k < 3; k++) {
                 HSSFCell cell = row.getCell(k);
+                if (cell == null) {
+                    continue;
+                }
                 switch (cell.getCellType()) {
                     case STRING:
                         String cellValue = cell.getStringCellValue();
@@ -813,11 +837,13 @@ public class PlanService {
             if (row == null) {
                 continue;//防止数据中间有空行
             }
-            //7. 获取列数
-            int physicalNumberOfCells = row.getPhysicalNumberOfCells();
+
             payment = new Payment();
-            for (int k = 0; k < physicalNumberOfCells; k++) {
+            for (int k = 0; k < 6; k++) {
                 HSSFCell cell = row.getCell(k);
+                if (cell == null) {
+                    continue;
+                }
                 switch (cell.getCellType()) {
                     case STRING:
                         String cellValue = cell.getStringCellValue();
@@ -876,11 +902,13 @@ public class PlanService {
             if (row == null) {
                 continue;//防止数据中间有空行
             }
-            //7. 获取列数
-            int physicalNumberOfCells = row.getPhysicalNumberOfCells();
+
             advisory = new Advisory();
-            for (int k = 0; k < physicalNumberOfCells; k++) {
+            for (int k = 0; k < 6; k++) {
                 HSSFCell cell = row.getCell(k);
+                if (cell == null) {
+                    continue;
+                }
                 switch (cell.getCellType()) {
                     case STRING:
                         String cellValue = cell.getStringCellValue();
@@ -939,11 +967,13 @@ public class PlanService {
             if (row == null) {
                 continue;//防止数据中间有空行
             }
-            //7. 获取列数
-            int physicalNumberOfCells = row.getPhysicalNumberOfCells();
+
             otherFee = new OtherFee();
-            for (int k = 0; k < physicalNumberOfCells; k++) {
+            for (int k = 0; k < 3; k++) {
                 HSSFCell cell = row.getCell(k);
+                if (cell == null) {
+                    continue;
+                }
                 switch (cell.getCellType()) {
                     case STRING:
                         String cellValue = cell.getStringCellValue();

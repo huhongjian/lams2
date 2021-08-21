@@ -35,8 +35,11 @@ public class AcademicFeeService {
         academicFee.setItemType(PlanItemTypeEnum.ACADEMIC.getIndex());
         academicFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
-        Double total = (academicFee.getRegistrationFee() * academicFee.getTimes() + (academicFee.getTransFee() + academicFee.getAccommodationFee()) * academicFee.getDays() * academicFee.getTimes()) / 10000D;
-        academicFee.setSubTotal(total);
+        if (academicFee.getSubTotal() == null) {
+            Double total = (academicFee.getRegistrationFee() * academicFee.getTimes() + (academicFee.getTransFee() + academicFee.getAccommodationFee()) * academicFee.getDays() * academicFee.getTimes()) / 10000D;
+            academicFee.setSubTotal(total);
+        }
+        academicFee.setSubTotal(academicFee.getSubTotal() * academicFee.getTimes());
         academicFee.setUnfulfilledQuota(academicFee.getSubTotal());
         academicFee.setExecuteRate(ComputeUtils.computeExecuteRate(academicFee.getSubTotal(), academicFee.getUnfulfilledQuota()));
         academicFeeMapper.insertSelective(academicFee);

@@ -291,7 +291,17 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row>
+            <el-form-item label="计价方式:" prop="count">
+              <el-select style="width: 200px" v-model="countType" clearable placeholder="请选择">
+                <el-option
+                    v-for="item in countTypeList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-row v-show="countType==1">
               <el-col :span="8">
                 <el-form-item label="注册费（元/人）:" prop="registrationFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
@@ -308,6 +318,14 @@
                 <el-form-item label="住宿及补助费（元/人/天）:" prop="accommodationFee">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="planItem.accommodationFee"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row v-show="countType==2">
+              <el-col :span="8">
+                <el-form-item label="费用（万元/次）:" prop="registrationFee">
+                  <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                            v-model="planItem.subTotal"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -508,7 +526,7 @@ export default {
         },
         {
           id: 3,
-          name: '国内学术会议差旅费'
+          name: '学术会议差旅费'
         },
         {
           id: 4,

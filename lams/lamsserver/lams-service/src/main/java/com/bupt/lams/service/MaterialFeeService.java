@@ -35,7 +35,7 @@ public class MaterialFeeService {
         materialFee.setItemType(PlanItemTypeEnum.MATERIAL.getIndex());
         materialFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
-        if (materialFee.getSubTotal() == null) {
+        if (materialFee.getSubTotal() == null || (materialFee.getUnitPrice() != null && materialFee.getAmount() != null)) {
             materialFee.setSubTotal(materialFee.getUnitPrice() * materialFee.getAmount());
         }
         materialFee.setUnfulfilledQuota(materialFee.getSubTotal());

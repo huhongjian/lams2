@@ -79,6 +79,7 @@
                 </el-table-column>
                 <el-table-column
                     prop="usage"
+                    :show-overflow-tooltip="true"
                     label="用途">
                 </el-table-column>
                 <el-table-column
@@ -418,7 +419,7 @@
               </el-table>
               </div>
               <div v-show="plan.planItemDataMap.academicFeeData.planItemList.length!=0">
-              <el-tag type="warning">国内学术会议差旅费</el-tag>
+              <el-tag type="warning">学术会议差旅费</el-tag>
               <el-tag>金额: {{ plan.planItemDataMap.academicFeeData.funding }}（万元）</el-tag>
               <el-tag type="success">未执行额度: {{ plan.planItemDataMap.academicFeeData.unfulfilledQuota }}（万元）</el-tag>
               <el-tag type="info">执行率: {{ plan.planItemDataMap.academicFeeData.executeRate }}%</el-tag>
@@ -577,6 +578,7 @@
                 </el-table-column>
                 <el-table-column
                     prop="remark"
+                    :show-overflow-tooltip="true"
                     label="说明">
                 </el-table-column>
                 <el-table-column

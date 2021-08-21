@@ -756,7 +756,8 @@ public class POIUtils {
         sheet.setColumnWidth(3, 10 * 256);
         sheet.setColumnWidth(4, 20 * 256);
         sheet.setColumnWidth(5, 10 * 256);
-        sheet.setColumnWidth(6, 80 * 256);
+        sheet.setColumnWidth(6, 20 * 256);
+        sheet.setColumnWidth(7, 80 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -779,7 +780,10 @@ public class POIUtils {
         c5.setCellValue("单位");
         HSSFCell c6 = r0.createCell(6);
         c6.setCellStyle(headerStyle);
-        c6.setCellValue("备注");
+        c6.setCellValue("小计（万元）");
+        HSSFCell c7 = r0.createCell(7);
+        c7.setCellStyle(headerStyle);
+        c7.setCellValue("备注");
 
         return workbook;
     }
@@ -916,7 +920,7 @@ public class POIUtils {
         headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         HSSFCellStyle dateCellStyle = workbook.createCellStyle();
         dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
-        HSSFSheet sheet = workbook.createSheet("国内学术会议差旅费");
+        HSSFSheet sheet = workbook.createSheet("学术会议差旅费");
         //设置列的宽度
         sheet.setColumnWidth(0, 50 * 256);
         sheet.setColumnWidth(1, 20 * 256);
@@ -955,7 +959,10 @@ public class POIUtils {
         c7.setCellValue("住宿及补助费（元/人/天）");
         HSSFCell c8 = r0.createCell(8);
         c8.setCellStyle(headerStyle);
-        c8.setCellValue("备注");
+        c8.setCellValue("费用（万元/次）");
+        HSSFCell c9 = r0.createCell(9);
+        c9.setCellStyle(headerStyle);
+        c9.setCellValue("备注");
 
         return workbook;
     }

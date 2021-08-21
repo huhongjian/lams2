@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 /**
@@ -78,5 +79,18 @@ public class PlanItem implements Serializable {
     public void setItemType(Integer itemType) {
         this.itemType = itemType;
         this.itemTypeName = PlanItemTypeEnum.getNameByIndex(itemType);
+    }
+
+    public void setSubTotal(Double total) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        this.subTotal = new Double(df.format(total.doubleValue()));
+    }
+
+    public Double getSubTotal() {
+        DecimalFormat df = new DecimalFormat("#.00");
+        if (this.subTotal == null) {
+            return null;
+        }
+        return new Double(df.format(this.subTotal.doubleValue()));
     }
 }

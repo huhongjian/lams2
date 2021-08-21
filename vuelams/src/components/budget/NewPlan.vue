@@ -376,7 +376,7 @@
               </el-table>
             </div>
             <div v-show="plan.planItemDataMap.academicFeeData.planItemList.length!=0">
-              <el-tag type="warning">国内学术会议差旅费</el-tag>
+              <el-tag type="warning">学术会议差旅费</el-tag>
               <el-tag>金额: {{ plan.planItemDataMap.academicFeeData.funding }}（万元）</el-tag>
               <el-table
                   :data="plan.planItemDataMap.academicFeeData.planItemList"

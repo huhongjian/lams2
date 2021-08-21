@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 /**
@@ -49,4 +50,17 @@ public class Project implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date updateTime;
+
+    public void setFunding(Double funding) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        this.funding = new Double(df.format(funding.doubleValue()));
+    }
+
+    public Double getFunding() {
+        DecimalFormat df = new DecimalFormat("#.00");
+        if (this.funding == null) {
+            return null;
+        }
+        return new Double(df.format(this.funding.doubleValue()));
+    }
 }

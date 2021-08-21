@@ -144,7 +144,7 @@ export default {
         },
         {
           id: 6,
-          name: '国内学术会议差旅费'
+          name: '学术会议差旅费'
         },
         {
           id: 7,

@@ -90,6 +90,8 @@
         join plan p on p.id = pi.pid
         join project pr on pr.id = p.projectId
         where
+        pi.itid = 7
+        and
         t.id = #{id}
     </select>
     <select id="getTransportationFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.PlanItem">
@@ -112,7 +114,7 @@
         join plan_item pi on t.id = pi.iid
         join plan p on p.id = pi.pid
         join project pr on pr.id = p.projectId
-        where 1=1
+        where pi.itid = 7
         <if test="list != null and list.size>0">
             and t.id in
             <foreach collection="list" item="item" open="(" close=")" separator=",">

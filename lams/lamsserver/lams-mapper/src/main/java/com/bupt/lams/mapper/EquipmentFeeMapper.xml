@@ -107,7 +107,7 @@
         join plan_item pi on e.id = pi.iid
         join plan p on  p.id = pi.pid
         join project pr on pr.id = p.projectId
-        where 1=1
+        where pi.itid = 1
         <if test="list != null and list.size>0">
             and e.id in
             <foreach collection="list" item="item" open="(" close=")" separator=",">
@@ -164,7 +164,8 @@
         join plan p on  p.id = pi.pid
         join project pr on pr.id = p.projectId
         where
-        e.id = #{id}
+        pi.itid = 1
+        and e.id = #{id}
     </select>
     <delete id="clear" parameterType="java.lang.String">
         delete e.*

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,5 +62,18 @@ public class Plan implements Serializable {
 
     public void setPlanItem(String key, PlanItemData data) {
         this.planItemDataMap.put(key, data);
+    }
+
+    public void setFunding(Double funding) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        this.funding = new Double(df.format(funding.doubleValue()));
+    }
+
+    public Double getFunding() {
+        DecimalFormat df = new DecimalFormat("#.00");
+        if (this.funding == null) {
+            return null;
+        }
+        return new Double(df.format(this.funding.doubleValue()));
     }
 }

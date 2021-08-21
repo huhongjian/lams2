@@ -9,9 +9,16 @@ public interface TransportationFeeMapper {
 
     List<PlanItem> getTransportationFeeByIds(List<Long> ids);
 
+    /**
+     * 根据ids获取完整信息，用于执行预算明细
+     */
+    List<PlanItem> getFullInfoByIds(List<Long> ids);
+
     PlanItem getById(Long id);
 
     void update(PlanItem equipmentFee);
 
     void clear(String userEmail);
+
+    List<PlanItem> getAll();
 }

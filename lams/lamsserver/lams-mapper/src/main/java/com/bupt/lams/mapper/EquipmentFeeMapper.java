@@ -9,19 +9,13 @@ public interface EquipmentFeeMapper {
 
     /**
      * 根据ids获取设备费基本信息，用于新建预算计划明细，那时和预算计划以及科研项目还没有关联关系
-     *
-     * @param ids
-     * @return
      */
     List<EquipmentFee> getEquipmentFeeByIds(List<Long> ids);
 
     /**
      * 根据ids获取设备费完整信息，用于执行预算明细
-     *
-     * @param ids
-     * @return
      */
-    List<EquipmentFee> getFullEquipmentFeeByIds(List<Long> ids);
+    List<EquipmentFee> getFullInfoByIds(List<Long> ids);
 
     EquipmentFee getById(Long id);
 

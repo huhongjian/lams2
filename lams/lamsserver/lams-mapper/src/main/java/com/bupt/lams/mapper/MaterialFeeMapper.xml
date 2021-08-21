@@ -137,11 +137,14 @@
         </where>
     </update>
     <select id="getById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.MaterialFee">
-        select m.*
+        select t.*, p.id as planId, pr.id as projectId, p.planName, pr.projectName
         from
-        material_fee m
+        material_fee t
+        join plan_item pi on t.id = pi.iid
+        join plan p on  p.id = pi.pid
+        join project pr on pr.id = p.projectId
         where
-        m.id = #{id}
+        t.id = #{id}
     </select>
     <select id="getMaterialFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.MaterialFee">
         select m.*
@@ -156,6 +159,22 @@
         </if>
         order by m.id
     </select>
+    <select id="getFullInfoByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.MaterialFee">
+        select t.*, p.id as planId, pr.id as projectId, p.planName, pr.projectName
+        from
+        material_fee t
+        join plan_item pi on t.id = pi.iid
+        join plan p on p.id = pi.pid
+        join project pr on pr.id = p.projectId
+        where 1=1
+        <if test="list != null and list.size>0">
+            and t.id in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        order by t.id
+    </select>
     <delete id="clear" parameterType="java.lang.String">
         delete m.*
         from material_fee m
@@ -165,4 +184,15 @@
         and m.itemType = 2
         and m.userEmail = #{userEmail};
     </delete>
+    <select id="getAll" resultType="com.bupt.lams.model.planItem.MaterialFee">
+        select t.*, p.id as planId, pr.id as projectId, p.planName, pr.projectName
+        from
+        material_fee t
+        join plan_item pi on t.id = pi.iid
+        join plan p on  p.id = pi.pid
+        join project pr on pr.id = p.projectId
+        where
+        pi.itid = 2
+        order by t.id
+    </select>
 </mapper>

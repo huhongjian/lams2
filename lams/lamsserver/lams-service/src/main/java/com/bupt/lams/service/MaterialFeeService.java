@@ -2,6 +2,7 @@ package com.bupt.lams.service;
 
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
+import com.bupt.lams.mapper.BudgetRecordMapper;
 import com.bupt.lams.mapper.MaterialFeeMapper;
 import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
@@ -9,11 +10,14 @@ import com.bupt.lams.model.planItem.MaterialFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -23,6 +27,8 @@ import java.util.List;
 public class MaterialFeeService {
     @Resource
     MaterialFeeMapper materialFeeMapper;
+    @Resource
+    BudgetRecordMapper budgetRecordMapper;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addMaterialFee(MaterialFee materialFee) {
@@ -52,7 +58,8 @@ public class MaterialFeeService {
         if (idList.size() == 0) {
             return data;
         }
-        data = getMaterialFeeDataByIds(idList);
+        List<MaterialFee> materialFeeList = materialFeeMapper.getFullInfoByIds(idList);
+        data = TransferUtils.transToPlanItemData(new ArrayList<>(materialFeeList));
         return data;
     }
 
@@ -79,5 +86,28 @@ public class MaterialFeeService {
     public void clear() {
         LamsUser user = UserInfoUtils.getLoginedUser();
         materialFeeMapper.clear(user.getUsername());
+    }
+
+    public List<MaterialFee> getRecommendFee() {
+        // 查询所有设备费信息
+        List<MaterialFee> materialFeeList = materialFeeMapper.getAll();
+        if (CollectionUtils.isEmpty(materialFeeList)) {
+            return new ArrayList<>();
+        }
+        // 获取最近一条设备费执行记录
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.MATERIAL.getIndex());
+        if (id == null) {
+            return materialFeeList;
+        }
+        MaterialFee fee = materialFeeMapper.getById(id);
+        if (fee == null) {
+            return materialFeeList;
+        }
+        // 计算相似度，并按照相似度逆序排列
+        for (MaterialFee e : materialFeeList) {
+            e.computeSimilar(fee);
+        }
+        Collections.sort(materialFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
+        return materialFeeList;
     }
 }

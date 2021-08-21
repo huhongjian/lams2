@@ -2,6 +2,7 @@ package com.bupt.lams.service;
 
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
+import com.bupt.lams.mapper.BudgetRecordMapper;
 import com.bupt.lams.mapper.MeetingFeeMapper;
 import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
@@ -9,11 +10,14 @@ import com.bupt.lams.model.planItem.MeetingFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -23,6 +27,8 @@ import java.util.List;
 public class MeetingFeeService {
     @Resource
     MeetingFeeMapper meetingFeeMapper;
+    @Resource
+    BudgetRecordMapper budgetRecordMapper;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addMeetingFee(MeetingFee meetingFee) {
@@ -51,7 +57,8 @@ public class MeetingFeeService {
         if (idList.size() == 0) {
             return data;
         }
-        data = getMeetingFeeDataByIds(idList);
+        List<MeetingFee> meetingFeeList = meetingFeeMapper.getFullInfoByIds(idList);
+        data = TransferUtils.transToPlanItemData(new ArrayList<>(meetingFeeList));
         return data;
     }
 
@@ -78,5 +85,28 @@ public class MeetingFeeService {
     public void clear() {
         LamsUser user = UserInfoUtils.getLoginedUser();
         meetingFeeMapper.clear(user.getUsername());
+    }
+
+    public List<MeetingFee> getRecommendFee() {
+        // 查询所有设备费信息
+        List<MeetingFee> meetingFeeList = meetingFeeMapper.getAll();
+        if (CollectionUtils.isEmpty(meetingFeeList)) {
+            return new ArrayList<>();
+        }
+        // 获取最近一条设备费执行记录
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.MEETING.getIndex());
+        if (id == null) {
+            return meetingFeeList;
+        }
+        MeetingFee fee = meetingFeeMapper.getById(id);
+        if (fee == null) {
+            return meetingFeeList;
+        }
+        // 计算相似度，并按照相似度逆序排列
+        for (MeetingFee e : meetingFeeList) {
+            e.computeSimilar(fee);
+        }
+        Collections.sort(meetingFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
+        return meetingFeeList;
     }
 }

@@ -2,6 +2,7 @@ package com.bupt.lams.service;
 
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
+import com.bupt.lams.mapper.BudgetRecordMapper;
 import com.bupt.lams.mapper.PaymentMapper;
 import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
@@ -9,11 +10,14 @@ import com.bupt.lams.model.planItem.Payment;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -23,6 +27,8 @@ import java.util.List;
 public class PaymentService {
     @Resource
     PaymentMapper paymentMapper;
+    @Resource
+    BudgetRecordMapper budgetRecordMapper;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addPayment(Payment payment) {
@@ -51,7 +57,8 @@ public class PaymentService {
         if (idList.size() == 0) {
             return data;
         }
-        data = getPaymentFeeDataByIds(idList);
+        List<Payment> paymentList = paymentMapper.getFullInfoByIds(idList);
+        data = TransferUtils.transToPlanItemData(new ArrayList<>(paymentList));
         return data;
     }
 
@@ -78,5 +85,28 @@ public class PaymentService {
     public void clear() {
         LamsUser user = UserInfoUtils.getLoginedUser();
         paymentMapper.clear(user.getUsername());
+    }
+
+    public List<Payment> getRecommendFee() {
+        // 查询所有设备费信息
+        List<Payment> paymentList = paymentMapper.getAll();
+        if (CollectionUtils.isEmpty(paymentList)) {
+            return new ArrayList<>();
+        }
+        // 获取最近一条设备费执行记录
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.PAYMENT.getIndex());
+        if (id == null) {
+            return paymentList;
+        }
+        Payment fee = paymentMapper.getById(id);
+        if (fee == null) {
+            return paymentList;
+        }
+        // 计算相似度，并按照相似度逆序排列
+        for (Payment e : paymentList) {
+            e.computeSimilar(fee);
+        }
+        Collections.sort(paymentList, Comparator.comparingDouble(x -> -x.getSimilar()));
+        return paymentList;
     }
 }

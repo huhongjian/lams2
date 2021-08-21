@@ -9,9 +9,16 @@ public interface PublishFeeMapper {
 
     List<PublishFee> getPublishFeeByIds(List<Long> ids);
 
+    /**
+     * 根据ids获取完整信息，用于执行预算明细
+     */
+    List<PublishFee> getFullInfoByIds(List<Long> ids);
+
     PublishFee getById(Long id);
 
     void update(PublishFee equipmentFee);
 
     void clear(String userEmail);
+
+    List<PublishFee> getAll();
 }

@@ -1,5 +1,6 @@
 package com.bupt.lams.model.planItem;
 
+import com.bupt.lams.utils.ComputeUtils;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -33,4 +34,25 @@ public class Advisory extends PlanItem implements Serializable {
      * 天数
      */
     private Integer days;
+
+    private Double similar;
+
+    @Override
+    public String toString() {
+        return "Advisory{" +
+                "personnelType='" + personnelType + '\'' +
+                ", content='" + content + '\'' +
+                ", amount=" + amount +
+                ", standard=" + standard +
+                ", days=" + days +
+                '}';
+    }
+
+    public void computeSimilar(Advisory fee) {
+        Double amountSim = Math.min(this.amount, fee.getAmount()) / (double) Math.max(this.amount, fee.getAmount());
+        Double daysSim = Math.min(this.days, fee.getDays()) / (double) Math.max(this.days, fee.getDays());
+        Double standardSim = Math.min(this.standard, fee.getStandard()) / Math.max(this.standard, fee.getStandard());
+        Double textSim = ComputeUtils.cos(this.toString(), fee.toString());
+        this.similar = amountSim + standardSim + daysSim + textSim;
+    }
 }

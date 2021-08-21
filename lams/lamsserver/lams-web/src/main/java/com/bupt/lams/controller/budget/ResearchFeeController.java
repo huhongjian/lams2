@@ -1,12 +1,9 @@
 package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanItemData;
-import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.RespBean;
-import com.bupt.lams.model.planItem.AcademicFee;
 import com.bupt.lams.model.planItem.ResearchFee;
 import com.bupt.lams.service.ResearchFeeService;
-import com.bupt.lams.utils.UserInfoUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,5 +74,22 @@ public class ResearchFeeController {
             return RespBean.error("清空无效预算明细失败!");
         }
         return RespBean.ok(null);
+    }
+
+    /**
+     * 获取推荐的预算明细
+     */
+    @GetMapping("/getRecommend")
+    public RespBean getRecommend() {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        try {
+            List<ResearchFee> data = researchFeeService.getRecommendFee();
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取推荐课题调研差旅费信息失败", e);
+            return RespBean.error("获取推荐课题调研差旅费信息失败！");
+        }
+        return response;
     }
 }

@@ -9,9 +9,16 @@ public interface OtherFeeMapper {
 
     List<OtherFee> getOtherFeeByIds(List<Long> ids);
 
+    /**
+     * 根据ids获取完整信息，用于执行预算明细
+     */
+    List<OtherFee> getFullInfoByIds(List<Long> ids);
+
     OtherFee getById(Long id);
 
     void update(OtherFee otherFee);
 
     void clear(String userEmail);
+
+    List<OtherFee> getAll();
 }

@@ -2,6 +2,7 @@ package com.bupt.lams.service;
 
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
+import com.bupt.lams.mapper.BudgetRecordMapper;
 import com.bupt.lams.mapper.ResearchFeeMapper;
 import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
@@ -9,11 +10,14 @@ import com.bupt.lams.model.planItem.ResearchFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -23,6 +27,8 @@ import java.util.List;
 public class ResearchFeeService {
     @Resource
     ResearchFeeMapper researchFeeMapper;
+    @Resource
+    BudgetRecordMapper budgetRecordMapper;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addResearchFee(ResearchFee researchFee) {
@@ -51,7 +57,8 @@ public class ResearchFeeService {
         if (idList.size() == 0) {
             return data;
         }
-        data = getResearchFeeDataByIds(idList);
+        List<ResearchFee> researchFeeList = researchFeeMapper.getFullInfoByIds(idList);
+        data = TransferUtils.transToPlanItemData(new ArrayList<>(researchFeeList));
         return data;
     }
 
@@ -78,5 +85,28 @@ public class ResearchFeeService {
     public void clear() {
         LamsUser user = UserInfoUtils.getLoginedUser();
         researchFeeMapper.clear(user.getUsername());
+    }
+
+    public List<ResearchFee> getRecommendFee() {
+        // 查询所有设备费信息
+        List<ResearchFee> researchFeeList = researchFeeMapper.getAll();
+        if (CollectionUtils.isEmpty(researchFeeList)) {
+            return new ArrayList<>();
+        }
+        // 获取最近一条设备费执行记录
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.RESEARCH.getIndex());
+        if (id == null) {
+            return researchFeeList;
+        }
+        ResearchFee fee = researchFeeMapper.getById(id);
+        if (fee == null) {
+            return researchFeeList;
+        }
+        // 计算相似度，并按照相似度逆序排列
+        for (ResearchFee e : researchFeeList) {
+            e.computeSimilar(fee);
+        }
+        Collections.sort(researchFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
+        return researchFeeList;
     }
 }

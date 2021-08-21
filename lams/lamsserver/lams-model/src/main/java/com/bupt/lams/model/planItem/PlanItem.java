@@ -1,6 +1,7 @@
 package com.bupt.lams.model.planItem;
 
 import com.bupt.lams.constants.PlanItemTypeEnum;
+import com.bupt.lams.utils.ComputeUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -57,6 +58,22 @@ public class PlanItem implements Serializable {
     private String projectId;
     private String projectName;
     private String planName;
+
+    private Double similar;
+
+    @Override
+    public String toString() {
+        return "PlanItem{" +
+                "remark='" + remark + '\'' +
+                ", subTotal=" + subTotal +
+                '}';
+    }
+
+    public void computeSimilar(PlanItem fee) {
+        Double subTotalSim = Math.min(this.subTotal, fee.getSubTotal()) / Math.max(this.subTotal, fee.getSubTotal());
+        Double textSim = ComputeUtils.cos(this.toString(), fee.toString());
+        this.similar = subTotalSim + textSim;
+    }
 
     public void setItemType(Integer itemType) {
         this.itemType = itemType;

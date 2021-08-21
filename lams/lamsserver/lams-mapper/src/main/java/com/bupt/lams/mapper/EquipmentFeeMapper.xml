@@ -100,7 +100,7 @@
         </if>
         order by e.id
     </select>
-    <select id="getFullEquipmentFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.EquipmentFee">
+    <select id="getFullInfoByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.EquipmentFee">
         select e.*, p.id as planId, pr.id as projectId, p.planName, pr.projectName
         from
         equipment_fee e

@@ -75,4 +75,21 @@ public class TransportationFeeController {
         }
         return RespBean.ok(null);
     }
+
+    /**
+     * 获取推荐的预算明细
+     */
+    @GetMapping("/getRecommend")
+    public RespBean getRecommend() {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        try {
+            List<PlanItem> data = transportationFeeService.getRecommendFee();
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取推荐北京市内交通费信息失败", e);
+            return RespBean.error("获取推荐北京市内交通费信息失败！");
+        }
+        return response;
+    }
 }

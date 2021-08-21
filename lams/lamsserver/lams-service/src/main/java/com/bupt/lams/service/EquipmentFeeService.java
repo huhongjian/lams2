@@ -55,7 +55,7 @@ public class EquipmentFeeService {
         if (idList.size() == 0) {
             return data;
         }
-        List<EquipmentFee> equipmentFeeList = equipmentFeeMapper.getFullEquipmentFeeByIds(idList);
+        List<EquipmentFee> equipmentFeeList = equipmentFeeMapper.getFullInfoByIds(idList);
         data = TransferUtils.transToPlanItemData(new ArrayList<>(equipmentFeeList));
         return data;
     }

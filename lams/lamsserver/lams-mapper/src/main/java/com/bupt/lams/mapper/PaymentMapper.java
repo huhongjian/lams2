@@ -9,9 +9,16 @@ public interface PaymentMapper {
 
     List<Payment> getPaymentByIds(List<Long> ids);
 
+    /**
+     * 根据ids获取完整信息，用于执行预算明细
+     */
+    List<Payment> getFullInfoByIds(List<Long> ids);
+
     Payment getById(Long id);
 
     void update(Payment payment);
 
     void clear(String userEmail);
+
+    List<Payment> getAll();
 }

@@ -2,6 +2,7 @@ package com.bupt.lams.service;
 
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
+import com.bupt.lams.mapper.BudgetRecordMapper;
 import com.bupt.lams.mapper.PublishFeeMapper;
 import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
@@ -10,11 +11,14 @@ import com.bupt.lams.model.planItem.PublishFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -24,6 +28,8 @@ import java.util.List;
 public class PublishFeeService {
     @Resource
     PublishFeeMapper publishFeeMapper;
+    @Resource
+    BudgetRecordMapper budgetRecordMapper;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addPublishFee(PublishFee publishFee) {
@@ -49,7 +55,8 @@ public class PublishFeeService {
         if (idList.size() == 0) {
             return data;
         }
-        data = getPublishFeeDataByIds(idList);
+        List<PublishFee> publishFeeList = publishFeeMapper.getFullInfoByIds(idList);
+        data = TransferUtils.transToPlanItemData(new ArrayList<>(publishFeeList));
         return data;
     }
 
@@ -76,5 +83,28 @@ public class PublishFeeService {
     public void clear() {
         LamsUser user = UserInfoUtils.getLoginedUser();
         publishFeeMapper.clear(user.getUsername());
+    }
+
+    public List<PublishFee> getRecommendFee() {
+        // 查询所有设备费信息
+        List<PublishFee> publishFeeList = publishFeeMapper.getAll();
+        if (CollectionUtils.isEmpty(publishFeeList)) {
+            return new ArrayList<>();
+        }
+        // 获取最近一条设备费执行记录
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.PUBLISH.getIndex());
+        if (id == null) {
+            return publishFeeList;
+        }
+        PublishFee fee = publishFeeMapper.getById(id);
+        if (fee == null) {
+            return publishFeeList;
+        }
+        // 计算相似度，并按照相似度逆序排列
+        for (PublishFee e : publishFeeList) {
+            e.computeSimilar(fee);
+        }
+        Collections.sort(publishFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
+        return publishFeeList;
     }
 }

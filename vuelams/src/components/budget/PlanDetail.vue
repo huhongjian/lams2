@@ -796,13 +796,12 @@
     </el-dialog>
     <ExecutePlan v-on:close="executePlanVisible = false"
                  v-on:freshPlan="freshPlan"
-                 :plan="plan"
                  :planItem="planItem"
                  :executePlanVisible="executePlanVisible"
                  :title="title"></ExecutePlan>
     <ExecuteDetail v-on:close="executeDetailVisible = false"
                    v-on:freshPlan="freshPlan"
-                   :planId="plan.id"
+                   :planId="planItem.planId"
                    :executeDetailVisible="executeDetailVisible"
                    :budgetRecordList="budgetRecordList"
                    :title="title"></ExecuteDetail>

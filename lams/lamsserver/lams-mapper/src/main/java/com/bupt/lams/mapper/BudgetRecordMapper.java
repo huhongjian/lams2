@@ -19,4 +19,6 @@ public interface BudgetRecordMapper {
     List<BudgetRecord> getByIds(List<Long> ids);
 
     void deleteManyByIds(List<Long> ids);
+
+    Long getRecentIdByItemType(Integer type);
 }

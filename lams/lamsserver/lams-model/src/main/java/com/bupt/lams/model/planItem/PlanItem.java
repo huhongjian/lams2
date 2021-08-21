@@ -53,6 +53,11 @@ public class PlanItem implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date updateTime;
 
+    private String planId;
+    private String projectId;
+    private String projectName;
+    private String planName;
+
     public void setItemType(Integer itemType) {
         this.itemType = itemType;
         this.itemTypeName = PlanItemTypeEnum.getNameByIndex(itemType);

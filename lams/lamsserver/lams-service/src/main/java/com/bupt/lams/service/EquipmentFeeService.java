@@ -2,17 +2,21 @@ package com.bupt.lams.service;
 
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
+import com.bupt.lams.mapper.BudgetRecordMapper;
 import com.bupt.lams.mapper.EquipmentFeeMapper;
 import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.utils.TransferUtils;
 import com.bupt.lams.utils.UserInfoUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -22,6 +26,8 @@ import java.util.List;
 public class EquipmentFeeService {
     @Resource
     EquipmentFeeMapper equipmentFeeMapper;
+    @Resource
+    BudgetRecordMapper budgetRecordMapper;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addEquipmentFee(EquipmentFee equipmentFee) {
@@ -49,7 +55,8 @@ public class EquipmentFeeService {
         if (idList.size() == 0) {
             return data;
         }
-        data = getEquipmentFeeDataByIds(idList);
+        List<EquipmentFee> equipmentFeeList = equipmentFeeMapper.getFullEquipmentFeeByIds(idList);
+        data = TransferUtils.transToPlanItemData(new ArrayList<>(equipmentFeeList));
         return data;
     }
 
@@ -72,5 +79,29 @@ public class EquipmentFeeService {
     public void clear() {
         LamsUser user = UserInfoUtils.getLoginedUser();
         equipmentFeeMapper.clear(user.getUsername());
+    }
+
+
+    public List<EquipmentFee> getRecommendFee() {
+        // 查询所有设备费信息
+        List<EquipmentFee> equipmentFeeList = equipmentFeeMapper.getAll();
+        if (CollectionUtils.isEmpty(equipmentFeeList)) {
+            return new ArrayList<>();
+        }
+        // 获取最近一条设备费执行记录
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.EQUIPMENT.getIndex());
+        if (id == null) {
+            return equipmentFeeList;
+        }
+        EquipmentFee fee = equipmentFeeMapper.getById(id);
+        if (fee == null) {
+            return equipmentFeeList;
+        }
+        // 计算相似度，并按照相似度逆序排列
+        for (EquipmentFee e : equipmentFeeList) {
+            e.computeSimilar(fee);
+        }
+        Collections.sort(equipmentFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
+        return equipmentFeeList;
     }
 }

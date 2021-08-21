@@ -100,6 +100,22 @@
         </if>
         order by e.id
     </select>
+    <select id="getFullEquipmentFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.EquipmentFee">
+        select e.*, p.id as planId, pr.id as projectId, p.planName, pr.projectName
+        from
+        equipment_fee e
+        join plan_item pi on e.id = pi.iid
+        join plan p on  p.id = pi.pid
+        join project pr on pr.id = p.projectId
+        where 1=1
+        <if test="list != null and list.size>0">
+            and e.id in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        order by e.id
+    </select>
     <update id="update" parameterType="com.bupt.lams.model.planItem.EquipmentFee">
         update equipment_fee
         set
@@ -141,9 +157,12 @@
         </where>
     </update>
     <select id="getById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.EquipmentFee">
-        select e.*
+        select e.*, p.id as planId, pr.id as projectId, p.planName, pr.projectName
         from
         equipment_fee e
+        join plan_item pi on e.id = pi.iid
+        join plan p on  p.id = pi.pid
+        join project pr on pr.id = p.projectId
         where
         e.id = #{id}
     </select>
@@ -156,4 +175,29 @@
         and e.itemType = 1
         and e.userEmail = #{userEmail};
     </delete>
+    <select id="getByPlanId" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.EquipmentFee">
+        select e.*, p.id as planId, pr.id as projectId, p.planName, pr.projectName
+        from
+        equipment_fee e
+        join plan_item pi on e.id = pi.iid
+        join plan p on  p.id = pi.pid
+        join project po on po.id = p.projectId
+        where
+        pi.itid = 1
+        and
+        pi.pid = #{pid}
+        order by e.id
+    </select>
+
+    <select id="getAll" resultType="com.bupt.lams.model.planItem.EquipmentFee">
+        select e.*, p.id as planId, pr.id as projectId, p.planName, pr.projectName
+        from
+        equipment_fee e
+        join plan_item pi on e.id = pi.iid
+        join plan p on  p.id = pi.pid
+        join project pr on pr.id = p.projectId
+        where
+        pi.itid = 1
+        order by e.id
+    </select>
 </mapper>

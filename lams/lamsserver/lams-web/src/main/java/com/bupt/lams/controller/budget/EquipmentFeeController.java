@@ -69,6 +69,23 @@ public class EquipmentFeeController {
         return response;
     }
 
+    /**
+     * 获取推荐的预算明细
+     */
+    @GetMapping("/getRecommend")
+    public RespBean getRecommend() {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        try {
+            List<EquipmentFee> data = equipmentService.getRecommendFee();
+            response.setObj(data);
+        } catch (Exception e) {
+            logger.error("获取推荐设备费信息失败", e);
+            return RespBean.error("获取推荐设备费信息失败！");
+        }
+        return response;
+    }
+
     @DeleteMapping("/clear")
     public RespBean clear() {
         try {

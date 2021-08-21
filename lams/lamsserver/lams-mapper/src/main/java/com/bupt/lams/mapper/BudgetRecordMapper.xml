@@ -170,4 +170,12 @@
             #{item}
         </foreach>
     </delete>
+    <select id="getRecentIdByItemType" parameterType="java.lang.Integer" resultType="java.lang.Long">
+        select b.planItemId
+        from
+        budget_record b
+        where b.itemType = #{type}
+        order by b.id desc
+        limit 1
+    </select>
 </mapper>

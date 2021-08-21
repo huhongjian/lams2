@@ -3,6 +3,9 @@
     <div>
       <div style="display: flex;justify-content: space-between; width: 100%">
         <div>
+          <el-button type="primary" @click="showSelectView">
+            点我执行
+          </el-button>
           <el-button @click="revertExecution" style="display: inline-flex;margin-left: 8px" type="danger">
             撤销执行
           </el-button>
@@ -148,13 +151,21 @@
         </el-pagination>
       </div>
     </div>
+    <ExecuteSelect v-on:close="executeSelectVisible = false"
+                   :executeSelectVisible="executeSelectVisible"
+                   :title="title"></ExecuteSelect>
   </div>
 </template>
 
 <script>
 
+import ExecuteSelect from "@/components/budget/ExecuteSelect";
+
 export default {
   name: "BudgetProject",
+  components: {
+    ExecuteSelect,
+  },
   data() {
     return {
       searchValue: {
@@ -164,6 +175,8 @@ export default {
         dateScope: null
       },
       showAdvanceSearchView: false,
+      executeSelectVisible: false,
+      title: "",
       executions: [],
       recordIds: [],
       loading: false,
@@ -180,6 +193,10 @@ export default {
     this.initProjects();
   },
   methods: {
+    showSelectView() {
+      this.title = '预算明细推荐';
+      this.executeSelectVisible = true;
+    },
     handleSelectionChange(val) {
       this.recordIds = [];
       for (let i = 0; i < val.length; i++) {

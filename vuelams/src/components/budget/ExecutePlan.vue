@@ -10,14 +10,14 @@
           <el-row>
             <el-col :span="20">
               <el-form-item label="预算计划名称:" prop="planName">
-                {{ plan.planName }}
+                {{ planItem.planName }}
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="15">
               <el-form-item label="科研项目:" prop="projectId">
-                {{ plan.projectName }}
+                {{ planItem.projectName }}
               </el-form-item>
             </el-col>
           </el-row>
@@ -61,7 +61,7 @@
 
 export default {
   name: "ExecutePlan",
-  props: ['title', 'plan', 'planItem', 'executePlanVisible', 'projectLists'],
+  props: ['title', 'planItem', 'executePlanVisible', 'projectLists'],
   data() {
     return {
       budgetRecord: {
@@ -109,10 +109,10 @@ export default {
     },
     executePlan() {
       let url = '/execution/add';
-      this.budgetRecord.projectId = this.plan.projectId;
-      this.budgetRecord.projectName = this.plan.projectName;
-      this.budgetRecord.planId = this.plan.id;
-      this.budgetRecord.planName = this.plan.planName;
+      this.budgetRecord.projectId = this.planItem.projectId;
+      this.budgetRecord.projectName = this.planItem.projectName;
+      this.budgetRecord.planId = this.planItem.planId;
+      this.budgetRecord.planName = this.planItem.planName;
       this.budgetRecord.planItemId = this.planItem.id;
       this.budgetRecord.itemType = this.planItem.itemType;
       this.budgetRecord.itemTypeName = this.planItem.itemTypeName;
@@ -122,7 +122,7 @@ export default {
             if (resp) {
               this.$emit('close');
               this.emptyBudgetRecord();
-              this.$emit('freshPlan', this.plan.id);
+              this.$emit('freshPlan', this.planItem.planId);
             }
           });
         }

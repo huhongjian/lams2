@@ -31,17 +31,17 @@ public class ResearchFee extends PlanItem implements Serializable {
     private Integer times;
 
     /**
-     * 往返交通费（元）
+     * 往返交通费（元/人/天）
      */
     private Double transFee;
 
     /**
-     * 住宿（元）
+     * 住宿（元/人/天）
      */
     private Double accommodationFee;
 
     /**
-     * 公杂费（元）
+     * 公杂费（元/人/天）
      */
     private Double otherFee;
 

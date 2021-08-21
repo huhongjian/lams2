@@ -58,6 +58,7 @@
               <el-progress :text-inside="true" :stroke-width="10"
                            :percentage=plan.planItemDataMap.equipmentFeeData.executeRate></el-progress>
               <el-table
+                  v-show="plan.planItemDataMap.equipmentFeeData.planItemList.length!=0"
                   :data="plan.planItemDataMap.equipmentFeeData.planItemList"
                   stripe
                   border
@@ -116,77 +117,80 @@
               </el-table>
             </el-collapse-item>
             <el-collapse-item title="材料费" name="2">
-              <el-tag>金额: {{ plan.planItemDataMap.materialFeeData.funding }}（万元）</el-tag>
-              <el-tag type="success">未执行额度: {{ plan.planItemDataMap.materialFeeData.unfulfilledQuota }}（万元）</el-tag>
-              <el-tag type="info">执行率: {{ plan.planItemDataMap.materialFeeData.executeRate }}%</el-tag>
-              <el-progress :text-inside="true" :stroke-width="10"
-                           :percentage=plan.planItemDataMap.materialFeeData.executeRate></el-progress>
-              <el-table
-                  :data="plan.planItemDataMap.materialFeeData.planItemList"
-                  stripe
-                  border
-                  v-loading="loading"
-                  element-loading-text="正在加载..."
-                  element-loading-spinner="el-icon-loading"
-                  element-loading-background="rgba(0, 0, 0, 0.8)"
-                  style="width: 100%">
-                <el-table-column
-                    prop="id"
-                    label="序号"
-                    width="50">
-                </el-table-column>
-                <el-table-column
-                    prop="materialName"
-                    :show-overflow-tooltip="true"
-                    label="材料用途">
-                </el-table-column>
-                <el-table-column
-                    prop="specification"
-                    label="规格"
-                    :show-overflow-tooltip="true"
-                    width="100">
-                </el-table-column>
-                <el-table-column
-                    prop="amount"
-                    label="数量"
-                    width="50">
-                </el-table-column>
-                <el-table-column
-                    prop="unitPrice"
-                    label="单价（万元）"
-                    width="100">
-                </el-table-column>
-                <el-table-column
-                    prop="unit"
-                    label="单位"
-                    width="50">
-                </el-table-column>
-                <el-table-column
-                    prop="subTotal"
-                    label="合计（万元）"
-                    width="100">
-                </el-table-column>
-                <el-table-column
-                    prop="unfulfilledQuota"
-                    label="未执行额度（万元）"
-                    width="150">
-                </el-table-column>
-                <el-table-column
-                    prop="executeRate"
-                    label="执行率"
-                    width="100">
-                </el-table-column>
-                <el-table-column
-                    width="150"
-                    label="操作">
-                  <template slot-scope="scope">
-                    <el-button @click="showExecuteDetailView(scope.row)">详情</el-button>
-                    <el-button type="primary" plain @click="showExecuteView(scope.row)">执行</el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
+              <div v-show="plan.planItemDataMap.materialFeeData.planItemList.length!=0">
+                <el-tag>金额: {{ plan.planItemDataMap.materialFeeData.funding }}（万元）</el-tag>
+                <el-tag type="success">未执行额度: {{ plan.planItemDataMap.materialFeeData.unfulfilledQuota }}（万元）</el-tag>
+                <el-tag type="info">执行率: {{ plan.planItemDataMap.materialFeeData.executeRate }}%</el-tag>
+                <el-progress :text-inside="true" :stroke-width="10"
+                             :percentage=plan.planItemDataMap.materialFeeData.executeRate></el-progress>
+                <el-table
+                    :data="plan.planItemDataMap.materialFeeData.planItemList"
+                    stripe
+                    border
+                    v-loading="loading"
+                    element-loading-text="正在加载..."
+                    element-loading-spinner="el-icon-loading"
+                    element-loading-background="rgba(0, 0, 0, 0.8)"
+                    style="width: 100%">
+                  <el-table-column
+                      prop="id"
+                      label="序号"
+                      width="50">
+                  </el-table-column>
+                  <el-table-column
+                      prop="materialName"
+                      :show-overflow-tooltip="true"
+                      label="材料用途">
+                  </el-table-column>
+                  <el-table-column
+                      prop="specification"
+                      label="规格"
+                      :show-overflow-tooltip="true"
+                      width="100">
+                  </el-table-column>
+                  <el-table-column
+                      prop="amount"
+                      label="数量"
+                      width="50">
+                  </el-table-column>
+                  <el-table-column
+                      prop="unitPrice"
+                      label="单价（万元）"
+                      width="100">
+                  </el-table-column>
+                  <el-table-column
+                      prop="unit"
+                      label="单位"
+                      width="50">
+                  </el-table-column>
+                  <el-table-column
+                      prop="subTotal"
+                      label="合计（万元）"
+                      width="100">
+                  </el-table-column>
+                  <el-table-column
+                      prop="unfulfilledQuota"
+                      label="未执行额度（万元）"
+                      width="150">
+                  </el-table-column>
+                  <el-table-column
+                      prop="executeRate"
+                      label="执行率"
+                      width="100">
+                  </el-table-column>
+                  <el-table-column
+                      width="150"
+                      label="操作">
+                    <template slot-scope="scope">
+                      <el-button @click="showExecuteDetailView(scope.row)">详情</el-button>
+                      <el-button type="primary" plain @click="showExecuteView(scope.row)">执行</el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
             </el-collapse-item>
             <el-collapse-item title="测试化验加工费" name="3">
+              <div v-show="plan.planItemDataMap.testingFeeData.planItemList.length!=0">
               <el-tag>金额: {{ plan.planItemDataMap.testingFeeData.funding }}（万元）</el-tag>
               <el-tag type="success">未执行额度: {{ plan.planItemDataMap.testingFeeData.unfulfilledQuota }}（万元）</el-tag>
               <el-tag type="info">执行率: {{ plan.planItemDataMap.testingFeeData.executeRate }}%</el-tag>
@@ -245,8 +249,10 @@
                   </template>
                 </el-table-column>
               </el-table>
+              </div>
             </el-collapse-item>
             <el-collapse-item title="差旅/会议/国际合作与交流费" name="4">
+              <div v-show="plan.planItemDataMap.meetingFeeData.planItemList.length!=0">
               <el-tag type="warning">会议费</el-tag>
               <el-tag>金额: {{ plan.planItemDataMap.meetingFeeData.funding }}（万元）</el-tag>
               <el-tag type="success">未执行额度: {{ plan.planItemDataMap.meetingFeeData.unfulfilledQuota }}（万元）</el-tag>
@@ -324,6 +330,8 @@
                   </template>
                 </el-table-column>
               </el-table>
+              </div>
+              <div v-show="plan.planItemDataMap.researchFeeData.planItemList.length!=0">
               <el-tag type="warning">课题调研差旅费</el-tag>
               <el-tag>金额: {{ plan.planItemDataMap.researchFeeData.funding }}（万元）</el-tag>
               <el-tag type="success">未执行额度: {{ plan.planItemDataMap.researchFeeData.unfulfilledQuota }}（万元）</el-tag>
@@ -408,6 +416,8 @@
                   </template>
                 </el-table-column>
               </el-table>
+              </div>
+              <div v-show="plan.planItemDataMap.academicFeeData.planItemList.length!=0">
               <el-tag type="warning">国内学术会议差旅费</el-tag>
               <el-tag>金额: {{ plan.planItemDataMap.academicFeeData.funding }}（万元）</el-tag>
               <el-tag type="success">未执行额度: {{ plan.planItemDataMap.academicFeeData.unfulfilledQuota }}（万元）</el-tag>
@@ -486,6 +496,8 @@
                   </template>
                 </el-table-column>
               </el-table>
+              </div>
+              <div v-show="plan.planItemDataMap.transFeeData.planItemList.length!=0">
               <el-tag type="warning">北京市内交通费</el-tag>
               <el-tag>金额: {{ plan.planItemDataMap.transFeeData.funding }}（万元）</el-tag>
               <el-tag type="success">未执行额度: {{ plan.planItemDataMap.transFeeData.unfulfilledQuota }}（万元）</el-tag>
@@ -535,8 +547,10 @@
                   </template>
                 </el-table-column>
               </el-table>
+              </div>
             </el-collapse-item>
             <el-collapse-item title="出版/文献/信息传播/知识产权事务费" name="5">
+              <div v-show="plan.planItemDataMap.publishFeeData.planItemList.length!=0">
               <el-tag>金额: {{ plan.planItemDataMap.publishFeeData.funding }}（万元）</el-tag>
               <el-tag type="success">未执行额度: {{ plan.planItemDataMap.publishFeeData.unfulfilledQuota }}（万元）</el-tag>
               <el-tag type="info">执行率: {{ plan.planItemDataMap.publishFeeData.executeRate }}%</el-tag>
@@ -590,8 +604,10 @@
                   </template>
                 </el-table-column>
               </el-table>
+              </div>
             </el-collapse-item>
             <el-collapse-item title="劳务费" name="6">
+              <div v-show="plan.planItemDataMap.paymentData.planItemList.length!=0">
               <el-tag>金额: {{ plan.planItemDataMap.paymentData.funding }}（万元）</el-tag>
               <el-tag type="success">未执行额度: {{ plan.planItemDataMap.paymentData.unfulfilledQuota }}（万元）</el-tag>
               <el-tag type="info">执行率: {{ plan.planItemDataMap.paymentData.executeRate }}%</el-tag>
@@ -661,8 +677,10 @@
                   </template>
                 </el-table-column>
               </el-table>
+              </div>
             </el-collapse-item>
             <el-collapse-item title="专家咨询费" name="7">
+              <div v-show="plan.planItemDataMap.advisoryData.planItemList.length!=0">
               <el-tag>金额: {{ plan.planItemDataMap.advisoryData.funding }}（万元）</el-tag>
               <el-tag type="success">未执行额度: {{ plan.planItemDataMap.advisoryData.unfulfilledQuota }}（万元）</el-tag>
               <el-tag type="info">执行率: {{ plan.planItemDataMap.advisoryData.executeRate }}%</el-tag>
@@ -732,8 +750,10 @@
                   </template>
                 </el-table-column>
               </el-table>
+              </div>
             </el-collapse-item>
             <el-collapse-item title="其他支出" name="8">
+              <div v-show="plan.planItemDataMap.otherFeeData.planItemList.length!=0">
               <el-tag>金额: {{ plan.planItemDataMap.otherFeeData.funding }}（万元）</el-tag>
               <el-tag type="success">未执行额度: {{ plan.planItemDataMap.otherFeeData.unfulfilledQuota }}（万元）</el-tag>
               <el-tag type="info">执行率: {{ plan.planItemDataMap.otherFeeData.executeRate }}%</el-tag>
@@ -786,6 +806,7 @@
                   </template>
                 </el-table-column>
               </el-table>
+              </div>
             </el-collapse-item>
           </el-collapse>
         </el-form>

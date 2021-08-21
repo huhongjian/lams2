@@ -26,12 +26,12 @@ public class Payment extends PlanItem implements Serializable {
     private Integer amount;
 
     /**
-     * 标准
+     * 标准（元/人/月）
      */
     private Double standard;
 
     /**
-     * 工作时间
+     * 工作时间（月）
      */
     private Integer hours;
 

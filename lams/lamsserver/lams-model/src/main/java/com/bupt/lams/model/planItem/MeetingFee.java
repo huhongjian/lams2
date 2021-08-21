@@ -21,12 +21,12 @@ public class MeetingFee extends PlanItem implements Serializable {
     private String relation;
 
     /**
-     * 伙食费（人/天）
+     * 伙食费（元/人/天）
      */
     private Double meal;
 
     /**
-     * 其他费用（人/天）
+     * 其他费用（元/人/天）
      */
     private Double otherCost;
 

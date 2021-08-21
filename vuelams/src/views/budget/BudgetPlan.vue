@@ -223,17 +223,39 @@ export default {
           remark: ""
         },
         planItemDataMap: {
-          equipmentFeeData: {},
-          materialFeeData: {},
-          testingFeeData: {},
-          meetingFeeData: {},
-          researchFeeData: {},
-          academicFeeData: {},
-          transFeeData: {},
-          publishFeeData: {},
-          paymentData: {},
-          advisoryData: {},
-          otherFeeData: {},
+          equipmentFeeData: {
+            planItemList:[]
+          },
+          materialFeeData: {
+            planItemList:[]
+          },
+          testingFeeData: {
+            planItemList:[]
+          },
+          meetingFeeData: {
+            planItemList:[]
+          },
+          researchFeeData: {
+            planItemList:[]
+          },
+          academicFeeData: {
+            planItemList:[]
+          },
+          transFeeData: {
+            planItemList:[]
+          },
+          publishFeeData: {
+            planItemList:[]
+          },
+          paymentData: {
+            planItemList:[]
+          },
+          advisoryData: {
+            planItemList:[]
+          },
+          otherFeeData: {
+            planItemList:[]
+          },
         },
         createTime: "",
         updateTime: ""
@@ -329,17 +351,39 @@ export default {
           remark: ""
         },
         planItemDataMap: {
-          equipmentFeeData: {},
-          materialFeeData: {},
-          testingFeeData: {},
-          meetingFeeData: {},
-          researchFeeData: {},
-          academicFeeData: {},
-          transFeeData: {},
-          publishFeeData: {},
-          paymentData: {},
-          advisoryData: {},
-          otherFeeData: {},
+          equipmentFeeData: {
+            planItemList:[]
+          },
+          materialFeeData: {
+            planItemList:[]
+          },
+          testingFeeData: {
+            planItemList:[]
+          },
+          meetingFeeData: {
+            planItemList:[]
+          },
+          researchFeeData: {
+            planItemList:[]
+          },
+          academicFeeData: {
+            planItemList:[]
+          },
+          transFeeData: {
+            planItemList:[]
+          },
+          publishFeeData: {
+            planItemList:[]
+          },
+          paymentData: {
+            planItemList:[]
+          },
+          advisoryData: {
+            planItemList:[]
+          },
+          otherFeeData: {
+            planItemList:[]
+          },
         },
         createTime: "",
         updateTime: ""

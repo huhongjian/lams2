@@ -26,7 +26,7 @@ public class Advisory extends PlanItem implements Serializable {
     private Integer amount;
 
     /**
-     * 标准
+     * 标准（元/人/天）
      */
     private Double standard;
 

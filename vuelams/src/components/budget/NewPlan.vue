@@ -51,635 +51,657 @@
         </el-form>
         <el-collapse>
           <el-collapse-item title="设备费" name="1">
-            <el-tag>金额: {{ plan.planItemDataMap.equipmentFeeData.funding }}（万元）</el-tag>
-            <el-table
-                :data="plan.planItemDataMap.equipmentFeeData.planItemList"
-                stripe
-                border
-                v-loading="loading"
-                element-loading-text="正在加载..."
-                element-loading-spinner="el-icon-loading"
-                element-loading-background="rgba(0, 0, 0, 0.8)"
-                style="width: 100%">
-              <el-table-column
-                  prop="id"
-                  label="序号"
-                  align="left"
-                  width="80">
-              </el-table-column>
-              <el-table-column
-                  prop="equipmentName"
-                  :show-overflow-tooltip="true"
-                  label="设备名称">
-              </el-table-column>
-              <el-table-column
-                  prop="usage"
-                  :show-overflow-tooltip="true"
-                  label="用途">
-              </el-table-column>
-              <el-table-column
-                  prop="unitPrice"
-                  label="单价（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="amount"
-                  label="数量"
-                  width="80">
-              </el-table-column>
-              <el-table-column
-                  prop="subTotal"
-                  label="合计（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="remark"
-                  :show-overflow-tooltip="true"
-                  label="备注">
-              </el-table-column>
-              <el-table-column
-                  width="80"
-                  label="操作">
-                <template slot-scope="scope">
-                  <el-button type="danger" plain @click="deleteEquipmentFee(scope.row.id)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+            <div v-show="plan.planItemDataMap.equipmentFeeData.planItemList.length!=0">
+              <el-tag>金额: {{ plan.planItemDataMap.equipmentFeeData.funding }}（万元）</el-tag>
+              <el-table
+                  :data="plan.planItemDataMap.equipmentFeeData.planItemList"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    prop="id"
+                    label="序号"
+                    align="left"
+                    width="80">
+                </el-table-column>
+                <el-table-column
+                    prop="equipmentName"
+                    :show-overflow-tooltip="true"
+                    label="设备名称">
+                </el-table-column>
+                <el-table-column
+                    prop="usage"
+                    :show-overflow-tooltip="true"
+                    label="用途">
+                </el-table-column>
+                <el-table-column
+                    prop="unitPrice"
+                    label="单价（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="amount"
+                    label="数量"
+                    width="80">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    label="合计（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    :show-overflow-tooltip="true"
+                    label="备注">
+                </el-table-column>
+                <el-table-column
+                    width="80"
+                    label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="danger" plain @click="deleteEquipmentFee(scope.row.id)">删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </el-collapse-item>
           <el-collapse-item title="材料费" name="2">
-            <el-tag>金额: {{ plan.planItemDataMap.materialFeeData.funding }}（万元）</el-tag>
-            <el-table
-                :data="plan.planItemDataMap.materialFeeData.planItemList"
-                stripe
-                border
-                v-loading="loading"
-                element-loading-text="正在加载..."
-                element-loading-spinner="el-icon-loading"
-                element-loading-background="rgba(0, 0, 0, 0.8)"
-                style="width: 100%">
-              <el-table-column
-                  prop="id"
-                  label="序号"
-                  align="left"
-                  width="80">
-              </el-table-column>
-              <el-table-column
-                  prop="materialName"
-                  :show-overflow-tooltip="true"
-                  label="材料用途">
-              </el-table-column>
-              <el-table-column
-                  prop="specification"
-                  label="规格"
-                  width="200">
-              </el-table-column>
-              <el-table-column
-                  prop="amount"
-                  label="数量"
-                  width="80">
-              </el-table-column>
-              <el-table-column
-                  prop="unitPrice"
-                  label="单价（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="unit"
-                  label="单位"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="subTotal"
-                  label="小计（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="remark"
-                  :show-overflow-tooltip="true"
-                  label="备注">
-              </el-table-column>
-              <el-table-column
-                  width="80"
-                  label="操作">
-                <template slot-scope="scope">
-                  <el-button type="danger" plain @click="deleteMaterialFee(scope.row.id)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+            <div v-show="plan.planItemDataMap.materialFeeData.planItemList.length!=0">
+              <el-tag>金额: {{ plan.planItemDataMap.materialFeeData.funding }}（万元）</el-tag>
+              <el-table
+                  :data="plan.planItemDataMap.materialFeeData.planItemList"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    prop="id"
+                    label="序号"
+                    align="left"
+                    width="80">
+                </el-table-column>
+                <el-table-column
+                    prop="materialName"
+                    :show-overflow-tooltip="true"
+                    label="材料用途">
+                </el-table-column>
+                <el-table-column
+                    prop="specification"
+                    label="规格"
+                    width="200">
+                </el-table-column>
+                <el-table-column
+                    prop="amount"
+                    label="数量"
+                    width="80">
+                </el-table-column>
+                <el-table-column
+                    prop="unitPrice"
+                    label="单价（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="unit"
+                    label="单位"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    label="小计（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    :show-overflow-tooltip="true"
+                    label="备注">
+                </el-table-column>
+                <el-table-column
+                    width="80"
+                    label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="danger" plain @click="deleteMaterialFee(scope.row.id)">删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </el-collapse-item>
           <el-collapse-item title="测试化验加工费" name="3">
-            <el-tag>金额: {{ plan.planItemDataMap.testingFeeData.funding }}（万元）</el-tag>
-            <el-table
-                :data="plan.planItemDataMap.testingFeeData.planItemList"
-                stripe
-                border
-                v-loading="loading"
-                element-loading-text="正在加载..."
-                element-loading-spinner="el-icon-loading"
-                element-loading-background="rgba(0, 0, 0, 0.8)"
-                style="width: 100%">
-              <el-table-column
-                  prop="id"
-                  label="序号"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="content"
-                  :show-overflow-tooltip="true"
-                  label="加工内容">
-              </el-table-column>
-              <el-table-column
-                  prop="times"
-                  align="left"
-                  label="次数"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="unitPrice"
-                  align="left"
-                  label="单价（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="subTotal"
-                  align="left"
-                  label="合计（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="remark"
-                  :show-overflow-tooltip="true"
-                  label="备注">
-              </el-table-column>
-              <el-table-column
-                  width="80"
-                  label="操作">
-                <template slot-scope="scope">
-                  <el-button type="danger" plain @click="deleteTestingFee(scope.row.id)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+            <div v-show="plan.planItemDataMap.testingFeeData.planItemList.length!=0">
+              <el-tag>金额: {{ plan.planItemDataMap.testingFeeData.funding }}（万元）</el-tag>
+              <el-table
+                  :data="plan.planItemDataMap.testingFeeData.planItemList"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    prop="id"
+                    label="序号"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="content"
+                    :show-overflow-tooltip="true"
+                    label="加工内容">
+                </el-table-column>
+                <el-table-column
+                    prop="times"
+                    align="left"
+                    label="次数"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="unitPrice"
+                    align="left"
+                    label="单价（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    align="left"
+                    label="合计（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    :show-overflow-tooltip="true"
+                    label="备注">
+                </el-table-column>
+                <el-table-column
+                    width="80"
+                    label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="danger" plain @click="deleteTestingFee(scope.row.id)">删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </el-collapse-item>
           <el-collapse-item title="差旅/会议/国际合作与交流费" name="4">
-            <el-tag type="warning">会议费</el-tag>
-            <el-tag>金额: {{ plan.planItemDataMap.meetingFeeData.funding }}（万元）</el-tag>
-            <el-table
-                :data="plan.planItemDataMap.meetingFeeData.planItemList"
-                stripe
-                border
-                v-loading="loading"
-                element-loading-text="正在加载..."
-                element-loading-spinner="el-icon-loading"
-                element-loading-background="rgba(0, 0, 0, 0.8)"
-                style="width: 100%">
-              <el-table-column
-                  prop="id"
-                  label="序号"
-                  align="left"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="content"
-                  :show-overflow-tooltip="true"
-                  label="会议内容">
-              </el-table-column>
-              <el-table-column
-                  prop="relation"
-                  :show-overflow-tooltip="true"
-                  label="与课题相关性">
-              </el-table-column>
-              <el-table-column
-                  prop="meal"
-                  label="伙食费（人/天）"
-                  width="120">
-              </el-table-column>
-              <el-table-column
-                  prop="otherCost"
-                  label="其他费用（人/天）"
-                  width="130">
-              </el-table-column>
-              <el-table-column
-                  prop="days"
-                  label="天数"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="amount"
-                  label="参会人数"
-                  width="80">
-              </el-table-column>
-              <el-table-column
-                  prop="meetingNum"
-                  label="会议次数"
-                  width="80">
-              </el-table-column>
-              <el-table-column
-                  prop="subTotal"
-                  label="合计（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="remark"
-                  :show-overflow-tooltip="true"
-                  label="备注">
-              </el-table-column>
-              <el-table-column
-                  width="80"
-                  label="操作">
-                <template slot-scope="scope">
-                  <el-button type="danger" plain @click="deleteMeetingFee(scope.row.id)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-tag type="warning">课题调研差旅费</el-tag>
-            <el-tag>金额: {{ plan.planItemDataMap.researchFeeData.funding }}（万元）</el-tag>
-            <el-table
-                :data="plan.planItemDataMap.researchFeeData.planItemList"
-                stripe
-                border
-                v-loading="loading"
-                element-loading-text="正在加载..."
-                element-loading-spinner="el-icon-loading"
-                element-loading-background="rgba(0, 0, 0, 0.8)"
-                style="width: 100%">
-              <el-table-column
-                  prop="id"
-                  label="序号"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="place"
-                  :show-overflow-tooltip="true"
-                  label="调研地点">
-              </el-table-column>
-              <el-table-column
-                  prop="purpose"
-                  :show-overflow-tooltip="true"
-                  label="调研目的">
-              </el-table-column>
-              <el-table-column
-                  prop="personnelType"
-                  label="人员类别"
-                  width="80">
-              </el-table-column>
-              <el-table-column
-                  prop="times"
-                  label="人次"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="transFee"
-                  label="交通费（元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="accommodationFee"
-                  label="住宿（元）"
-                  width="90">
-              </el-table-column>
-              <el-table-column
-                  prop="otherFee"
-                  label="公杂费（元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="days"
-                  label="天数"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="subTotal"
-                  label="合计（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="remark"
-                  :show-overflow-tooltip="true"
-                  label="备注">
-              </el-table-column>
-              <el-table-column
-                  width="80"
-                  label="操作">
-                <template slot-scope="scope">
-                  <el-button type="danger" plain @click="deleteResearchFee(scope.row.id)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-tag type="warning">国内学术会议差旅费</el-tag>
-            <el-tag>金额: {{ plan.planItemDataMap.academicFeeData.funding }}（万元）</el-tag>
-            <el-table
-                :data="plan.planItemDataMap.academicFeeData.planItemList"
-                stripe
-                border
-                v-loading="loading"
-                element-loading-text="正在加载..."
-                element-loading-spinner="el-icon-loading"
-                element-loading-background="rgba(0, 0, 0, 0.8)"
-                style="width: 100%">
-              <el-table-column
-                  prop="id"
-                  label="序号"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="meetingName"
-                  :show-overflow-tooltip="true"
-                  label="会议名称">
-              </el-table-column>
-              <el-table-column
-                  prop="personnelType"
-                  label="人员类别"
-                  width="80">
-              </el-table-column>
-              <el-table-column
-                  prop="times"
-                  label="人次"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="year"
-                  label="年度"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="days"
-                  label="会期（天）"
-                  width="90">
-              </el-table-column>
-              <el-table-column
-                  prop="registrationFee"
-                  label="注册费（元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="transFee"
-                  label="往返交通费（元）"
-                  width="120">
-              </el-table-column>
-              <el-table-column
-                  prop="accommodationFee"
-                  label="住宿及补助费（元）"
-                  width="150">
-              </el-table-column>
-              <el-table-column
-                  prop="subTotal"
-                  label="合计（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="remark"
-                  :show-overflow-tooltip="true"
-                  label="备注">
-              </el-table-column>
-              <el-table-column
-                  width="80"
-                  label="操作">
-                <template slot-scope="scope">
-                  <el-button type="danger" plain @click="deleteAcademicFee(scope.row.id)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-tag type="warning">北京市内交通费</el-tag>
-            <el-tag>金额: {{ plan.planItemDataMap.transFeeData.funding }}（万元）</el-tag>
-            <el-table
-                :data="plan.planItemDataMap.transFeeData.planItemList"
-                stripe
-                border
-                v-loading="loading"
-                element-loading-text="正在加载..."
-                element-loading-spinner="el-icon-loading"
-                element-loading-background="rgba(0, 0, 0, 0.8)"
-                style="width: 100%">
-              <el-table-column
-                  prop="id"
-                  label="序号"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="remark"
-                  :show-overflow-tooltip="true"
-                  label="说明">
-              </el-table-column>
-              <el-table-column
-                  prop="subTotal"
-                  label="合计（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="remark"
-                  :show-overflow-tooltip="true"
-                  label="备注">
-              </el-table-column>
-              <el-table-column
-                  width="80"
-                  label="操作">
-                <template slot-scope="scope">
-                  <el-button type="danger" plain @click="deleteTransportationFee(scope.row.id)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+            <div v-show="plan.planItemDataMap.meetingFeeData.planItemList.length!=0">
+              <el-tag type="warning">会议费</el-tag>
+              <el-tag>金额: {{ plan.planItemDataMap.meetingFeeData.funding }}（万元）</el-tag>
+              <el-table
+                  :data="plan.planItemDataMap.meetingFeeData.planItemList"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    prop="id"
+                    label="序号"
+                    align="left"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="content"
+                    :show-overflow-tooltip="true"
+                    label="会议内容">
+                </el-table-column>
+                <el-table-column
+                    prop="relation"
+                    :show-overflow-tooltip="true"
+                    label="与课题相关性">
+                </el-table-column>
+                <el-table-column
+                    prop="meal"
+                    label="伙食费（人/天）"
+                    width="120">
+                </el-table-column>
+                <el-table-column
+                    prop="otherCost"
+                    label="其他费用（人/天）"
+                    width="130">
+                </el-table-column>
+                <el-table-column
+                    prop="days"
+                    label="天数"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="amount"
+                    label="参会人数"
+                    width="80">
+                </el-table-column>
+                <el-table-column
+                    prop="meetingNum"
+                    label="会议次数"
+                    width="80">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    label="合计（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    :show-overflow-tooltip="true"
+                    label="备注">
+                </el-table-column>
+                <el-table-column
+                    width="80"
+                    label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="danger" plain @click="deleteMeetingFee(scope.row.id)">删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+            <div v-show="plan.planItemDataMap.researchFeeData.planItemList.length!=0">
+              <el-tag type="warning">课题调研差旅费</el-tag>
+              <el-tag>金额: {{ plan.planItemDataMap.researchFeeData.funding }}（万元）</el-tag>
+              <el-table
+                  :data="plan.planItemDataMap.researchFeeData.planItemList"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    prop="id"
+                    label="序号"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="place"
+                    :show-overflow-tooltip="true"
+                    label="调研地点">
+                </el-table-column>
+                <el-table-column
+                    prop="purpose"
+                    :show-overflow-tooltip="true"
+                    label="调研目的">
+                </el-table-column>
+                <el-table-column
+                    prop="personnelType"
+                    label="人员类别"
+                    width="80">
+                </el-table-column>
+                <el-table-column
+                    prop="times"
+                    label="人次"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="transFee"
+                    label="交通费（元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="accommodationFee"
+                    label="住宿（元）"
+                    width="90">
+                </el-table-column>
+                <el-table-column
+                    prop="otherFee"
+                    label="公杂费（元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="days"
+                    label="天数"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    label="合计（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    :show-overflow-tooltip="true"
+                    label="备注">
+                </el-table-column>
+                <el-table-column
+                    width="80"
+                    label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="danger" plain @click="deleteResearchFee(scope.row.id)">删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+            <div v-show="plan.planItemDataMap.academicFeeData.planItemList.length!=0">
+              <el-tag type="warning">国内学术会议差旅费</el-tag>
+              <el-tag>金额: {{ plan.planItemDataMap.academicFeeData.funding }}（万元）</el-tag>
+              <el-table
+                  :data="plan.planItemDataMap.academicFeeData.planItemList"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    prop="id"
+                    label="序号"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="meetingName"
+                    :show-overflow-tooltip="true"
+                    label="会议名称">
+                </el-table-column>
+                <el-table-column
+                    prop="personnelType"
+                    label="人员类别"
+                    width="80">
+                </el-table-column>
+                <el-table-column
+                    prop="times"
+                    label="人次"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="year"
+                    label="年度"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="days"
+                    label="会期（天）"
+                    width="90">
+                </el-table-column>
+                <el-table-column
+                    prop="registrationFee"
+                    label="注册费（元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="transFee"
+                    label="往返交通费（元）"
+                    width="120">
+                </el-table-column>
+                <el-table-column
+                    prop="accommodationFee"
+                    label="住宿及补助费（元）"
+                    width="150">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    label="合计（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    :show-overflow-tooltip="true"
+                    label="备注">
+                </el-table-column>
+                <el-table-column
+                    width="80"
+                    label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="danger" plain @click="deleteAcademicFee(scope.row.id)">删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+            <div v-show="plan.planItemDataMap.transFeeData.planItemList.length!=0">
+              <el-tag type="warning">北京市内交通费</el-tag>
+              <el-tag>金额: {{ plan.planItemDataMap.transFeeData.funding }}（万元）</el-tag>
+              <el-table
+                  :data="plan.planItemDataMap.transFeeData.planItemList"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    prop="id"
+                    label="序号"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    :show-overflow-tooltip="true"
+                    label="说明">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    label="合计（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    :show-overflow-tooltip="true"
+                    label="备注">
+                </el-table-column>
+                <el-table-column
+                    width="80"
+                    label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="danger" plain @click="deleteTransportationFee(scope.row.id)">删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </el-collapse-item>
           <el-collapse-item title="出版/文献/信息传播/知识产权事务费" name="5">
-            <el-tag>金额: {{ plan.planItemDataMap.publishFeeData.funding }}（万元）</el-tag>
-            <el-table
-                :data="plan.planItemDataMap.publishFeeData.planItemList"
-                stripe
-                border
-                v-loading="loading"
-                element-loading-text="正在加载..."
-                element-loading-spinner="el-icon-loading"
-                element-loading-background="rgba(0, 0, 0, 0.8)"
-                style="width: 100%">
-              <el-table-column
-                  prop="id"
-                  label="序号"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="type"
-                  :show-overflow-tooltip="true"
-                  label="类别">
-              </el-table-column>
-              <el-table-column
-                  prop="remark"
-                  :show-overflow-tooltip="true"
-                  label="说明">
-              </el-table-column>
-              <el-table-column
-                  prop="subTotal"
-                  label="合计（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  width="80"
-                  label="操作">
-                <template slot-scope="scope">
-                  <el-button type="danger" plain @click="deletePublishFee(scope.row.id)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+            <div v-show="plan.planItemDataMap.publishFeeData.planItemList.length!=0">
+              <el-tag>金额: {{ plan.planItemDataMap.publishFeeData.funding }}（万元）</el-tag>
+              <el-table
+                  :data="plan.planItemDataMap.publishFeeData.planItemList"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    prop="id"
+                    label="序号"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="type"
+                    :show-overflow-tooltip="true"
+                    label="类别">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    :show-overflow-tooltip="true"
+                    label="说明">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    label="合计（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    width="80"
+                    label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="danger" plain @click="deletePublishFee(scope.row.id)">删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </el-collapse-item>
           <el-collapse-item title="劳务费" name="6">
-            <el-tag>金额: {{ plan.planItemDataMap.paymentData.funding }}（万元）</el-tag>
-            <el-table
-                :data="plan.planItemDataMap.paymentData.planItemList"
-                stripe
-                border
-                v-loading="loading"
-                element-loading-text="正在加载..."
-                element-loading-spinner="el-icon-loading"
-                element-loading-background="rgba(0, 0, 0, 0.8)"
-                style="width: 100%">
-              <el-table-column
-                  prop="id"
-                  label="序号"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="personnelType"
-                  :show-overflow-tooltip="true"
-                  label="人员种类"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="content"
-                  :show-overflow-tooltip="true"
-                  label="工作内容">
-              </el-table-column>
-              <el-table-column
-                  prop="amount"
-                  label="人数"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="standard"
-                  label="标准（元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="hours"
-                  label="工作时间"
-                  width="80">
-              </el-table-column>
-              <el-table-column
-                  prop="subTotal"
-                  label="合计（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="remark"
-                  :show-overflow-tooltip="true"
-                  label="备注">
-              </el-table-column>
-              <el-table-column
-                  width="80"
-                  label="操作">
-                <template slot-scope="scope">
-                  <el-button type="danger" plain @click="deletePublishFee(scope.row)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+            <div v-show="plan.planItemDataMap.paymentData.planItemList.length!=0">
+              <el-tag>金额: {{ plan.planItemDataMap.paymentData.funding }}（万元）</el-tag>
+              <el-table
+                  :data="plan.planItemDataMap.paymentData.planItemList"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    prop="id"
+                    label="序号"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="personnelType"
+                    :show-overflow-tooltip="true"
+                    label="人员种类"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="content"
+                    :show-overflow-tooltip="true"
+                    label="工作内容">
+                </el-table-column>
+                <el-table-column
+                    prop="amount"
+                    label="人数"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="standard"
+                    label="标准（元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="hours"
+                    label="工作时间"
+                    width="80">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    label="合计（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    :show-overflow-tooltip="true"
+                    label="备注">
+                </el-table-column>
+                <el-table-column
+                    width="80"
+                    label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="danger" plain @click="deletePublishFee(scope.row)">删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </el-collapse-item>
           <el-collapse-item title="专家咨询费" name="7">
-            <el-tag>金额: {{ plan.planItemDataMap.advisoryData.funding }}（万元）</el-tag>
-            <el-table
-                :data="plan.planItemDataMap.advisoryData.planItemList"
-                stripe
-                border
-                v-loading="loading"
-                element-loading-text="正在加载..."
-                element-loading-spinner="el-icon-loading"
-                element-loading-background="rgba(0, 0, 0, 0.8)"
-                style="width: 100%">
-              <el-table-column
-                  prop="id"
-                  label="序号"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="content"
-                  :show-overflow-tooltip="true"
-                  label="咨询内容">
-              </el-table-column>
-              <el-table-column
-                  prop="personnelType"
-                  label="人员类型"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="standard"
-                  label="标准（元/天）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="amount"
-                  label="人数"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="days"
-                  label="天数"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="subTotal"
-                  label="总计（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  prop="remark"
-                  :show-overflow-tooltip="true"
-                  label="备注">
-              </el-table-column>
-              <el-table-column
-                  width="80"
-                  label="操作">
-                <template slot-scope="scope">
-                  <el-button type="danger" plain @click="deleteAdvisory(scope.row.id)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+            <div v-show="plan.planItemDataMap.advisoryData.planItemList.length!=0">
+              <el-tag>金额: {{ plan.planItemDataMap.advisoryData.funding }}（万元）</el-tag>
+              <el-table
+                  :data="plan.planItemDataMap.advisoryData.planItemList"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    prop="id"
+                    label="序号"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="content"
+                    :show-overflow-tooltip="true"
+                    label="咨询内容">
+                </el-table-column>
+                <el-table-column
+                    prop="personnelType"
+                    label="人员类型"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="standard"
+                    label="标准（元/天）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="amount"
+                    label="人数"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="days"
+                    label="天数"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    label="总计（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    :show-overflow-tooltip="true"
+                    label="备注">
+                </el-table-column>
+                <el-table-column
+                    width="80"
+                    label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="danger" plain @click="deleteAdvisory(scope.row.id)">删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </el-collapse-item>
           <el-collapse-item title="其他支出" name="8">
-            <el-tag>金额: {{ plan.planItemDataMap.otherFeeData.funding }}（万元）</el-tag>
-            <el-table
-                :data="plan.planItemDataMap.otherFeeData.planItemList"
-                stripe
-                border
-                v-loading="loading"
-                element-loading-text="正在加载..."
-                element-loading-spinner="el-icon-loading"
-                element-loading-background="rgba(0, 0, 0, 0.8)"
-                style="width: 100%">
-              <el-table-column
-                  prop="id"
-                  label="序号"
-                  width="50">
-              </el-table-column>
-              <el-table-column
-                  prop="type"
-                  :show-overflow-tooltip="true"
-                  label="类别">
-              </el-table-column>
-              <el-table-column
-                  prop="remark"
-                  :show-overflow-tooltip="true"
-                  label="说明">
-              </el-table-column>
-              <el-table-column
-                  prop="subTotal"
-                  align="left"
-                  label="合计（万元）"
-                  width="100">
-              </el-table-column>
-              <el-table-column
-                  width="80"
-                  label="操作">
-                <template slot-scope="scope">
-                  <el-button type="danger" plain @click="deleteOtherFee(scope.row.id)">删除</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+            <div v-show="plan.planItemDataMap.otherFeeData.planItemList.length!=0">
+              <el-tag>金额: {{ plan.planItemDataMap.otherFeeData.funding }}（万元）</el-tag>
+              <el-table
+                  :data="plan.planItemDataMap.otherFeeData.planItemList"
+                  stripe
+                  border
+                  v-loading="loading"
+                  element-loading-text="正在加载..."
+                  element-loading-spinner="el-icon-loading"
+                  element-loading-background="rgba(0, 0, 0, 0.8)"
+                  style="width: 100%">
+                <el-table-column
+                    prop="id"
+                    label="序号"
+                    width="50">
+                </el-table-column>
+                <el-table-column
+                    prop="type"
+                    :show-overflow-tooltip="true"
+                    label="类别">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    :show-overflow-tooltip="true"
+                    label="说明">
+                </el-table-column>
+                <el-table-column
+                    prop="subTotal"
+                    align="left"
+                    label="合计（万元）"
+                    width="100">
+                </el-table-column>
+                <el-table-column
+                    width="80"
+                    label="操作">
+                  <template slot-scope="scope">
+                    <el-button type="danger" plain @click="deleteOtherFee(scope.row.id)">删除</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </el-collapse-item>
         </el-collapse>
       </div>

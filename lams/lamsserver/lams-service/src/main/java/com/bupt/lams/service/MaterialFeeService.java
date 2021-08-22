@@ -95,7 +95,7 @@ public class MaterialFeeService {
             return new ArrayList<>();
         }
         // 获取最近一条设备费执行记录
-        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.MATERIAL.getIndex());
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.MATERIAL.getIndex(), UserInfoUtils.getLoginedUser().getUsername());
         if (id == null) {
             return materialFeeList.size() > 10 ? materialFeeList.subList(0, 10) : materialFeeList;
         }

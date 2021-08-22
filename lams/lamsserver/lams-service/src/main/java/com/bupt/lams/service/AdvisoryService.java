@@ -94,7 +94,7 @@ public class AdvisoryService {
             return new ArrayList<>();
         }
         // 获取最近一条设备费执行记录
-        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.ADVISORY.getIndex());
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.ADVISORY.getIndex(), UserInfoUtils.getLoginedUser().getUsername());
         if (id == null) {
             return advisoryList.size() > 10 ? advisoryList.subList(0, 10) : advisoryList;
         }

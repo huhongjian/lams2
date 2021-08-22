@@ -89,7 +89,7 @@ public class EquipmentFeeService {
             return new ArrayList<>();
         }
         // 获取最近一条设备费执行记录
-        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.EQUIPMENT.getIndex());
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.EQUIPMENT.getIndex(), UserInfoUtils.getLoginedUser().getUsername());
         if (id == null) {
             return equipmentFeeList.size() > 10 ? equipmentFeeList.subList(0, 10) : equipmentFeeList;
         }

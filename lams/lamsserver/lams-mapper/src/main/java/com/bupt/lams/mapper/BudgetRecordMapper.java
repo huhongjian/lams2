@@ -2,6 +2,7 @@ package com.bupt.lams.mapper;
 
 import com.bupt.lams.dto.ExecutionQueryCondition;
 import com.bupt.lams.model.BudgetRecord;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,5 +21,5 @@ public interface BudgetRecordMapper {
 
     void deleteManyByIds(List<Long> ids);
 
-    Long getRecentIdByItemType(Integer type);
+    Long getRecentIdByItemType(@Param("type") Integer type, @Param("userEmail") String userEmail);
 }

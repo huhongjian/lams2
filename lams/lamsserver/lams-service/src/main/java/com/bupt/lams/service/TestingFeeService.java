@@ -95,7 +95,7 @@ public class TestingFeeService {
             return new ArrayList<>();
         }
         // 获取最近一条设备费执行记录
-        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.TESTING.getIndex());
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.TESTING.getIndex(), UserInfoUtils.getLoginedUser().getUsername());
         if (id == null) {
             return testingFeeList.size() > 10 ? testingFeeList.subList(0, 10) : testingFeeList;
         }

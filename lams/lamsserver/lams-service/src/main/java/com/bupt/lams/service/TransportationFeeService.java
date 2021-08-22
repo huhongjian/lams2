@@ -91,7 +91,7 @@ public class TransportationFeeService {
             return new ArrayList<>();
         }
         // 获取最近一条设备费执行记录
-        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.TRANSPORTATION.getIndex());
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.TRANSPORTATION.getIndex(), UserInfoUtils.getLoginedUser().getUsername());
         if (id == null) {
             return transFeeList.size() > 10 ? transFeeList.subList(0, 10) : transFeeList;
         }

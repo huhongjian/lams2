@@ -91,7 +91,7 @@ public class PublishFeeService {
             return new ArrayList<>();
         }
         // 获取最近一条设备费执行记录
-        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.PUBLISH.getIndex());
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.PUBLISH.getIndex(), UserInfoUtils.getLoginedUser().getUsername());
         if (id == null) {
             return publishFeeList.size() > 10 ? publishFeeList.subList(0, 10) : publishFeeList;
         }

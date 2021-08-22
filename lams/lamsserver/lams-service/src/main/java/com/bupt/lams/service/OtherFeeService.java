@@ -91,7 +91,7 @@ public class OtherFeeService {
             return new ArrayList<>();
         }
         // 获取最近一条设备费执行记录
-        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.OTHERS.getIndex());
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.OTHERS.getIndex(), UserInfoUtils.getLoginedUser().getUsername());
         if (id == null) {
             return otherFeeList.size() > 10 ? otherFeeList.subList(0, 10) : otherFeeList;
         }

@@ -94,7 +94,7 @@ public class MeetingFeeService {
             return new ArrayList<>();
         }
         // 获取最近一条设备费执行记录
-        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.MEETING.getIndex());
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.MEETING.getIndex(), UserInfoUtils.getLoginedUser().getUsername());
         if (id == null) {
             return meetingFeeList.size() > 10 ? meetingFeeList.subList(0, 10) : meetingFeeList;
         }

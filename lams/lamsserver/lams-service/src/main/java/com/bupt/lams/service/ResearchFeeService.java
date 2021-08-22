@@ -94,7 +94,7 @@ public class ResearchFeeService {
             return new ArrayList<>();
         }
         // 获取最近一条设备费执行记录
-        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.RESEARCH.getIndex());
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.RESEARCH.getIndex(), UserInfoUtils.getLoginedUser().getUsername());
         if (id == null) {
             return researchFeeList.size() > 10 ? researchFeeList.subList(0, 10) : researchFeeList;
         }

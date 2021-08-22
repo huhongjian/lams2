@@ -94,7 +94,7 @@ public class PaymentService {
             return new ArrayList<>();
         }
         // 获取最近一条设备费执行记录
-        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.PAYMENT.getIndex());
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.PAYMENT.getIndex(), UserInfoUtils.getLoginedUser().getUsername());
         if (id == null) {
             return paymentList.size() > 10 ? paymentList.subList(0, 10) : paymentList;
         }

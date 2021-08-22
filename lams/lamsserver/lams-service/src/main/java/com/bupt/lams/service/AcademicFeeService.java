@@ -93,7 +93,7 @@ public class AcademicFeeService {
             return new ArrayList<>();
         }
         // 获取最近一条设备费执行记录
-        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.ACADEMIC.getIndex());
+        Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.ACADEMIC.getIndex(), UserInfoUtils.getLoginedUser().getUsername());
         if (id == null) {
             return academicFeeList.size() > 10 ? academicFeeList.subList(0, 10) : academicFeeList;
         }

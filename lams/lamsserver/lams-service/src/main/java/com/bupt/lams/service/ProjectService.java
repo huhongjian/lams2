@@ -70,11 +70,15 @@ public class ProjectService {
     public ProjectHeadTableData getHeadTableData() {
         ProjectHeadTableData data = new ProjectHeadTableData();
         Double total = projectMapper.getTotal();
+        total = total == null ? 0 : total;
         Double unfulfilledQuota = projectMapper.getUnfulfilledQuota();
+        unfulfilledQuota = unfulfilledQuota == null ? 0 : unfulfilledQuota;
         data.setTotal(total);
         data.setLeft(unfulfilledQuota);
         data.setUsed(total - unfulfilledQuota);
-        data.setInPlan(planMapper.getTotal());
+        Double inPlan = planMapper.getTotal();
+        inPlan = inPlan == null ? 0 : inPlan;
+        data.setInPlan(inPlan);
         data.setExecuteRate(ComputeUtils.computeExecuteRate(total, unfulfilledQuota));
         return data;
     }

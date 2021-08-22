@@ -150,7 +150,7 @@
         where id = #{id}
     </select>
     <select id="getTotal" resultType="java.lang.Double">
-        select sum(p.funding) from plan p where p.isDeleted = 0;
+        select cast(sum(p.funding) as decimal (19,2)) from plan p where p.isDeleted = 0;
     </select>
     <select id="getPlansByProjectIds" parameterType="list" resultType="com.bupt.lams.model.Plan">
         select *

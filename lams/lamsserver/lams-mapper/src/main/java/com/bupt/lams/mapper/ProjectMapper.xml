@@ -154,10 +154,10 @@
         where id = #{id}
     </select>
     <select id="getTotal" resultType="java.lang.Double">
-        select sum(p.funding) from project p
+        select cast(sum(p.funding) as decimal (19,2)) from project p
     </select>
     <select id="getUnfulfilledQuota" resultType="java.lang.Double">
-        select sum(p.unfulfilledQuota) from project p
+        select cast(sum(p.unfulfilledQuota) as decimal (19,2)) from project p
     </select>
     <delete id="deleteProjects" parameterType="list">
         delete

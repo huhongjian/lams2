@@ -55,16 +55,18 @@
             <el-table-column
                 prop="equipmentName"
                 :show-overflow-tooltip="true"
-                label="设备名称">
+                label="设备名称"
+                width="120">
             </el-table-column>
             <el-table-column
                 prop="usage"
+                :show-overflow-tooltip="true"
                 label="用途">
             </el-table-column>
             <el-table-column
                 prop="unitPrice"
-                label="单价（万元）"
-                width="100">
+                label="单价(万元)"
+                width="60">
             </el-table-column>
             <el-table-column
                 prop="amount"
@@ -73,18 +75,18 @@
             </el-table-column>
             <el-table-column
                 prop="subTotal"
-                label="合计（万元）"
-                width="100">
+                label="合计(万元)"
+                width="60">
             </el-table-column>
             <el-table-column
                 prop="unfulfilledQuota"
-                label="未执行额度（万元）"
-                width="130">
+                label="未执行额度(万元)"
+                width="90">
             </el-table-column>
             <el-table-column
                 prop="executeRate"
-                label="执行率（%）"
-                width="100">
+                label="执行率(%)"
+                width="60">
             </el-table-column>
             <el-table-column
                 width="80"

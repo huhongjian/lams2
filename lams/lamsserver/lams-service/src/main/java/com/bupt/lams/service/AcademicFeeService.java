@@ -95,17 +95,17 @@ public class AcademicFeeService {
         // 获取最近一条设备费执行记录
         Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.ACADEMIC.getIndex());
         if (id == null) {
-            return academicFeeList;
+            return academicFeeList.size() > 10 ? academicFeeList.subList(0, 10) : academicFeeList;
         }
         AcademicFee fee = academicFeeMapper.getById(id);
         if (fee == null) {
-            return academicFeeList;
+            return academicFeeList.size() > 10 ? academicFeeList.subList(0, 10) : academicFeeList;
         }
         // 计算相似度，并按照相似度逆序排列
         for (AcademicFee e : academicFeeList) {
             e.computeSimilar(fee);
         }
         Collections.sort(academicFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
-        return academicFeeList;
+        return academicFeeList.size() > 10 ? academicFeeList.subList(0, 10) : academicFeeList;
     }
 }

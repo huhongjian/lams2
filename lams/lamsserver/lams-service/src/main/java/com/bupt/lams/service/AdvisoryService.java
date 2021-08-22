@@ -96,17 +96,17 @@ public class AdvisoryService {
         // 获取最近一条设备费执行记录
         Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.ADVISORY.getIndex());
         if (id == null) {
-            return advisoryList;
+            return advisoryList.size() > 10 ? advisoryList.subList(0, 10) : advisoryList;
         }
         Advisory fee = advisoryMapper.getById(id);
         if (fee == null) {
-            return advisoryList;
+            return advisoryList.size() > 10 ? advisoryList.subList(0, 10) : advisoryList;
         }
         // 计算相似度，并按照相似度逆序排列
         for (Advisory e : advisoryList) {
             e.computeSimilar(fee);
         }
         Collections.sort(advisoryList, Comparator.comparingDouble(x -> -x.getSimilar()));
-        return advisoryList;
+        return advisoryList.size() > 10 ? advisoryList.subList(0, 10) : advisoryList;
     }
 }

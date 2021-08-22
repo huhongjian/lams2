@@ -199,6 +199,8 @@
         join project pr on pr.id = p.projectId
         where
         pi.itid = 1
+        and
+        p.isDeleted = 0
         order by e.id
     </select>
 </mapper>

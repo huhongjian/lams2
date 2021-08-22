@@ -194,7 +194,7 @@ export default {
   },
   methods: {
     showSelectView() {
-      this.title = '预算明细推荐';
+      this.title = '预算明细推荐Top10';
       this.executeSelectVisible = true;
     },
     handleSelectionChange(val) {

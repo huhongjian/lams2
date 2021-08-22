@@ -96,17 +96,17 @@ public class MeetingFeeService {
         // 获取最近一条设备费执行记录
         Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.MEETING.getIndex());
         if (id == null) {
-            return meetingFeeList;
+            return meetingFeeList.size() > 10 ? meetingFeeList.subList(0, 10) : meetingFeeList;
         }
         MeetingFee fee = meetingFeeMapper.getById(id);
         if (fee == null) {
-            return meetingFeeList;
+            return meetingFeeList.size() > 10 ? meetingFeeList.subList(0, 10) : meetingFeeList;
         }
         // 计算相似度，并按照相似度逆序排列
         for (MeetingFee e : meetingFeeList) {
             e.computeSimilar(fee);
         }
         Collections.sort(meetingFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
-        return meetingFeeList;
+        return meetingFeeList.size() > 10 ? meetingFeeList.subList(0, 10) : meetingFeeList;
     }
 }

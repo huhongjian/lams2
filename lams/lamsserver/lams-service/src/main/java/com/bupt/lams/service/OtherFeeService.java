@@ -93,17 +93,17 @@ public class OtherFeeService {
         // 获取最近一条设备费执行记录
         Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.OTHERS.getIndex());
         if (id == null) {
-            return otherFeeList;
+            return otherFeeList.size() > 10 ? otherFeeList.subList(0, 10) : otherFeeList;
         }
         OtherFee fee = otherFeeMapper.getById(id);
         if (fee == null) {
-            return otherFeeList;
+            return otherFeeList.size() > 10 ? otherFeeList.subList(0, 10) : otherFeeList;
         }
         // 计算相似度，并按照相似度逆序排列
         for (OtherFee e : otherFeeList) {
             e.computeSimilar(fee);
         }
         Collections.sort(otherFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
-        return otherFeeList;
+        return otherFeeList.size() > 10 ? otherFeeList.subList(0, 10) : otherFeeList;
     }
 }

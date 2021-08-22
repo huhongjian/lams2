@@ -93,17 +93,17 @@ public class TransportationFeeService {
         // 获取最近一条设备费执行记录
         Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.TRANSPORTATION.getIndex());
         if (id == null) {
-            return transFeeList;
+            return transFeeList.size() > 10 ? transFeeList.subList(0, 10) : transFeeList;
         }
         PlanItem fee = transportationFeeMapper.getById(id);
         if (fee == null) {
-            return transFeeList;
+            return transFeeList.size() > 10 ? transFeeList.subList(0, 10) : transFeeList;
         }
         // 计算相似度，并按照相似度逆序排列
         for (PlanItem e : transFeeList) {
             e.computeSimilar(fee);
         }
         Collections.sort(transFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
-        return transFeeList;
+        return transFeeList.size() > 10 ? transFeeList.subList(0, 10) : transFeeList;
     }
 }

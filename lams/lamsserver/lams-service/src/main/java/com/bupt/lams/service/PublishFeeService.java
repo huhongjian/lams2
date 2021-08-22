@@ -6,7 +6,6 @@ import com.bupt.lams.mapper.BudgetRecordMapper;
 import com.bupt.lams.mapper.PublishFeeMapper;
 import com.bupt.lams.model.LamsUser;
 import com.bupt.lams.model.PlanAndItem;
-import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.PublishFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
@@ -94,17 +93,17 @@ public class PublishFeeService {
         // 获取最近一条设备费执行记录
         Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.PUBLISH.getIndex());
         if (id == null) {
-            return publishFeeList;
+            return publishFeeList.size() > 10 ? publishFeeList.subList(0, 10) : publishFeeList;
         }
         PublishFee fee = publishFeeMapper.getById(id);
         if (fee == null) {
-            return publishFeeList;
+            return publishFeeList.size() > 10 ? publishFeeList.subList(0, 10) : publishFeeList;
         }
         // 计算相似度，并按照相似度逆序排列
         for (PublishFee e : publishFeeList) {
             e.computeSimilar(fee);
         }
         Collections.sort(publishFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
-        return publishFeeList;
+        return publishFeeList.size() > 10 ? publishFeeList.subList(0, 10) : publishFeeList;
     }
 }

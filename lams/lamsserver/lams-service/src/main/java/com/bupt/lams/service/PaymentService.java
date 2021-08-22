@@ -96,17 +96,17 @@ public class PaymentService {
         // 获取最近一条设备费执行记录
         Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.PAYMENT.getIndex());
         if (id == null) {
-            return paymentList;
+            return paymentList.size() > 10 ? paymentList.subList(0, 10) : paymentList;
         }
         Payment fee = paymentMapper.getById(id);
         if (fee == null) {
-            return paymentList;
+            return paymentList.size() > 10 ? paymentList.subList(0, 10) : paymentList;
         }
         // 计算相似度，并按照相似度逆序排列
         for (Payment e : paymentList) {
             e.computeSimilar(fee);
         }
         Collections.sort(paymentList, Comparator.comparingDouble(x -> -x.getSimilar()));
-        return paymentList;
+        return paymentList.size() > 10 ? paymentList.subList(0, 10) : paymentList;
     }
 }

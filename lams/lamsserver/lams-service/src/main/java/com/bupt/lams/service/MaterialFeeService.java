@@ -97,17 +97,17 @@ public class MaterialFeeService {
         // 获取最近一条设备费执行记录
         Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.MATERIAL.getIndex());
         if (id == null) {
-            return materialFeeList;
+            return materialFeeList.size() > 10 ? materialFeeList.subList(0, 10) : materialFeeList;
         }
         MaterialFee fee = materialFeeMapper.getById(id);
         if (fee == null) {
-            return materialFeeList;
+            return materialFeeList.size() > 10 ? materialFeeList.subList(0, 10) : materialFeeList;
         }
         // 计算相似度，并按照相似度逆序排列
         for (MaterialFee e : materialFeeList) {
             e.computeSimilar(fee);
         }
         Collections.sort(materialFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
-        return materialFeeList;
+        return materialFeeList.size() > 10 ? materialFeeList.subList(0, 10) : materialFeeList;
     }
 }

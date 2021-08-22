@@ -168,6 +168,8 @@
         join project pr on pr.id = p.projectId
         where
         pi.itid = 3
+        and
+        p.isDeleted = 0
         order by t.id
     </select>
 </mapper>

@@ -97,17 +97,17 @@ public class TestingFeeService {
         // 获取最近一条设备费执行记录
         Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.TESTING.getIndex());
         if (id == null) {
-            return testingFeeList;
+            return testingFeeList.size() > 10 ? testingFeeList.subList(0, 10) : testingFeeList;
         }
         TestingFee fee = testingFeeMapper.getById(id);
         if (fee == null) {
-            return testingFeeList;
+            return testingFeeList.size() > 10 ? testingFeeList.subList(0, 10) : testingFeeList;
         }
         // 计算相似度，并按照相似度逆序排列
         for (TestingFee e : testingFeeList) {
             e.computeSimilar(fee);
         }
         Collections.sort(testingFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
-        return testingFeeList;
+        return testingFeeList.size() > 10 ? testingFeeList.subList(0, 10) : testingFeeList;
     }
 }

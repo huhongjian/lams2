@@ -96,17 +96,17 @@ public class ResearchFeeService {
         // 获取最近一条设备费执行记录
         Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.RESEARCH.getIndex());
         if (id == null) {
-            return researchFeeList;
+            return researchFeeList.size() > 10 ? researchFeeList.subList(0, 10) : researchFeeList;
         }
         ResearchFee fee = researchFeeMapper.getById(id);
         if (fee == null) {
-            return researchFeeList;
+            return researchFeeList.size() > 10 ? researchFeeList.subList(0, 10) : researchFeeList;
         }
         // 计算相似度，并按照相似度逆序排列
         for (ResearchFee e : researchFeeList) {
             e.computeSimilar(fee);
         }
         Collections.sort(researchFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
-        return researchFeeList;
+        return researchFeeList.size() > 10 ? researchFeeList.subList(0, 10) : researchFeeList;
     }
 }

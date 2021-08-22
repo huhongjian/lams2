@@ -213,6 +213,8 @@
         join project pr on pr.id = p.projectId
         where
         pi.itid = 5
+        and
+        p.isDeleted = 0
         order by t.id
     </select>
 </mapper>

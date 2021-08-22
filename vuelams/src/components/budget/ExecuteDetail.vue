@@ -26,12 +26,12 @@
           <el-table-column
               prop="id"
               label="流水编号"
-              width="80">
+              width="50">
           </el-table-column>
           <el-table-column
               prop="funding"
-              width="100"
-              label="金额（万元）">
+              width="60"
+              label="金额(万元)">
           </el-table-column>
           <el-table-column
               prop="projectName"
@@ -51,7 +51,7 @@
           </el-table-column>
           <el-table-column
               prop="planItemId"
-              width="100"
+              width="60"
               label="预算明细序号">
           </el-table-column>
           <el-table-column

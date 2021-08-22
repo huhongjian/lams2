@@ -91,17 +91,17 @@ public class EquipmentFeeService {
         // 获取最近一条设备费执行记录
         Long id = budgetRecordMapper.getRecentIdByItemType(PlanItemTypeEnum.EQUIPMENT.getIndex());
         if (id == null) {
-            return equipmentFeeList;
+            return equipmentFeeList.size() > 10 ? equipmentFeeList.subList(0, 10) : equipmentFeeList;
         }
         EquipmentFee fee = equipmentFeeMapper.getById(id);
         if (fee == null) {
-            return equipmentFeeList;
+            return equipmentFeeList.size() > 10 ? equipmentFeeList.subList(0, 10) : equipmentFeeList;
         }
         // 计算相似度，并按照相似度逆序排列
         for (EquipmentFee e : equipmentFeeList) {
             e.computeSimilar(fee);
         }
         Collections.sort(equipmentFeeList, Comparator.comparingDouble(x -> -x.getSimilar()));
-        return equipmentFeeList;
+        return equipmentFeeList.size() > 10 ? equipmentFeeList.subList(0, 10) : equipmentFeeList;
     }
 }

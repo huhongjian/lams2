@@ -59,8 +59,8 @@ public class ExecutionController {
         try {
             budgetRecordService.addBudgetRecord(record);
         } catch (Exception e) {
-            logger.error("新增项目失败", e);
-            return RespBean.error("新增项目失败！");
+            logger.error("预算执行失败", e);
+            return RespBean.error("预算执行失败！" + e.getMessage());
         }
         return response;
     }

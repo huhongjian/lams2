@@ -91,7 +91,7 @@ public class BudgetRecordService {
         Double unfulfilledQuota = planItemData.getUnfulfilledQuota();
         if (unfulfilledQuota < funding) {
             logger.error("[executePlanItem]:执行金额过大！");
-            throw new Exception("[executePlanItem]:执行金额过大！");
+            throw new Exception("执行金额过大！");
         }
 
         Method setUnfulfilledQuota = pojo.getMethod("setUnfulfilledQuota", Double.class);

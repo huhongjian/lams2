@@ -35,7 +35,7 @@ public class ResearchFeeService {
         researchFee.setItemType(PlanItemTypeEnum.RESEARCH.getIndex());
         researchFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
-        Double total = (researchFee.getAccommodationFee() + researchFee.getOtherFee() + researchFee.getTransFee()) * researchFee.getDays() * researchFee.getTimes() / 10000D;
+        Double total = (researchFee.getTransFee() * researchFee.getTimes() + (researchFee.getAccommodationFee() + researchFee.getOtherFee()) * researchFee.getDays() * researchFee.getTimes()) / 10000D;
         researchFee.setSubTotal(total);
         researchFee.setUnfulfilledQuota(researchFee.getSubTotal());
         researchFee.setExecuteRate(ComputeUtils.computeExecuteRate(researchFee.getSubTotal(), researchFee.getUnfulfilledQuota()));

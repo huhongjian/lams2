@@ -4,6 +4,7 @@ import com.bupt.lams.model.planItem.PlanItem;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,5 +38,31 @@ public class PlanItemData implements Serializable {
         this.unfulfilledQuota = 0.0;
         this.executeRate = 0.0;
         this.planItemList = new ArrayList<>();
+    }
+
+    public void setFunding(Double funding) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        this.funding = new Double(df.format(funding.doubleValue()));
+    }
+
+    public Double getFunding() {
+        DecimalFormat df = new DecimalFormat("#.00");
+        if (this.funding == null) {
+            return null;
+        }
+        return new Double(df.format(this.funding.doubleValue()));
+    }
+
+    public void setUnfulfilledQuota(Double unfulfilledQuota) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        this.unfulfilledQuota = new Double(df.format(unfulfilledQuota.doubleValue()));
+    }
+
+    public Double getUnfulfilledQuota() {
+        DecimalFormat df = new DecimalFormat("#.00");
+        if (this.unfulfilledQuota == null) {
+            return null;
+        }
+        return new Double(df.format(this.unfulfilledQuota.doubleValue()));
     }
 }

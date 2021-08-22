@@ -36,7 +36,7 @@ public class AcademicFeeService {
         academicFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
         if (academicFee.getSubTotal() == null) {
-            Double total = (academicFee.getRegistrationFee() * academicFee.getTimes() + (academicFee.getTransFee() + academicFee.getAccommodationFee()) * academicFee.getDays() * academicFee.getTimes()) / 10000D;
+            Double total = ((academicFee.getRegistrationFee() + academicFee.getTransFee()) * academicFee.getTimes() + academicFee.getAccommodationFee() * academicFee.getDays() * academicFee.getTimes()) / 10000D;
             academicFee.setSubTotal(total);
         }
         academicFee.setSubTotal(academicFee.getSubTotal() * academicFee.getTimes());

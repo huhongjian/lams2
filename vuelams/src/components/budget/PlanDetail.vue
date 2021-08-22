@@ -84,8 +84,8 @@
                 </el-table-column>
                 <el-table-column
                     prop="unitPrice"
-                    label="单价（万元）"
-                    width="100">
+                    label="单价(万元)"
+                    width="60">
                 </el-table-column>
                 <el-table-column
                     prop="amount"
@@ -94,18 +94,18 @@
                 </el-table-column>
                 <el-table-column
                     prop="subTotal"
-                    label="合计（万元）"
-                    width="100">
+                    label="合计(万元)"
+                    width="60">
                 </el-table-column>
                 <el-table-column
                     prop="unfulfilledQuota"
-                    label="未执行额度（万元）"
-                    width="150">
+                    label="未执行额度(万元)"
+                    width="90">
                 </el-table-column>
                 <el-table-column
                     prop="executeRate"
-                    label="执行率"
-                    width="100">
+                    label="执行率(%)"
+                    width="60">
                 </el-table-column>
                 <el-table-column
                     width="150"
@@ -146,8 +146,7 @@
                   <el-table-column
                       prop="specification"
                       label="规格"
-                      :show-overflow-tooltip="true"
-                      width="100">
+                      :show-overflow-tooltip="true">
                   </el-table-column>
                   <el-table-column
                       prop="amount"
@@ -156,8 +155,8 @@
                   </el-table-column>
                   <el-table-column
                       prop="unitPrice"
-                      label="单价（万元）"
-                      width="100">
+                      label="单价(万元)"
+                      width="60">
                   </el-table-column>
                   <el-table-column
                       prop="unit"
@@ -166,18 +165,18 @@
                   </el-table-column>
                   <el-table-column
                       prop="subTotal"
-                      label="合计（万元）"
-                      width="100">
+                      label="合计(万元)"
+                      width="60">
                   </el-table-column>
                   <el-table-column
                       prop="unfulfilledQuota"
-                      label="未执行额度（万元）"
-                      width="150">
+                      label="未执行额度(万元)"
+                      width="90">
                   </el-table-column>
                   <el-table-column
                       prop="executeRate"
-                      label="执行率"
-                      width="100">
+                      label="执行率(%)"
+                      width="60">
                   </el-table-column>
                   <el-table-column
                       width="150"
@@ -276,21 +275,23 @@
                 </el-table-column>
                 <el-table-column
                     prop="content"
+                    :show-overflow-tooltip="true"
                     label="会议内容">
                 </el-table-column>
                 <el-table-column
                     prop="relation"
+                    :show-overflow-tooltip="true"
                     label="与课题相关性">
                 </el-table-column>
                 <el-table-column
                     prop="meal"
-                    label="伙食费（人/天）"
-                    width="120">
+                    label="伙食费(人/天)"
+                    width="70">
                 </el-table-column>
                 <el-table-column
                     prop="otherCost"
-                    label="其他费用（人/天）"
-                    width="130">
+                    label="其他费用(人/天)"
+                    width="70">
                 </el-table-column>
                 <el-table-column
                     prop="days"
@@ -309,18 +310,18 @@
                 </el-table-column>
                 <el-table-column
                     prop="subTotal"
-                    label="合计（万元）"
-                    width="100">
+                    label="合计(万元)"
+                    width="60">
                 </el-table-column>
                 <el-table-column
                     prop="unfulfilledQuota"
-                    label="未执行额度（万元）"
-                    width="130">
+                    label="未执行额度(万元)"
+                    width="90">
                 </el-table-column>
                 <el-table-column
                     prop="executeRate"
-                    label="执行率（%）"
-                    width="100">
+                    label="执行率(%)"
+                    width="60">
                 </el-table-column>
                 <el-table-column
                     width="150"
@@ -356,7 +357,8 @@
                 <el-table-column
                     prop="place"
                     :show-overflow-tooltip="true"
-                    label="调研地点">
+                    label="调研地点"
+                    width="100">
                 </el-table-column>
                 <el-table-column
                     prop="purpose"
@@ -366,7 +368,7 @@
                 <el-table-column
                     prop="personnelType"
                     label="人员类别"
-                    width="80">
+                    width="70">
                 </el-table-column>
                 <el-table-column
                     prop="times"
@@ -375,18 +377,18 @@
                 </el-table-column>
                 <el-table-column
                     prop="transFee"
-                    width="100"
-                    label="交通费（元）">
+                    width="60"
+                    label="交通费(元)">
                 </el-table-column>
                 <el-table-column
                     prop="accommodationFee"
-                    width="90"
-                    label="住宿（元）">
+                    width="60"
+                    label="住宿(元)">
                 </el-table-column>
                 <el-table-column
                     prop="otherFee"
-                    width="100"
-                    label="公杂费（元）">
+                    width="60"
+                    label="公杂费(元)">
                 </el-table-column>
                 <el-table-column
                     prop="days"
@@ -395,18 +397,18 @@
                 </el-table-column>
                 <el-table-column
                     prop="subTotal"
-                    width="100"
-                    label="合计（万元）">
+                    width="60"
+                    label="合计(万元)">
                 </el-table-column>
                 <el-table-column
                     prop="unfulfilledQuota"
-                    label="未执行额度（万元）"
-                    width="130">
+                    label="未执行额度(万元)"
+                    width="90">
                 </el-table-column>
                 <el-table-column
                     prop="executeRate"
                     label="执行率(%)"
-                    width="100">
+                    width="60">
                 </el-table-column>
                 <el-table-column
                     width="150"
@@ -441,12 +443,14 @@
                 </el-table-column>
                 <el-table-column
                     prop="meetingName"
+                    :show-overflow-tooltip="true"
                     label="会议名称">
                 </el-table-column>
                 <el-table-column
                     prop="personnelType"
                     label="人员类别"
-                    width="100">
+                    :show-overflow-tooltip="true"
+                    width="70">
                 </el-table-column>
                 <el-table-column
                     prop="times"
@@ -460,33 +464,38 @@
                 </el-table-column>
                 <el-table-column
                     prop="days"
-                    width="80"
-                    label="会期（天）">
+                    width="50"
+                    label="会期(天)">
+                </el-table-column>
+                <el-table-column
+                    prop="registrationFee"
+                    label="注册费(元)"
+                    width="60">
                 </el-table-column>
                 <el-table-column
                     prop="transFee"
-                    label="往返交通费（元）"
-                    width="150">
+                    label="往返交通费(元)"
+                    width="90">
                 </el-table-column>
                 <el-table-column
                     prop="accommodationFee"
-                    label="住宿及补助费（元）"
-                    width="150">
+                    label="住宿及补助费(元)"
+                    width="100">
                 </el-table-column>
                 <el-table-column
                     prop="subTotal"
-                    width="100"
-                    label="合计（万元）">
+                    width="60"
+                    label="合计(万元)">
                 </el-table-column>
                 <el-table-column
                     prop="unfulfilledQuota"
-                    label="未执行额度（万元）"
-                    width="130">
+                    label="未执行额度(万元)"
+                    width="90">
                 </el-table-column>
                 <el-table-column
                     prop="executeRate"
                     label="执行率(%)"
-                    width="100">
+                    width="60">
                 </el-table-column>
                 <el-table-column
                     width="150"
@@ -574,7 +583,8 @@
                 <el-table-column
                     prop="type"
                     :show-overflow-tooltip="true"
-                    label="类别">
+                    label="类别"
+                    width="150">
                 </el-table-column>
                 <el-table-column
                     prop="remark"

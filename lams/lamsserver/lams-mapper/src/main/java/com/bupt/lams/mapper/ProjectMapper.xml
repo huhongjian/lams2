@@ -107,9 +107,6 @@
             <if test="funding != null">
                 #{funding},
             </if>
-            <if test="funding != null">
-                #{funding},
-            </if>
             <if test="unfulfilledQuota != null">
                 #{unfulfilledQuota},
             </if>

@@ -4,8 +4,7 @@ import com.bupt.lams.model.Asset;
 import com.bupt.lams.model.Order;
 import com.bupt.lams.model.Plan;
 import com.bupt.lams.model.PurchaseOrder;
-import com.bupt.lams.model.planItem.EquipmentFee;
-import com.bupt.lams.model.planItem.PlanItem;
+import com.bupt.lams.model.planItem.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.hpsf.DocumentSummaryInformation;
 import org.apache.poi.hpsf.SummaryInformation;
@@ -930,7 +929,8 @@ public class POIUtils {
         sheet.setColumnWidth(5, 20 * 256);
         sheet.setColumnWidth(6, 20 * 256);
         sheet.setColumnWidth(7, 20 * 256);
-        sheet.setColumnWidth(8, 80 * 256);
+        sheet.setColumnWidth(8, 20 * 256);
+        sheet.setColumnWidth(9, 80 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -1148,6 +1148,56 @@ public class POIUtils {
                 List<PlanItem> equipmentFeeList = plan.getPlanItemDataMap().get("equipmentFeeData").getPlanItemList();
                 workbook = fillEquipmentFee((List) equipmentFeeList, workbook);
             }
+
+            if (plan.getPlanItemDataMap().get("materialFeeData") != null && CollectionUtils.isNotEmpty(plan.getPlanItemDataMap().get("materialFeeData").getPlanItemList())) {
+                List<PlanItem> materialFeeList = plan.getPlanItemDataMap().get("materialFeeData").getPlanItemList();
+                workbook = fillMaterialFee((List) materialFeeList, workbook);
+            }
+
+            if (plan.getPlanItemDataMap().get("testingFeeData") != null && CollectionUtils.isNotEmpty(plan.getPlanItemDataMap().get("testingFeeData").getPlanItemList())) {
+                List<PlanItem> testingFeeList = plan.getPlanItemDataMap().get("testingFeeData").getPlanItemList();
+                workbook = fillTestingFee((List) testingFeeList, workbook);
+            }
+
+            if (plan.getPlanItemDataMap().get("meetingFeeData") != null && CollectionUtils.isNotEmpty(plan.getPlanItemDataMap().get("meetingFeeData").getPlanItemList())) {
+                List<PlanItem> meetingFeeList = plan.getPlanItemDataMap().get("meetingFeeData").getPlanItemList();
+                workbook = fillMeetingFee((List) meetingFeeList, workbook);
+            }
+
+            if (plan.getPlanItemDataMap().get("researchFeeData") != null && CollectionUtils.isNotEmpty(plan.getPlanItemDataMap().get("researchFeeData").getPlanItemList())) {
+                List<PlanItem> researchFeeList = plan.getPlanItemDataMap().get("researchFeeData").getPlanItemList();
+                workbook = fillResearchFee((List) researchFeeList, workbook);
+            }
+
+            if (plan.getPlanItemDataMap().get("academicFeeData") != null && CollectionUtils.isNotEmpty(plan.getPlanItemDataMap().get("academicFeeData").getPlanItemList())) {
+                List<PlanItem> academicFeeList = plan.getPlanItemDataMap().get("academicFeeData").getPlanItemList();
+                workbook = fillAcademicFee((List) academicFeeList, workbook);
+            }
+
+            if (plan.getPlanItemDataMap().get("transFeeData") != null && CollectionUtils.isNotEmpty(plan.getPlanItemDataMap().get("transFeeData").getPlanItemList())) {
+                List<PlanItem> transFeeList = plan.getPlanItemDataMap().get("transFeeData").getPlanItemList();
+                workbook = fillTransFee(transFeeList, workbook);
+            }
+
+            if (plan.getPlanItemDataMap().get("publishFeeData") != null && CollectionUtils.isNotEmpty(plan.getPlanItemDataMap().get("publishFeeData").getPlanItemList())) {
+                List<PlanItem> publishFeeList = plan.getPlanItemDataMap().get("publishFeeData").getPlanItemList();
+                workbook = fillPublishFee((List) publishFeeList, workbook);
+            }
+
+            if (plan.getPlanItemDataMap().get("paymentData") != null && CollectionUtils.isNotEmpty(plan.getPlanItemDataMap().get("paymentData").getPlanItemList())) {
+                List<PlanItem> paymentList = plan.getPlanItemDataMap().get("paymentData").getPlanItemList();
+                workbook = fillPayment((List) paymentList, workbook);
+            }
+
+            if (plan.getPlanItemDataMap().get("advisoryData") != null && CollectionUtils.isNotEmpty(plan.getPlanItemDataMap().get("advisoryData").getPlanItemList())) {
+                List<PlanItem> advisoryList = plan.getPlanItemDataMap().get("advisoryData").getPlanItemList();
+                workbook = fillAdvisory((List) advisoryList, workbook);
+            }
+
+            if (plan.getPlanItemDataMap().get("otherFeeData") != null && CollectionUtils.isNotEmpty(plan.getPlanItemDataMap().get("otherFeeData").getPlanItemList())) {
+                List<PlanItem> otherFeeList = plan.getPlanItemDataMap().get("otherFeeData").getPlanItemList();
+                workbook = fillOtherFee((List) otherFeeList, workbook);
+            }
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         HttpHeaders headers = new HttpHeaders();
@@ -1170,14 +1220,14 @@ public class POIUtils {
         dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
         HSSFSheet sheet = workbook.createSheet("预算计划");
         //设置列的宽度
-        sheet.setColumnWidth(0, 10 * 256);
-        sheet.setColumnWidth(1, 15 * 256);
-        sheet.setColumnWidth(2, 10 * 256);
+        sheet.setColumnWidth(0, 15 * 256);
+        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(2, 15 * 256);
         sheet.setColumnWidth(3, 80 * 256);
-        sheet.setColumnWidth(4, 10 * 256);
-        sheet.setColumnWidth(5, 15 * 256);
-        sheet.setColumnWidth(6, 10 * 256);
-        sheet.setColumnWidth(7, 13 * 256);
+        sheet.setColumnWidth(4, 15 * 256);
+        sheet.setColumnWidth(5, 20 * 256);
+        sheet.setColumnWidth(6, 15 * 256);
+        sheet.setColumnWidth(7, 80 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -1227,19 +1277,19 @@ public class POIUtils {
         HSSFSheet sheet = workbook.createSheet("设备费");
         //设置列的宽度
         sheet.setColumnWidth(0, 10 * 256);
-        sheet.setColumnWidth(1, 15 * 256);
-        sheet.setColumnWidth(2, 10 * 256);
-        sheet.setColumnWidth(3, 80 * 256);
+        sheet.setColumnWidth(1, 30 * 256);
+        sheet.setColumnWidth(2, 80 * 256);
+        sheet.setColumnWidth(3, 10 * 256);
         sheet.setColumnWidth(4, 10 * 256);
-        sheet.setColumnWidth(5, 15 * 256);
-        sheet.setColumnWidth(6, 10 * 256);
-        sheet.setColumnWidth(7, 13 * 256);
-        sheet.setColumnWidth(8, 13 * 256);
+        sheet.setColumnWidth(5, 20 * 256);
+        sheet.setColumnWidth(6, 20 * 256);
+        sheet.setColumnWidth(7, 10 * 256);
+        sheet.setColumnWidth(8, 80 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
-        c0.setCellValue("编号");
         c0.setCellStyle(headerStyle);
+        c0.setCellValue("编号");
         HSSFCell c1 = r0.createCell(1);
         c1.setCellStyle(headerStyle);
         c1.setCellValue("设备名称");
@@ -1277,6 +1327,666 @@ public class POIUtils {
             row.createCell(6).setCellValue(equipmentFee.getUnfulfilledQuota());
             row.createCell(7).setCellValue(equipmentFee.getExecuteRate());
             row.createCell(8).setCellValue(equipmentFee.getRemark());
+        }
+        return workbook;
+    }
+
+    private static HSSFWorkbook fillMaterialFee(List<MaterialFee> list, HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("材料费");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(2, 30 * 256);
+        sheet.setColumnWidth(3, 50 * 256);
+        sheet.setColumnWidth(4, 10 * 256);
+        sheet.setColumnWidth(5, 20 * 256);
+        sheet.setColumnWidth(6, 10 * 256);
+        sheet.setColumnWidth(7, 20 * 256);
+        sheet.setColumnWidth(8, 20 * 256);
+        sheet.setColumnWidth(9, 10 * 256);
+        sheet.setColumnWidth(10, 80 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellStyle(headerStyle);
+        c0.setCellValue("编号");
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellValue("材料名称");
+        c1.setCellStyle(headerStyle);
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("规格");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("用途");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("数量");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("单价（万元）");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("单位");
+        HSSFCell c7 = r0.createCell(7);
+        c7.setCellStyle(headerStyle);
+        c7.setCellValue("小计（万元）");
+        HSSFCell c8 = r0.createCell(8);
+        c8.setCellStyle(headerStyle);
+        c8.setCellValue("未执行额度（万元）");
+        HSSFCell c9 = r0.createCell(9);
+        c9.setCellStyle(headerStyle);
+        c9.setCellValue("执行率（%）");
+        HSSFCell c10 = r0.createCell(10);
+        c10.setCellStyle(headerStyle);
+        c10.setCellValue("备注");
+
+        int cnt = 0;
+        for (int i = 0; i < list.size(); i++) {
+            MaterialFee materialFee = list.get(i);
+            HSSFRow row = sheet.createRow(++cnt);
+            row.createCell(0).setCellValue(materialFee.getId());
+            row.createCell(1).setCellValue(materialFee.getMaterialName());
+            row.createCell(2).setCellValue(materialFee.getSpecification());
+            row.createCell(3).setCellValue(materialFee.getUsage());
+            row.createCell(4).setCellValue(materialFee.getAmount());
+            row.createCell(5).setCellValue(materialFee.getUnitPrice());
+            row.createCell(6).setCellValue(materialFee.getUnit());
+            row.createCell(7).setCellValue(materialFee.getSubTotal());
+            row.createCell(8).setCellValue(materialFee.getUnfulfilledQuota());
+            row.createCell(9).setCellValue(materialFee.getExecuteRate());
+            row.createCell(10).setCellValue(materialFee.getRemark());
+        }
+        return workbook;
+    }
+
+    private static HSSFWorkbook fillTestingFee(List<TestingFee> list, HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("测试化验加工费");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(2, 10 * 256);
+        sheet.setColumnWidth(3, 20 * 256);
+        sheet.setColumnWidth(4, 20 * 256);
+        sheet.setColumnWidth(5, 20 * 256);
+        sheet.setColumnWidth(6, 10 * 256);
+        sheet.setColumnWidth(7, 80 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellStyle(headerStyle);
+        c0.setCellValue("编号");
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellValue("加工内容");
+        c1.setCellStyle(headerStyle);
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("次数");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("单价（万元）");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("合计（万元）");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("未执行额度（万元）");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("执行率（%）");
+        HSSFCell c7 = r0.createCell(7);
+        c7.setCellStyle(headerStyle);
+        c7.setCellValue("备注");
+
+        int cnt = 0;
+        for (int i = 0; i < list.size(); i++) {
+            TestingFee testingFee = list.get(i);
+            HSSFRow row = sheet.createRow(++cnt);
+            row.createCell(0).setCellValue(testingFee.getId());
+            row.createCell(1).setCellValue(testingFee.getContent());
+            row.createCell(2).setCellValue(testingFee.getTimes());
+            row.createCell(3).setCellValue(testingFee.getUnitPrice());
+            row.createCell(4).setCellValue(testingFee.getSubTotal());
+            row.createCell(5).setCellValue(testingFee.getUnfulfilledQuota());
+            row.createCell(6).setCellValue(testingFee.getExecuteRate());
+            row.createCell(7).setCellValue(testingFee.getRemark());
+        }
+        return workbook;
+    }
+
+    private static HSSFWorkbook fillMeetingFee(List<MeetingFee> list, HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("会议费");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(2, 50 * 256);
+        sheet.setColumnWidth(3, 20 * 256);
+        sheet.setColumnWidth(4, 20 * 256);
+        sheet.setColumnWidth(5, 10 * 256);
+        sheet.setColumnWidth(6, 10 * 256);
+        sheet.setColumnWidth(7, 10 * 256);
+        sheet.setColumnWidth(8, 20 * 256);
+        sheet.setColumnWidth(9, 20 * 256);
+        sheet.setColumnWidth(10, 10 * 256);
+        sheet.setColumnWidth(11, 80 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellStyle(headerStyle);
+        c0.setCellValue("编号");
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("会议内容");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("与课题相关性");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("伙食费（元/人/天）");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("其他费用（元/人/天）");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("天数");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("参会人数");
+        HSSFCell c7 = r0.createCell(7);
+        c7.setCellStyle(headerStyle);
+        c7.setCellValue("会议次数");
+        HSSFCell c8 = r0.createCell(8);
+        c8.setCellStyle(headerStyle);
+        c8.setCellValue("合计（万元）");
+        HSSFCell c9 = r0.createCell(9);
+        c9.setCellStyle(headerStyle);
+        c9.setCellValue("未执行额度（万元）");
+        HSSFCell c10 = r0.createCell(10);
+        c10.setCellStyle(headerStyle);
+        c10.setCellValue("执行率（%）");
+        HSSFCell c11 = r0.createCell(11);
+        c11.setCellStyle(headerStyle);
+        c11.setCellValue("备注");
+
+        int cnt = 0;
+        for (int i = 0; i < list.size(); i++) {
+            MeetingFee meetingFee = list.get(i);
+            HSSFRow row = sheet.createRow(++cnt);
+            row.createCell(0).setCellValue(meetingFee.getId());
+            row.createCell(1).setCellValue(meetingFee.getContent());
+            row.createCell(2).setCellValue(meetingFee.getRelation());
+            row.createCell(3).setCellValue(meetingFee.getMeal());
+            row.createCell(4).setCellValue(meetingFee.getOtherCost());
+            row.createCell(5).setCellValue(meetingFee.getDays());
+            row.createCell(6).setCellValue(meetingFee.getAmount());
+            row.createCell(7).setCellValue(meetingFee.getMeetingNum());
+            row.createCell(8).setCellValue(meetingFee.getSubTotal());
+            row.createCell(9).setCellValue(meetingFee.getUnfulfilledQuota());
+            row.createCell(10).setCellValue(meetingFee.getExecuteRate());
+            row.createCell(11).setCellValue(meetingFee.getRemark());
+        }
+        return workbook;
+    }
+
+    private static HSSFWorkbook fillResearchFee(List<ResearchFee> list, HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("课题调研差旅费");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(2, 50 * 256);
+        sheet.setColumnWidth(3, 20 * 256);
+        sheet.setColumnWidth(4, 10 * 256);
+        sheet.setColumnWidth(5, 20 * 256);
+        sheet.setColumnWidth(6, 20 * 256);
+        sheet.setColumnWidth(7, 20 * 256);
+        sheet.setColumnWidth(8, 10 * 256);
+        sheet.setColumnWidth(9, 20 * 256);
+        sheet.setColumnWidth(10, 20 * 256);
+        sheet.setColumnWidth(11, 10 * 256);
+        sheet.setColumnWidth(12, 80 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellStyle(headerStyle);
+        c0.setCellValue("编号");
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellValue("调研地点");
+        c1.setCellStyle(headerStyle);
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("调研目的");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("人员类别");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("人次");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("往返交通费（元/人/天）");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("住宿（元/人/天）");
+        HSSFCell c7 = r0.createCell(7);
+        c7.setCellStyle(headerStyle);
+        c7.setCellValue("公杂费（元/人/天）");
+        HSSFCell c8 = r0.createCell(8);
+        c8.setCellStyle(headerStyle);
+        c8.setCellValue("天数");
+        HSSFCell c9 = r0.createCell(9);
+        c9.setCellStyle(headerStyle);
+        c9.setCellValue("合计（万元）");
+        HSSFCell c10 = r0.createCell(10);
+        c10.setCellStyle(headerStyle);
+        c10.setCellValue("未执行额度（万元）");
+        HSSFCell c11 = r0.createCell(11);
+        c11.setCellStyle(headerStyle);
+        c11.setCellValue("执行率（%）");
+        HSSFCell c12 = r0.createCell(12);
+        c12.setCellStyle(headerStyle);
+        c12.setCellValue("备注");
+
+        int cnt = 0;
+        for (int i = 0; i < list.size(); i++) {
+            ResearchFee researchFee = list.get(i);
+            HSSFRow row = sheet.createRow(++cnt);
+            row.createCell(0).setCellValue(researchFee.getId());
+            row.createCell(1).setCellValue(researchFee.getPlace());
+            row.createCell(2).setCellValue(researchFee.getPurpose());
+            row.createCell(3).setCellValue(researchFee.getPersonnelType());
+            row.createCell(4).setCellValue(researchFee.getTimes());
+            row.createCell(5).setCellValue(researchFee.getTransFee());
+            row.createCell(6).setCellValue(researchFee.getAccommodationFee());
+            row.createCell(7).setCellValue(researchFee.getOtherFee());
+            row.createCell(8).setCellValue(researchFee.getDays());
+            row.createCell(9).setCellValue(researchFee.getSubTotal());
+            row.createCell(10).setCellValue(researchFee.getUnfulfilledQuota());
+            row.createCell(11).setCellValue(researchFee.getExecuteRate());
+            row.createCell(12).setCellValue(researchFee.getRemark());
+        }
+        return workbook;
+    }
+
+    private static HSSFWorkbook fillAcademicFee(List<AcademicFee> list, HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("学术会议差旅费");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(2, 20 * 256);
+        sheet.setColumnWidth(3, 10 * 256);
+        sheet.setColumnWidth(4, 20 * 256);
+        sheet.setColumnWidth(5, 10 * 256);
+        sheet.setColumnWidth(6, 20 * 256);
+        sheet.setColumnWidth(7, 20 * 256);
+        sheet.setColumnWidth(8, 20 * 256);
+        sheet.setColumnWidth(9, 20 * 256);
+        sheet.setColumnWidth(10, 20 * 256);
+        sheet.setColumnWidth(11, 10 * 256);
+        sheet.setColumnWidth(12, 80 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellStyle(headerStyle);
+        c0.setCellValue("编号");
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("会议名称");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("人员类别");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("人次");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("年度");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("会期（天）");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("注册费（元/人）");
+        HSSFCell c7 = r0.createCell(7);
+        c7.setCellStyle(headerStyle);
+        c7.setCellValue("往返交通费（元/人/天）");
+        HSSFCell c8 = r0.createCell(8);
+        c8.setCellStyle(headerStyle);
+        c8.setCellValue("住宿及补助费（元/人/天）");
+        HSSFCell c9 = r0.createCell(9);
+        c9.setCellStyle(headerStyle);
+        c9.setCellValue("合计（万元）");
+        HSSFCell c10 = r0.createCell(10);
+        c10.setCellStyle(headerStyle);
+        c10.setCellValue("未执行额度（万元）");
+        HSSFCell c11 = r0.createCell(11);
+        c11.setCellStyle(headerStyle);
+        c11.setCellValue("执行率（%）");
+        HSSFCell c12 = r0.createCell(12);
+        c12.setCellStyle(headerStyle);
+        c12.setCellValue("备注");
+
+        int cnt = 0;
+        for (int i = 0; i < list.size(); i++) {
+            AcademicFee materialFee = list.get(i);
+            HSSFRow row = sheet.createRow(++cnt);
+            row.createCell(0).setCellValue(materialFee.getId());
+            row.createCell(1).setCellValue(materialFee.getMeetingName());
+            row.createCell(2).setCellValue(materialFee.getPersonnelType());
+            row.createCell(3).setCellValue(materialFee.getTimes());
+            row.createCell(4).setCellValue(materialFee.getYear());
+            row.createCell(5).setCellValue(materialFee.getDays());
+            row.createCell(6).setCellValue(materialFee.getRegistrationFee());
+            row.createCell(7).setCellValue(materialFee.getTransFee());
+            row.createCell(8).setCellValue(materialFee.getAccommodationFee());
+            row.createCell(9).setCellValue(materialFee.getSubTotal());
+            row.createCell(10).setCellValue(materialFee.getUnfulfilledQuota());
+            row.createCell(11).setCellValue(materialFee.getExecuteRate());
+            row.createCell(12).setCellValue(materialFee.getRemark());
+        }
+        return workbook;
+    }
+
+    private static HSSFWorkbook fillTransFee(List<PlanItem> list, HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("北京市内交通费");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 20 * 256);
+        sheet.setColumnWidth(2, 20 * 256);
+        sheet.setColumnWidth(3, 10 * 256);
+        sheet.setColumnWidth(4, 80 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellStyle(headerStyle);
+        c0.setCellValue("编号");
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("合计（万元）");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("未执行额度（万元）");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("执行率（%）");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("备注");
+
+        int cnt = 0;
+        for (int i = 0; i < list.size(); i++) {
+            PlanItem transFee = list.get(i);
+            HSSFRow row = sheet.createRow(++cnt);
+            row.createCell(0).setCellValue(transFee.getId());
+            row.createCell(1).setCellValue(transFee.getSubTotal());
+            row.createCell(2).setCellValue(transFee.getUnfulfilledQuota());
+            row.createCell(3).setCellValue(transFee.getExecuteRate());
+            row.createCell(4).setCellValue(transFee.getRemark());
+        }
+        return workbook;
+    }
+
+    private static HSSFWorkbook fillPublishFee(List<PublishFee> list, HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("出版、文献、信息传播、知识产权事务费");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(2, 20 * 256);
+        sheet.setColumnWidth(3, 20 * 256);
+        sheet.setColumnWidth(4, 10 * 256);
+        sheet.setColumnWidth(5, 80 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellStyle(headerStyle);
+        c0.setCellValue("编号");
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("类别");
+        HSSFCell c2 = r0.createCell(2);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("合计（万元）");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("未执行额度（万元）");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("执行率（%）");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("备注");
+
+        int cnt = 0;
+        for (int i = 0; i < list.size(); i++) {
+            PublishFee publishFee = list.get(i);
+            HSSFRow row = sheet.createRow(++cnt);
+            row.createCell(0).setCellValue(publishFee.getId());
+            row.createCell(1).setCellValue(publishFee.getType());
+            row.createCell(2).setCellValue(publishFee.getSubTotal());
+            row.createCell(3).setCellValue(publishFee.getUnfulfilledQuota());
+            row.createCell(4).setCellValue(publishFee.getExecuteRate());
+            row.createCell(5).setCellValue(publishFee.getRemark());
+        }
+        return workbook;
+    }
+
+    private static HSSFWorkbook fillPayment(List<Payment> list, HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("劳务费");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(2, 50 * 256);
+        sheet.setColumnWidth(3, 10 * 256);
+        sheet.setColumnWidth(4, 20 * 256);
+        sheet.setColumnWidth(5, 15 * 256);
+        sheet.setColumnWidth(6, 20 * 256);
+        sheet.setColumnWidth(7, 20 * 256);
+        sheet.setColumnWidth(8, 10 * 256);
+        sheet.setColumnWidth(9, 80 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellStyle(headerStyle);
+        c0.setCellValue("编号");
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("类别");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("工作内容");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("数量");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("标准（元/人/月）");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("工作时间（月）");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("合计（万元）");
+        HSSFCell c7 = r0.createCell(7);
+        c7.setCellStyle(headerStyle);
+        c7.setCellValue("未执行额度（万元）");
+        HSSFCell c8 = r0.createCell(8);
+        c8.setCellStyle(headerStyle);
+        c8.setCellValue("执行率（%）");
+        HSSFCell c9 = r0.createCell(9);
+        c9.setCellStyle(headerStyle);
+        c9.setCellValue("备注");
+
+        int cnt = 0;
+        for (int i = 0; i < list.size(); i++) {
+            Payment payment = list.get(i);
+            HSSFRow row = sheet.createRow(++cnt);
+            row.createCell(0).setCellValue(payment.getId());
+            row.createCell(1).setCellValue(payment.getPersonnelType());
+            row.createCell(2).setCellValue(payment.getContent());
+            row.createCell(3).setCellValue(payment.getAmount());
+            row.createCell(4).setCellValue(payment.getStandard());
+            row.createCell(5).setCellValue(payment.getHours());
+            row.createCell(6).setCellValue(payment.getSubTotal());
+            row.createCell(7).setCellValue(payment.getUnfulfilledQuota());
+            row.createCell(8).setCellValue(payment.getExecuteRate());
+            row.createCell(9).setCellValue(payment.getRemark());
+        }
+        return workbook;
+    }
+
+    private static HSSFWorkbook fillAdvisory(List<Advisory> list, HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("专家咨询费");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 20 * 256);
+        sheet.setColumnWidth(2, 50 * 256);
+        sheet.setColumnWidth(3, 10 * 256);
+        sheet.setColumnWidth(4, 20 * 256);
+        sheet.setColumnWidth(5, 10 * 256);
+        sheet.setColumnWidth(6, 20 * 256);
+        sheet.setColumnWidth(7, 20 * 256);
+        sheet.setColumnWidth(8, 10 * 256);
+        sheet.setColumnWidth(9, 80 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellStyle(headerStyle);
+        c0.setCellValue("编号");
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("人员种类");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("工作内容");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("人数");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("标准（元/人/天）");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("天数");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("合计（万元）");
+        HSSFCell c7 = r0.createCell(7);
+        c7.setCellStyle(headerStyle);
+        c7.setCellValue("未执行额度（万元）");
+        HSSFCell c8 = r0.createCell(8);
+        c8.setCellStyle(headerStyle);
+        c8.setCellValue("执行率（%）");
+        HSSFCell c9 = r0.createCell(9);
+        c9.setCellStyle(headerStyle);
+        c9.setCellValue("备注");
+
+        int cnt = 0;
+        for (int i = 0; i < list.size(); i++) {
+            Advisory advisory = list.get(i);
+            HSSFRow row = sheet.createRow(++cnt);
+            row.createCell(0).setCellValue(advisory.getId());
+            row.createCell(1).setCellValue(advisory.getPersonnelType());
+            row.createCell(2).setCellValue(advisory.getContent());
+            row.createCell(3).setCellValue(advisory.getAmount());
+            row.createCell(4).setCellValue(advisory.getStandard());
+            row.createCell(5).setCellValue(advisory.getDays());
+            row.createCell(6).setCellValue(advisory.getSubTotal());
+            row.createCell(7).setCellValue(advisory.getUnfulfilledQuota());
+            row.createCell(8).setCellValue(advisory.getExecuteRate());
+            row.createCell(9).setCellValue(advisory.getRemark());
+        }
+        return workbook;
+    }
+
+    private static HSSFWorkbook fillOtherFee(List<OtherFee> list, HSSFWorkbook workbook) {
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("其他支出");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(2, 20 * 256);
+        sheet.setColumnWidth(3, 20 * 256);
+        sheet.setColumnWidth(4, 10 * 256);
+        sheet.setColumnWidth(5, 80 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellStyle(headerStyle);
+        c0.setCellValue("编号");
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("类别");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("合计（万元）");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("未执行额度（万元）");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("执行率（%）");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("备注");
+
+        int cnt = 0;
+        for (int i = 0; i < list.size(); i++) {
+            OtherFee otherFee = list.get(i);
+            HSSFRow row = sheet.createRow(++cnt);
+            row.createCell(0).setCellValue(otherFee.getId());
+            row.createCell(1).setCellValue(otherFee.getType());
+            row.createCell(2).setCellValue(otherFee.getSubTotal());
+            row.createCell(3).setCellValue(otherFee.getUnfulfilledQuota());
+            row.createCell(4).setCellValue(otherFee.getExecuteRate());
+            row.createCell(5).setCellValue(otherFee.getRemark());
         }
         return workbook;
     }

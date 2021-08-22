@@ -27,13 +27,13 @@
           </el-row>
           <el-row>
             <el-col :span="10">
-              <el-form-item label="项目总体执行年限（年）:" prop="projectYears">
+              <el-form-item label="项目总体执行年限（年）:" prop="years">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                           v-model="project.years"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="10">
-              <el-form-item label="资助额度（万元）:" prop="projectFunding">
+              <el-form-item label="资助额度（万元）:" prop="funding">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                           v-model="project.funding"></el-input>
               </el-form-item>
@@ -59,8 +59,8 @@ export default {
       rules: {
         projectName: [{required: true, message: '请输入项目名称', trigger: 'blur'}],
         projectType: [{required: true, message: '请选择项目类型', trigger: 'blur'}],
-        projectYears: [{required: true, message: '请输入年限', trigger: 'blur'}],
-        projectFunding: [{required: true, message: '请输入资助额度', trigger: 'blur'}]
+        years: [{required: true, message: '请输入年限', trigger: 'blur'}],
+        funding: [{required: true, message: '请输入资助额度', trigger: 'blur'}]
       },
     }
   },

@@ -32,12 +32,12 @@ CREATE TABLE `academic_fee` (
   `times` int NOT NULL DEFAULT '0' COMMENT '人次',
   `year` int NOT NULL DEFAULT '0' COMMENT '年度',
   `days` int NOT NULL DEFAULT '0' COMMENT '会期（天）',
-  `registrationFee` double DEFAULT NULL COMMENT '注册费',
+  `registrationFee` double DEFAULT '0' COMMENT '注册费',
   `transFee` double DEFAULT '0' COMMENT '往返交通费（元）',
   `accommodationFee` double DEFAULT '0' COMMENT '住宿及补助费（元）',
   `subTotal` double DEFAULT '0' COMMENT '小计（万元）',
-  `unfulfilledQuota` double DEFAULT NULL COMMENT '未执行额度',
-  `executeRate` double DEFAULT NULL COMMENT '执行率',
+  `unfulfilledQuota` double DEFAULT '0' COMMENT '未执行额度',
+  `executeRate` double DEFAULT '0' COMMENT '执行率',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -231,7 +231,7 @@ CREATE TABLE `lams_user` (
   `enabled` tinyint(1) DEFAULT '1',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -240,7 +240,7 @@ CREATE TABLE `lams_user` (
 
 LOCK TABLES `lams_user` WRITE;
 /*!40000 ALTER TABLE `lams_user` DISABLE KEYS */;
-INSERT INTO `lams_user` VALUES (3,'系统管理员','18568887789','admin','$2a$10$ySG2lkvjFHY5O0./CPIE1OI8VJsuKYEzOYzqIa7AJR6sEgSzUFOAm',1,'系统管理员'),(13,'hhj','18840833079','294116824@qq.com','$2a$10$F9ccPpocdnltlEPTnUfI5OHD2iXXov6pWTwkYiSgvqyWzSTb72PjK',0,NULL);
+INSERT INTO `lams_user` VALUES (3,'系统管理员','18568887789','admin','$2a$10$ySG2lkvjFHY5O0./CPIE1OI8VJsuKYEzOYzqIa7AJR6sEgSzUFOAm',1,'系统管理员'),(13,'hhj','18840833079','294116824@qq.com','$2a$10$F9ccPpocdnltlEPTnUfI5OHD2iXXov6pWTwkYiSgvqyWzSTb72PjK',0,NULL),(14,'lams',NULL,'3551983486@qq.com','$2a$10$.GX9xb.PBbmd7y5yOSxYE.csxTXpUutIt.gDyllfhYP90yQMpjupi',1,NULL);
 /*!40000 ALTER TABLE `lams_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +260,7 @@ CREATE TABLE `lams_user_role` (
   KEY `hr_role_ibfk_1` (`uid`),
   CONSTRAINT `lams_user_role_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `lams_user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `lams_user_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,7 +269,7 @@ CREATE TABLE `lams_user_role` (
 
 LOCK TABLES `lams_user_role` WRITE;
 /*!40000 ALTER TABLE `lams_user_role` DISABLE KEYS */;
-INSERT INTO `lams_user_role` VALUES (1,3,6),(83,13,24),(84,3,22),(85,3,23),(86,14,24);
+INSERT INTO `lams_user_role` VALUES (1,3,6),(83,13,24),(84,3,22),(85,3,23),(86,14,24),(87,14,24);
 /*!40000 ALTER TABLE `lams_user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -289,7 +289,7 @@ CREATE TABLE `material_fee` (
   `materialName` varchar(255) NOT NULL COMMENT '材料名称',
   `amount` int DEFAULT '0' COMMENT '数量',
   `specification` varchar(255) DEFAULT NULL COMMENT '规格',
-  `unitPrice` double DEFAULT NULL COMMENT '单价（万元）',
+  `unitPrice` double DEFAULT '0' COMMENT '单价（万元）',
   `unit` varchar(255) DEFAULT NULL COMMENT '单位',
   `subTotal` double NOT NULL DEFAULT '0' COMMENT '小计（万元）',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
@@ -616,8 +616,8 @@ CREATE TABLE `project` (
   `projectName` varchar(255) NOT NULL DEFAULT '1' COMMENT '项目名称',
   `projectType` varchar(255) DEFAULT NULL COMMENT '项目类别',
   `years` int DEFAULT NULL COMMENT '项目总体执行年限',
-  `funding` double DEFAULT NULL COMMENT '资助额度',
-  `unfulfilledQuota` double DEFAULT NULL COMMENT '未执行额度',
+  `funding` double DEFAULT '0' COMMENT '资助额度',
+  `unfulfilledQuota` double DEFAULT '0' COMMENT '未执行额度',
   `executeRate` double DEFAULT '0' COMMENT '执行率',
   `userEmail` varchar(255) NOT NULL COMMENT '创建人邮箱',
   `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -893,4 +893,4 @@ CREATE TABLE `warning_config` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-22 11:42:58
+-- Dump completed on 2021-08-23 10:36:32

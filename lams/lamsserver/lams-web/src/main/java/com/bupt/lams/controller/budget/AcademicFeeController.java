@@ -31,9 +31,9 @@ public class AcademicFeeController {
             logger.error("国内学术会议差旅费不能为空！");
             return RespBean.error("国内学术会议差旅费不能为空！");
         }
-        if (academicFee.getTimes() == null || academicFee.getDays() == null || academicFee.getAccommodationFee() == null || academicFee.getTimes() == null || academicFee.getTimes() == null) {
-            logger.error("国内学术会议差旅费不能为空！");
-            return RespBean.error("国内学术会议差旅费不能为空！");
+        if (academicFee.getSubTotal() == null && (academicFee.getRegistrationFee() == null || academicFee.getTransFee() == null || academicFee.getAccommodationFee() == null)) {
+            logger.error("国内学术会议差旅费单价和合计不能同时为空！");
+            return RespBean.error("国内学术会议差旅费单价和合计不能同时为空！");
         }
         try {
             Long id = academicFeeService.addAcademicFee(academicFee);

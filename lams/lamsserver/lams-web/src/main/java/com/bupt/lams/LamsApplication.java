@@ -37,17 +37,17 @@ public class LamsApplication {
         return executor;
     }
 
-//    /**
-//     * 预热分词器字典，牺牲部署时间，节约接口耗时
-//     *
-//     * @return
-//     */
-//    @Bean
-//    public CosineTextSimilarity cosineTextSimilarity() {
-//        CosineTextSimilarity textSimilarity = new CosineTextSimilarity();
-//        textSimilarity.similarScore("我爱我的祖国，我爱我的家乡", "我爱读书，我爱玩游戏");
-//        System.out.println("----------------------------字典预热完成----------------------------\n");
-//        return textSimilarity;
-//    }
+    /**
+     * 预热分词器字典，牺牲部署时间，节约接口耗时
+     *
+     * @return
+     */
+    @Bean
+    public CosineTextSimilarity cosineTextSimilarity() {
+        CosineTextSimilarity textSimilarity = new CosineTextSimilarity();
+        textSimilarity.similarScore("我爱我的祖国，我爱我的家乡", "我爱读书，我爱玩游戏");
+        System.out.println("----------------------------字典预热完成----------------------------\n");
+        return textSimilarity;
+    }
 
 }

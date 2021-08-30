@@ -810,7 +810,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="$emit('close')">关 闭</el-button>
+    <el-button @click="handleClose">关 闭</el-button>
   </span>
     </el-dialog>
 

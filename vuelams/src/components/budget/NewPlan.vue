@@ -28,7 +28,7 @@
             </el-col>
             <el-col :span="5">
               <el-form-item label="本计划预算（万元）:" prop="funding">
-                {{ plan.funding }}
+                {{ plan.funding | numFilter }}
               </el-form-item>
             </el-col>
           </el-row>
@@ -772,6 +772,13 @@ export default {
   },
   components: {
     NewPlanItem
+  },
+  filters: {
+    numFilter(value) {
+      // 截取当前数据到小数点后两位
+      let realVal = parseFloat(value).toFixed(2)
+      return realVal
+    }
   },
   methods: {
     emptyIdList() {

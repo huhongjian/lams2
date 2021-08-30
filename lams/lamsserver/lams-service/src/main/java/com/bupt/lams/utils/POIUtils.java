@@ -1,9 +1,9 @@
 package com.bupt.lams.utils;
 
-import com.bupt.lams.model.Asset;
-import com.bupt.lams.model.Order;
-import com.bupt.lams.model.Plan;
-import com.bupt.lams.model.PurchaseOrder;
+import com.bupt.lams.constants.BudgetReimburseEnum;
+import com.bupt.lams.constants.PlanItemTypeEnum;
+import com.bupt.lams.dto.PlanItemData;
+import com.bupt.lams.model.*;
 import com.bupt.lams.model.planItem.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.hpsf.DocumentSummaryInformation;
@@ -15,10 +15,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文档工具类
@@ -1990,4 +1995,291 @@ public class POIUtils {
         }
         return workbook;
     }
+
+    /**
+     * excel转预算流水
+     */
+    public static List<BudgetRecord> excel2Record(MultipartFile file) {
+        List<BudgetRecord> list = new ArrayList<>();
+        BudgetRecord record = null;
+        try {
+            //1. 创建一个 workbook 对象
+            HSSFWorkbook workbook = new HSSFWorkbook(file.getInputStream());
+            //2. 获取 workbook 中表单的数量
+            int numberOfSheets = workbook.getNumberOfSheets();
+            for (int i = 0; i < numberOfSheets; i++) {
+                //3. 获取表单
+                HSSFSheet sheet = workbook.getSheetAt(i);
+                //4. 获取表单中的行数
+                int physicalNumberOfRows = sheet.getPhysicalNumberOfRows();
+                for (int j = 0; j < physicalNumberOfRows; j++) {
+                    //5. 跳过标题行
+                    if (j == 0) {
+                        continue;//跳过标题行
+                    }
+                    //6. 获取行
+                    HSSFRow row = sheet.getRow(j);
+                    if (row == null) {
+                        continue;//防止数据中间有空行
+                    }
+                    //7. 获取列数
+                    int physicalNumberOfCells = row.getPhysicalNumberOfCells();
+                    record = new BudgetRecord();
+                    for (int k = 0; k < physicalNumberOfCells; k++) {
+                        HSSFCell cell = row.getCell(k);
+                        switch (cell.getCellType()) {
+                            case STRING:
+                                String cellValue = cell.getStringCellValue();
+                                switch (k) {
+                                    case 1:
+                                        record.setProjectName(cellValue);
+                                        break;
+                                    case 3:
+                                        record.setPlanName(cellValue);
+                                        break;
+                                    case 4:
+                                        record.setItemTypeName(cellValue);
+                                        break;
+                                    case 7:
+                                        record.setReimburseName(cellValue);
+                                        break;
+                                    case 8:
+                                        record.setRemark(cellValue);
+                                        break;
+                                }
+                                break;
+                            default: {
+                                switch (k) {
+                                    case 0:
+                                        record.setProjectId((long) cell.getNumericCellValue());
+                                        break;
+                                    case 2:
+                                        record.setPlanId((long) cell.getNumericCellValue());
+                                        break;
+                                    case 5:
+                                        record.setPlanItemId((long) cell.getNumericCellValue());
+                                        break;
+                                    case 6:
+                                        record.setFunding(cell.getNumericCellValue());
+                                        break;
+                                    case 9:
+                                        record.setExecuteDate(cell.getDateCellValue());
+                                        break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    record.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
+                    record.setItemType(PlanItemTypeEnum.getIndexByName(record.getItemTypeName()));
+                    record.setIsReimburse(BudgetReimburseEnum.getIndexByName(record.getReimburseName()));
+                    list.add(record);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * 执行流水转excel
+     *
+     * @param list
+     * @return
+     */
+    public static ResponseEntity<byte[]> budgetRecord2Excel(List<BudgetRecord> list) {
+        //1. 创建一个 Excel 文档
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        //2. 创建文档摘要
+        workbook.createInformationProperties();
+        //3. 获取并配置文档信息
+        DocumentSummaryInformation docInfo = workbook.getDocumentSummaryInformation();
+        //文档类别
+        docInfo.setCategory("执行流水");
+        //文档管理员
+        docInfo.setManager("admin");
+        //设置公司信息
+        docInfo.setCompany("bupt");
+        //4. 获取文档摘要信息
+        SummaryInformation summInfo = workbook.getSummaryInformation();
+        //文档标题
+        summInfo.setTitle("执行流水表");
+        //文档作者
+        summInfo.setAuthor("lams");
+        // 文档备注
+        summInfo.setComments("本文档由 lams 提供");
+        //5. 创建样式
+        //创建标题行的样式
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("执行流水表");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 10 * 256);
+        sheet.setColumnWidth(2, 10 * 256);
+        sheet.setColumnWidth(3, 50 * 256);
+        sheet.setColumnWidth(4, 50 * 256);
+        sheet.setColumnWidth(5, 30 * 256);
+        sheet.setColumnWidth(6, 10 * 256);
+        sheet.setColumnWidth(7, 50 * 256);
+        sheet.setColumnWidth(8, 15 * 256);
+        sheet.setColumnWidth(9, 15 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellValue("流水编号");
+        c0.setCellStyle(headerStyle);
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("是否报销");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("金额（万元）");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("科研项目");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("预算计划");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("预算科目");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("预算明细序号");
+        HSSFCell c7 = r0.createCell(7);
+        c7.setCellStyle(headerStyle);
+        c7.setCellValue("备注");
+        HSSFCell c8 = r0.createCell(8);
+        c8.setCellStyle(headerStyle);
+        c8.setCellValue("执行用户");
+        HSSFCell c9 = r0.createCell(9);
+        c9.setCellStyle(headerStyle);
+        c9.setCellValue("执行时间");
+        for (int i = 0; i < list.size(); i++) {
+            BudgetRecord record = list.get(i);
+            HSSFRow row = sheet.createRow(i + 1);
+            row.createCell(0).setCellValue(record.getId());
+            row.createCell(1).setCellValue(record.getReimburseName());
+            row.createCell(2).setCellValue(record.getFunding());
+            row.createCell(3).setCellValue(record.getProjectName());
+            row.createCell(4).setCellValue(record.getPlanName());
+            row.createCell(5).setCellValue(record.getItemTypeName());
+            row.createCell(6).setCellValue(record.getPlanItemId());
+            row.createCell(7).setCellValue(record.getRemark());
+            row.createCell(8).setCellValue(record.getUser().getName());
+            HSSFCell cell6 = row.createCell(9);
+            cell6.setCellStyle(dateCellStyle);
+            cell6.setCellValue(record.getExecuteDate());
+        }
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        HttpHeaders headers = new HttpHeaders();
+        try {
+            headers.setContentDispositionFormData("attachment", new String("执行流水表.xls".getBytes("UTF-8"), "ISO-8859-1"));
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            workbook.write(baos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.CREATED);
+    }
+
+    /**
+     * 执行流水导入模板
+     *
+     * @return
+     */
+    public static ResponseEntity<byte[]> budgetRecordExcelTemplate() {
+        //1. 创建一个 Excel 文档
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        //2. 创建文档摘要
+        workbook.createInformationProperties();
+        //3. 获取并配置文档信息
+        DocumentSummaryInformation docInfo = workbook.getDocumentSummaryInformation();
+        //文档类别
+        docInfo.setCategory("执行流水");
+        //文档管理员
+        docInfo.setManager("admin");
+        //设置公司信息
+        docInfo.setCompany("bupt");
+        //4. 获取文档摘要信息
+        SummaryInformation summInfo = workbook.getSummaryInformation();
+        //文档标题
+        summInfo.setTitle("执行流水导入模板");
+        //文档作者
+        summInfo.setAuthor("lams");
+        // 文档备注
+        summInfo.setComments("本文档由 lams 提供");
+
+        // 执行流水信息
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.YELLOW.index);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("执行流水");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 15 * 256);
+        sheet.setColumnWidth(1, 30 * 256);
+        sheet.setColumnWidth(2, 15 * 256);
+        sheet.setColumnWidth(3, 30 * 256);
+        sheet.setColumnWidth(4, 15 * 256);
+        sheet.setColumnWidth(5, 15 * 256);
+        sheet.setColumnWidth(6, 15 * 256);
+        sheet.setColumnWidth(7, 15 * 256);
+        sheet.setColumnWidth(8, 50 * 256);
+        sheet.setColumnWidth(9, 15 * 256);
+
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellValue("科研项目编号");
+        c0.setCellStyle(headerStyle);
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("科研项目名称");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("预算计划编号");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("预算计划名称");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("预算科目");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("预算明细编号");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("金额（万元）");
+        HSSFCell c7 = r0.createCell(7);
+        c7.setCellStyle(headerStyle);
+        c7.setCellValue("是否报销");
+        HSSFCell c8 = r0.createCell(8);
+        c8.setCellStyle(headerStyle);
+        c8.setCellValue("备注");
+        HSSFCell c9 = r0.createCell(9);
+        c9.setCellStyle(headerStyle);
+        c9.setCellValue("执行时间");
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        HttpHeaders headers = new HttpHeaders();
+        try {
+            headers.setContentDispositionFormData("attachment", new String("执行流水导入模板.xls".getBytes("UTF-8"), "ISO-8859-1"));
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            workbook.write(baos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.CREATED);
+    }
+
+
 }

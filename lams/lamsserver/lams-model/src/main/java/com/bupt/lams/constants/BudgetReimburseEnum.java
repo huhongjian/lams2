@@ -45,4 +45,16 @@ public enum BudgetReimburseEnum {
         }
         return null;
     }
+
+    /**
+     * 根据name获取去index
+     */
+    public static Integer getIndexByName(String name) {
+        for (BudgetReimburseEnum e : BudgetReimburseEnum.values()) {
+            if (name.equals(e.getName())) {
+                return e.getIndex();
+            }
+        }
+        return null;
+    }
 }

@@ -1,17 +1,21 @@
 package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.ExecutionQueryCondition;
+import com.bupt.lams.dto.PlanQueryCondition;
 import com.bupt.lams.model.BudgetRecord;
 import com.bupt.lams.model.Plan;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.model.planItem.PlanItem;
 import com.bupt.lams.service.BudgetRecordService;
+import com.bupt.lams.utils.POIUtils;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -97,5 +101,33 @@ public class ExecutionController {
             return RespBean.error("取消报销失败!");
         }
         return RespBean.ok("取消报销成功!");
+    }
+
+    @PostMapping("/import")
+    public RespBean importData(MultipartFile file) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        response.setMsg("上传成功!");
+        try {
+            List<BudgetRecord> list = POIUtils.excel2Record(file);
+            for (BudgetRecord budgetRecord : list) {
+                budgetRecordService.addBudgetRecord(budgetRecord);
+            }
+        } catch (Exception e) {
+            logger.error("上传失败", e);
+            return RespBean.error("上传失败！");
+        }
+        return response;
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportData(ExecutionQueryCondition condition) throws Exception {
+        List<BudgetRecord> list = (List<BudgetRecord>) budgetRecordService.getBudgetRecordByCondition(condition).getData();
+        return POIUtils.budgetRecord2Excel(list);
+    }
+
+    @GetMapping("/template")
+    public ResponseEntity<byte[]> getTemplate() {
+        return POIUtils.budgetRecordExcelTemplate();
     }
 }

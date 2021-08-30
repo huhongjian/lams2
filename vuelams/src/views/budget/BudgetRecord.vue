@@ -22,7 +22,7 @@
               :on-error="onError"
               :disabled="importDataDisabled"
               style="display: inline-flex;margin-left: 8px"
-              action="/plan/import">
+              action="/execution/import">
             <el-button :disabled="importDataDisabled" type="success" :icon="importDataBtnIcon">
               {{ importDataBtnText }}
             </el-button>
@@ -207,6 +207,7 @@
 <script>
 
 import ExecuteSelect from "@/components/budget/ExecuteSelect";
+import {Message} from "element-ui";
 
 export default {
   name: "BudgetProject",
@@ -263,7 +264,7 @@ export default {
       this.importDataBtnText = '导入数据';
       this.importDataBtnIcon = 'el-icon-upload2';
       this.importDataDisabled = false;
-      this.initPlans();
+      this.initExecutions();
     },
     beforeUpload() {
       this.importDataBtnText = '正在导入';
@@ -386,6 +387,29 @@ export default {
           this.initExecutions();
         }
       })
+    },
+    getTemplate() {
+      let url = '/execution/template';
+      window.open(url, '_parent');
+    },
+    exportData() {
+      let url = '/execution/export?1=1';
+      if (this.searchValue.isReimburse != null) {
+        url += '&isReimburse=' + this.searchValue.isReimburse;
+      }
+      if (this.searchValue.planName) {
+        url += '&planName=' + this.searchValue.planName;
+      }
+      if (this.searchValue.projectId) {
+        url += '&projectId=' + this.searchValue.projectId;
+      }
+      if (this.searchValue.userEmail) {
+        url += '&userEmail=' + this.searchValue.userEmail;
+      }
+      if (this.searchValue.dateScope) {
+        url += '&dateScope=' + this.searchValue.dateScope;
+      }
+      window.open(url, '_parent');
     },
   }
 }

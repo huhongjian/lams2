@@ -78,4 +78,24 @@ public class ExecutionController {
         }
         return RespBean.ok("撤销成功!");
     }
+
+    @PutMapping("/reimburse")
+    public RespBean reimburseRecord(@RequestBody List<Long> ids) {
+        try {
+            budgetRecordService.reimburseRecord(ids);
+        } catch (Exception e) {
+            return RespBean.error("报销失败!");
+        }
+        return RespBean.ok("报销成功!");
+    }
+
+    @PutMapping("/cancel")
+    public RespBean cancelReimburse(@RequestBody List<Long> ids) {
+        try {
+            budgetRecordService.cancelReimburse(ids);
+        } catch (Exception e) {
+            return RespBean.error("取消报销失败!");
+        }
+        return RespBean.ok("取消报销成功!");
+    }
 }

@@ -21,5 +21,7 @@ public interface BudgetRecordMapper {
 
     void deleteManyByIds(List<Long> ids);
 
+    void update(BudgetRecord budgetRecord);
+
     Long getRecentIdByItemType(@Param("type") Integer type, @Param("userEmail") String userEmail);
 }

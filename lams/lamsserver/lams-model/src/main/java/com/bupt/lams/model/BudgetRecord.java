@@ -1,5 +1,6 @@
 package com.bupt.lams.model;
 
+import com.bupt.lams.constants.BudgetReimburseEnum;
 import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -13,6 +14,8 @@ import java.util.Date;
 @Data
 public class BudgetRecord implements Serializable {
     private Long id;
+    private Integer isReimburse;
+    private String reimburseName;
     private Double funding;
     private Long projectId;
     private String projectName;
@@ -58,5 +61,10 @@ public class BudgetRecord implements Serializable {
     public void setType(Integer type) {
         this.itemType = type;
         this.itemTypeName = PlanItemTypeEnum.getNameByIndex(type);
+    }
+
+    public void setReimburse(Integer reimburse) {
+        this.isReimburse = reimburse;
+        this.reimburseName = BudgetReimburseEnum.getNameByIndex(reimburse);
     }
 }

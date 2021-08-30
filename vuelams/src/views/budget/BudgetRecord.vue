@@ -9,6 +9,32 @@
           <el-button @click="revertExecution" style="display: inline-flex;margin-left: 8px" type="danger">
             撤销执行
           </el-button>
+          <el-button type="primary" @click="reimburse" plain>
+            确认报销
+          </el-button>
+          <el-button @click="cancelReimburse" style="display: inline-flex;margin-left: 8px" type="danger" plain>
+            取消报销
+          </el-button>
+          <el-upload
+              :show-file-list="false"
+              :before-upload="beforeUpload"
+              :on-success="onSuccess"
+              :on-error="onError"
+              :disabled="importDataDisabled"
+              style="display: inline-flex;margin-left: 8px"
+              action="/plan/import">
+            <el-button :disabled="importDataDisabled" type="success" :icon="importDataBtnIcon">
+              {{ importDataBtnText }}
+            </el-button>
+          </el-upload>
+          <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="getTemplate"
+                     icon="el-icon-download">
+            下载模板
+          </el-button>
+          <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
+                     icon="el-icon-download">
+            导出数据
+          </el-button>
         </div>
         <div>
           <el-input placeholder="请输入项目序号进行搜索，可以直接回车搜索..." prefix-icon="el-icon-search"
@@ -31,18 +57,30 @@
         <div v-show="showAdvanceSearchView"
              style="border: 1px solid #759ad1;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px;">
           <el-row>
-            <el-col :span="10">
+            <el-col :span="8">
               计划名称:
               <el-input size="mini" style="width: 220px" clearable prefix-icon="el-icon-edit"
                         v-model="searchValue.planName"></el-input>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="8">
               科研项目:
               <el-select v-model="searchValue.projectId" clearable placeholder="科研项目" size="mini" style="width: 300px;">
                 <el-option
                     v-for="item in projectLists"
                     :key="item.id"
                     :label="item.projectName"
+                    :value="item.id">
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="8">
+              是否报销:
+              <el-select v-model="searchValue.isReimburse" clearable placeholder="是否报销" size="mini"
+                         style="width: 300px;">
+                <el-option
+                    v-for="item in reimburseTypes"
+                    :key="item.id"
+                    :label="item.name"
                     :value="item.id">
                 </el-option>
               </el-select>
@@ -95,6 +133,15 @@
             prop="id"
             label="流水编号"
             width="80">
+        </el-table-column>
+        <el-table-column
+            label="是否报销"
+            width="70">
+          <template slot-scope="scope">
+            <span style="color: #00e079; font-weight: bold"
+                  v-if="scope.row.isReimburse=='1'">{{ scope.row.reimburseName }}</span>
+            <span v-else>{{ scope.row.reimburseName }}</span>
+          </template>
         </el-table-column>
         <el-table-column
             prop="funding"
@@ -168,9 +215,13 @@ export default {
   },
   data() {
     return {
+      importDataBtnText: '导入数据',
+      importDataBtnIcon: 'el-icon-upload2',
+      importDataDisabled: false,
       searchValue: {
         planName: null,
         projectId: null,
+        isReimburse: null,
         userEmail: null,
         dateScope: null
       },
@@ -185,6 +236,16 @@ export default {
       keyword: '',
       size: 10,
       projectLists: [],
+      reimburseTypes: [
+        {
+          id: 0,
+          name: '未报销'
+        },
+        {
+          id: 1,
+          name: '已报销'
+        }
+      ],
       type: ""
     }
   },
@@ -193,6 +254,22 @@ export default {
     this.initProjects();
   },
   methods: {
+    onError(err, file, fileList) {
+      this.importDataBtnText = '导入数据';
+      this.importDataBtnIcon = 'el-icon-upload2';
+      this.importDataDisabled = false;
+    },
+    onSuccess(response, file, fileList) {
+      this.importDataBtnText = '导入数据';
+      this.importDataBtnIcon = 'el-icon-upload2';
+      this.importDataDisabled = false;
+      this.initPlans();
+    },
+    beforeUpload() {
+      this.importDataBtnText = '正在导入';
+      this.importDataBtnIcon = 'el-icon-loading';
+      this.importDataDisabled = true;
+    },
     showSelectView() {
       this.title = '预算明细推荐Top10';
       this.executeSelectVisible = true;
@@ -223,6 +300,9 @@ export default {
       this.type = 'advanced'
       this.loading = true;
       let url = '/execution/get/?page=' + this.page + '&size=' + this.size;
+      if (this.searchValue.isReimburse != null) {
+        url += '&isReimburse=' + this.searchValue.isReimburse;
+      }
       if (this.searchValue.planName) {
         url += '&planName=' + this.searchValue.planName;
       }
@@ -257,6 +337,7 @@ export default {
     },
     clearSearchValue() {
       this.searchValue = {
+        isReimburse: null,
         planName: null,
         projectId: null,
         userEmail: null,
@@ -289,6 +370,22 @@ export default {
           this.projectLists = resp.obj;
         }
       });
+    },
+    cancelReimburse() {
+      this.putRequest("/execution/cancel", this.recordIds).then(resp => {
+        if (resp) {
+          this.recordIds = [];
+          this.initExecutions();
+        }
+      })
+    },
+    reimburse() {
+      this.putRequest("/execution/reimburse", this.recordIds).then(resp => {
+        if (resp) {
+          this.recordIds = [];
+          this.initExecutions();
+        }
+      })
     },
   }
 }

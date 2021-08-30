@@ -3,6 +3,8 @@
 <mapper namespace="com.bupt.lams.mapper.BudgetRecordMapper">
     <resultMap id="BaseResultMap" type="com.bupt.lams.model.BudgetRecord">
         <id column="id" property="id"/>
+        <result column="isReimburse" property="isReimburse"/>
+        <result column="reimburseName" property="reimburseName"/>
         <result column="funding" property="funding"/>
         <result column="projectId" property="projectId"/>
         <result column="projectName" property="projectName"/>
@@ -45,6 +47,9 @@
         </if>
         <if test="projectId !=null">
             and b.projectId = #{projectId}
+        </if>
+        <if test="isReimburse !=null">
+            and b.isReimburse = #{isReimburse}
         </if>
         <if test="startDate !=null and endDate !=null">
             and b.executeDate between #{startDate} and #{endDate}
@@ -170,6 +175,58 @@
             #{item}
         </foreach>
     </delete>
+    <update id="update" parameterType="com.bupt.lams.model.BudgetRecord">
+        update budget_record
+        set
+        <trim suffixOverrides=",">
+            <if test="isReimburse != null">
+                isReimburse = #{isReimburse},
+            </if>
+            <if test="reimburseName != null and reimburseName != ''">
+                reimburseName = #{reimburseName},
+            </if>
+            <if test="funding != null">
+                funding = #{funding},
+            </if>
+            <if test="projectId != null">
+                projectId = #{projectId},
+            </if>
+            <if test="projectName != null and projectName != ''">
+                projectName = #{projectName},
+            </if>
+            <if test="planId != null">
+                planId = #{planId},
+            </if>
+            <if test="planName != null and planName != ''">
+                planName = #{planName},
+            </if>
+            <if test="planItemId != null">
+                planItemId = #{planItemId},
+            </if>
+            <if test="itemType != null">
+                itemType = #{itemType},
+            </if>
+            <if test="itemTypeName != null and itemTypeName != ''">
+                itemTypeName = #{itemTypeName},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="userEmail != null and userEmail != ''">
+                userEmail = #{userEmail},
+            </if>
+            <if test="executeDate != null">
+                executeDate = #{executeDate},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime},
+            </if>
+            updateTime = NOW()
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
     <select id="getRecentIdByItemType" resultType="java.lang.Long">
         select b.planItemId
         from

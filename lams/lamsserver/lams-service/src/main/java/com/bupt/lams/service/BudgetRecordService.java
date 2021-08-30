@@ -1,6 +1,8 @@
 package com.bupt.lams.service;
 
 import com.bupt.lams.constants.BudgetConstant;
+import com.bupt.lams.constants.BudgetReimburseEnum;
+import com.bupt.lams.constants.ConfigStatusEnum;
 import com.bupt.lams.dto.ExecutionQueryCondition;
 import com.bupt.lams.mapper.BudgetRecordMapper;
 import com.bupt.lams.mapper.PlanMapper;
@@ -138,5 +140,31 @@ public class BudgetRecordService {
             executePlanItem(record, true);
         }
         budgetRecordMapper.deleteManyByIds(rids);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void reimburseRecord(List<Long> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return;
+        }
+        for (Long id : ids) {
+            BudgetRecord budgetRecord = new BudgetRecord();
+            budgetRecord.setId(id);
+            budgetRecord.setReimburse(BudgetReimburseEnum.YES.getIndex());
+            budgetRecordMapper.update(budgetRecord);
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void cancelReimburse(List<Long> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return;
+        }
+        for (Long id : ids) {
+            BudgetRecord budgetRecord = new BudgetRecord();
+            budgetRecord.setId(id);
+            budgetRecord.setReimburse(BudgetReimburseEnum.NO.getIndex());
+            budgetRecordMapper.update(budgetRecord);
+        }
     }
 }

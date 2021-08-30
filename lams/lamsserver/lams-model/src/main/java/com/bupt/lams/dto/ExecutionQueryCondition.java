@@ -23,6 +23,7 @@ public class ExecutionQueryCondition {
 
     private String planName;
     private Long projectId;
+    private Integer isReimburse;
     private String userEmail;
     private Long planItemId;
     private Integer itemType;

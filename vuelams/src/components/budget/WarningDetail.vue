@@ -25,6 +25,18 @@
         </el-row>
         <el-row>
           <el-col span="10">
+            <el-form-item label="计划编号:" prop="planId">
+              {{ warningConfig.planId }}
+            </el-form-item>
+          </el-col>
+          <el-col span="10">
+            <el-form-item label="计划名称:" prop="planName">
+              {{ warningConfig.planName }}
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col span="10">
             <el-form-item label="预算科目:" prop="itemTypeName">
               {{ warningConfig.itemTypeName }}
             </el-form-item>

@@ -60,6 +60,7 @@ public class MailSendTask {
      * 每天10点报警
      */
     @Scheduled(cron = "0 0 10 ? * *")
+//    @Scheduled(cron = "0/10 * * * * ?")
     public void dayWarningTask() {
         List<WarningConfig> configs = warningConfigService.getConfigByFreq(WarningFreqEnum.DAY.getIndex());
         sendWarningMessage(configs);

@@ -6,6 +6,9 @@
           <el-button type="primary" icon="el-icon-plus" @click="showAddWarningView">
             新增
           </el-button>
+          <el-button type="success" @click="startConfig">
+            启动
+          </el-button>
           <el-button type="info" @click="pauseConfig">
             暂停
           </el-button>
@@ -339,6 +342,14 @@ export default {
       for (let i = 0; i < val.length; i++) {
         this.configIds.push(val[i].id);
       }
+    },
+    startConfig(){
+      this.putRequest("/warning/config/start", this.configIds).then(resp => {
+        if (resp) {
+          this.configIds = [];
+          this.initConfigs();
+        }
+      })
     },
     pauseConfig() {
       this.putRequest("/warning/config/pause", this.configIds).then(resp => {

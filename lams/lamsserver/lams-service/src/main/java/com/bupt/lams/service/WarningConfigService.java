@@ -84,6 +84,8 @@ public class WarningConfigService {
     }
 
     public void update(WarningConfig config) {
+        config.setStartTime(config.getDateScope()[0]);
+        config.setEndTime(config.getDateScope()[1]);
         warningConfigMapper.update(config);
     }
 
@@ -96,6 +98,19 @@ public class WarningConfigService {
             WarningConfig config = new WarningConfig();
             config.setId(id);
             config.setConfigStatus(ConfigStatusEnum.STOP.getIndex());
+            warningConfigMapper.update(config);
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void startConfig(List<Long> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return;
+        }
+        for (Long id : ids) {
+            WarningConfig config = new WarningConfig();
+            config.setId(id);
+            config.setConfigStatus(ConfigStatusEnum.ON.getIndex());
             warningConfigMapper.update(config);
         }
     }

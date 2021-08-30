@@ -93,4 +93,14 @@ public class WarningController {
         }
         return RespBean.ok("暂停成功!");
     }
+
+    @PutMapping("/config/start")
+    public RespBean startConfig(@RequestBody List<Long> ids) {
+        try {
+            warningConfigService.startConfig(ids);
+        } catch (Exception e) {
+            return RespBean.error("启动失败!");
+        }
+        return RespBean.ok("启动成功!");
+    }
 }

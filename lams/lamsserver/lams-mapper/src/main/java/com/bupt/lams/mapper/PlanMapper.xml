@@ -152,6 +152,9 @@
     <select id="getTotal" resultType="java.lang.Double">
         select cast(sum(p.funding) as decimal (19,2)) from plan p where p.isDeleted = 0;
     </select>
+    <select id="getTotalByProjectId" resultType="java.lang.Double">
+        select cast(sum(p.funding) as decimal (19,2)) from plan p where p.isDeleted = 0 and p.projectId=#{id};
+    </select>
     <select id="getPlansByProjectIds" parameterType="list" resultType="com.bupt.lams.model.Plan">
         select *
         from plan p

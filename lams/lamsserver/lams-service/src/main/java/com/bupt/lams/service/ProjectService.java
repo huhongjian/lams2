@@ -83,6 +83,10 @@ public class ProjectService {
         return data;
     }
 
+    public Double getInPlanById(Long id) {
+        return planMapper.getTotalByProjectId(id);
+    }
+
     public void deleteProjects(List<Long> pids) {
         projectMapper.deleteProjects(pids);
     }

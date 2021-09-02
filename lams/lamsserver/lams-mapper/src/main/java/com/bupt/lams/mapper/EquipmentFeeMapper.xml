@@ -105,7 +105,7 @@
         from
         equipment_fee e
         join plan_item pi on e.id = pi.iid
-        join plan p on  p.id = pi.pid
+        join plan p on p.id = pi.pid
         join project pr on pr.id = p.projectId
         where pi.itid = 1
         <if test="list != null and list.size>0">
@@ -157,15 +157,11 @@
         </where>
     </update>
     <select id="getById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.EquipmentFee">
-        select e.*, p.id as planId, pr.id as projectId, p.planName, pr.projectName
+        select e.*
         from
         equipment_fee e
-        join plan_item pi on e.id = pi.iid
-        join plan p on  p.id = pi.pid
-        join project pr on pr.id = p.projectId
         where
-        pi.itid = 1
-        and e.id = #{id}
+        e.id = #{id}
     </select>
     <delete id="clear" parameterType="java.lang.String">
         delete e.*

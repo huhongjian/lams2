@@ -2,9 +2,11 @@ package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanQueryCondition;
 import com.bupt.lams.model.Plan;
+import com.bupt.lams.model.Project;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.RespPageBean;
 import com.bupt.lams.service.PlanService;
+import com.bupt.lams.service.ProjectService;
 import com.bupt.lams.utils.POIUtils;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.slf4j.Logger;
@@ -27,6 +29,8 @@ public class PlanController {
 
     @Resource
     PlanService planService;
+    @Resource
+    ProjectService projectService;
 
     @GetMapping("/get")
     public RespPageBean getPlanInfoByPage(PlanQueryCondition planQueryCondition, Date[] dateScope) {
@@ -57,6 +61,11 @@ public class PlanController {
         response.setStatus(200);
         response.setMsg("预算计划新增成功!");
         try {
+            Project project = projectService.getProjectById(plan.getProjectId());
+            Double inPlan = projectService.getInPlanById(plan.getProjectId());
+            if (plan.getFunding() + inPlan > project.getFunding()) {
+                return RespBean.error("新增项目失败！金额过大，超出项目剩余额度！");
+            }
             planService.addPlan(plan);
         } catch (Exception e) {
             logger.error("新增项目失败", e);
@@ -66,16 +75,11 @@ public class PlanController {
     }
 
     @PutMapping("/edit")
-    public RespBean updateProject(@RequestBody Plan plan) {
+    public RespBean updatePlan(@RequestBody Plan plan) {
         try {
-            Plan oldProject = planService.getPlanById(plan.getId());
-            Double used = oldProject.getFunding() - oldProject.getUnfulfilledQuota();
-            if (plan.getFunding() < used) {
-                return RespBean.error("更新失败!总额度小于已执行额度！");
-            }
             planService.updatePlan(plan);
         } catch (Exception e) {
-            return RespBean.error("更新失败!");
+            return RespBean.error("更新失败!" + e.getMessage());
         }
         return RespBean.ok("更新成功!");
     }

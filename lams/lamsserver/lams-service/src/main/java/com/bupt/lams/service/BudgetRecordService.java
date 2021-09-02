@@ -107,7 +107,7 @@ public class BudgetRecordService {
         Plan plan = planMapper.getPlanById(budgetRecord.getPlanId());
         if (plan.getUnfulfilledQuota() < funding) {
             logger.error("[executePlanItem]:执行金额过大！");
-            throw new Exception("[executePlanItem]:执行金额过大！");
+            throw new Exception("执行金额过大！");
         }
         plan.setUnfulfilledQuota(plan.getUnfulfilledQuota() - funding);
         plan.setExecuteRate(ComputeUtils.computeExecuteRate(plan.getFunding(), plan.getUnfulfilledQuota()));
@@ -116,7 +116,7 @@ public class BudgetRecordService {
         Project project = projectMapper.getProjectById(budgetRecord.getProjectId());
         if (project.getUnfulfilledQuota() < funding) {
             logger.error("[executePlanItem]:执行金额过大！");
-            throw new Exception("[executePlanItem]:执行金额过大！");
+            throw new Exception("执行金额过大！");
         }
         project.setUnfulfilledQuota(project.getUnfulfilledQuota() - funding);
         project.setExecuteRate(ComputeUtils.computeExecuteRate(project.getFunding(), project.getUnfulfilledQuota()));

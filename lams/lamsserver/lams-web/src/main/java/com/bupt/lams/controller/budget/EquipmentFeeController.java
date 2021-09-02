@@ -31,9 +31,9 @@ public class EquipmentFeeController {
             logger.error("设备费不能为空！");
             return RespBean.error("设备费不能为空！");
         }
-        if (equipmentFee.getUnitPrice() == null) {
-            logger.error("设备单价不能为空！");
-            return RespBean.error("设备单价不能为空！");
+        if (equipmentFee.getUnitPrice() == null && equipmentFee.getSubTotal() == null) {
+            logger.error("设备单价和合计不能同时为空！");
+            return RespBean.error("设备单价和合计不能同时为空！");
         }
         if (equipmentFee.getAmount() == null) {
             equipmentFee.setAmount(0);
@@ -44,6 +44,30 @@ public class EquipmentFeeController {
         } catch (Exception e) {
             logger.error("新增设备费失败", e);
             return RespBean.error("新增设备费失败！");
+        }
+        return response;
+    }
+
+    @PutMapping("/edit")
+    public RespBean editEquipmentFee(@RequestBody EquipmentFee equipmentFee) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (equipmentFee == null) {
+            logger.error("设备费不能为空！");
+            return RespBean.error("设备费不能为空！");
+        }
+        if (equipmentFee.getUnitPrice() == null && equipmentFee.getSubTotal() == null) {
+            logger.error("设备单价和合计不能同时为空！");
+            return RespBean.error("设备单价和合计不能同时为空！");
+        }
+        if (equipmentFee.getAmount() == null) {
+            equipmentFee.setAmount(0);
+        }
+        try {
+            equipmentService.update(equipmentFee);
+        } catch (Exception e) {
+            logger.error("编辑设备费失败", e);
+            return RespBean.error("编辑设备费失败！" + e.getMessage());
         }
         return response;
     }

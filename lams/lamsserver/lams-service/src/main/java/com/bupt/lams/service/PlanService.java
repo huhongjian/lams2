@@ -4,10 +4,8 @@ import com.bupt.lams.constants.BudgetConstant;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.dto.PlanQueryCondition;
 import com.bupt.lams.mapper.PlanMapper;
-import com.bupt.lams.model.LamsUser;
-import com.bupt.lams.model.Plan;
-import com.bupt.lams.model.PlanAndItem;
-import com.bupt.lams.model.RespPageBean;
+import com.bupt.lams.mapper.ProjectMapper;
+import com.bupt.lams.model.*;
 import com.bupt.lams.model.planItem.*;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.SpringContextUtil;
@@ -36,6 +34,8 @@ import java.util.Map;
 public class PlanService {
     @Resource
     PlanMapper planMapper;
+    @Resource
+    ProjectMapper projectMapper;
 
     @Resource
     EquipmentFeeService equipmentFeeService;
@@ -110,18 +110,32 @@ public class PlanService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void updatePlan(Plan plan) {
+    public void updatePlan(Plan plan) throws Exception {
+        updatePlanInfo(plan);
+        // 更新和预算明细的关联关系
+        planAndPlanItemService.updatePlanAndItemRelationByPlan(plan);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updatePlanInfo(Plan plan) throws Exception {
         Plan oldPlan = planMapper.getPlanById(plan.getId());
+        Double used = oldPlan.getFunding() - oldPlan.getUnfulfilledQuota();
+        if (plan.getFunding() < used) {
+            throw new Exception("总额度小于已执行额度！");
+        }
+        Project project = projectMapper.getProjectById(plan.getProjectId());
+        Double inPlan = planMapper.getTotalByProjectId(plan.getProjectId());
+        if (plan.getFunding() + inPlan > project.getFunding()) {
+            throw new Exception("金额过大，超出项目剩余额度！");
+        }
         // 如果总额有更新, 则更新相关数据
-        if (oldPlan.getFunding() != plan.getFunding()) {
+        if (!oldPlan.getFunding().equals(plan.getFunding())) {
             Double change = plan.getFunding() - oldPlan.getFunding();
             double quota = plan.getUnfulfilledQuota() + change;
             plan.setUnfulfilledQuota(quota);
             plan.setExecuteRate(ComputeUtils.computeExecuteRate(plan.getFunding(), quota));
         }
         planMapper.updatePlan(plan);
-        // 更新和预算明细的关联关系
-        planAndPlanItemService.updatePlanAndItemRelationByPlan(plan);
     }
 
     public List<Plan> getPlansByProjectIds(List<Long> pids) {

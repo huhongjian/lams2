@@ -55,8 +55,8 @@ public class PlanItem implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date updateTime;
 
-    private String planId;
-    private String projectId;
+    private Long planId;
+    private Long projectId;
     private String projectName;
     private String planName;
 
@@ -79,18 +79,5 @@ public class PlanItem implements Serializable {
     public void setItemType(Integer itemType) {
         this.itemType = itemType;
         this.itemTypeName = PlanItemTypeEnum.getNameByIndex(itemType);
-    }
-
-    public void setSubTotal(Double total) {
-        DecimalFormat df = new DecimalFormat("#.00");
-        this.subTotal = new Double(df.format(total.doubleValue()));
-    }
-
-    public Double getSubTotal() {
-        DecimalFormat df = new DecimalFormat("#.00");
-        if (this.subTotal == null) {
-            return null;
-        }
-        return new Double(df.format(this.subTotal.doubleValue()));
     }
 }

@@ -6,7 +6,7 @@
         :before-close="handleClose"
         width="80%">
       <div>
-        <el-form :model="budgetRecord" ref="executionForm">
+        <el-form :model="budgetRecord" :rules="rules" ref="executionForm">
           <el-row>
             <el-col :span="20">
               <el-form-item label="预算计划名称:" prop="planName">
@@ -23,13 +23,13 @@
           </el-row>
           <el-row>
             <el-col :span="8">
-              <el-form-item label="金额（万元）:" prop="planName">
+              <el-form-item label="金额（万元）:" prop="funding">
                 <el-input size="mini" style="width: 200px" prefix-icon="el-icon-edit"
                           v-model="budgetRecord.funding"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="执行时间:" prop="planName">
+              <el-form-item label="执行时间:" prop="executeDate">
                 <el-date-picker
                     v-model="budgetRecord.executeDate"
                     type="date"
@@ -79,6 +79,16 @@ export default {
         executeDate: "",
         createTime: "",
         updateTime: ""
+      },
+      rules: {
+        remark: [{required: true, message: '请输入预算执行信息备注说明', trigger: 'blur'}],
+        executeDate: [{required: true, message: '请选择预算执行时间', trigger: 'blur'}],
+        funding: [{
+          pattern: /^[+-]?(0|([1-9]\d*))(\.\d+)?$/,
+          required: true,
+          message: '请输入金额，参数必须为数字',
+          trigger: 'blur'
+        }],
       }
     }
   },

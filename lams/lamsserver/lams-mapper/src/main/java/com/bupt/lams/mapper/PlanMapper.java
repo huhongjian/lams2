@@ -24,6 +24,8 @@ public interface PlanMapper {
 
     Double getTotal();
 
+    Double getTotalByProjectId(Long id);
+
     List<Plan> getPlansByProjectIds(List<Long> pids);
 
     void deletePlans(List<Long> ids);

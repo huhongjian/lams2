@@ -99,10 +99,13 @@
                     label="备注">
                 </el-table-column>
                 <el-table-column
-                    width="80"
+                    width="100"
                     label="操作">
                   <template slot-scope="scope">
-                    <el-button type="danger" plain @click="deleteEquipmentFee(scope.row.id)">删除</el-button>
+                    <el-button type="primary" icon="el-icon-edit" circle
+                               @click="showEditView(scope.row)"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle
+                               @click="deleteEquipmentFee(scope.row.id)"></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -712,6 +715,7 @@
     </el-dialog>
     <NewPlanItem v-on:close="newPlanItemVisible = false"
                  v-on:handlePlanItemIds="handlePlanItemIds"
+                 :planId="plan.id"
                  :planItem="planItem"
                  :newPlanItemVisible="newPlanItemVisible" :title="planItemTitle"></NewPlanItem>
   </div>
@@ -896,6 +900,11 @@ export default {
     showAddView() {
       this.emptyItem();
       this.planItemTitle = '新增预算明细';
+      this.newPlanItemVisible = true;
+    },
+    showEditView(data) {
+      this.planItem = data;
+      this.planItemTitle = '更新预算明细';
       this.newPlanItemVisible = true;
     },
     handleClose() {

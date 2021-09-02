@@ -4,12 +4,16 @@ import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.BudgetRecordMapper;
 import com.bupt.lams.mapper.EquipmentFeeMapper;
+import com.bupt.lams.mapper.PlanMapper;
 import com.bupt.lams.model.LamsUser;
+import com.bupt.lams.model.Plan;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.EquipmentFee;
+import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,15 +32,21 @@ public class EquipmentFeeService {
     EquipmentFeeMapper equipmentFeeMapper;
     @Resource
     BudgetRecordMapper budgetRecordMapper;
+    @Resource
+    PlanMapper planMapper;
+    @Resource
+    PlanService planService;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addEquipmentFee(EquipmentFee equipmentFee) {
         equipmentFee.setItemType(PlanItemTypeEnum.EQUIPMENT.getIndex());
         equipmentFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
-        double subTotal = equipmentFee.getUnitPrice() * equipmentFee.getAmount();
-        equipmentFee.setSubTotal(subTotal);
-        equipmentFee.setUnfulfilledQuota(subTotal);
+        if (equipmentFee.getSubTotal() == null) {
+            double subTotal = equipmentFee.getUnitPrice() * equipmentFee.getAmount();
+            equipmentFee.setSubTotal(subTotal);
+        }
+        equipmentFee.setUnfulfilledQuota(equipmentFee.getSubTotal());
         equipmentFeeMapper.insertSelective(equipmentFee);
         return equipmentFee.getId();
     }
@@ -65,7 +75,34 @@ public class EquipmentFeeService {
         return TransferUtils.transToPlanItemData(new ArrayList<>(equipmentFeeList));
     }
 
-    public void update(EquipmentFee equipmentFee) {
+    @Transactional(rollbackFor = Exception.class)
+    public void update(EquipmentFee equipmentFee) throws Exception {
+        EquipmentFee old = equipmentFeeMapper.getById(equipmentFee.getId());
+        Double used = old.getSubTotal() - old.getUnfulfilledQuota();
+        if (equipmentFee.getSubTotal() == null) {
+            double subTotal = equipmentFee.getUnitPrice() * equipmentFee.getAmount();
+            equipmentFee.setSubTotal(subTotal);
+        }
+        if (equipmentFee.getSubTotal() < used) {
+            throw new Exception("总额度小于已执行额度！");
+        }
+        // 如果总额有更新, 则更新相关数据
+        if (old.getSubTotal() != equipmentFee.getSubTotal()) {
+            Double change = equipmentFee.getSubTotal() - old.getSubTotal();
+            double quota = equipmentFee.getUnfulfilledQuota() + change;
+            equipmentFee.setUnfulfilledQuota(quota);
+            equipmentFee.setExecuteRate(ComputeUtils.computeExecuteRate(equipmentFee.getSubTotal(), quota));
+
+            // 更新项目金额信息
+            Plan plan = planMapper.getPlanById(equipmentFee.getPlanId());
+            // 新建一个计划实例，解决mybatis缓存导致的问题
+            Plan newPlan = new Plan();
+            newPlan.setFunding(plan.getFunding() + change);
+            newPlan.setId(plan.getId());
+            newPlan.setProjectId(plan.getProjectId());
+            newPlan.setUnfulfilledQuota(plan.getUnfulfilledQuota());
+            planService.updatePlanInfo(newPlan);
+        }
         equipmentFeeMapper.update(equipmentFee);
     }
 

@@ -2027,6 +2027,9 @@ public class POIUtils {
                     record = new BudgetRecord();
                     for (int k = 0; k < physicalNumberOfCells; k++) {
                         HSSFCell cell = row.getCell(k);
+                        if (cell == null) {
+                            continue;
+                        }
                         switch (cell.getCellType()) {
                             case STRING:
                                 String cellValue = cell.getStringCellValue();
@@ -2252,7 +2255,7 @@ public class POIUtils {
         c3.setCellValue("预算计划名称");
         HSSFCell c4 = r0.createCell(4);
         c4.setCellStyle(headerStyle);
-        c4.setCellValue("预算科目");
+        c4.setCellValue("预算科目（请严格按照系统命名，不能有换行）");
         HSSFCell c5 = r0.createCell(5);
         c5.setCellStyle(headerStyle);
         c5.setCellValue("预算明细编号");
@@ -2261,7 +2264,7 @@ public class POIUtils {
         c6.setCellValue("金额（万元）");
         HSSFCell c7 = r0.createCell(7);
         c7.setCellStyle(headerStyle);
-        c7.setCellValue("是否报销");
+        c7.setCellValue("已报销/未报销");
         HSSFCell c8 = r0.createCell(8);
         c8.setCellStyle(headerStyle);
         c8.setCellValue("备注");

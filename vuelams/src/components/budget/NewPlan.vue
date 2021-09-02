@@ -135,9 +135,14 @@
                     label="材料用途">
                 </el-table-column>
                 <el-table-column
+                    prop="materialName"
+                    :show-overflow-tooltip="true"
+                    label="材料名称">
+                </el-table-column>
+                <el-table-column
                     prop="specification"
-                    label="规格"
-                    width="200">
+                    :show-overflow-tooltip="true"
+                    label="规格">
                 </el-table-column>
                 <el-table-column
                     prop="amount"
@@ -165,10 +170,13 @@
                     label="备注">
                 </el-table-column>
                 <el-table-column
-                    width="80"
+                    width="100"
                     label="操作">
                   <template slot-scope="scope">
-                    <el-button type="danger" plain @click="deleteMaterialFee(scope.row.id)">删除</el-button>
+                    <el-button type="primary" icon="el-icon-edit" circle
+                               @click="showEditView(scope.row)"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle
+                               @click="deleteMaterialFee(scope.row.id)"></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -220,10 +228,13 @@
                     label="备注">
                 </el-table-column>
                 <el-table-column
-                    width="80"
+                    width="100"
                     label="操作">
                   <template slot-scope="scope">
-                    <el-button type="danger" plain @click="deleteTestingFee(scope.row.id)">删除</el-button>
+                    <el-button type="primary" icon="el-icon-edit" circle
+                               @click="showEditView(scope.row)"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle
+                               @click="deleteTestingFee(scope.row.id)"></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -294,10 +305,13 @@
                     label="备注">
                 </el-table-column>
                 <el-table-column
-                    width="80"
+                    width="100"
                     label="操作">
                   <template slot-scope="scope">
-                    <el-button type="danger" plain @click="deleteMeetingFee(scope.row.id)">删除</el-button>
+                    <el-button type="primary" icon="el-icon-edit" circle
+                               @click="showEditView(scope.row)"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle
+                               @click="deleteMeetingFee(scope.row.id)"></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -370,10 +384,13 @@
                     label="备注">
                 </el-table-column>
                 <el-table-column
-                    width="80"
+                    width="100"
                     label="操作">
                   <template slot-scope="scope">
-                    <el-button type="danger" plain @click="deleteResearchFee(scope.row.id)">删除</el-button>
+                    <el-button type="primary" icon="el-icon-edit" circle
+                               @click="showEditView(scope.row)"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle
+                               @click="deleteResearchFee(scope.row.id)"></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -446,10 +463,13 @@
                     label="备注">
                 </el-table-column>
                 <el-table-column
-                    width="80"
+                    width="100"
                     label="操作">
                   <template slot-scope="scope">
-                    <el-button type="danger" plain @click="deleteAcademicFee(scope.row.id)">删除</el-button>
+                    <el-button type="primary" icon="el-icon-edit" circle
+                               @click="showEditView(scope.row)"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle
+                               @click="deleteAcademicFee(scope.row.id)"></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -487,10 +507,13 @@
                     label="备注">
                 </el-table-column>
                 <el-table-column
-                    width="80"
+                    width="100"
                     label="操作">
                   <template slot-scope="scope">
-                    <el-button type="danger" plain @click="deleteTransportationFee(scope.row.id)">删除</el-button>
+                    <el-button type="primary" icon="el-icon-edit" circle
+                               @click="showEditView(scope.row)"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle
+                               @click="deleteTransportationFee(scope.row.id)"></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -529,10 +552,13 @@
                     width="100">
                 </el-table-column>
                 <el-table-column
-                    width="80"
+                    width="100"
                     label="操作">
                   <template slot-scope="scope">
-                    <el-button type="danger" plain @click="deletePublishFee(scope.row.id)">删除</el-button>
+                    <el-button type="primary" icon="el-icon-edit" circle
+                               @click="showEditView(scope.row)"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle
+                               @click="deletePublishFee(scope.row.id)"></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -592,10 +618,13 @@
                     label="备注">
                 </el-table-column>
                 <el-table-column
-                    width="80"
+                    width="100"
                     label="操作">
                   <template slot-scope="scope">
-                    <el-button type="danger" plain @click="deletePublishFee(scope.row)">删除</el-button>
+                    <el-button type="primary" icon="el-icon-edit" circle
+                               @click="showEditView(scope.row)"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle
+                               @click="deletePublishFee(scope.row.id)"></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -654,10 +683,13 @@
                     label="备注">
                 </el-table-column>
                 <el-table-column
-                    width="80"
+                    width="100"
                     label="操作">
                   <template slot-scope="scope">
-                    <el-button type="danger" plain @click="deleteAdvisory(scope.row.id)">删除</el-button>
+                    <el-button type="primary" icon="el-icon-edit" circle
+                               @click="showEditView(scope.row)"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle
+                               @click="deleteAdvisory(scope.row.id)"></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -697,10 +729,13 @@
                     width="100">
                 </el-table-column>
                 <el-table-column
-                    width="80"
+                    width="100"
                     label="操作">
                   <template slot-scope="scope">
-                    <el-button type="danger" plain @click="deleteOtherFee(scope.row.id)">删除</el-button>
+                    <el-button type="primary" icon="el-icon-edit" circle
+                               @click="showEditView(scope.row)"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle
+                               @click="deleteOtherFee(scope.row.id)"></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -904,6 +939,11 @@ export default {
     },
     showEditView(data) {
       this.planItem = data;
+      let type = data.itemType;
+      if (data.itemType == 4 || data.itemType == 5 || data.itemType == 6 || data.itemType == 7) {
+        this.planItem.itemType = 4;
+        this.planItem.subType = type - 3;
+      }
       this.planItemTitle = '更新预算明细';
       this.newPlanItemVisible = true;
     },
@@ -939,13 +979,13 @@ export default {
         this.academicFeeList.push(id)
       } else if (itemType == 4 && subType == 4) {
         this.transportationFeeList.push(id)
-      } else if (itemType == 5) {
-        this.publishFeeList.push(id)
-      } else if (itemType == 6) {
-        this.paymentList.push(id)
-      } else if (itemType == 7) {
-        this.advisoryList.push(id)
       } else if (itemType == 8) {
+        this.publishFeeList.push(id)
+      } else if (itemType == 9) {
+        this.paymentList.push(id)
+      } else if (itemType == 10) {
+        this.advisoryList.push(id)
+      } else if (itemType == 11) {
         this.otherFeeList.push(id)
       }
       this.initPlanItemList()

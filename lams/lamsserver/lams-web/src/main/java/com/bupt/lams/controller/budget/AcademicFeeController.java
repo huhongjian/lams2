@@ -3,6 +3,7 @@ package com.bupt.lams.controller.budget;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.AcademicFee;
+import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.service.AcademicFeeService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -13,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 国内学术会议差旅费相关
+ * 学术会议差旅费相关
  */
 @RestController
 @RequestMapping("/planItem/academicFee")
@@ -28,19 +29,25 @@ public class AcademicFeeController {
         RespBean response = new RespBean();
         response.setStatus(200);
         if (academicFee == null) {
-            logger.error("国内学术会议差旅费不能为空！");
-            return RespBean.error("国内学术会议差旅费不能为空！");
+            logger.error("学术会议差旅费不能为空！");
+            return RespBean.error("学术会议差旅费不能为空！");
         }
         if (academicFee.getSubTotal() == null && (academicFee.getRegistrationFee() == null || academicFee.getTransFee() == null || academicFee.getAccommodationFee() == null)) {
-            logger.error("国内学术会议差旅费单价和合计不能同时为空！");
-            return RespBean.error("国内学术会议差旅费单价和合计不能同时为空！");
+            logger.error("学术会议差旅费单价和合计不能同时为空！");
+            return RespBean.error("学术会议差旅费单价和合计不能同时为空！");
+        }
+        if (academicFee.getTimes() == null) {
+            academicFee.setTimes(0);
+        }
+        if (academicFee.getDays() == null) {
+            academicFee.setDays(0);
         }
         try {
             Long id = academicFeeService.addAcademicFee(academicFee);
             response.setObj(id);
         } catch (Exception e) {
-            logger.error("新增国内学术会议差旅费失败", e);
-            return RespBean.error("新增国内学术会议差旅费失败！");
+            logger.error("新增学术会议差旅费失败", e);
+            return RespBean.error("新增学术会议差旅费失败！");
         }
         return response;
     }
@@ -60,8 +67,8 @@ public class AcademicFeeController {
             PlanItemData data = academicFeeService.getAcademicFeeListByIds(pids);
             response.setObj(data);
         } catch (Exception e) {
-            logger.error("获取国内学术会议差旅费信息失败", e);
-            return RespBean.error("获取国内学术会议差旅费信息失败！");
+            logger.error("获取学术会议差旅费信息失败", e);
+            return RespBean.error("获取学术会议差旅费信息失败！");
         }
         return response;
     }
@@ -87,8 +94,35 @@ public class AcademicFeeController {
             List<AcademicFee> data = academicFeeService.getRecommendFee();
             response.setObj(data);
         } catch (Exception e) {
-            logger.error("获取推荐国内学术会议差旅费信息失败", e);
-            return RespBean.error("获取推荐国内学术会议差旅费信息失败！");
+            logger.error("获取推荐学术会议差旅费信息失败", e);
+            return RespBean.error("获取推荐学术会议差旅费信息失败！");
+        }
+        return response;
+    }
+
+    @PutMapping("/edit")
+    public RespBean editAcademicFee(@RequestBody AcademicFee academicFee) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (academicFee == null) {
+            logger.error("学术会议差旅费不能为空！");
+            return RespBean.error("学术会议差旅费不能为空！");
+        }
+        if (academicFee.getSubTotal() == null && (academicFee.getRegistrationFee() == null || academicFee.getTransFee() == null || academicFee.getAccommodationFee() == null)) {
+            logger.error("学术会议差旅费单价和合计不能同时为空！");
+            return RespBean.error("学术会议差旅费单价和合计不能同时为空！");
+        }
+        if (academicFee.getTimes() == null) {
+            academicFee.setTimes(0);
+        }
+        if (academicFee.getDays() == null) {
+            academicFee.setDays(0);
+        }
+        try {
+            academicFeeService.update(academicFee);
+        } catch (Exception e) {
+            logger.error("编辑学术会议差旅费失败", e);
+            return RespBean.error("编辑学术会议差旅费失败！" + e.getMessage());
         }
         return response;
     }

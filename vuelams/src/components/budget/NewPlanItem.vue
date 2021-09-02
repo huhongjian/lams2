@@ -431,7 +431,7 @@
             </el-row>
           </el-form>
         </el-form>
-        <el-form v-if="planItem.itemType==5" :model="planItem" :rules="rules" ref="planItemForm">
+        <el-form v-if="planItem.itemType==8" :model="planItem" :rules="rules" ref="planItemForm">
           <el-row>
             <el-form-item label="类别:" prop="type" key="publish">
               <el-input size="mini" prefix-icon="el-icon-edit"
@@ -445,7 +445,7 @@
             </el-form-item>
           </el-row>
         </el-form>
-        <el-form v-if="planItem.itemType==6" :model="planItem" :rules="rules" ref="planItemForm">
+        <el-form v-if="planItem.itemType==9" :model="planItem" :rules="rules" ref="planItemForm">
           <el-row>
             <el-form-item label="人员种类:" prop="personnelType" key="payment">
               <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
@@ -459,6 +459,28 @@
             </el-form-item>
           </el-row>
           <el-row>
+            <el-col :span="15">
+              <el-form-item label="计价方式:" prop="count" key="material">
+                <el-select style="width: 200px" v-model="countType" clearable placeholder="请选择">
+                  <el-option
+                      v-for="item in countTypeList"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row v-if="countType==2">
+            <el-col :span="6">
+              <el-form-item label="合计（万元）:" prop="subTotal" key="material">
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                          v-model="planItem.subTotal"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row v-if="countType==1">
             <el-col :span="8">
               <el-form-item label="人数:" prop="amount" key="payment">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
@@ -479,7 +501,7 @@
             </el-col>
           </el-row>
         </el-form>
-        <el-form v-if="planItem.itemType==7" :model="planItem" :rules="rules" ref="planItemForm">
+        <el-form v-if="planItem.itemType==10" :model="planItem" :rules="rules" ref="planItemForm">
           <el-row>
             <el-form-item label="咨询内容:" prop="content" key="advisory">
               <el-input size="mini" prefix-icon="el-icon-edit"
@@ -493,6 +515,28 @@
             </el-form-item>
           </el-row>
           <el-row>
+            <el-col :span="15">
+              <el-form-item label="计价方式:" prop="count" key="material">
+                <el-select style="width: 200px" v-model="countType" clearable placeholder="请选择">
+                  <el-option
+                      v-for="item in countTypeList"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row v-if="countType==2">
+            <el-col :span="6">
+              <el-form-item label="合计（万元）:" prop="subTotal" key="material">
+                <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
+                          v-model="planItem.subTotal"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row v-if="countType==1">
             <el-col :span="6">
               <el-form-item label="标准（元/天）:" prop="standard" key="advisory">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
@@ -515,7 +559,7 @@
           <el-row>
           </el-row>
         </el-form>
-        <el-form v-if="planItem.itemType==8" :model="planItem" :rules="rules" ref="planItemForm">
+        <el-form v-if="planItem.itemType==11" :model="planItem" :rules="rules" ref="planItemForm">
           <el-row>
             <el-form-item label="类别:" prop="type" key="other">
               <el-input size="mini" prefix-icon="el-icon-edit"
@@ -581,19 +625,19 @@ export default {
           name: '差旅/会议/国际合作与交流费'
         },
         {
-          id: 5,
+          id: 8,
           name: '出版/文献/信息传播/知识产权事务费'
         },
         {
-          id: 6,
+          id: 9,
           name: '劳务费'
         },
         {
-          id: 7,
+          id: 10,
           name: '专家咨询费'
         },
         {
-          id: 8,
+          id: 11,
           name: '其他支出'
         },
       ],
@@ -705,13 +749,13 @@ export default {
         this.itemUrl = 'academicFee'
       } else if (this.planItem.itemType == 4 && this.planItem.subType == 4) {
         this.itemUrl = 'transportationFee'
-      } else if (this.planItem.itemType == 5) {
-        this.itemUrl = 'publishFee'
-      } else if (this.planItem.itemType == 6) {
-        this.itemUrl = 'payment'
-      } else if (this.planItem.itemType == 7) {
-        this.itemUrl = 'advisory'
       } else if (this.planItem.itemType == 8) {
+        this.itemUrl = 'publishFee'
+      } else if (this.planItem.itemType == 9) {
+        this.itemUrl = 'payment'
+      } else if (this.planItem.itemType == 10) {
+        this.itemUrl = 'advisory'
+      } else if (this.planItem.itemType == 11) {
         this.itemUrl = 'otherFee'
       }
     },

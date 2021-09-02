@@ -2,6 +2,7 @@ package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
+import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.TestingFee;
 import com.bupt.lams.service.TestingFeeService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -31,13 +32,12 @@ public class TestingFeeController {
             logger.error("测试化验加工费不能为空！");
             return RespBean.error("测试化验加工费不能为空！");
         }
-        if (testingFee.getUnitPrice() == null) {
-            logger.error("单价不能为空！");
-            return RespBean.error("单价不能为空！");
+        if (testingFee.getUnitPrice() == null && testingFee.getSubTotal() == null) {
+            logger.error("单价和合计不能同时为空！");
+            return RespBean.error("单价和合计不能同时为空！");
         }
         if (testingFee.getTimes() == null) {
-            logger.error("次数不能为空！");
-            return RespBean.error("次数不能为空！");
+            testingFee.setTimes(0);
         }
         try {
             Long id = testingFeeService.addTestingFee(testingFee);
@@ -93,6 +93,30 @@ public class TestingFeeController {
         } catch (Exception e) {
             logger.error("获取推荐测试化验加工费信息失败", e);
             return RespBean.error("获取推荐测试化验加工费信息失败！");
+        }
+        return response;
+    }
+
+    @PutMapping("/edit")
+    public RespBean editTestingFee(@RequestBody TestingFee testingFee) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (testingFee == null) {
+            logger.error("测试化验加工费不能为空！");
+            return RespBean.error("测试化验加工费不能为空！");
+        }
+        if (testingFee.getUnitPrice() == null && testingFee.getSubTotal() == null) {
+            logger.error("单价和合计不能同时为空！");
+            return RespBean.error("单价和合计不能同时为空！");
+        }
+        if (testingFee.getTimes() == null) {
+            testingFee.setTimes(0);
+        }
+        try {
+            testingFeeService.update(testingFee);
+        } catch (Exception e) {
+            logger.error("编辑测试化验加工费失败", e);
+            return RespBean.error("编辑测试化验加工费失败！" + e.getMessage());
         }
         return response;
     }

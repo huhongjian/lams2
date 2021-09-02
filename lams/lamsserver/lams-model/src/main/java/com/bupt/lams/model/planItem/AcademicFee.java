@@ -6,7 +6,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 国内学术会议差旅费pojo
+ * 学术会议差旅费pojo
  */
 @Data
 public class AcademicFee extends PlanItem implements Serializable {

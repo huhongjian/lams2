@@ -2,6 +2,7 @@ package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
+import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.OtherFee;
 import com.bupt.lams.service.OtherFeeService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -89,6 +90,27 @@ public class OtherFeeController {
         } catch (Exception e) {
             logger.error("获取推荐其他支出信息失败", e);
             return RespBean.error("获取推荐其他支出信息失败！");
+        }
+        return response;
+    }
+
+    @PutMapping("/edit")
+    public RespBean editOtherFee(@RequestBody OtherFee otherFee) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (otherFee == null) {
+            logger.error("其他支出不能为空！");
+            return RespBean.error("其他支出不能为空！");
+        }
+        if (otherFee.getSubTotal() == null) {
+            logger.error("合计不能为空！");
+            return RespBean.error("合计不能为空！");
+        }
+        try {
+            otherFeeService.update(otherFee);
+        } catch (Exception e) {
+            logger.error("编辑其他支出失败", e);
+            return RespBean.error("编辑其他支出失败！" + e.getMessage());
         }
         return response;
     }

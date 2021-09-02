@@ -29,6 +29,8 @@ public class PublishFeeService {
     PublishFeeMapper publishFeeMapper;
     @Resource
     BudgetRecordMapper budgetRecordMapper;
+    @Resource
+    PlanService planService;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addPublishFee(PublishFee publishFee) {
@@ -68,7 +70,25 @@ public class PublishFeeService {
         return publishFeeMapper.getPublishFeeByIds(pids);
     }
 
-    public void update(PublishFee publishFee) {
+
+    @Transactional(rollbackFor = Exception.class)
+    public void update(PublishFee publishFee) throws Exception{
+        publishFee.setItemType(PlanItemTypeEnum.PUBLISH.getIndex());
+        PublishFee old = publishFeeMapper.getById(publishFee.getId());
+        Double used = old.getSubTotal() - old.getUnfulfilledQuota();
+        if (publishFee.getSubTotal() < used) {
+            throw new Exception("总额度小于已执行额度！");
+        }
+        // 如果总额有更新, 则更新相关数据
+        if (old.getSubTotal() != publishFee.getSubTotal()) {
+            Double change = publishFee.getSubTotal() - old.getSubTotal();
+            double quota = publishFee.getUnfulfilledQuota() + change;
+            publishFee.setUnfulfilledQuota(quota);
+            publishFee.setExecuteRate(ComputeUtils.computeExecuteRate(publishFee.getSubTotal(), quota));
+
+            // 更新项目金额信息
+            planService.updatePlanFunding(publishFee.getPlanId(), change);
+        }
         publishFeeMapper.update(publishFee);
     }
 

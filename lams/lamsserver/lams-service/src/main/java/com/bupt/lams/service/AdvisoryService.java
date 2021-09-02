@@ -29,14 +29,18 @@ public class AdvisoryService {
     AdvisoryMapper advisoryMapper;
     @Resource
     BudgetRecordMapper budgetRecordMapper;
+    @Resource
+    PlanService planService;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addAdvisory(Advisory advisory) {
         advisory.setItemType(PlanItemTypeEnum.ADVISORY.getIndex());
         advisory.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
-        Double total = advisory.getStandard() * advisory.getAmount() * advisory.getDays() / 10000D;
-        advisory.setSubTotal(total);
+        if (advisory.getSubTotal() == null) {
+            Double total = advisory.getStandard() * advisory.getAmount() * advisory.getDays() / 10000D;
+            advisory.setSubTotal(total);
+        }
         advisory.setUnfulfilledQuota(advisory.getSubTotal());
         advisory.setExecuteRate(ComputeUtils.computeExecuteRate(advisory.getSubTotal(), advisory.getUnfulfilledQuota()));
         advisoryMapper.insertSelective(advisory);
@@ -71,7 +75,28 @@ public class AdvisoryService {
         return advisoryMapper.getAdvisoryByIds(ids);
     }
 
-    public void update(Advisory advisory) {
+    @Transactional(rollbackFor = Exception.class)
+    public void update(Advisory advisory) throws Exception {
+        advisory.setItemType(PlanItemTypeEnum.ADVISORY.getIndex());
+        Advisory old = advisoryMapper.getById(advisory.getId());
+        Double used = old.getSubTotal() - old.getUnfulfilledQuota();
+        if (advisory.getSubTotal() == null) {
+            double subTotal = advisory.getStandard() * advisory.getAmount() * advisory.getDays() / 10000D;
+            advisory.setSubTotal(subTotal);
+        }
+        if (advisory.getSubTotal() < used) {
+            throw new Exception("总额度小于已执行额度！");
+        }
+        // 如果总额有更新, 则更新相关数据
+        if (old.getSubTotal() != advisory.getSubTotal()) {
+            Double change = advisory.getSubTotal() - old.getSubTotal();
+            double quota = advisory.getUnfulfilledQuota() + change;
+            advisory.setUnfulfilledQuota(quota);
+            advisory.setExecuteRate(ComputeUtils.computeExecuteRate(advisory.getSubTotal(), quota));
+
+            // 更新项目金额信息
+            planService.updatePlanFunding(advisory.getPlanId(), change);
+        }
         advisoryMapper.update(advisory);
     }
 

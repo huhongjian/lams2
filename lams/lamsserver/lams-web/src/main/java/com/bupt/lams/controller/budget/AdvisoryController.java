@@ -3,6 +3,7 @@ package com.bupt.lams.controller.budget;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
 import com.bupt.lams.model.planItem.Advisory;
+import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.service.AdvisoryService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -31,9 +32,9 @@ public class AdvisoryController {
             logger.error("专家咨询费不能为空！");
             return RespBean.error("专家咨询费不能为空！");
         }
-        if (advisory.getStandard() == null || advisory.getAmount() == null || advisory.getDays() == null) {
-            logger.error("专家咨询费标准、人数、天数等信息不能为空！");
-            return RespBean.error("专家咨询费标准、人数、天数等信息不能为空！");
+        if (advisory.getSubTotal() == null && (advisory.getStandard() == null || advisory.getAmount() == null || advisory.getDays() == null)) {
+            logger.error("计价方式不能同时为空");
+            return RespBean.error("计价方式不能同时为空");
         }
         try {
             Long id = advisoryService.addAdvisory(advisory);
@@ -89,6 +90,27 @@ public class AdvisoryController {
         } catch (Exception e) {
             logger.error("获取推荐专家咨询费信息失败", e);
             return RespBean.error("获取推荐专家咨询费信息失败！");
+        }
+        return response;
+    }
+
+    @PutMapping("/edit")
+    public RespBean editAdvisory(@RequestBody Advisory advisory) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (advisory == null) {
+            logger.error("专家咨询费不能为空！");
+            return RespBean.error("专家咨询费不能为空！");
+        }
+        if (advisory.getSubTotal() == null && (advisory.getStandard() == null || advisory.getAmount() == null || advisory.getDays() == null)) {
+            logger.error("计价方式不能同时为空");
+            return RespBean.error("计价方式不能同时为空");
+        }
+        try {
+            advisoryService.update(advisory);
+        } catch (Exception e) {
+            logger.error("专家咨询费失败", e);
+            return RespBean.error("专家咨询费失败！" + e.getMessage());
         }
         return response;
     }

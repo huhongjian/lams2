@@ -2,6 +2,7 @@ package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
+import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.ResearchFee;
 import com.bupt.lams.service.ResearchFeeService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -31,9 +32,9 @@ public class ResearchFeeController {
             logger.error("课题调研差旅费不能为空！");
             return RespBean.error("课题调研差旅费不能为空！");
         }
-        if (researchFee.getTimes() == null || researchFee.getAccommodationFee() == null || researchFee.getTransFee() == null || researchFee.getOtherFee() == null || researchFee.getDays() == null) {
-            logger.error("费用、天数、人次等信息不能为空！");
-            return RespBean.error("费用、天数、人次等信息不能为空！");
+        if (researchFee.getSubTotal() == null && (researchFee.getTimes() == null || researchFee.getAccommodationFee() == null || researchFee.getTransFee() == null || researchFee.getOtherFee() == null || researchFee.getDays() == null)) {
+            logger.error("计价方式不能同时为空");
+            return RespBean.error("计价方式不能同时为空");
         }
         try {
             Long id = researchFeeService.addResearchFee(researchFee);
@@ -89,6 +90,27 @@ public class ResearchFeeController {
         } catch (Exception e) {
             logger.error("获取推荐课题调研差旅费信息失败", e);
             return RespBean.error("获取推荐课题调研差旅费信息失败！");
+        }
+        return response;
+    }
+
+    @PutMapping("/edit")
+    public RespBean editEquipmentFee(@RequestBody ResearchFee researchFee) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (researchFee == null) {
+            logger.error("课题调研差旅费不能为空！");
+            return RespBean.error("课题调研差旅费不能为空！");
+        }
+        if (researchFee.getSubTotal() == null && (researchFee.getTimes() == null || researchFee.getAccommodationFee() == null || researchFee.getTransFee() == null || researchFee.getOtherFee() == null || researchFee.getDays() == null)) {
+            logger.error("计价方式不能同时为空");
+            return RespBean.error("计价方式不能同时为空");
+        }
+        try {
+            researchFeeService.update(researchFee);
+        } catch (Exception e) {
+            logger.error("编辑课题调研差旅费失败", e);
+            return RespBean.error("编辑课题调研差旅费失败！" + e.getMessage());
         }
         return response;
     }

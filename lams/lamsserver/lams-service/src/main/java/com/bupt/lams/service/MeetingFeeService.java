@@ -29,14 +29,18 @@ public class MeetingFeeService {
     MeetingFeeMapper meetingFeeMapper;
     @Resource
     BudgetRecordMapper budgetRecordMapper;
+    @Resource
+    PlanService planService;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addMeetingFee(MeetingFee meetingFee) {
         meetingFee.setItemType(PlanItemTypeEnum.MEETING.getIndex());
         meetingFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
-        Double total = (meetingFee.getMeal() + meetingFee.getOtherCost()) * meetingFee.getDays() * meetingFee.getAmount() * meetingFee.getMeetingNum() / 10000D;
-        meetingFee.setSubTotal(total);
+        if (meetingFee.getSubTotal() == null) {
+            Double total = (meetingFee.getMeal() + meetingFee.getOtherCost()) * meetingFee.getDays() * meetingFee.getAmount() * meetingFee.getMeetingNum() / 10000D;
+            meetingFee.setSubTotal(total);
+        }
         meetingFee.setUnfulfilledQuota(meetingFee.getSubTotal());
         meetingFee.setExecuteRate(ComputeUtils.computeExecuteRate(meetingFee.getSubTotal(), meetingFee.getUnfulfilledQuota()));
         meetingFeeMapper.insertSelective(meetingFee);
@@ -71,7 +75,29 @@ public class MeetingFeeService {
         return meetingFeeMapper.getMeetingFeeByIds(pids);
     }
 
-    public void update(MeetingFee meetingFee) {
+
+    @Transactional(rollbackFor = Exception.class)
+    public void update(MeetingFee meetingFee) throws Exception {
+        meetingFee.setItemType(PlanItemTypeEnum.MEETING.getIndex());
+        MeetingFee old = meetingFeeMapper.getById(meetingFee.getId());
+        Double used = old.getSubTotal() - old.getUnfulfilledQuota();
+        if (meetingFee.getSubTotal() == null) {
+            double subTotal = (meetingFee.getMeal() + meetingFee.getOtherCost()) * meetingFee.getDays() * meetingFee.getAmount() * meetingFee.getMeetingNum() / 10000D;
+            meetingFee.setSubTotal(subTotal);
+        }
+        if (meetingFee.getSubTotal() < used) {
+            throw new Exception("总额度小于已执行额度！");
+        }
+        // 如果总额有更新, 则更新相关数据
+        if (old.getSubTotal() != meetingFee.getSubTotal()) {
+            Double change = meetingFee.getSubTotal() - old.getSubTotal();
+            double quota = meetingFee.getUnfulfilledQuota() + change;
+            meetingFee.setUnfulfilledQuota(quota);
+            meetingFee.setExecuteRate(ComputeUtils.computeExecuteRate(meetingFee.getSubTotal(), quota));
+
+            // 更新项目金额信息
+            planService.updatePlanFunding(meetingFee.getPlanId(), change);
+        }
         meetingFeeMapper.update(meetingFee);
     }
 

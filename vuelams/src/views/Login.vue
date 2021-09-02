@@ -42,7 +42,7 @@ export default {
       vcUrl: '/verifyCode?time=' + new Date(),
       loginForm: {
         username: 'admin',
-        password: '123',
+        password: '',
         code: ''
       },
       checked: true,

@@ -29,6 +29,8 @@ public class TestingFeeService {
     TestingFeeMapper testingFeeMapper;
     @Resource
     BudgetRecordMapper budgetRecordMapper;
+    @Resource
+    PlanService planService;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addTestingFee(TestingFee testingFee) {
@@ -72,7 +74,28 @@ public class TestingFeeService {
         return testingFeeMapper.getTestingFeeByIds(pids);
     }
 
-    public void update(TestingFee testingFee) {
+
+    @Transactional(rollbackFor = Exception.class)
+    public void update(TestingFee testingFee) throws Exception {
+        testingFee.setItemType(PlanItemTypeEnum.TESTING.getIndex());
+        TestingFee old = testingFeeMapper.getById(testingFee.getId());
+        Double used = old.getSubTotal() - old.getUnfulfilledQuota();
+        if (testingFee.getSubTotal() == null) {
+            testingFee.setSubTotal(testingFee.getUnitPrice() * testingFee.getTimes());
+        }
+        if (testingFee.getSubTotal() < used) {
+            throw new Exception("总额度小于已执行额度！");
+        }
+        // 如果总额有更新, 则更新相关数据
+        if (old.getSubTotal() != testingFee.getSubTotal()) {
+            Double change = testingFee.getSubTotal() - old.getSubTotal();
+            double quota = testingFee.getUnfulfilledQuota() + change;
+            testingFee.setUnfulfilledQuota(quota);
+            testingFee.setExecuteRate(ComputeUtils.computeExecuteRate(testingFee.getSubTotal(), quota));
+
+            // 更新项目金额信息
+            planService.updatePlanFunding(testingFee.getPlanId(), change);
+        }
         testingFeeMapper.update(testingFee);
     }
 

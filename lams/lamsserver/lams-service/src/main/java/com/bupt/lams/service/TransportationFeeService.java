@@ -29,6 +29,8 @@ public class TransportationFeeService {
     TransportationFeeMapper transportationFeeMapper;
     @Resource
     BudgetRecordMapper budgetRecordMapper;
+    @Resource
+    PlanService planService;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addTransportationFee(PlanItem transportationFee) {
@@ -68,8 +70,26 @@ public class TransportationFeeService {
         return transportationFeeMapper.getTransportationFeeByIds(pids);
     }
 
-    public void update(PlanItem planItem) {
-        transportationFeeMapper.update(planItem);
+
+    @Transactional(rollbackFor = Exception.class)
+    public void update(PlanItem transFee) throws Exception {
+        transFee.setItemType(PlanItemTypeEnum.TRANSPORTATION.getIndex());
+        PlanItem old = transportationFeeMapper.getById(transFee.getId());
+        Double used = old.getSubTotal() - old.getUnfulfilledQuota();
+        if (transFee.getSubTotal() < used) {
+            throw new Exception("总额度小于已执行额度！");
+        }
+        // 如果总额有更新, 则更新相关数据
+        if (old.getSubTotal() != transFee.getSubTotal()) {
+            Double change = transFee.getSubTotal() - old.getSubTotal();
+            double quota = transFee.getUnfulfilledQuota() + change;
+            transFee.setUnfulfilledQuota(quota);
+            transFee.setExecuteRate(ComputeUtils.computeExecuteRate(transFee.getSubTotal(), quota));
+
+            // 更新项目金额信息
+            planService.updatePlanFunding(transFee.getPlanId(), change);
+        }
+        transportationFeeMapper.update(transFee);
     }
 
     public PlanItem getById(Long id) {

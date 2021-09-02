@@ -29,6 +29,8 @@ public class OtherFeeService {
     OtherFeeMapper otherFeeMapper;
     @Resource
     BudgetRecordMapper budgetRecordMapper;
+    @Resource
+    PlanService planService;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addOtherFee(OtherFee otherFee) {
@@ -68,7 +70,25 @@ public class OtherFeeService {
         return otherFeeMapper.getOtherFeeByIds(pids);
     }
 
-    public void update(OtherFee otherFee) {
+
+    @Transactional(rollbackFor = Exception.class)
+    public void update(OtherFee otherFee) throws Exception{
+        otherFee.setItemType(PlanItemTypeEnum.OTHERS.getIndex());
+        OtherFee old = otherFeeMapper.getById(otherFee.getId());
+        Double used = old.getSubTotal() - old.getUnfulfilledQuota();
+        if (otherFee.getSubTotal() < used) {
+            throw new Exception("总额度小于已执行额度！");
+        }
+        // 如果总额有更新, 则更新相关数据
+        if (old.getSubTotal() != otherFee.getSubTotal()) {
+            Double change = otherFee.getSubTotal() - old.getSubTotal();
+            double quota = otherFee.getUnfulfilledQuota() + change;
+            otherFee.setUnfulfilledQuota(quota);
+            otherFee.setExecuteRate(ComputeUtils.computeExecuteRate(otherFee.getSubTotal(), quota));
+
+            // 更新项目金额信息
+            planService.updatePlanFunding(otherFee.getPlanId(), change);
+        }
         otherFeeMapper.update(otherFee);
     }
 

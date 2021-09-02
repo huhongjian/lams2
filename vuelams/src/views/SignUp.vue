@@ -68,10 +68,10 @@ export default {
         checkPass: [{validator: validatePass2, trigger: 'blur'}]
       },
       signInForm: {
-        name: 'hhj',
-        username: '296@qq.com',
-        password: '123',
-        checkPass: '123'
+        name: '',
+        username: '',
+        password: '',
+        checkPass: ''
       },
     }
   },

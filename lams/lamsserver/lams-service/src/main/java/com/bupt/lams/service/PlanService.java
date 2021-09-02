@@ -138,6 +138,20 @@ public class PlanService {
         planMapper.updatePlan(plan);
     }
 
+    public void updatePlanFunding(Long planId, Double change) throws Exception {
+        Plan plan = planMapper.getPlanById(planId);
+        if (plan == null) {
+            return;
+        }
+        // 新建一个计划实例，解决mybatis缓存导致的问题
+        Plan newPlan = new Plan();
+        newPlan.setFunding(plan.getFunding() + change);
+        newPlan.setId(plan.getId());
+        newPlan.setProjectId(plan.getProjectId());
+        newPlan.setUnfulfilledQuota(plan.getUnfulfilledQuota());
+        updatePlanInfo(newPlan);
+    }
+
     public List<Plan> getPlansByProjectIds(List<Long> pids) {
         return planMapper.getPlansByProjectIds(pids);
     }
@@ -233,7 +247,7 @@ public class PlanService {
             planItemDataMap.put("researchFeeData", researchFeeData);
             total += researchFeeData.getFunding();
 
-            // 获取国内学术会议差旅费表单
+            // 获取学术会议差旅费表单
             PlanItemData academicFeeData = getAcademicFeeData(workbook);
             planItemDataMap.put("academicFeeData", academicFeeData);
             total += academicFeeData.getFunding();

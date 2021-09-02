@@ -2,6 +2,7 @@ package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
+import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.MeetingFee;
 import com.bupt.lams.service.MeetingFeeService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -31,9 +32,9 @@ public class MeetingFeeController {
             logger.error("会议费不能为空！");
             return RespBean.error("会议费不能为空！");
         }
-        if (meetingFee.getMeal() == null || meetingFee.getOtherCost() == null || meetingFee.getDays() == null || meetingFee.getAmount() == null || meetingFee.getMeetingNum() == null) {
-            logger.error("费用和数量不能为空！");
-            return RespBean.error("费用和数量不能为空！");
+        if (meetingFee.getSubTotal() == null && (meetingFee.getMeal() == null || meetingFee.getOtherCost() == null || meetingFee.getDays() == null || meetingFee.getAmount() == null || meetingFee.getMeetingNum() == null)) {
+            logger.error("计价方式不能同时为空！");
+            return RespBean.error("计价方式不能同时为空！");
         }
         try {
             Long id = meetingFeeService.addMeetingFee(meetingFee);
@@ -89,6 +90,27 @@ public class MeetingFeeController {
         } catch (Exception e) {
             logger.error("获取推荐会议费信息失败", e);
             return RespBean.error("获取推荐会议费信息失败！");
+        }
+        return response;
+    }
+
+    @PutMapping("/edit")
+    public RespBean editMeetingFee(@RequestBody MeetingFee meetingFee) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (meetingFee == null) {
+            logger.error("会议费不能为空！");
+            return RespBean.error("会议费不能为空！");
+        }
+        if (meetingFee.getSubTotal() == null && (meetingFee.getMeal() == null || meetingFee.getOtherCost() == null || meetingFee.getDays() == null || meetingFee.getAmount() == null || meetingFee.getMeetingNum() == null)) {
+            logger.error("计价方式不能同时为空！");
+            return RespBean.error("计价方式不能同时为空！");
+        }
+        try {
+            meetingFeeService.update(meetingFee);
+        } catch (Exception e) {
+            logger.error("编辑会议费失败", e);
+            return RespBean.error("编辑会议费失败！" + e.getMessage());
         }
         return response;
     }

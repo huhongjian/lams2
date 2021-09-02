@@ -2,6 +2,7 @@ package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
+import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.PublishFee;
 import com.bupt.lams.service.PublishFeeService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -89,6 +90,27 @@ public class PublishFeeController {
         } catch (Exception e) {
             logger.error("获取推荐出版/文献/信息传播/知识产权事务费信息失败", e);
             return RespBean.error("获取推荐出版/文献/信息传播/知识产权事务费信息失败！");
+        }
+        return response;
+    }
+
+    @PutMapping("/edit")
+    public RespBean editPublishFee(@RequestBody PublishFee publishFee) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (publishFee == null) {
+            logger.error("出版/文献/信息传播/知识产权事务费不能为空！");
+            return RespBean.error("出版/文献/信息传播/知识产权事务费不能为空！");
+        }
+        if (publishFee.getSubTotal() == null) {
+            logger.error("合计不能为空！");
+            return RespBean.error("合计不能为空！");
+        }
+        try {
+            publishFeeService.update(publishFee);
+        } catch (Exception e) {
+            logger.error("编辑出版/文献/信息传播/知识产权事务费失败", e);
+            return RespBean.error("编辑出版/文献/信息传播/知识产权事务费失败！" + e.getMessage());
         }
         return response;
     }

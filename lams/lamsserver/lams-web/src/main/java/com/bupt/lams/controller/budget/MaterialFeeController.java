@@ -2,6 +2,7 @@ package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
+import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.MaterialFee;
 import com.bupt.lams.service.MaterialFeeService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -32,8 +33,8 @@ public class MaterialFeeController {
             return RespBean.error("材料费不能为空！");
         }
         if (materialFee.getUnitPrice() == null && materialFee.getSubTotal() == null) {
-            logger.error("材料单价和合计不能同时为空！");
-            return RespBean.error("材料单价和合计不能同时为空！");
+            logger.error("材料费单价和合计不能同时为空！");
+            return RespBean.error("材料费单价和合计不能同时为空！");
         }
         if (materialFee.getAmount() == null) {
             materialFee.setAmount(0);
@@ -92,6 +93,30 @@ public class MaterialFeeController {
         } catch (Exception e) {
             logger.error("获取推荐材料费信息失败", e);
             return RespBean.error("获取推荐材料费信息失败！");
+        }
+        return response;
+    }
+
+    @PutMapping("/edit")
+    public RespBean editMaterialFee(@RequestBody MaterialFee materialFee) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (materialFee == null) {
+            logger.error("材料费不能为空！");
+            return RespBean.error("材料费不能为空！");
+        }
+        if (materialFee.getUnitPrice() == null && materialFee.getSubTotal() == null) {
+            logger.error("材料费单价和合计不能同时为空！");
+            return RespBean.error("材料费单价和合计不能同时为空！");
+        }
+        if (materialFee.getAmount() == null) {
+            materialFee.setAmount(0);
+        }
+        try {
+            materialFeeService.update(materialFee);
+        } catch (Exception e) {
+            logger.error("编辑材料费失败", e);
+            return RespBean.error("编辑材料费失败！" + e.getMessage());
         }
         return response;
     }

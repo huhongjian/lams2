@@ -29,14 +29,18 @@ public class PaymentService {
     PaymentMapper paymentMapper;
     @Resource
     BudgetRecordMapper budgetRecordMapper;
+    @Resource
+    PlanService planService;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addPayment(Payment payment) {
         payment.setItemType(PlanItemTypeEnum.PAYMENT.getIndex());
         payment.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
-        Double total = payment.getStandard() * payment.getAmount() * payment.getHours() / 10000D;
-        payment.setSubTotal(total);
+        if (payment.getSubTotal() == null) {
+            Double total = payment.getStandard() * payment.getAmount() * payment.getHours() / 10000D;
+            payment.setSubTotal(total);
+        }
         payment.setUnfulfilledQuota(payment.getSubTotal());
         payment.setExecuteRate(ComputeUtils.computeExecuteRate(payment.getSubTotal(), payment.getUnfulfilledQuota()));
         paymentMapper.insertSelective(payment);
@@ -71,8 +75,30 @@ public class PaymentService {
         return paymentMapper.getPaymentByIds(pids);
     }
 
-    public void update(Payment equipmentFee) {
-        paymentMapper.update(equipmentFee);
+
+    @Transactional(rollbackFor = Exception.class)
+    public void update(Payment payment) throws Exception {
+        payment.setItemType(PlanItemTypeEnum.PAYMENT.getIndex());
+        Payment old = paymentMapper.getById(payment.getId());
+        Double used = old.getSubTotal() - old.getUnfulfilledQuota();
+        if (payment.getSubTotal() == null) {
+            double subTotal = payment.getStandard() * payment.getAmount() * payment.getHours() / 10000D;
+            payment.setSubTotal(subTotal);
+        }
+        if (payment.getSubTotal() < used) {
+            throw new Exception("总额度小于已执行额度！");
+        }
+        // 如果总额有更新, 则更新相关数据
+        if (old.getSubTotal() != payment.getSubTotal()) {
+            Double change = payment.getSubTotal() - old.getSubTotal();
+            double quota = payment.getUnfulfilledQuota() + change;
+            payment.setUnfulfilledQuota(quota);
+            payment.setExecuteRate(ComputeUtils.computeExecuteRate(payment.getSubTotal(), quota));
+
+            // 更新项目金额信息
+            planService.updatePlanFunding(payment.getPlanId(), change);
+        }
+        paymentMapper.update(payment);
     }
 
     public Payment getById(Long id) {

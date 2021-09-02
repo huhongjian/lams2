@@ -9,7 +9,7 @@ public enum PlanItemTypeEnum {
     TESTING("测试化验加工费", 3),
     MEETING("会议费", 4),
     RESEARCH("课题调研差旅费", 5),
-    ACADEMIC("国内学术会议差旅费", 6),
+    ACADEMIC("学术会议差旅费", 6),
     TRANSPORTATION("北京市内交通费", 7),
     PUBLISH("出版/文献/信息传播/知识产权事务费", 8),
     PAYMENT("劳务费", 9),

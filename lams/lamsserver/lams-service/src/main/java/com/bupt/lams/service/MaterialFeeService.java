@@ -29,6 +29,8 @@ public class MaterialFeeService {
     MaterialFeeMapper materialFeeMapper;
     @Resource
     BudgetRecordMapper budgetRecordMapper;
+    @Resource
+    PlanService planService;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addMaterialFee(MaterialFee materialFee) {
@@ -72,7 +74,29 @@ public class MaterialFeeService {
         return materialFeeMapper.getMaterialFeeByIds(pids);
     }
 
-    public void update(MaterialFee materialFee) {
+
+    @Transactional(rollbackFor = Exception.class)
+    public void update(MaterialFee materialFee) throws Exception {
+        materialFee.setItemType(PlanItemTypeEnum.MATERIAL.getIndex());
+        MaterialFee old = materialFeeMapper.getById(materialFee.getId());
+        Double used = old.getSubTotal() - old.getUnfulfilledQuota();
+        if (materialFee.getSubTotal() == null) {
+            double subTotal = materialFee.getUnitPrice() * materialFee.getAmount();
+            materialFee.setSubTotal(subTotal);
+        }
+        if (materialFee.getSubTotal() < used) {
+            throw new Exception("总额度小于已执行额度！");
+        }
+        // 如果总额有更新, 则更新相关数据
+        if (old.getSubTotal() != materialFee.getSubTotal()) {
+            Double change = materialFee.getSubTotal() - old.getSubTotal();
+            double quota = materialFee.getUnfulfilledQuota() + change;
+            materialFee.setUnfulfilledQuota(quota);
+            materialFee.setExecuteRate(ComputeUtils.computeExecuteRate(materialFee.getSubTotal(), quota));
+
+            // 更新项目金额信息
+            planService.updatePlanFunding(materialFee.getPlanId(), change);
+        }
         materialFeeMapper.update(materialFee);
     }
 

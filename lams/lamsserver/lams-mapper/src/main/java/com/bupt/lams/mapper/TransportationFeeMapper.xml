@@ -83,15 +83,10 @@
         </where>
     </update>
     <select id="getById" parameterType="java.lang.Long" resultType="com.bupt.lams.model.planItem.PlanItem">
-        select t.*, p.id as planId, pr.id as projectId, p.planName, pr.projectName
+        select t.*
         from
         transportation_fee t
-        join plan_item pi on t.id = pi.iid
-        join plan p on p.id = pi.pid
-        join project pr on pr.id = p.projectId
         where
-        pi.itid = 7
-        and
         t.id = #{id}
     </select>
     <select id="getTransportationFeeByIds" parameterType="list" resultType="com.bupt.lams.model.planItem.PlanItem">

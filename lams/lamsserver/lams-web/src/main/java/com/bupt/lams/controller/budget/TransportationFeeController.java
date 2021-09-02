@@ -92,4 +92,25 @@ public class TransportationFeeController {
         }
         return response;
     }
+
+    @PutMapping("/edit")
+    public RespBean editTransFee(@RequestBody PlanItem transFee) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (transFee == null) {
+            logger.error("北京市内交通费不能为空！");
+            return RespBean.error("北京市内交通费不能为空！");
+        }
+        if (transFee.getSubTotal() == null) {
+            logger.error("北京市内交通费合计不能为空！");
+            return RespBean.error("北京市内交通费合计不能为空！");
+        }
+        try {
+            transportationFeeService.update(transFee);
+        } catch (Exception e) {
+            logger.error("编辑北京市内交通费失败", e);
+            return RespBean.error("编辑北京市内交通费失败！" + e.getMessage());
+        }
+        return response;
+    }
 }

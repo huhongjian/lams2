@@ -2,6 +2,7 @@ package com.bupt.lams.controller.budget;
 
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.model.RespBean;
+import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.model.planItem.Payment;
 import com.bupt.lams.service.PaymentService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -31,9 +32,9 @@ public class PaymentController {
             logger.error("劳务费不能为空！");
             return RespBean.error("劳务费不能为空！");
         }
-        if (payment.getHours() == null || payment.getAmount() == null || payment.getStandard() == null) {
-            logger.error("人数、工时等信息不能为空！");
-            return RespBean.error("人数、工时等信息不能为空！");
+        if (payment.getSubTotal() == null && (payment.getHours() == null || payment.getAmount() == null || payment.getStandard() == null)) {
+            logger.error("计价方式不能同时为空");
+            return RespBean.error("计价方式不能同时为空");
         }
         try {
             Long id = paymentService.addPayment(payment);
@@ -89,6 +90,27 @@ public class PaymentController {
         } catch (Exception e) {
             logger.error("获取推荐劳务费信息失败", e);
             return RespBean.error("获取推荐劳务费信息失败！");
+        }
+        return response;
+    }
+
+    @PutMapping("/edit")
+    public RespBean editEquipmentFee(@RequestBody Payment payment) {
+        RespBean response = new RespBean();
+        response.setStatus(200);
+        if (payment == null) {
+            logger.error("劳务费不能为空！");
+            return RespBean.error("劳务费不能为空！");
+        }
+        if (payment.getSubTotal() == null && (payment.getHours() == null || payment.getAmount() == null || payment.getStandard() == null)) {
+            logger.error("计价方式不能同时为空");
+            return RespBean.error("计价方式不能同时为空");
+        }
+        try {
+            paymentService.update(payment);
+        } catch (Exception e) {
+            logger.error("编辑劳务费失败", e);
+            return RespBean.error("编辑劳务费失败！" + e.getMessage());
         }
         return response;
     }

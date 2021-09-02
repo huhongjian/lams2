@@ -4,16 +4,13 @@ import com.bupt.lams.constants.PlanItemTypeEnum;
 import com.bupt.lams.dto.PlanItemData;
 import com.bupt.lams.mapper.BudgetRecordMapper;
 import com.bupt.lams.mapper.EquipmentFeeMapper;
-import com.bupt.lams.mapper.PlanMapper;
 import com.bupt.lams.model.LamsUser;
-import com.bupt.lams.model.Plan;
 import com.bupt.lams.model.PlanAndItem;
 import com.bupt.lams.model.planItem.EquipmentFee;
 import com.bupt.lams.utils.ComputeUtils;
 import com.bupt.lams.utils.TransferUtils;
 import com.bupt.lams.utils.UserInfoUtils;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +29,6 @@ public class EquipmentFeeService {
     EquipmentFeeMapper equipmentFeeMapper;
     @Resource
     BudgetRecordMapper budgetRecordMapper;
-    @Resource
-    PlanMapper planMapper;
     @Resource
     PlanService planService;
 
@@ -77,6 +72,7 @@ public class EquipmentFeeService {
 
     @Transactional(rollbackFor = Exception.class)
     public void update(EquipmentFee equipmentFee) throws Exception {
+        equipmentFee.setItemType(PlanItemTypeEnum.EQUIPMENT.getIndex());
         EquipmentFee old = equipmentFeeMapper.getById(equipmentFee.getId());
         Double used = old.getSubTotal() - old.getUnfulfilledQuota();
         if (equipmentFee.getSubTotal() == null) {
@@ -94,14 +90,7 @@ public class EquipmentFeeService {
             equipmentFee.setExecuteRate(ComputeUtils.computeExecuteRate(equipmentFee.getSubTotal(), quota));
 
             // 更新项目金额信息
-            Plan plan = planMapper.getPlanById(equipmentFee.getPlanId());
-            // 新建一个计划实例，解决mybatis缓存导致的问题
-            Plan newPlan = new Plan();
-            newPlan.setFunding(plan.getFunding() + change);
-            newPlan.setId(plan.getId());
-            newPlan.setProjectId(plan.getProjectId());
-            newPlan.setUnfulfilledQuota(plan.getUnfulfilledQuota());
-            planService.updatePlanInfo(newPlan);
+            planService.updatePlanFunding(equipmentFee.getPlanId(), change);
         }
         equipmentFeeMapper.update(equipmentFee);
     }

@@ -21,7 +21,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * 国内学术会议差旅费service
+ * 学术会议差旅费service
  */
 @Service
 public class AcademicFeeService {
@@ -29,6 +29,8 @@ public class AcademicFeeService {
     AcademicFeeMapper academicFeeMapper;
     @Resource
     BudgetRecordMapper budgetRecordMapper;
+    @Resource
+    PlanService planService;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addAcademicFee(AcademicFee academicFee) {
@@ -39,7 +41,6 @@ public class AcademicFeeService {
             Double total = ((academicFee.getRegistrationFee() + academicFee.getTransFee()) * academicFee.getTimes() + academicFee.getAccommodationFee() * academicFee.getDays() * academicFee.getTimes()) / 10000D;
             academicFee.setSubTotal(total);
         }
-        academicFee.setSubTotal(academicFee.getSubTotal() * academicFee.getTimes());
         academicFee.setUnfulfilledQuota(academicFee.getSubTotal());
         academicFee.setExecuteRate(ComputeUtils.computeExecuteRate(academicFee.getSubTotal(), academicFee.getUnfulfilledQuota()));
         academicFeeMapper.insertSelective(academicFee);
@@ -70,7 +71,28 @@ public class AcademicFeeService {
         return TransferUtils.transToPlanItemData(new ArrayList<>(academicFeeList));
     }
 
-    public void update(AcademicFee academicFee) {
+    @Transactional(rollbackFor = Exception.class)
+    public void update(AcademicFee academicFee) throws Exception {
+        academicFee.setItemType(PlanItemTypeEnum.ACADEMIC.getIndex());
+        AcademicFee old = academicFeeMapper.getById(academicFee.getId());
+        Double used = old.getSubTotal() - old.getUnfulfilledQuota();
+        if (academicFee.getSubTotal() == null) {
+            double subTotal = ((academicFee.getRegistrationFee() + academicFee.getTransFee()) * academicFee.getTimes() + academicFee.getAccommodationFee() * academicFee.getDays() * academicFee.getTimes()) / 10000D;
+            academicFee.setSubTotal(subTotal);
+        }
+        if (academicFee.getSubTotal() < used) {
+            throw new Exception("总额度小于已执行额度！");
+        }
+        // 如果总额有更新, 则更新相关数据
+        if (old.getSubTotal() != academicFee.getSubTotal()) {
+            Double change = academicFee.getSubTotal() - old.getSubTotal();
+            double quota = academicFee.getUnfulfilledQuota() + change;
+            academicFee.setUnfulfilledQuota(quota);
+            academicFee.setExecuteRate(ComputeUtils.computeExecuteRate(academicFee.getSubTotal(), quota));
+
+            // 更新项目金额信息
+            planService.updatePlanFunding(academicFee.getPlanId(), change);
+        }
         academicFeeMapper.update(academicFee);
     }
 

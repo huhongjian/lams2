@@ -29,14 +29,18 @@ public class ResearchFeeService {
     ResearchFeeMapper researchFeeMapper;
     @Resource
     BudgetRecordMapper budgetRecordMapper;
+    @Resource
+    PlanService planService;
 
     @Transactional(rollbackFor = Exception.class)
     public Long addResearchFee(ResearchFee researchFee) {
         researchFee.setItemType(PlanItemTypeEnum.RESEARCH.getIndex());
         researchFee.setUserEmail(UserInfoUtils.getLoginedUser().getUsername());
         // 计算合计
-        Double total = (researchFee.getTransFee() * researchFee.getTimes() + (researchFee.getAccommodationFee() + researchFee.getOtherFee()) * researchFee.getDays() * researchFee.getTimes()) / 10000D;
-        researchFee.setSubTotal(total);
+        if (researchFee.getSubTotal() == null) {
+            Double total = (researchFee.getTransFee() * researchFee.getTimes() + (researchFee.getAccommodationFee() + researchFee.getOtherFee()) * researchFee.getDays() * researchFee.getTimes()) / 10000D;
+            researchFee.setSubTotal(total);
+        }
         researchFee.setUnfulfilledQuota(researchFee.getSubTotal());
         researchFee.setExecuteRate(ComputeUtils.computeExecuteRate(researchFee.getSubTotal(), researchFee.getUnfulfilledQuota()));
         researchFeeMapper.insertSelective(researchFee);
@@ -71,8 +75,29 @@ public class ResearchFeeService {
         return researchFeeMapper.getResearchFeeByIds(pids);
     }
 
-    public void update(ResearchFee equipmentFee) {
-        researchFeeMapper.update(equipmentFee);
+    @Transactional(rollbackFor = Exception.class)
+    public void update(ResearchFee researchFee) throws Exception {
+        researchFee.setItemType(PlanItemTypeEnum.RESEARCH.getIndex());
+        ResearchFee old = researchFeeMapper.getById(researchFee.getId());
+        Double used = old.getSubTotal() - old.getUnfulfilledQuota();
+        if (researchFee.getSubTotal() == null) {
+            double subTotal = (researchFee.getTransFee() * researchFee.getTimes() + (researchFee.getAccommodationFee() + researchFee.getOtherFee()) * researchFee.getDays() * researchFee.getTimes()) / 10000D;
+            researchFee.setSubTotal(subTotal);
+        }
+        if (researchFee.getSubTotal() < used) {
+            throw new Exception("总额度小于已执行额度！");
+        }
+        // 如果总额有更新, 则更新相关数据
+        if (old.getSubTotal() != researchFee.getSubTotal()) {
+            Double change = researchFee.getSubTotal() - old.getSubTotal();
+            double quota = researchFee.getUnfulfilledQuota() + change;
+            researchFee.setUnfulfilledQuota(quota);
+            researchFee.setExecuteRate(ComputeUtils.computeExecuteRate(researchFee.getSubTotal(), quota));
+
+            // 更新项目金额信息
+            planService.updatePlanFunding(researchFee.getPlanId(), change);
+        }
+        researchFeeMapper.update(researchFee);
     }
 
     public ResearchFee getById(Long id) {

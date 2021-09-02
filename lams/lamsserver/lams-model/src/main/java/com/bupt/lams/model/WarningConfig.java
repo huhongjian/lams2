@@ -59,6 +59,9 @@ public class WarningConfig {
     private Date updateTime;
 
     public void setItemType(Integer itemType) {
+        if (itemType == null) {
+            return;
+        }
         this.itemType = itemType;
         this.itemTypeName = PlanItemTypeEnum.getNameByIndex(itemType);
     }

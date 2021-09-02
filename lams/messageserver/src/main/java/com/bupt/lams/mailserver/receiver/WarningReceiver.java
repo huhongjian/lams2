@@ -1,4 +1,4 @@
-package org.javaboy.mailserver.receiver;
+package com.bupt.lams.mailserver.receiver;
 
 import com.bupt.lams.model.MessageConstants;
 import com.bupt.lams.model.MessageContent;

@@ -1,4 +1,4 @@
-package org.javaboy.mailserver;
+package com.bupt.lams.mailserver;
 
 import com.bupt.lams.model.MessageConstants;
 import org.springframework.amqp.core.Queue;

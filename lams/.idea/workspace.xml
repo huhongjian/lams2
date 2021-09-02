@@ -24,11 +24,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7216ff54-8cd9-4358-b2bf-8a185f9c16aa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PlanMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PlanMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PlanMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-mapper/src/main/java/com/bupt/lams/mapper/PlanMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/PlanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/PlanService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/ProjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/PlanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/PlanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/WarningConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lamsserver/lams-model/src/main/java/com/bupt/lams/model/WarningConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageserver/src/main/java/org/javaboy/mailserver/MessageServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageserver/src/main/java/com/bupt/lams/mailserver/MessageServerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageserver/src/main/java/org/javaboy/mailserver/receiver/WarningReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageserver/src/main/java/com/bupt/lams/mailserver/receiver/WarningReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageserver/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/messageserver/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vuelams/src/components/budget/NewWarning.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../vuelams/src/components/budget/NewWarning.vue" afterDir="false" />
     </list>
     <list id="d9c6d090-d8d0-42d6-8b8c-ce0025f2f90f" name="不提交" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -176,14 +176,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MessageServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="messageserver" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.bupt.lams.mailserver.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.bupt.lams.mailserver.MessageServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Remote.remote" />
       <item itemvalue="Spring Boot.MailserverApplication" />
       <item itemvalue="Spring Boot.LamsApplication" />
+      <item itemvalue="Spring Boot.MessageServerApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.LamsApplication" />
+        <item itemvalue="Spring Boot.MessageServerApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -242,14 +257,7 @@
       <workItem from="1629896348286" duration="8627000" />
       <workItem from="1629962083951" duration="16015000" />
       <workItem from="1630305562552" duration="22421000" />
-      <workItem from="1630549747934" duration="20569000" />
-    </task>
-    <task id="LOCAL-00139" summary="为归还资产功能新增日志类">
-      <created>1609342490765</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1609342490765</updated>
+      <workItem from="1630549747934" duration="24482000" />
     </task>
     <task id="LOCAL-00140" summary="优化我的模块">
       <created>1609346767931</created>
@@ -587,7 +595,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630572644600</updated>
     </task>
-    <option name="localTasksCounter" value="188" />
+    <task id="LOCAL-00188" summary="第六版上线：支持预算计划相关功能">
+      <created>1630574425448</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1630574425448</updated>
+    </task>
+    <option name="localTasksCounter" value="189" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -666,14 +681,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="524" y="114" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1630570536455" />
-    <state x="350" y="0" key="CommitChangelistDialog2" timestamp="1630572641914">
+    <state x="350" y="0" key="CommitChangelistDialog2" timestamp="1630574422336">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="350" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1630572641914" />
-    <state width="699" height="466" key="DebuggerActiveHint" timestamp="1630574034034">
+    <state x="350" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1630574422336" />
+    <state width="699" height="466" key="DebuggerActiveHint" timestamp="1630577277035">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="699" height="466" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1630574034034" />
+    <state width="699" height="466" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1630577277035" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1630571490786">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -682,54 +697,54 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="579" y="215" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1630334565125" />
-    <state width="1493" height="554" key="GridCell.Tab.0.bottom" timestamp="1630574020845">
+    <state width="1493" height="642" key="GridCell.Tab.0.bottom" timestamp="1630577403593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="554" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1630574020845" />
-    <state width="1493" height="554" key="GridCell.Tab.0.center" timestamp="1630574020845">
+    <state width="1493" height="642" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1630577403593" />
+    <state width="1493" height="642" key="GridCell.Tab.0.center" timestamp="1630577403593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="554" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1630574020845" />
-    <state width="1493" height="554" key="GridCell.Tab.0.left" timestamp="1630574020844">
+    <state width="1493" height="642" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1630577403593" />
+    <state width="1493" height="642" key="GridCell.Tab.0.left" timestamp="1630577403592">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="554" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1630574020844" />
-    <state width="1493" height="554" key="GridCell.Tab.0.right" timestamp="1630574020845">
+    <state width="1493" height="642" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1630577403592" />
+    <state width="1493" height="642" key="GridCell.Tab.0.right" timestamp="1630577403593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="554" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1630574020845" />
-    <state width="1493" height="554" key="GridCell.Tab.1.bottom" timestamp="1630574020845">
+    <state width="1493" height="642" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1630577403593" />
+    <state width="1493" height="642" key="GridCell.Tab.1.bottom" timestamp="1630577403593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="554" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1630574020845" />
-    <state width="1493" height="554" key="GridCell.Tab.1.center" timestamp="1630574020845">
+    <state width="1493" height="642" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1630577403593" />
+    <state width="1493" height="642" key="GridCell.Tab.1.center" timestamp="1630577403593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="554" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1630574020845" />
-    <state width="1493" height="554" key="GridCell.Tab.1.left" timestamp="1630574020845">
+    <state width="1493" height="642" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1630577403593" />
+    <state width="1493" height="642" key="GridCell.Tab.1.left" timestamp="1630577403593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="554" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1630574020845" />
-    <state width="1493" height="554" key="GridCell.Tab.1.right" timestamp="1630574020845">
+    <state width="1493" height="642" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1630577403593" />
+    <state width="1493" height="642" key="GridCell.Tab.1.right" timestamp="1630577403593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="554" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1630574020845" />
-    <state width="1493" height="554" key="GridCell.Tab.2.bottom" timestamp="1630574020845">
+    <state width="1493" height="642" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1630577403593" />
+    <state width="1493" height="642" key="GridCell.Tab.2.bottom" timestamp="1630577403593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="554" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1630574020845" />
-    <state width="1493" height="554" key="GridCell.Tab.2.center" timestamp="1630574020845">
+    <state width="1493" height="642" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1630577403593" />
+    <state width="1493" height="642" key="GridCell.Tab.2.center" timestamp="1630577403593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="554" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1630574020845" />
-    <state width="1493" height="554" key="GridCell.Tab.2.left" timestamp="1630574020845">
+    <state width="1493" height="642" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1630577403593" />
+    <state width="1493" height="642" key="GridCell.Tab.2.left" timestamp="1630577403593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="554" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1630574020845" />
-    <state width="1493" height="554" key="GridCell.Tab.2.right" timestamp="1630574020845">
+    <state width="1493" height="642" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1630577403593" />
+    <state width="1493" height="642" key="GridCell.Tab.2.right" timestamp="1630577403593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="554" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1630574020845" />
+    <state width="1493" height="642" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1630577403593" />
     <state x="502" y="114" key="RollbackChangesDialog" timestamp="1629581195997">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -766,10 +781,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1625998686587" />
-    <state x="311" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1630568492432">
+    <state x="311" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1630574349596">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="311" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1630568492432" />
+    <state x="311" y="141" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1630574349596" />
     <state x="499" y="172" key="extract.method.dialog" timestamp="1629392456864">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -791,34 +806,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/PlanService.java</url>
-          <line>132</line>
-          <option name="timeStamp" value="91" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/PlanService.java</url>
-          <line>131</line>
-          <option name="timeStamp" value="92" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/PlanService.java</url>
-          <line>120</line>
-          <option name="timeStamp" value="93" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/EquipmentFeeService.java</url>
-          <line>96</line>
-          <option name="timeStamp" value="94" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-service/src/main/java/com/bupt/lams/service/EquipmentFeeService.java</url>
-          <line>90</line>
-          <option name="timeStamp" value="97" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lamsserver/lams-web/src/main/java/com/bupt/lams/controller/budget/PlanController.java</url>
-          <line>65</line>
-          <option name="timeStamp" value="98" />
+          <url>file://$PROJECT_DIR$/messageserver/src/main/java/com/bupt/lams/mailserver/receiver/WarningReceiver.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="99" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

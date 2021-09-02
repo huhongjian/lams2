@@ -177,6 +177,18 @@ export default {
           name: "每周"
         }
       ],
+      rules: {
+        projectId: [{required: true, message: '请选择科研项目', trigger: 'blur'}],
+        dateScope: [{required: true, message: '请选择报警时间', trigger: 'blur'}],
+        freq: [{required: true, message: '请选择报警频率', trigger: 'blur'}],
+        toUser: [{required: true, message: '请选择报警接收人列表', trigger: 'blur'}],
+        executeRate: [{
+          pattern: /^[+-]?(0|([1-9]\d*))(\.\d+)?$/,
+          required: true,
+          message: '请输入报警执行率，参数必须为数字',
+          trigger: 'blur'
+        }],
+      }
     }
   },
   methods: {

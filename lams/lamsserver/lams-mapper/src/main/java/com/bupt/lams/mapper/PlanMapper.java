@@ -2,6 +2,7 @@ package com.bupt.lams.mapper;
 
 import com.bupt.lams.dto.PlanQueryCondition;
 import com.bupt.lams.model.Plan;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface PlanMapper {
 
     Double getTotal();
 
-    Double getTotalByProjectId(Long id);
+    Double getTotalByProjectId(@Param("projectId") Long projectId, @Param("planId") Long planId);
 
     List<Plan> getPlansByProjectIds(List<Long> pids);
 

@@ -62,7 +62,7 @@ public class PlanController {
         response.setMsg("预算计划新增成功!");
         try {
             Project project = projectService.getProjectById(plan.getProjectId());
-            Double inPlan = projectService.getInPlanById(plan.getProjectId());
+            Double inPlan = projectService.getInPlanById(plan.getProjectId(), null);
             if (plan.getFunding() + inPlan > project.getFunding()) {
                 return RespBean.error("新增项目失败！金额过大，超出项目剩余额度！");
             }

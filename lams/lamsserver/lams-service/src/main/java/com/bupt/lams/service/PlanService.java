@@ -124,7 +124,7 @@ public class PlanService {
             throw new Exception("总额度小于已执行额度！");
         }
         Project project = projectMapper.getProjectById(plan.getProjectId());
-        Double inPlan = planMapper.getTotalByProjectId(plan.getProjectId());
+        Double inPlan = planMapper.getTotalByProjectId(plan.getProjectId(), plan.getId());
         if (plan.getFunding() + inPlan > project.getFunding()) {
             throw new Exception("金额过大，超出项目剩余额度！");
         }

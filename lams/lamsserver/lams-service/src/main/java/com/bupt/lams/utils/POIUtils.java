@@ -724,7 +724,8 @@ public class POIUtils {
         sheet.setColumnWidth(1, 55 * 256);
         sheet.setColumnWidth(2, 10 * 256);
         sheet.setColumnWidth(3, 20 * 256);
-        sheet.setColumnWidth(4, 80 * 256);
+        sheet.setColumnWidth(4, 20 * 256);
+        sheet.setColumnWidth(5, 80 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -741,7 +742,10 @@ public class POIUtils {
         c3.setCellValue("单价（万元）");
         HSSFCell c4 = r0.createCell(4);
         c4.setCellStyle(headerStyle);
-        c4.setCellValue("备注");
+        c4.setCellValue("合计（万元）");
+        HSSFCell c5 = r0.createCell(5);
+        c5.setCellStyle(headerStyle);
+        c5.setCellValue("备注");
 
         return workbook;
     }
@@ -784,7 +788,7 @@ public class POIUtils {
         c5.setCellValue("单位");
         HSSFCell c6 = r0.createCell(6);
         c6.setCellStyle(headerStyle);
-        c6.setCellValue("小计（万元）");
+        c6.setCellValue("合计（万元）");
         HSSFCell c7 = r0.createCell(7);
         c7.setCellStyle(headerStyle);
         c7.setCellValue("备注");
@@ -803,7 +807,8 @@ public class POIUtils {
         sheet.setColumnWidth(0, 50 * 256);
         sheet.setColumnWidth(1, 10 * 256);
         sheet.setColumnWidth(2, 20 * 256);
-        sheet.setColumnWidth(3, 80 * 256);
+        sheet.setColumnWidth(3, 20 * 256);
+        sheet.setColumnWidth(4, 80 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -817,7 +822,10 @@ public class POIUtils {
         c2.setCellValue("单价（万元）");
         HSSFCell c3 = r0.createCell(3);
         c3.setCellStyle(headerStyle);
-        c3.setCellValue("备注");
+        c3.setCellValue("合计（万元）");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("备注");
 
         return workbook;
     }
@@ -837,7 +845,8 @@ public class POIUtils {
         sheet.setColumnWidth(4, 10 * 256);
         sheet.setColumnWidth(5, 10 * 256);
         sheet.setColumnWidth(6, 10 * 256);
-        sheet.setColumnWidth(7, 80 * 256);
+        sheet.setColumnWidth(7, 10 * 256);
+        sheet.setColumnWidth(8, 80 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -863,7 +872,10 @@ public class POIUtils {
         c6.setCellValue("会议次数");
         HSSFCell c7 = r0.createCell(7);
         c7.setCellStyle(headerStyle);
-        c7.setCellValue("备注");
+        c7.setCellValue("合计（万元）");
+        HSSFCell c8 = r0.createCell(8);
+        c8.setCellStyle(headerStyle);
+        c8.setCellValue("备注");
 
         return workbook;
     }
@@ -884,7 +896,8 @@ public class POIUtils {
         sheet.setColumnWidth(5, 20 * 256);
         sheet.setColumnWidth(6, 20 * 256);
         sheet.setColumnWidth(7, 10 * 256);
-        sheet.setColumnWidth(8, 80 * 256);
+        sheet.setColumnWidth(8, 20 * 256);
+        sheet.setColumnWidth(9, 80 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -913,7 +926,10 @@ public class POIUtils {
         c7.setCellValue("天数");
         HSSFCell c8 = r0.createCell(8);
         c8.setCellStyle(headerStyle);
-        c8.setCellValue("备注");
+        c8.setCellValue("合计（万元）");
+        HSSFCell c9 = r0.createCell(9);
+        c9.setCellStyle(headerStyle);
+        c9.setCellValue("备注");
 
         return workbook;
     }
@@ -964,7 +980,7 @@ public class POIUtils {
         c7.setCellValue("住宿及补助费（元/人/天）");
         HSSFCell c8 = r0.createCell(8);
         c8.setCellStyle(headerStyle);
-        c8.setCellValue("费用（万元/次）");
+        c8.setCellValue("合计（万元）");
         HSSFCell c9 = r0.createCell(9);
         c9.setCellStyle(headerStyle);
         c9.setCellValue("备注");
@@ -1033,7 +1049,8 @@ public class POIUtils {
         sheet.setColumnWidth(2, 10 * 256);
         sheet.setColumnWidth(3, 20 * 256);
         sheet.setColumnWidth(4, 15 * 256);
-        sheet.setColumnWidth(5, 80 * 256);
+        sheet.setColumnWidth(5, 20 * 256);
+        sheet.setColumnWidth(6, 80 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -1053,7 +1070,10 @@ public class POIUtils {
         c4.setCellValue("工作时间（月）");
         HSSFCell c5 = r0.createCell(5);
         c5.setCellStyle(headerStyle);
-        c5.setCellValue("备注");
+        c5.setCellValue("合计（万元）");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("备注");
 
         return workbook;
     }
@@ -1071,7 +1091,8 @@ public class POIUtils {
         sheet.setColumnWidth(2, 10 * 256);
         sheet.setColumnWidth(3, 20 * 256);
         sheet.setColumnWidth(4, 10 * 256);
-        sheet.setColumnWidth(5, 80 * 256);
+        sheet.setColumnWidth(5, 20 * 256);
+        sheet.setColumnWidth(6, 80 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -1091,7 +1112,10 @@ public class POIUtils {
         c4.setCellValue("天数");
         HSSFCell c5 = r0.createCell(5);
         c5.setCellStyle(headerStyle);
-        c5.setCellValue("备注");
+        c5.setCellValue("合计（万元）");
+        HSSFCell c6 = r0.createCell(6);
+        c6.setCellStyle(headerStyle);
+        c6.setCellValue("备注");
 
         return workbook;
     }

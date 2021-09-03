@@ -46,7 +46,7 @@
           </el-row>
           <el-row>
             <el-col :span="15">
-              <el-form-item label="计价方式:" prop="count" key="material">
+              <el-form-item label="计价方式:" prop="count" key="equipment">
                 <el-select style="width: 200px" v-model="countType" clearable placeholder="请选择">
                   <el-option
                       v-for="item in countTypeList"
@@ -74,9 +74,9 @@
           </el-row>
           <el-row v-if="countType==2">
             <el-col :span="6">
-              <el-form-item label="合计（万元）:" prop="subTotal" key="material">
+              <el-form-item label="合计（万元）:" prop="subTotal" key="equipment">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
-                          v-model="planItem.subTotal" :key="key"></el-input>
+                          v-model="planItem.subTotal"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -152,7 +152,7 @@
           </el-row>
           <el-row>
             <el-col :span="15">
-              <el-form-item label="计价方式:" prop="count" key="material">
+              <el-form-item label="计价方式:" prop="count" key="testing">
                 <el-select style="width: 200px" v-model="countType" clearable placeholder="请选择">
                   <el-option
                       v-for="item in countTypeList"
@@ -180,7 +180,7 @@
           </el-row>
           <el-row v-if="countType==2">
             <el-col :span="6">
-              <el-form-item label="合计（万元）:" prop="subTotal" key="material">
+              <el-form-item label="合计（万元）:" prop="subTotal" key="testing">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                           v-model="planItem.subTotal"></el-input>
               </el-form-item>
@@ -215,7 +215,7 @@
             </el-row>
             <el-row>
               <el-col :span="15">
-                <el-form-item label="计价方式:" prop="count" key="material">
+                <el-form-item label="计价方式:" prop="count" key="meeting">
                   <el-select style="width: 200px" v-model="countType" clearable placeholder="请选择">
                     <el-option
                         v-for="item in countTypeList"
@@ -263,7 +263,7 @@
             </el-row>
             <el-row v-if="countType==2">
               <el-col :span="6">
-                <el-form-item label="合计（万元）:" prop="subTotal" key="material">
+                <el-form-item label="合计（万元）:" prop="subTotal" key="meeting">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="planItem.subTotal"></el-input>
                 </el-form-item>
@@ -293,7 +293,7 @@
             </el-row>
             <el-row>
               <el-col :span="15">
-                <el-form-item label="计价方式:" prop="count" key="material">
+                <el-form-item label="计价方式:" prop="count" key="research">
                   <el-select style="width: 200px" v-model="countType" clearable placeholder="请选择">
                     <el-option
                         v-for="item in countTypeList"
@@ -307,7 +307,7 @@
             </el-row>
             <el-row v-if="countType==2">
               <el-col :span="6">
-                <el-form-item label="合计（万元）:" prop="subTotal" key="material">
+                <el-form-item label="合计（万元）:" prop="subTotal" key="research">
                   <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                             v-model="planItem.subTotal"></el-input>
                 </el-form-item>
@@ -460,7 +460,7 @@
           </el-row>
           <el-row>
             <el-col :span="15">
-              <el-form-item label="计价方式:" prop="count" key="material">
+              <el-form-item label="计价方式:" prop="count" key="payment">
                 <el-select style="width: 200px" v-model="countType" clearable placeholder="请选择">
                   <el-option
                       v-for="item in countTypeList"
@@ -474,7 +474,7 @@
           </el-row>
           <el-row v-if="countType==2">
             <el-col :span="6">
-              <el-form-item label="合计（万元）:" prop="subTotal" key="material">
+              <el-form-item label="合计（万元）:" prop="subTotal" key="payment">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                           v-model="planItem.subTotal"></el-input>
               </el-form-item>
@@ -516,7 +516,7 @@
           </el-row>
           <el-row>
             <el-col :span="15">
-              <el-form-item label="计价方式:" prop="count" key="material">
+              <el-form-item label="计价方式:" prop="count" key="advisory">
                 <el-select style="width: 200px" v-model="countType" clearable placeholder="请选择">
                   <el-option
                       v-for="item in countTypeList"
@@ -530,7 +530,7 @@
           </el-row>
           <el-row v-if="countType==2">
             <el-col :span="6">
-              <el-form-item label="合计（万元）:" prop="subTotal" key="material">
+              <el-form-item label="合计（万元）:" prop="subTotal" key="advisory">
                 <el-input size="mini" style="width: 150px" prefix-icon="el-icon-edit"
                           v-model="planItem.subTotal"></el-input>
               </el-form-item>

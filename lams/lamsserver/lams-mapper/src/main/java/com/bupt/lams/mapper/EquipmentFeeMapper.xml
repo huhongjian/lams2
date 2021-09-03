@@ -132,6 +132,9 @@
             <if test="usage != null and usage != ''">
                 `usage` = #{usage},
             </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
             <if test="amount != null">
                 amount = #{amount},
             </if>

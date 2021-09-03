@@ -6,7 +6,7 @@
         :before-close="handleClose"
         width="80%">
       <div>
-        <el-form :model="plan" :rules="rules" ref="planForm">
+        <el-form :model="plan" ref="planForm">
           <el-row>
             <el-col :span="20">
               <el-form-item label="预算计划名称:" prop="planName">
@@ -832,13 +832,13 @@
                  v-on:freshPlan="freshPlan"
                  :planItem="planItem"
                  :executePlanVisible="executePlanVisible"
-                 :title="title"></ExecutePlan>
+                 :title="title2"></ExecutePlan>
     <ExecuteDetail v-on:close="executeDetailVisible = false"
                    v-on:freshPlan="freshPlan"
                    :planId="planItem.planId"
                    :executeDetailVisible="executeDetailVisible"
                    :budgetRecordList="budgetRecordList"
-                   :title="title"></ExecuteDetail>
+                   :title="title2"></ExecuteDetail>
   </div>
 </template>
 <script>
@@ -856,7 +856,7 @@ export default {
     return {
       budgetRecordList: [],
       loading: false,
-      title: '',
+      title2: '',
       planItem: {
         id: null,
         itemType: "",
@@ -880,14 +880,14 @@ export default {
       });
     },
     showExecuteView(data) {
-      this.title = '预算执行信息';
+      this.title2 = '预算执行信息';
       this.planItem = data;
       this.executePlanVisible = true;
     },
     showExecuteDetailView(data) {
       this.planItem = data;
       this.initBudgetRecordList();
-      this.title = '预算执行记录';
+      this.title2 = '预算执行记录';
       this.executeDetailVisible = true;
     },
     handleClose() {

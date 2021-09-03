@@ -104,37 +104,37 @@
                 itemTypeName = #{itemTypeName},
             </if>
             <if test="content != null and content != ''">
-                #{content},
+                content = #{content},
             </if>
             <if test="relation != null and relation != ''">
-                #{relation},
+                relation = #{relation},
             </if>
             <if test="meal != null">
-                #{meal},
+                meal = #{meal},
             </if>
             <if test="otherCost != null">
-                #{otherCost},
+                otherCost = #{otherCost},
             </if>
             <if test="days != null">
-                #{days},
+                days = #{days},
             </if>
             <if test="amount != null">
-                #{amount},
+                amount = #{amount},
             </if>
             <if test="meetingNum != null">
-                #{meetingNum},
+                meetingNum = #{meetingNum},
             </if>
             <if test="subTotal != null">
-                #{subTotal},
+                subTotal = #{subTotal},
             </if>
             <if test="remark != null and remark != ''">
-                #{remark},
+                remark = #{remark},
             </if>
             <if test="unfulfilledQuota != null">
-                #{unfulfilledQuota},
+                unfulfilledQuota = #{unfulfilledQuota},
             </if>
             <if test="executeRate != null">
-                #{executeRate},
+                executeRate = #{executeRate},
             </if>
             <if test="createTime != null">
                 createTime = #{createTime},

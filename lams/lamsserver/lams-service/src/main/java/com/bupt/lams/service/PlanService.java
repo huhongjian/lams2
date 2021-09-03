@@ -359,7 +359,7 @@ public class PlanService {
                             case 1:
                                 equipmentFee.setUsage(cellValue);
                                 break;
-                            case 4:
+                            case 5:
                                 equipmentFee.setRemark(cellValue);
                                 break;
                         }
@@ -371,6 +371,9 @@ public class PlanService {
                                 break;
                             case 3:
                                 equipmentFee.setUnitPrice(cell.getNumericCellValue());
+                                break;
+                            case 4:
+                                equipmentFee.setSubTotal(cell.getNumericCellValue());
                                 break;
                         }
                     }
@@ -489,7 +492,7 @@ public class PlanService {
                             case 0:
                                 testingFee.setContent(cellValue);
                                 break;
-                            case 3:
+                            case 4:
                                 testingFee.setRemark(cellValue);
                                 break;
                         }
@@ -501,6 +504,9 @@ public class PlanService {
                                 break;
                             case 2:
                                 testingFee.setUnitPrice(cell.getNumericCellValue());
+                                break;
+                            case 3:
+                                testingFee.setSubTotal(cell.getNumericCellValue());
                                 break;
                         }
                     }
@@ -551,7 +557,7 @@ public class PlanService {
                             case 1:
                                 meetingFee.setRelation(cellValue);
                                 break;
-                            case 7:
+                            case 8:
                                 meetingFee.setRemark(cellValue);
                                 break;
                         }
@@ -572,6 +578,9 @@ public class PlanService {
                                 break;
                             case 6:
                                 meetingFee.setMeetingNum((int) cell.getNumericCellValue());
+                                break;
+                            case 7:
+                                meetingFee.setSubTotal(cell.getNumericCellValue());
                                 break;
                         }
                     }
@@ -625,7 +634,7 @@ public class PlanService {
                             case 2:
                                 researchFee.setPersonnelType(cellValue);
                                 break;
-                            case 8:
+                            case 9:
                                 researchFee.setRemark(cellValue);
                                 break;
                         }
@@ -646,6 +655,9 @@ public class PlanService {
                                 break;
                             case 7:
                                 researchFee.setDays((int) cell.getNumericCellValue());
+                                break;
+                            case 8:
+                                researchFee.setSubTotal(cell.getNumericCellValue());
                                 break;
                         }
                     }
@@ -882,7 +894,7 @@ public class PlanService {
                             case 1:
                                 payment.setContent(cellValue);
                                 break;
-                            case 5:
+                            case 6:
                                 payment.setRemark(cellValue);
                                 break;
                         }
@@ -897,6 +909,9 @@ public class PlanService {
                                 break;
                             case 4:
                                 payment.setHours((int) cell.getNumericCellValue());
+                                break;
+                            case 5:
+                                payment.setSubTotal(cell.getNumericCellValue());
                                 break;
                         }
                     }
@@ -947,7 +962,7 @@ public class PlanService {
                             case 1:
                                 advisory.setContent(cellValue);
                                 break;
-                            case 5:
+                            case 6:
                                 advisory.setRemark(cellValue);
                                 break;
                         }
@@ -962,6 +977,9 @@ public class PlanService {
                                 break;
                             case 4:
                                 advisory.setDays((int) cell.getNumericCellValue());
+                                break;
+                            case 5:
+                                advisory.setSubTotal(cell.getNumericCellValue());
                                 break;
                         }
                     }

@@ -68,10 +68,10 @@
                 itemTypeName = #{itemTypeName},
             </if>
             <if test="type != null and type != ''">
-                #{type},
+                `type` = #{type},
             </if>
             <if test="remark != null and remark != ''">
-                #{remark},
+                remark = #{remark},
             </if>
             <if test="subTotal != null">
                 subTotal = #{subTotal},

@@ -71,6 +71,12 @@
             keyProperty="id">
         insert into budget_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isReimburse != null">
+                isReimburse,
+            </if>
+            <if test="reimburseName != null and reimburseName != ''">
+                reimburseName,
+            </if>
             <if test="funding != null">
                 funding,
             </if>
@@ -112,6 +118,12 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isReimburse != null">
+                #{isReimburse},
+            </if>
+            <if test="reimburseName != null and reimburseName != ''">
+                #{reimburseName},
+            </if>
             <if test="funding != null">
                 #{funding},
             </if>

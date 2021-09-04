@@ -1270,10 +1270,10 @@ public class POIUtils {
         HSSFSheet sheet = workbook.createSheet("经费使用情况");
         //设置列的宽度
         sheet.setColumnWidth(0, 10 * 256);
-        sheet.setColumnWidth(1, 30 * 256);
-        sheet.setColumnWidth(2, 80 * 256);
-        sheet.setColumnWidth(3, 10 * 256);
-        sheet.setColumnWidth(4, 10 * 256);
+        sheet.setColumnWidth(1, 35 * 256);
+        sheet.setColumnWidth(2, 15 * 256);
+        sheet.setColumnWidth(3, 15 * 256);
+        sheet.setColumnWidth(4, 15 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -1290,7 +1290,7 @@ public class POIUtils {
         c3.setCellValue("已使用");
         HSSFCell c4 = r0.createCell(4);
         c4.setCellStyle(headerStyle);
-        c4.setCellValue("执行率");
+        c4.setCellValue("执行率%");
         int cnt = 0;
 
         HSSFRow row1 = sheet.createRow(++cnt);
@@ -1434,13 +1434,13 @@ public class POIUtils {
         HSSFSheet sheet = workbook.createSheet("预算计划");
         //设置列的宽度
         sheet.setColumnWidth(0, 15 * 256);
-        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(1, 30 * 256);
         sheet.setColumnWidth(2, 15 * 256);
-        sheet.setColumnWidth(3, 80 * 256);
+        sheet.setColumnWidth(3, 30 * 256);
         sheet.setColumnWidth(4, 15 * 256);
-        sheet.setColumnWidth(5, 20 * 256);
-        sheet.setColumnWidth(6, 15 * 256);
-        sheet.setColumnWidth(7, 80 * 256);
+        sheet.setColumnWidth(5, 15 * 256);
+        sheet.setColumnWidth(6, 10 * 256);
+        sheet.setColumnWidth(7, 50 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -1491,13 +1491,13 @@ public class POIUtils {
         //设置列的宽度
         sheet.setColumnWidth(0, 10 * 256);
         sheet.setColumnWidth(1, 30 * 256);
-        sheet.setColumnWidth(2, 80 * 256);
+        sheet.setColumnWidth(2, 30 * 256);
         sheet.setColumnWidth(3, 10 * 256);
         sheet.setColumnWidth(4, 10 * 256);
-        sheet.setColumnWidth(5, 20 * 256);
-        sheet.setColumnWidth(6, 20 * 256);
+        sheet.setColumnWidth(5, 10 * 256);
+        sheet.setColumnWidth(6, 15 * 256);
         sheet.setColumnWidth(7, 10 * 256);
-        sheet.setColumnWidth(8, 80 * 256);
+        sheet.setColumnWidth(8, 50 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -1553,16 +1553,16 @@ public class POIUtils {
         HSSFSheet sheet = workbook.createSheet("材料费");
         //设置列的宽度
         sheet.setColumnWidth(0, 10 * 256);
-        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(1, 30 * 256);
         sheet.setColumnWidth(2, 30 * 256);
-        sheet.setColumnWidth(3, 50 * 256);
+        sheet.setColumnWidth(3, 30 * 256);
         sheet.setColumnWidth(4, 10 * 256);
-        sheet.setColumnWidth(5, 20 * 256);
+        sheet.setColumnWidth(5, 10 * 256);
         sheet.setColumnWidth(6, 10 * 256);
-        sheet.setColumnWidth(7, 20 * 256);
-        sheet.setColumnWidth(8, 20 * 256);
+        sheet.setColumnWidth(7, 10 * 256);
+        sheet.setColumnWidth(8, 10 * 256);
         sheet.setColumnWidth(9, 10 * 256);
-        sheet.setColumnWidth(10, 80 * 256);
+        sheet.setColumnWidth(10, 50 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -1627,13 +1627,13 @@ public class POIUtils {
         HSSFSheet sheet = workbook.createSheet("测试化验加工费");
         //设置列的宽度
         sheet.setColumnWidth(0, 10 * 256);
-        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(1, 30 * 256);
         sheet.setColumnWidth(2, 10 * 256);
-        sheet.setColumnWidth(3, 20 * 256);
-        sheet.setColumnWidth(4, 20 * 256);
-        sheet.setColumnWidth(5, 20 * 256);
+        sheet.setColumnWidth(3, 10 * 256);
+        sheet.setColumnWidth(4, 10 * 256);
+        sheet.setColumnWidth(5, 15 * 256);
         sheet.setColumnWidth(6, 10 * 256);
-        sheet.setColumnWidth(7, 80 * 256);
+        sheet.setColumnWidth(7, 50 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -1686,17 +1686,17 @@ public class POIUtils {
         HSSFSheet sheet = workbook.createSheet("会议费");
         //设置列的宽度
         sheet.setColumnWidth(0, 10 * 256);
-        sheet.setColumnWidth(1, 50 * 256);
-        sheet.setColumnWidth(2, 50 * 256);
-        sheet.setColumnWidth(3, 20 * 256);
-        sheet.setColumnWidth(4, 20 * 256);
+        sheet.setColumnWidth(1, 30 * 256);
+        sheet.setColumnWidth(2, 30 * 256);
+        sheet.setColumnWidth(3, 15 * 256);
+        sheet.setColumnWidth(4, 15 * 256);
         sheet.setColumnWidth(5, 10 * 256);
         sheet.setColumnWidth(6, 10 * 256);
         sheet.setColumnWidth(7, 10 * 256);
-        sheet.setColumnWidth(8, 20 * 256);
-        sheet.setColumnWidth(9, 20 * 256);
+        sheet.setColumnWidth(8, 10 * 256);
+        sheet.setColumnWidth(9, 15 * 256);
         sheet.setColumnWidth(10, 10 * 256);
-        sheet.setColumnWidth(11, 80 * 256);
+        sheet.setColumnWidth(11, 50 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -1765,18 +1765,18 @@ public class POIUtils {
         HSSFSheet sheet = workbook.createSheet("课题调研差旅费");
         //设置列的宽度
         sheet.setColumnWidth(0, 10 * 256);
-        sheet.setColumnWidth(1, 50 * 256);
-        sheet.setColumnWidth(2, 50 * 256);
+        sheet.setColumnWidth(1, 30 * 256);
+        sheet.setColumnWidth(2, 30 * 256);
         sheet.setColumnWidth(3, 20 * 256);
         sheet.setColumnWidth(4, 10 * 256);
         sheet.setColumnWidth(5, 20 * 256);
-        sheet.setColumnWidth(6, 20 * 256);
-        sheet.setColumnWidth(7, 20 * 256);
+        sheet.setColumnWidth(6, 15 * 256);
+        sheet.setColumnWidth(7, 15 * 256);
         sheet.setColumnWidth(8, 10 * 256);
-        sheet.setColumnWidth(9, 20 * 256);
-        sheet.setColumnWidth(10, 20 * 256);
+        sheet.setColumnWidth(9, 15 * 256);
+        sheet.setColumnWidth(10, 15 * 256);
         sheet.setColumnWidth(11, 10 * 256);
-        sheet.setColumnWidth(12, 80 * 256);
+        sheet.setColumnWidth(12, 50 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -1849,18 +1849,18 @@ public class POIUtils {
         HSSFSheet sheet = workbook.createSheet("学术会议差旅费");
         //设置列的宽度
         sheet.setColumnWidth(0, 10 * 256);
-        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(1, 30 * 256);
         sheet.setColumnWidth(2, 20 * 256);
         sheet.setColumnWidth(3, 10 * 256);
-        sheet.setColumnWidth(4, 20 * 256);
+        sheet.setColumnWidth(4, 10 * 256);
         sheet.setColumnWidth(5, 10 * 256);
-        sheet.setColumnWidth(6, 20 * 256);
+        sheet.setColumnWidth(6, 15 * 256);
         sheet.setColumnWidth(7, 20 * 256);
         sheet.setColumnWidth(8, 20 * 256);
-        sheet.setColumnWidth(9, 20 * 256);
-        sheet.setColumnWidth(10, 20 * 256);
+        sheet.setColumnWidth(9, 15 * 256);
+        sheet.setColumnWidth(10, 15 * 256);
         sheet.setColumnWidth(11, 10 * 256);
-        sheet.setColumnWidth(12, 80 * 256);
+        sheet.setColumnWidth(12, 50 * 256);
         //6. 创建标题行
         HSSFRow r0 = sheet.createRow(0);
         HSSFCell c0 = r0.createCell(0);
@@ -1991,8 +1991,8 @@ public class POIUtils {
         c1.setCellStyle(headerStyle);
         c1.setCellValue("类别");
         HSSFCell c2 = r0.createCell(2);
-        c1.setCellStyle(headerStyle);
-        c1.setCellValue("合计（万元）");
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("合计（万元）");
         HSSFCell c3 = r0.createCell(3);
         c3.setCellStyle(headerStyle);
         c3.setCellValue("未执行额度（万元）");

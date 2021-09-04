@@ -134,6 +134,10 @@ public class PlanService {
             double quota = plan.getUnfulfilledQuota() + change;
             plan.setUnfulfilledQuota(quota);
             plan.setExecuteRate(ComputeUtils.computeExecuteRate(plan.getFunding(), quota));
+        } else {
+            // 总额没有更新，以数据库中数据为准，前端数据有滞后性
+            plan.setUnfulfilledQuota(oldPlan.getUnfulfilledQuota());
+            plan.setExecuteRate(oldPlan.getExecuteRate());
         }
         planMapper.updatePlan(plan);
     }

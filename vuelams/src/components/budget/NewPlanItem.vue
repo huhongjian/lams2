@@ -761,20 +761,22 @@ export default {
     },
     doAddPlanItem() {
       if (this.planItem.id) {
-        this.$refs['planItemForm'].validate(valid => {
-          if (valid) {
-            this.planItem.planId = this.planId;
-            this.getItemUrl();
-            if (this.countType == 1) {
-              this.planItem.subTotal = null;
-            }
-            let url = "/planItem/" + this.itemUrl + "/edit/";
-            this.putRequest(url, this.planItem).then(resp => {
-              if (resp) {
-                this.handleClose();
+        this.$nextTick(() => {
+          this.$refs['planItemForm'].validate(valid => {
+            if (valid) {
+              this.planItem.planId = this.planId;
+              this.getItemUrl();
+              if (this.countType == 1) {
+                this.planItem.subTotal = null;
               }
-            })
-          }
+              let url = "/planItem/" + this.itemUrl + "/edit/";
+              this.putRequest(url, this.planItem).then(resp => {
+                if (resp) {
+                  this.handleClose();
+                }
+              })
+            }
+          });
         });
       } else {
         this.$refs['planItemForm'].validate(valid => {

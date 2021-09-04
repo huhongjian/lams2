@@ -11,6 +11,7 @@ import org.apache.poi.hpsf.SummaryInformation;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -1146,7 +1147,7 @@ public class POIUtils {
         return workbook;
     }
 
-    public static ResponseEntity<byte[]> planIn2Excel(Plan plan) {
+    public static ResponseEntity<byte[]> plan2Excel(Plan plan) {
         //1. 创建一个 Excel 文档
         HSSFWorkbook workbook = new HSSFWorkbook();
         //2. 创建文档摘要
@@ -1236,6 +1237,189 @@ public class POIUtils {
             workbook.write(baos);
         } catch (
                 IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.CREATED);
+    }
+
+    public static ResponseEntity<byte[]> planStatics2Excel(Plan plan) {
+        //1. 创建一个 Excel 文档
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        //2. 创建文档摘要
+        workbook.createInformationProperties();
+        //3. 获取并配置文档信息
+        DocumentSummaryInformation docInfo = workbook.getDocumentSummaryInformation();
+        //文档类别
+        docInfo.setCategory("经费使用情况");
+        //文档管理员
+        docInfo.setManager("admin");
+        //设置公司信息
+        docInfo.setCompany("bupt");
+        //4. 获取文档摘要信息
+        SummaryInformation summInfo = workbook.getSummaryInformation();
+        //文档标题
+        summInfo.setTitle("经费使用情况表");
+        //文档作者
+        summInfo.setAuthor("lams");
+        // 文档备注
+        summInfo.setComments("本文档由 lams 提供");
+
+        HSSFCellStyle headerStyle = workbook.createCellStyle();
+        HSSFCellStyle dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        HSSFSheet sheet = workbook.createSheet("经费使用情况");
+        //设置列的宽度
+        sheet.setColumnWidth(0, 10 * 256);
+        sheet.setColumnWidth(1, 30 * 256);
+        sheet.setColumnWidth(2, 80 * 256);
+        sheet.setColumnWidth(3, 10 * 256);
+        sheet.setColumnWidth(4, 10 * 256);
+        //6. 创建标题行
+        HSSFRow r0 = sheet.createRow(0);
+        HSSFCell c0 = r0.createCell(0);
+        c0.setCellStyle(headerStyle);
+        c0.setCellValue("序号");
+        HSSFCell c1 = r0.createCell(1);
+        c1.setCellStyle(headerStyle);
+        c1.setCellValue("预算科目名称");
+        HSSFCell c2 = r0.createCell(2);
+        c2.setCellStyle(headerStyle);
+        c2.setCellValue("金额（万元）");
+        HSSFCell c3 = r0.createCell(3);
+        c3.setCellStyle(headerStyle);
+        c3.setCellValue("已使用");
+        HSSFCell c4 = r0.createCell(4);
+        c4.setCellStyle(headerStyle);
+        c4.setCellValue("执行率");
+        int cnt = 0;
+
+        HSSFRow row1 = sheet.createRow(++cnt);
+        row1.createCell(0).setCellValue(cnt);
+        row1.createCell(1).setCellValue("设备费");
+        row1.createCell(2).setCellValue(0);
+        row1.createCell(3).setCellValue(0);
+        row1.createCell(4).setCellValue(0);
+        if (plan.getPlanItemDataMap() != null && plan.getPlanItemDataMap().get("equipmentFeeData") != null) {
+            PlanItemData data = plan.getPlanItemDataMap().get("equipmentFeeData");
+            row1.createCell(2).setCellValue(data.getFunding());
+            row1.createCell(3).setCellValue(data.getFunding() - data.getUnfulfilledQuota());
+            row1.createCell(4).setCellValue(data.getExecuteRate());
+        }
+
+        HSSFRow row2 = sheet.createRow(++cnt);
+        row2.createCell(0).setCellValue(cnt);
+        row2.createCell(1).setCellValue("材料费");
+        row2.createCell(2).setCellValue(0);
+        row2.createCell(3).setCellValue(0);
+        row2.createCell(4).setCellValue(0);
+        if (plan.getPlanItemDataMap() != null && plan.getPlanItemDataMap().get("materialFeeData") != null) {
+            PlanItemData data = plan.getPlanItemDataMap().get("materialFeeData");
+            row2.createCell(2).setCellValue(data.getFunding());
+            row2.createCell(3).setCellValue(data.getFunding() - data.getUnfulfilledQuota());
+            row2.createCell(4).setCellValue(data.getExecuteRate());
+        }
+
+        HSSFRow row3 = sheet.createRow(++cnt);
+        row3.createCell(0).setCellValue(cnt);
+        row3.createCell(1).setCellValue("测试化验加工费");
+        row3.createCell(2).setCellValue(0);
+        row3.createCell(3).setCellValue(0);
+        row3.createCell(4).setCellValue(0);
+        if (plan.getPlanItemDataMap() != null && plan.getPlanItemDataMap().get("testingFeeData") != null) {
+            PlanItemData data = plan.getPlanItemDataMap().get("testingFeeData");
+            row3.createCell(2).setCellValue(data.getFunding());
+            row3.createCell(3).setCellValue(data.getFunding() - data.getUnfulfilledQuota());
+            row3.createCell(4).setCellValue(data.getExecuteRate());
+        }
+
+        HSSFRow row4 = sheet.createRow(++cnt);
+        row4.createCell(0).setCellValue(cnt);
+        row4.createCell(1).setCellValue("差旅/会议/国际合作与交流费");
+        row4.createCell(2).setCellValue(0);
+        row4.createCell(3).setCellValue(0);
+        row4.createCell(4).setCellValue(0);
+        Double total = 0D;
+        Double unfulfilledQuota = 0D;
+        if (plan.getPlanItemDataMap() != null && plan.getPlanItemDataMap().get("meetingFeeData") != null) {
+            PlanItemData data = plan.getPlanItemDataMap().get("meetingFeeData");
+            total += data.getFunding();
+            unfulfilledQuota += data.getUnfulfilledQuota();
+        }
+        if (plan.getPlanItemDataMap() != null && plan.getPlanItemDataMap().get("researchFeeData") != null) {
+            PlanItemData data = plan.getPlanItemDataMap().get("researchFeeData");
+            total += data.getFunding();
+            unfulfilledQuota += data.getUnfulfilledQuota();
+        }
+        if (plan.getPlanItemDataMap() != null && plan.getPlanItemDataMap().get("academicFeeData") != null) {
+            PlanItemData data = plan.getPlanItemDataMap().get("academicFeeData");
+            total += data.getFunding();
+            unfulfilledQuota += data.getUnfulfilledQuota();
+        }
+        if (plan.getPlanItemDataMap() != null && plan.getPlanItemDataMap().get("transFeeData") != null) {
+            PlanItemData data = plan.getPlanItemDataMap().get("transFeeData");
+            total += data.getFunding();
+            unfulfilledQuota += data.getUnfulfilledQuota();
+        }
+        row4.createCell(2).setCellValue(total);
+        row4.createCell(3).setCellValue(unfulfilledQuota);
+        row4.createCell(4).setCellValue(ComputeUtils.computeExecuteRate(total, unfulfilledQuota));
+
+        HSSFRow row5 = sheet.createRow(++cnt);
+        row5.createCell(0).setCellValue(cnt);
+        row5.createCell(1).setCellValue("出版/文献/信息传播/知识产权事务费");
+        row5.createCell(2).setCellValue(0);
+        row5.createCell(3).setCellValue(0);
+        row5.createCell(4).setCellValue(0);
+        if (plan.getPlanItemDataMap() != null && plan.getPlanItemDataMap().get("publishFeeData") != null) {
+            PlanItemData data = plan.getPlanItemDataMap().get("publishFeeData");
+            row5.createCell(2).setCellValue(data.getFunding());
+            row5.createCell(3).setCellValue(data.getFunding() - data.getUnfulfilledQuota());
+            row5.createCell(4).setCellValue(data.getExecuteRate());
+        }
+
+        HSSFRow row6 = sheet.createRow(++cnt);
+        row6.createCell(0).setCellValue(cnt);
+        row6.createCell(1).setCellValue("劳务费");
+        row6.createCell(2).setCellValue(0);
+        row6.createCell(3).setCellValue(0);
+        row6.createCell(4).setCellValue(0);
+        if (plan.getPlanItemDataMap() != null && plan.getPlanItemDataMap().get("paymentData") != null) {
+            PlanItemData data = plan.getPlanItemDataMap().get("paymentData");
+            row6.createCell(2).setCellValue(data.getFunding());
+            row6.createCell(3).setCellValue(data.getFunding() - data.getUnfulfilledQuota());
+            row6.createCell(4).setCellValue(data.getExecuteRate());
+        }
+
+        HSSFRow row7 = sheet.createRow(++cnt);
+        row7.createCell(0).setCellValue(cnt);
+        row7.createCell(1).setCellValue("专家咨询费");
+        row7.createCell(2).setCellValue(0);
+        row7.createCell(3).setCellValue(0);
+        row7.createCell(4).setCellValue(0);
+        if (plan.getPlanItemDataMap() != null && plan.getPlanItemDataMap().get("advisoryData") != null) {
+            PlanItemData data = plan.getPlanItemDataMap().get("advisoryData");
+            row7.createCell(2).setCellValue(data.getFunding());
+            row7.createCell(3).setCellValue(data.getFunding() - data.getUnfulfilledQuota());
+            row7.createCell(4).setCellValue(data.getExecuteRate());
+        }
+
+        sheet.addMergedRegion(new CellRangeAddress(8, 8, 0, 1));
+        HSSFRow row = sheet.createRow(++cnt);
+        row.createCell(0).setCellValue("经费合计");
+        row.createCell(2).setCellValue(0);
+        row.createCell(3).setCellValue(0);
+        row.createCell(4).setCellValue(0);
+        row.createCell(2).setCellValue(plan.getFunding());
+        row.createCell(3).setCellValue(plan.getFunding() - plan.getUnfulfilledQuota());
+        row.createCell(4).setCellValue(plan.getExecuteRate());
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        HttpHeaders headers = new HttpHeaders();
+        try {
+            headers.setContentDispositionFormData("attachment", new String("经费使用情况表.xls".getBytes("UTF-8"), "ISO-8859-1"));
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            workbook.write(baos);
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.CREATED);

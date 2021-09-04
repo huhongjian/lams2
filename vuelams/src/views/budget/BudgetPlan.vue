@@ -24,7 +24,11 @@
           </el-button>
           <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportData"
                      icon="el-icon-download">
-            导出数据
+            导出完整数据
+          </el-button>
+          <el-button type="success" style="display: inline-flex;margin-left: 8px" @click="exportStatics"
+                     icon="el-icon-download">
+            导出统计数据
           </el-button>
           <el-button @click="deletePlan" style="display: inline-flex;margin-left: 8px" type="danger">
             删除
@@ -224,37 +228,37 @@ export default {
         },
         planItemDataMap: {
           equipmentFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           materialFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           testingFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           meetingFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           researchFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           academicFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           transFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           publishFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           paymentData: {
-            planItemList:[]
+            planItemList: []
           },
           advisoryData: {
-            planItemList:[]
+            planItemList: []
           },
           otherFeeData: {
-            planItemList:[]
+            planItemList: []
           },
         },
         createTime: "",
@@ -300,6 +304,15 @@ export default {
         return;
       }
       let url = '/plan/export';
+      url += "?id=" + this.planIds[0];
+      window.open(url, '_parent');
+    },
+    exportStatics() {
+      if (this.planIds == null || this.planIds.length != 1) {
+        Message.info({message: '一次只能导出一个预算计划哦！'});
+        return;
+      }
+      let url = '/plan/export/statics';
       url += "?id=" + this.planIds[0];
       window.open(url, '_parent');
     },
@@ -352,37 +365,37 @@ export default {
         },
         planItemDataMap: {
           equipmentFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           materialFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           testingFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           meetingFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           researchFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           academicFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           transFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           publishFeeData: {
-            planItemList:[]
+            planItemList: []
           },
           paymentData: {
-            planItemList:[]
+            planItemList: []
           },
           advisoryData: {
-            planItemList:[]
+            planItemList: []
           },
           otherFeeData: {
-            planItemList:[]
+            planItemList: []
           },
         },
         createTime: "",

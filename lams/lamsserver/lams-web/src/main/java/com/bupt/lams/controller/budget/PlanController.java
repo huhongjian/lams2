@@ -121,7 +121,18 @@ public class PlanController {
         if (planList.size() != 1) {
             return null;
         }
-        return POIUtils.planIn2Excel(planList.get(0));
+        return POIUtils.plan2Excel(planList.get(0));
+    }
+
+    @GetMapping("/export/statics")
+    public ResponseEntity<byte[]> exportStatics(Long id) throws Exception {
+        PlanQueryCondition condition = new PlanQueryCondition();
+        condition.setPlanId(id);
+        List<Plan> planList = planService.getFullPlanInfo(condition);
+        if (planList.size() != 1) {
+            return null;
+        }
+        return POIUtils.planStatics2Excel(planList.get(0));
     }
 
     @GetMapping("/template")
